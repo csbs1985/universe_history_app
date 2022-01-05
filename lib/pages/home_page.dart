@@ -76,6 +76,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ),
             ),
             Expanded(
+              // controller: _scrollViewController,
               child: HistoryItemComponent(allHistory),
             ),
           ],
