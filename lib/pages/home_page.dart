@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_new, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:universe_history_app/components/history_item_component.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
@@ -14,13 +15,41 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  late final TabController _tabController;
+  late ScrollController _scrollViewController;
+  bool _showAppbar = true;
+  bool isScrollingDown = false;
   List<HistoryModel> allHistory = HistoryModel.allHistory;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _scrollViewController = new ScrollController();
+    _scrollViewController.addListener(() {
+      if (_scrollViewController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        if (!isScrollingDown) {
+          isScrollingDown = true;
+          _showAppbar = false;
+          setState(() {});
+        }
+      }
+
+      if (_scrollViewController.position.userScrollDirection ==
+          ScrollDirection.forward) {
+        if (isScrollingDown) {
+          isScrollingDown = false;
+          _showAppbar = true;
+          setState(() {});
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollViewController.dispose();
+    _scrollViewController.removeListener(() {});
+    super.dispose();
   }
 
   @override
@@ -33,30 +62,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
 
     return Scaffold(
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return [
-            SliverAppBar(
-              title: const Text('Weight Tracker'),
-              floating: true,
-              pinned: true,
-              forceElevated: innerBoxIsScrolled,
-              elevation: 0,
-              bottom: TabBar(
-                tabs: const [
-                  Tab(text: 'STATISTICS'),
-                  Tab(text: 'HISTORY'),
+      body: SafeArea(
+        child: Column(
+          children: [
+            AnimatedContainer(
+              height: _showAppbar ? 56.0 : 0.0,
+              duration: Duration(milliseconds: 200),
+              child: AppBar(
+                title: Text('Scroll Demo'),
+                actions: const [
+                  Text('title'),
                 ],
-                controller: _tabController,
               ),
             ),
-          ];
-        },
-        body: TabBarView(
-          controller: _tabController,
-          children: [
-            HistoryItemComponent(allHistory),
-            HistoryItemComponent(allHistory),
+            Expanded(
+              child: HistoryItemComponent(allHistory),
+            ),
           ],
         ),
       ),

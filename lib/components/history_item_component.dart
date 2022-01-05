@@ -52,7 +52,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         'comentários',
                         style: uiTextStyle.text2,
                       ),

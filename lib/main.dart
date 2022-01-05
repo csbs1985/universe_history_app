@@ -29,8 +29,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       home: const SplashPage(),
       theme: ThemeData(
-        scaffoldBackgroundColor: uiColor.primary,
-        fontFamily: 'ubuntu',
+        scaffoldBackgroundColor: uiColor.comp_5,
+        fontFamily: 'roboto',
         appBarTheme: const AppBarTheme(
           backgroundColor: uiColor.primary,
           elevation: 0,
