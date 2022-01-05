@@ -19,8 +19,8 @@ class MyApp extends StatelessWidget {
         statusBarColor: uiColor.primary,
         statusBarIconBrightness: Brightness.light,
         statusBarBrightness: Brightness.light,
-        systemNavigationBarColor: uiColor.primary,
-        systemNavigationBarIconBrightness: Brightness.light,
+        systemNavigationBarColor: uiColor.light,
+        systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
 
@@ -31,9 +31,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: uiColor.primary,
         fontFamily: 'ubuntu',
-        iconTheme: const IconThemeData(
-            // color: uiColor.element,
-            ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: uiColor.primary,
+          elevation: 0,
+        ),
       ),
       onGenerateRoute: (settings) {
         switch (settings.name) {

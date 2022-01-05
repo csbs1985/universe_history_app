@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:universe_history_app/theme/ui_svgs.dart';
+import 'package:flutter/services.dart';
+import 'package:universe_history_app/theme/ui_colors.dart';
+import 'package:universe_history_app/theme/ui_image.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -12,17 +15,28 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(
-            height: 100,
-            width: 100,
-            child: SvgPicture.asset(uiSvg.logo),
-          ),
-        ],
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        systemNavigationBarColor: uiColor.primary,
+        systemNavigationBarIconBrightness: Brightness.light,
+      ),
+    );
+
+    return WillPopScope(
+      onWillPop: () => exit(0),
+      child: Scaffold(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(
+              height: 52,
+              child: Image.asset(
+                uiImage.logo,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -31,7 +45,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(seconds: 10)).then((_) {
+    Future.delayed(const Duration(seconds: 1)).then((_) {
       Navigator.pushNamed(context, '/home', arguments: {});
     });
   }
