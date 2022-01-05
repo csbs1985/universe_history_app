@@ -1,7 +1,10 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
+import 'package:universe_history_app/theme/ui_svgs.dart';
+import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class HistoryItemComponent extends StatefulWidget {
   const HistoryItemComponent(this.allHistory);
@@ -20,13 +23,57 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
           shrinkWrap: true,
           itemCount: widget.allHistory.length,
           itemBuilder: (BuildContext context, int index) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(widget.allHistory[index].historyTitle),
-                Text(widget.allHistory[index].historyText),
-              ],
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.allHistory[index].historyTitle,
+                    style: uiTextStyle.header1,
+                  ),
+                  Text(
+                    widget.allHistory[index].historyDate,
+                    style: uiTextStyle.text2,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    widget.allHistory[index].historyText,
+                    style: uiTextStyle.text1,
+                  ),
+                  const Text(
+                    'continuar lendo',
+                    style: uiTextStyle.text3,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'comentários',
+                        style: uiTextStyle.text2,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                              onPressed: () {},
+                              icon: SvgPicture.asset(uiSvg.comment)),
+                          IconButton(
+                              onPressed: () {},
+                              icon: SvgPicture.asset(uiSvg.favorite)),
+                          IconButton(
+                              onPressed: () {},
+                              icon: SvgPicture.asset(uiSvg.options))
+                        ],
+                      )
+                    ],
+                  ),
+                ],
+              ),
             );
           }),
     );

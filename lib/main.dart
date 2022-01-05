@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         statusBarColor: uiColor.primary,
         statusBarIconBrightness: Brightness.light,
         statusBarBrightness: Brightness.light,
-        systemNavigationBarColor: uiColor.light,
+        systemNavigationBarColor: uiColor.comp_5,
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
