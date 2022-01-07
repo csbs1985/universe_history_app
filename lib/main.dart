@@ -16,11 +16,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        statusBarColor: uiColor.primary,
+        statusBarColor: uiColor.second,
         statusBarIconBrightness: Brightness.light,
         statusBarBrightness: Brightness.light,
-        systemNavigationBarColor: uiColor.comp_5,
-        systemNavigationBarIconBrightness: Brightness.dark,
+        systemNavigationBarColor: uiColor.second,
+        systemNavigationBarIconBrightness: Brightness.light,
       ),
     );
 
@@ -29,18 +29,25 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       home: const SplashPage(),
       theme: ThemeData(
-        scaffoldBackgroundColor: uiColor.comp_5,
+        scaffoldBackgroundColor: uiColor.second,
         fontFamily: 'roboto',
         appBarTheme: const AppBarTheme(
-          backgroundColor: uiColor.primary,
+          backgroundColor: uiColor.second,
           elevation: 0,
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            primary: uiColor.first,
+            shape: const BeveledRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(5))),
+          ),
         ),
       ),
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/home':
             return PageTransition(
-                child: const HomePage(),
+                child: HomePage(),
                 type: PageTransitionType.fade,
                 settings: settings);
           default:

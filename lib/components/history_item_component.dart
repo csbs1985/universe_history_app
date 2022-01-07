@@ -1,9 +1,9 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors
 
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:universe_history_app/shared/models/history_model.dart';
+import 'package:universe_history_app/shared/models/history.dart';
 import 'package:universe_history_app/theme/ui_colors.dart';
 import 'package:universe_history_app/theme/ui_svgs.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -19,14 +19,12 @@ class HistoryItemComponent extends StatefulWidget {
 class _HistoryItemComponentState extends State<HistoryItemComponent> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView.builder(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: widget.allHistory.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
+    return ListView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: widget.allHistory.length,
+        itemBuilder: (BuildContext context, int index) => Padding(
+              padding: const EdgeInsets.only(top: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -48,7 +46,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                     expandText: 'CONTINUAR LENDO',
                     collapseText: 'FECHAR',
                     maxLines: 20,
-                    linkColor: uiColor.comp_2,
+                    linkColor: uiColor.first,
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -78,8 +76,6 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                   ),
                 ],
               ),
-            );
-          }),
-    );
+            ));
   }
 }

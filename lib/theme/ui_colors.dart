@@ -3,12 +3,10 @@
 import 'package:flutter/cupertino.dart';
 
 class uiColor {
-  static const Color primary = const Color(0xFFA9D2BF);
+  static const Color first = const Color(0xFF7291d5);
+  static const Color second = const Color(0xFF0d1117);
+  static const Color third = const Color(0xFFc9d1d9);
 
-  static const Color comp_1 = const Color(0xFF000000);
-  static const Color comp_2 = const Color(0xFFA19D9D);
-  static const Color comp_3 = const Color(0xFFD0D7DE);
-  static const Color comp_4 = const Color(0xFFF6F8FA);
-  static const Color comp_5 = const Color(0xFFFFFFFF);
-  static const Color comp_6 = const Color(0xFFF0F2F5);
+  static const Color comp_1 = const Color(0xFF21262d);
+  static const Color comp_2 = const Color(0xFF8b949e);
 }
