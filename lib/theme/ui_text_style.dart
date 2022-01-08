@@ -10,6 +10,12 @@ class uiTextStyle {
     color: uiColor.third,
   );
 
+  static const TextStyle header2 = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+    color: uiColor.first,
+  );
+
   static const TextStyle text1 = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w400,
@@ -29,8 +35,26 @@ class uiTextStyle {
   );
 
   static const TextStyle button1 = TextStyle(
-    fontSize: 28,
+    fontSize: 20,
     fontWeight: FontWeight.w400,
     color: uiColor.second,
+  );
+
+  static const TextStyle button2 = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: uiColor.first,
+  );
+
+  static const TextStyle chip = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: uiColor.first,
+  );
+
+  static const TextStyle active = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: uiColor.third,
   );
 }

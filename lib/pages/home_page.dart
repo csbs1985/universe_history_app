@@ -1,7 +1,6 @@
 // ignore_for_file: unnecessary_new, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, use_key_in_widget_constructors, must_be_immutable
 
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
@@ -45,28 +44,28 @@ class HomePage extends StatelessWidget {
           ),
         ),
         body: Snap(
-          controller: _scrollController.appBar, // Controller is also here
+          controller: _scrollController.appBar,
           child: Container(
             child: SingleChildScrollView(
               controller: _scrollController,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
-                      height: 64,
-                      child: MenuCategory(),
-                    ),
-                    SizedBox(
-                      height: 160,
-                      child: CallCreate(),
-                    ),
-                    Flexible(
-                      child: HistoryItemComponent(allHistory),
-                    ),
-                  ],
-                ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    height: 36,
+                    child: MenuCategories(),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    height: 145,
+                    child: CallCreate(),
+                  ),
+                  Flexible(
+                    child: HistoryItemComponent(allHistory),
+                  ),
+                ],
               ),
             ),
           ),

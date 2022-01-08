@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:universe_history_app/pages/create_history.dart';
 import 'package:universe_history_app/pages/home_page.dart';
 import 'package:universe_history_app/pages/splash_page.dart';
 import 'package:universe_history_app/theme/ui_colors.dart';
@@ -49,6 +50,11 @@ class MyApp extends StatelessWidget {
             return PageTransition(
                 child: HomePage(),
                 type: PageTransitionType.fade,
+                settings: settings);
+          case '/create':
+            return PageTransition(
+                child: CreateHistory(),
+                type: PageTransitionType.bottomToTop,
                 settings: settings);
           default:
             return null;
