@@ -1,152 +1,60 @@
 // ignore_for_file: unnecessary_new
 
 class Category {
-  final String categoryId;
-  final String categoryLabel;
-  final bool categoryDisabled;
+  final String id;
+  final String label;
+  final bool disabled;
 
   Category({
-    required this.categoryId,
-    required this.categoryLabel,
-    required this.categoryDisabled,
+    required this.id,
+    required this.label,
+    required this.disabled,
   });
 
   static List<Category> allCategories = [
+    new Category(id: 'maisRecente', label: '📰 mais recente', disabled: false),
+    new Category(id: 'favoritas', label: '⭐ favoritas', disabled: false),
+    new Category(id: 'animais', label: '🐈 animais', disabled: false),
+    new Category(id: 'astrologia', label: '♏ astrologia', disabled: false),
+    new Category(id: 'astronomia', label: '🚀 astronomia', disabled: false),
+    new Category(id: 'bebida', label: '🍹 bebida', disabled: false),
+    new Category(id: 'beleza', label: '💇🏽 beleza', disabled: false),
+    new Category(id: 'ciencias', label: '🧪 ciências', disabled: false),
+    new Category(id: 'climaTempo', label: '⛅ clima e tempo', disabled: false),
+    new Category(id: 'comedia', label: '😆 comedia', disabled: false),
+    new Category(id: 'comida', label: '🍜 comida', disabled: false),
+    new Category(id: 'cultura', label: '🎨 cultura', disabled: false),
+    new Category(id: 'dinheiro', label: '🪙 dinheiro', disabled: false),
     new Category(
-        categoryId: 'maisRecente',
-        categoryLabel: '📰 mais recente',
-        categoryDisabled: false),
+        id: 'entretenimento', label: '🎭 entretenimento', disabled: false),
+    new Category(id: 'esportes', label: '🏐 esportes', disabled: false),
+    new Category(id: 'estudos', label: '🎓 estudos', disabled: false),
+    new Category(id: 'eventos', label: '🎫 eventos', disabled: false),
     new Category(
-        categoryId: 'favoritas',
-        categoryLabel: '⭐ favoritas',
-        categoryDisabled: false),
+        id: 'extraterrestre', label: '👽 extraterrestre', disabled: false),
+    new Category(id: 'familia', label: '👨‍👨‍👧 família', disabled: false),
     new Category(
-        categoryId: 'familia',
-        categoryLabel: '👨‍👨‍👧 família',
-        categoryDisabled: false),
+        id: 'fotografiaVideos',
+        label: '🎥 fotografia e vídeos',
+        disabled: false),
+    new Category(id: 'geografia', label: '🗺️ geografia', disabled: false),
+    new Category(id: 'moda', label: '👗 moda', disabled: false),
+    new Category(id: 'musica', label: '🎵 música', disabled: false),
+    new Category(id: 'religiao', label: '⛪ religião', disabled: false),
+    new Category(id: 'romance', label: '❤️ romance', disabled: false),
+    new Category(id: 'saude', label: '🫁 saúde', disabled: false),
+    new Category(id: 'sexo', label: '♾️ sexo', disabled: false),
     new Category(
-        categoryId: 'trabalho',
-        categoryLabel: '👔 trabalho',
-        categoryDisabled: false),
+        id: 'tatuagemPiercing',
+        label: '➿ tatuagem e piercing',
+        disabled: false),
+    new Category(id: 'tecnologia', label: '💻 tecnologia', disabled: false),
+    new Category(id: 'terror', label: '😱 terror', disabled: false),
+    new Category(id: 'trabalho', label: '👔 trabalho', disabled: false),
+    new Category(id: 'transportes', label: '🚌 transportes', disabled: false),
     new Category(
-        categoryId: 'estudos',
-        categoryLabel: '🎓 estudos',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'ciencias',
-        categoryLabel: '🧪 ciências',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'geografia',
-        categoryLabel: '🗺️ geografia',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'comida',
-        categoryLabel: '🍜 comida',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'bebida',
-        categoryLabel: '🍹 bebida',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'dinheiro',
-        categoryLabel: '🪙 dinheiro',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'terror',
-        categoryLabel: '😱 terror',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'romance',
-        categoryLabel: '❤️ romance',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'esportes',
-        categoryLabel: '🏐 esportes',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'veiculos',
-        categoryLabel: '🚗 veículos',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'cultura',
-        categoryLabel: '🎨 cultura',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'violencia',
-        categoryLabel: '🔫 violência',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'comedia',
-        categoryLabel: '😆 comedia',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'musica',
-        categoryLabel: '🎵 música',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'tvFilmesSeries',
-        categoryLabel: '📺 tv, filmes e series',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'sexo', categoryLabel: '♾️ sexo', categoryDisabled: false),
-    new Category(
-        categoryId: 'beleza',
-        categoryLabel: '💇🏽 beleza',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'moda', categoryLabel: '👗 moda', categoryDisabled: false),
-    new Category(
-        categoryId: 'animais',
-        categoryLabel: '🐈 animais',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'extraterrestre',
-        categoryLabel: '👽 extraterrestre',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'religiao',
-        categoryLabel: '⛪ religião',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'saude',
-        categoryLabel: '🫁 saúde',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'cienciasTecnologia',
-        categoryLabel: '💻 ciências e tecnologia',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'entretenimento',
-        categoryLabel: '🎭 entretenimento',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'transportes',
-        categoryLabel: '🚌 transportes',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'eventos',
-        categoryLabel: '🎫 eventos',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'tatuagemPiercing',
-        categoryLabel: '➿ tatuagem e piercing',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'fotografiaVideos',
-        categoryLabel: '🎥 fotografia e vídeos',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'climaTempo',
-        categoryLabel: '⛅ clima e tempo',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'astrologia',
-        categoryLabel: '♏ astrologia',
-        categoryDisabled: false),
-    new Category(
-        categoryId: 'astronomia',
-        categoryLabel: '🚀 astronomia',
-        categoryDisabled: false),
+        id: 'tvFilmesSeries', label: '📺 tv, filmes e séries', disabled: false),
+    new Category(id: 'veiculos', label: '🚗 veículos', disabled: false),
+    new Category(id: 'violencia', label: '🔫 violência', disabled: false),
   ];
 }

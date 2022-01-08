@@ -32,13 +32,13 @@ class _MenuCategoriesState extends State<MenuCategories> {
       scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) => TextButton(
         child: Text(
-          allCategories[index].categoryLabel,
-          style: _getSelected(allCategories[index].categoryId)
+          allCategories[index].label,
+          style: _getSelected(allCategories[index].id)
               ? uiTextStyle.text3
               : uiTextStyle.text1,
         ),
         onPressed: () {
-          _setSelected(allCategories[index].categoryId);
+          _setSelected(allCategories[index].id);
         },
       ),
     );

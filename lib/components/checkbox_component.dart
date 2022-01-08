@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/shared/models/checkbox.dart';
 import 'package:universe_history_app/theme/ui_button.dart';
-import 'package:universe_history_app/theme/ui_colors.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class CheckboxCuston extends StatefulWidget {
@@ -17,12 +16,6 @@ class CheckboxCuston extends StatefulWidget {
 
 class _CheckboxCustonState extends State<CheckboxCuston> {
   int isSelected = 0;
-
-  @override
-  void initState() {
-    print(widget.content);
-    super.initState();
-  }
 
   void _setSelected(int id) {
     setState(() {

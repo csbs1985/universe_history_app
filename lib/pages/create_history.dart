@@ -3,11 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/components/checkbox_component.dart';
+import 'package:universe_history_app/components/radio_component.dart';
 import 'package:universe_history_app/shared/models/category.dart';
 import 'package:universe_history_app/shared/models/checkbox.dart';
 import 'package:universe_history_app/theme/ui_colors.dart';
 import 'package:universe_history_app/theme/ui_svgs.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
+import 'package:flutter/services.dart';
 
 class CreateHistory extends StatefulWidget {
   const CreateHistory({Key? key}) : super(key: key);
@@ -55,9 +57,11 @@ class _CreateHistoryState extends State<CreateHistory> {
                 keyboardType: TextInputType.multiline,
                 minLines: 1,
                 maxLines: 2,
+                maxLength: 60,
                 style: uiTextStyle.header1,
                 decoration: InputDecoration(
-                  hintText: 'Título em 60 caracteres',
+                  counterText: "",
+                  hintText: 'Título com até 60 caracteres',
                   hintStyle: uiTextStyle.header1,
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: uiColor.second),
@@ -91,50 +95,7 @@ class _CreateHistoryState extends State<CreateHistory> {
                 'Habilitar comentários',
                 allComment,
               ),
-              // ListView.builder(
-              //     itemCount: allCategories.length,
-              //     scrollDirection: Axis.horizontal,
-              //     itemBuilder: (BuildContext context, int index) => TextButton(
-              //           child: Text(
-              //             allCategories[index].categoryLabel,
-              //             style: uiTextStyle.text1,
-              //           ),
-              //           onPressed: () {
-              //             // _setSelected(allCategories[index].categoryId);
-              //           },
-              //         )),
-              const Text(
-                'Categorias',
-                style: uiTextStyle.header2,
-              ),
-              // Column(
-              //   mainAxisSize: MainAxisSize.min,
-              //   children: [
-              //     for (var categoty in allCategories)
-              //       TextButton(
-              //         onPressed: null,
-              //         child: Text(
-              //           categoty.categoryLabel,
-              //           style: uiTextStyle.text1,
-              //         ),
-              //         style: ButtonStyle(
-              //           padding: MaterialStateProperty.all<EdgeInsets>(
-              //               const EdgeInsets.fromLTRB(20, 8, 20, 10)),
-              //           backgroundColor:
-              //               MaterialStateProperty.all<Color>(uiColor.first),
-              //           foregroundColor:
-              //               MaterialStateProperty.all<Color>(uiColor.first),
-              //           shape:
-              //               MaterialStateProperty.all<RoundedRectangleBorder>(
-              //             RoundedRectangleBorder(
-              //               borderRadius: BorderRadius.circular(10),
-              //               side: const BorderSide(color: uiColor.first),
-              //             ),
-              //           ),
-              //         ),
-              //       )
-              //   ],
-              // )
+              RadioCuston('Categorias', allCategories),
             ],
           ),
         ),

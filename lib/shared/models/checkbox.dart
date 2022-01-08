@@ -11,12 +11,11 @@ class CheckboxModel {
 
   static List<CheckboxModel> allPrivacy = [
     new CheckboxModel(id: 0, label: "Assinar história como anonimo"),
-    new CheckboxModel(id: 1, label: "Assinar historia com seu nome de usuário"),
+    new CheckboxModel(id: 1, label: "Assinar história com seu nome de usuário"),
   ];
 
   static List<CheckboxModel> allComment = [
-    new CheckboxModel(id: 0, label: "Habilitar comentários de outros usuários"),
-    new CheckboxModel(
-        id: 1, label: "Desabilitar comentários de outros usuários"),
+    new CheckboxModel(id: 0, label: "Habilitar comentários na história"),
+    new CheckboxModel(id: 1, label: "Desabilitar comentários na história"),
   ];
 }
