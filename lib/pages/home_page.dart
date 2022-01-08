@@ -15,6 +15,11 @@ class HomePage extends StatelessWidget {
   final _scrollController = ScrollController();
   List<HistoryModel> allHistory = HistoryModel.allHistory;
 
+  void _scrollToTop() {
+    _scrollController.animateTo(0,
+        duration: Duration(milliseconds: 300), curve: Curves.linear);
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -36,9 +41,12 @@ class HomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(
-                uiImages.logo,
-                height: 28,
+              GestureDetector(
+                onTap: _scrollToTop,
+                child: Image.asset(
+                  uiImages.logo,
+                  height: 28,
+                ),
               ),
             ],
           ),
