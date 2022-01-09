@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import
+// ignore_for_file: unused_import, unused_field
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,10 +19,31 @@ class CreateHistory extends StatefulWidget {
 
 class _CreateHistoryState extends State<CreateHistory> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
+
   List<Category> allCategories = Category.allCategories;
   List<Category> categoriesSelected = [];
   List<CheckboxModel> allPrivacy = CheckboxModel.allPrivacy;
   List<CheckboxModel> allComment = CheckboxModel.allComment;
+
+  TextEditingController titleController = TextEditingController();
+  TextEditingController textController = TextEditingController();
+  // late History _newHistory;
+
+  void _setHistory() {
+    // _newHistory = {
+    //   historyId: "",
+    //   historyTitle: titleController.text,
+    //   historyText: textController.text,
+    //   historyDate: "",
+    //   historyComment: "",
+    //   historyAnonymous: "",
+    //   historyEdit: "",
+    //   historyDelete: "",
+    //   userId: "",
+    //   categories: [],
+    // };
+    print(titleController.text);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +58,10 @@ class _CreateHistoryState extends State<CreateHistory> {
           Padding(
             padding: const EdgeInsets.only(right: 10),
             child: TextButton(
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () {
+                _setHistory;
+                Navigator.of(context).pop();
+              },
               child: const Text(
                 'publicar',
                 style: uiTextStyle.button2,
@@ -52,13 +76,15 @@ class _CreateHistoryState extends State<CreateHistory> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const TextField(
+              TextField(
+                controller: titleController,
                 keyboardType: TextInputType.multiline,
                 minLines: 1,
                 maxLines: 2,
                 maxLength: 60,
+                autofocus: true,
                 style: uiTextStyle.header1,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   counterText: "",
                   hintText: 'Título com até 60 caracteres',
                   hintStyle: uiTextStyle.header1,
@@ -70,12 +96,13 @@ class _CreateHistoryState extends State<CreateHistory> {
                   ),
                 ),
               ),
-              const TextField(
+              TextField(
+                controller: textController,
                 keyboardType: TextInputType.multiline,
                 minLines: 10,
                 maxLines: 20,
                 style: uiTextStyle.text1,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Sua história',
                   hintStyle: uiTextStyle.text1,
                   enabledBorder: UnderlineInputBorder(

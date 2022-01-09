@@ -12,6 +12,8 @@ class Category {
   });
 
   static List<Category> allCategories = [
+    new Category(
+        id: 'minhasHistorias', label: 'minhas histórias', disabled: false),
     new Category(id: 'todas', label: 'todas', disabled: false),
     new Category(id: 'favoritas', label: 'favoritas', disabled: false),
     new Category(id: 'animais', label: 'animais', disabled: false),

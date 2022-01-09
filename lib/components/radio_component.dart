@@ -22,7 +22,9 @@ class _RadioCustonState extends State<RadioCuston> {
   List<String> listSelect = [];
 
   bool _filterList(String id) {
-    return id == 'todas' || id == 'favoritas' ? false : true;
+    return id == 'todas' || id == 'favoritas' || id == 'minhasHistorias'
+        ? false
+        : true;
   }
 
   void _setSelected(String id) {

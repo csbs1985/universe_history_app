@@ -4,6 +4,7 @@ import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:universe_history_app/components/comment_component.dart';
 import 'package:universe_history_app/shared/models/history.dart';
 import 'package:universe_history_app/theme/ui_colors.dart';
 import 'package:universe_history_app/theme/ui_svgs.dart';
@@ -72,16 +73,14 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                       ),
                       IconButton(
                         icon: SvgPicture.asset(uiSvg.options),
-                        onPressed: () => showCupertinoModalBottomSheet(
+                        onPressed: () => showMaterialModalBottomSheet(
                           expand: true,
-                          barrierColor: uiColor.second,
+                          barrierColor: Colors.white10,
                           context: context,
-                          backgroundColor: Colors.transparent,
+                          backgroundColor: uiColor.second,
                           builder: (context) => SingleChildScrollView(
                             controller: ModalScrollController.of(context),
-                            child: Container(
-                              child: Text('data'),
-                            ),
+                            child: Comment(),
                           ),
                         ),
                       ),
