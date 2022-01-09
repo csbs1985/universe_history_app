@@ -18,6 +18,9 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
+        statusBarColor: uiColor.first,
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.light,
         systemNavigationBarColor: uiColor.first,
         systemNavigationBarIconBrightness: Brightness.light,
       ),
@@ -26,17 +29,20 @@ class _SplashPageState extends State<SplashPage> {
     return WillPopScope(
       onWillPop: () => exit(0),
       child: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(
-              height: 52,
-              child: Image.asset(
-                uiImages.logo,
+        body: Container(
+          color: uiColor.first,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(
+                height: 52,
+                child: Image.asset(
+                  uiImages.logo,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

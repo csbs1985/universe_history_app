@@ -2,13 +2,11 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
 import 'package:universe_history_app/components/call_create_component.dart';
 import 'package:universe_history_app/components/history_item_component.dart';
 import 'package:universe_history_app/components/menu_category_component.dart';
 import 'package:universe_history_app/shared/models/history.dart';
-import 'package:universe_history_app/theme/ui_colors.dart';
 import 'package:universe_history_app/theme/ui_images.dart';
 
 class HomePage extends StatelessWidget {
@@ -22,13 +20,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        systemNavigationBarColor: uiColor.second,
-        systemNavigationBarIconBrightness: Brightness.light,
-      ),
-    );
-
     return WillPopScope(
       onWillPop: () => exit(0),
       child: Scaffold(
@@ -67,7 +58,7 @@ class HomePage extends StatelessWidget {
                     height: 20,
                   ),
                   SizedBox(
-                    height: 145,
+                    height: 149,
                     child: CallCreate(),
                   ),
                   Flexible(

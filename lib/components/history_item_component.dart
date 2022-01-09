@@ -3,6 +3,7 @@
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/shared/models/history.dart';
 import 'package:universe_history_app/theme/ui_colors.dart';
 import 'package:universe_history_app/theme/ui_svgs.dart';
@@ -45,8 +46,8 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                     ExpandableText(
                       widget.allHistory[index].historyText,
                       style: uiTextStyle.text1,
-                      expandText: 'CONTINUAR LENDO',
-                      collapseText: 'FECHAR',
+                      expandText: 'continuar lendo',
+                      collapseText: 'fechar',
                       maxLines: 20,
                       linkColor: uiColor.first,
                     ),
@@ -70,8 +71,20 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                               icon: SvgPicture.asset(uiSvg.favorite),
                             ),
                             IconButton(
-                                onPressed: () {},
-                                icon: SvgPicture.asset(uiSvg.options))
+                              icon: SvgPicture.asset(uiSvg.options),
+                              onPressed: () => showCupertinoModalBottomSheet(
+                                expand: true,
+                                barrierColor: uiColor.second,
+                                context: context,
+                                backgroundColor: Colors.transparent,
+                                builder: (context) => SingleChildScrollView(
+                                  controller: ModalScrollController.of(context),
+                                  child: Container(
+                                    child: Text('data'),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         )
                       ],

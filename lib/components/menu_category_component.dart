@@ -13,7 +13,7 @@ class MenuCategories extends StatefulWidget {
 
 class _MenuCategoriesState extends State<MenuCategories> {
   List<Category> allCategories = Category.allCategories;
-  String isSelected = 'maisRecente';
+  String isSelected = 'recente';
 
   void _setSelected(String id) {
     setState(() {

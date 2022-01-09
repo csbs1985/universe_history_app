@@ -49,7 +49,7 @@ class _CheckboxCustonState extends State<CheckboxCuston> {
                     item.label,
                     style: _getSelected(item.id)
                         ? uiTextStyle.active
-                        : uiTextStyle.chip,
+                        : uiTextStyle.chips,
                   ),
                   onPressed: () => _setSelected(item.id),
                   style: _getSelected(item.id)

@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/theme/ui_button.dart';
-import 'package:universe_history_app/theme/ui_colors.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class CallCreate extends StatelessWidget {
@@ -15,7 +14,7 @@ class CallCreate extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Escreva sua historia, quem sabe alguém pode te ajudar.',
+            'Escreva sua história, quem sabe alguém pode te ajudar.',
             style: uiTextStyle.header1,
           ),
           const SizedBox(

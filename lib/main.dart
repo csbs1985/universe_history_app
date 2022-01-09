@@ -5,6 +5,7 @@ import 'package:universe_history_app/pages/home_page.dart';
 import 'package:universe_history_app/pages/splash_page.dart';
 import 'package:universe_history_app/theme/ui_colors.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:universe_history_app/theme/ui_theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,23 +28,8 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
       home: const SplashPage(),
-      theme: ThemeData(
-        scaffoldBackgroundColor: uiColor.second,
-        fontFamily: 'roboto',
-        appBarTheme: const AppBarTheme(
-          backgroundColor: uiColor.second,
-          elevation: 0,
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            primary: uiColor.first,
-            shape: const BeveledRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(5))),
-          ),
-        ),
-      ),
+      theme: ProjectTheme.theme1,
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/home':
@@ -53,7 +39,7 @@ class MyApp extends StatelessWidget {
                 settings: settings);
           case '/create':
             return PageTransition(
-                child: CreateHistory(),
+                child: const CreateHistory(),
                 type: PageTransitionType.bottomToTop,
                 settings: settings);
           default:

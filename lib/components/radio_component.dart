@@ -22,7 +22,7 @@ class _RadioCustonState extends State<RadioCuston> {
   List<String> listSelect = [];
 
   bool _filterList(String id) {
-    return id == 'maisRecente' || id == 'favoritas' ? false : true;
+    return id == 'recente' || id == 'favoritas' ? false : true;
   }
 
   void _setSelected(String id) {
@@ -58,7 +58,9 @@ class _RadioCustonState extends State<RadioCuston> {
                     onPressed: () => _setSelected(item.id),
                     child: Text(
                       item.label,
-                      style: uiTextStyle.text1,
+                      style: _getSelected(item.id)
+                          ? uiTextStyle.active
+                          : uiTextStyle.chips,
                     ),
                     style: _getSelected(item.id)
                         ? ButtonsTheme.active

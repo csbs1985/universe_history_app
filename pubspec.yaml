@@ -37,6 +37,7 @@ dependencies:
   flutter_svg: ^1.0.0
   expandable_text: ^2.2.0
   scroll_app_bar: ^2.0.0
+  modal_bottom_sheet: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -62,9 +63,6 @@ flutter:
     - assets/icons/
     - assets/images/
   fonts:
-    - family: roboto
+    - family: segoe
       fonts:
-        - asset: assets/fonts/RobotoSlab-Bold.ttf
-        - asset: assets/fonts/RobotoSlab-Light.ttf
-        - asset: assets/fonts/RobotoSlab-Medium.ttf
-        - asset: assets/fonts/RobotoSlab-Regular.ttf
+        - asset: assets/fonts/segoe-ui.ttf
