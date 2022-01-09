@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:universe_history_app/pages/create_history.dart';
+import 'package:universe_history_app/pages/create_history_page.dart';
 import 'package:universe_history_app/pages/home_page.dart';
+import 'package:universe_history_app/pages/notification_page.dart';
+import 'package:universe_history_app/pages/settings_page.dart';
 import 'package:universe_history_app/pages/splash_page.dart';
 import 'package:universe_history_app/theme/ui_colors.dart';
 import 'package:page_transition/page_transition.dart';
@@ -34,13 +36,23 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case '/home':
             return PageTransition(
-                child: HomePage(),
+                child: const HomePage(),
                 type: PageTransitionType.fade,
                 settings: settings);
           case '/create':
             return PageTransition(
                 child: const CreateHistory(),
                 type: PageTransitionType.bottomToTop,
+                settings: settings);
+          case '/settings':
+            return PageTransition(
+                child: const SettingsPage(),
+                type: PageTransitionType.topToBottom,
+                settings: settings);
+          case '/notification':
+            return PageTransition(
+                child: const NotificationPage(),
+                type: PageTransitionType.topToBottom,
                 settings: settings);
           default:
             return null;

@@ -3,6 +3,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
 import 'package:universe_history_app/components/call_create_component.dart';
 import 'package:universe_history_app/components/history_item_component.dart';
@@ -11,6 +12,7 @@ import 'package:universe_history_app/components/skeleton_history_item.dart';
 import 'package:universe_history_app/shared/models/history.dart';
 import 'package:universe_history_app/theme/ui_colors.dart';
 import 'package:universe_history_app/theme/ui_images.dart';
+import 'package:universe_history_app/theme/ui_svgs.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -59,7 +61,7 @@ class _HomePageState extends State<HomePage> {
           elevation: 0,
           titleSpacing: 10,
           title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               GestureDetector(
@@ -69,6 +71,22 @@ class _HomePageState extends State<HomePage> {
                   height: 28,
                 ),
               ),
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed("/notification");
+                    },
+                    icon: SvgPicture.asset(uiSvg.notification),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed("/settings");
+                    },
+                    icon: SvgPicture.asset(uiSvg.options),
+                  ),
+                ],
+              )
             ],
           ),
         ),
