@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, unused_field
 
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
@@ -23,75 +23,76 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: widget.allHistory.length,
-          itemBuilder: (BuildContext context, int index) => Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.allHistory[index].historyTitle,
-                      style: uiTextStyle.header1,
-                    ),
-                    Text(
-                      widget.allHistory[index].historyDate + ' - anonimo',
-                      style: uiTextStyle.text2,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ExpandableText(
-                      widget.allHistory[index].historyText,
-                      style: uiTextStyle.text1,
-                      expandText: 'continuar lendo',
-                      collapseText: 'fechar',
-                      maxLines: 20,
-                      linkColor: uiColor.first,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'comentários',
-                          style: uiTextStyle.text2,
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: widget.allHistory.length,
+        itemBuilder: (BuildContext context, int index) => Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                widget.allHistory[index].historyTitle,
+                style: uiTextStyle.header1,
+              ),
+              Text(
+                widget.allHistory[index].historyDate + ' - anonimo',
+                style: uiTextStyle.text2,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              ExpandableText(
+                widget.allHistory[index].historyText,
+                style: uiTextStyle.text1,
+                expandText: 'continuar lendo',
+                collapseText: 'fechar',
+                maxLines: 20,
+                linkColor: uiColor.first,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'comentários',
+                    style: uiTextStyle.text2,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      if (widget.allHistory[index].historyComment)
+                        IconButton(
+                            onPressed: () {},
+                            icon: SvgPicture.asset(uiSvg.comment)),
+                      IconButton(
+                        onPressed: () {},
+                        icon: SvgPicture.asset(uiSvg.favorite),
+                      ),
+                      IconButton(
+                        icon: SvgPicture.asset(uiSvg.options),
+                        onPressed: () => showCupertinoModalBottomSheet(
+                          expand: true,
+                          barrierColor: uiColor.second,
+                          context: context,
+                          backgroundColor: Colors.transparent,
+                          builder: (context) => SingleChildScrollView(
+                            controller: ModalScrollController.of(context),
+                            child: Container(
+                              child: Text('data'),
+                            ),
+                          ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            if (widget.allHistory[index].historyComment)
-                              IconButton(
-                                  onPressed: () {},
-                                  icon: SvgPicture.asset(uiSvg.comment)),
-                            IconButton(
-                              onPressed: () {},
-                              icon: SvgPicture.asset(uiSvg.favorite),
-                            ),
-                            IconButton(
-                              icon: SvgPicture.asset(uiSvg.options),
-                              onPressed: () => showCupertinoModalBottomSheet(
-                                expand: true,
-                                barrierColor: uiColor.second,
-                                context: context,
-                                backgroundColor: Colors.transparent,
-                                builder: (context) => SingleChildScrollView(
-                                  controller: ModalScrollController.of(context),
-                                  child: Container(
-                                    child: Text('data'),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              )),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

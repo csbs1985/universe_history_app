@@ -23,7 +23,7 @@ class uiTextStyle {
   );
 
   static const TextStyle text2 = TextStyle(
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: FontWeight.w400,
     color: uiColor.comp_2,
   );

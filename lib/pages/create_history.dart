@@ -9,7 +9,6 @@ import 'package:universe_history_app/shared/models/checkbox.dart';
 import 'package:universe_history_app/theme/ui_colors.dart';
 import 'package:universe_history_app/theme/ui_svgs.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
-import 'package:flutter/services.dart';
 
 class CreateHistory extends StatefulWidget {
   const CreateHistory({Key? key}) : super(key: key);
