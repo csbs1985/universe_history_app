@@ -8,7 +8,7 @@ import 'package:universe_history_app/theme/ui_text_style.dart';
 class CheckboxCuston extends StatefulWidget {
   const CheckboxCuston(this.title, this.content);
   final String title;
-  final List<CheckboxModel> content;
+  final List<Checkbox> content;
 
   @override
   _CheckboxCustonState createState() => _CheckboxCustonState();

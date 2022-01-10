@@ -1,6 +1,7 @@
-// ignore_for_file: unnecessary_new, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, use_key_in_widget_constructors, must_be_immutable
+// ignore_for_file: unnecessary_new, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, use_key_in_widget_constructors, must_be_immutable, prefer_final_fields
 
 import 'dart:io';
+import 'package:circle_button/circle_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,9 +24,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _scrollController = ScrollController();
-  List<HistoryModel> allHistory = HistoryModel.allHistory;
+  List<History> allHistory = History.allHistory;
 
   bool _isLoading = true;
+  bool _notification = true;
 
   @override
   void initState() {
@@ -73,12 +75,17 @@ class _HomePageState extends State<HomePage> {
               ),
               Row(
                 children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed("/notification");
-                    },
-                    icon: SvgPicture.asset(uiSvg.notification),
-                  ),
+                  CircleButton(
+                      onTap: () {
+                        Navigator.of(context).pushNamed("/notification");
+                      },
+                      width: 36,
+                      height: 36,
+                      child: SvgPicture.asset(uiSvg.notification),
+                      borderWidth: 0,
+                      borderColor: Colors.transparent,
+                      backgroundColor:
+                          _notification ? uiColor.comp_1 : uiColor.second),
                   IconButton(
                     onPressed: () {
                       Navigator.of(context).pushNamed("/settings");

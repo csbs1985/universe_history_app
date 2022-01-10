@@ -1,21 +1,21 @@
 // ignore_for_file: unnecessary_new
 
-class CheckboxModel {
+class Checkbox {
   final int id;
   final String label;
 
-  CheckboxModel({
+  Checkbox({
     required this.id,
     required this.label,
   });
 
-  static List<CheckboxModel> allPrivacy = [
-    new CheckboxModel(id: 0, label: "Assinar história como anonimo"),
-    new CheckboxModel(id: 1, label: "Assinar história com seu nome de usuário"),
+  static List<Checkbox> allPrivacy = [
+    new Checkbox(id: 0, label: "assinar história como anonimo"),
+    new Checkbox(id: 1, label: "assinar história com seu nome de usuário"),
   ];
 
-  static List<CheckboxModel> allComment = [
-    new CheckboxModel(id: 0, label: "Habilitar comentários na história"),
-    new CheckboxModel(id: 1, label: "Desabilitar comentários na história"),
+  static List<Checkbox> allComment = [
+    new Checkbox(id: 0, label: "habilitar comentários na história"),
+    new Checkbox(id: 1, label: "desabilitar comentários na história"),
   ];
 }

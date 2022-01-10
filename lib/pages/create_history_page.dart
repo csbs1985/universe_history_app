@@ -22,8 +22,8 @@ class _CreateHistoryState extends State<CreateHistory> {
 
   List<Category> allCategories = Category.allCategories;
   List<Category> categoriesSelected = [];
-  List<CheckboxModel> allPrivacy = CheckboxModel.allPrivacy;
-  List<CheckboxModel> allComment = CheckboxModel.allComment;
+  List<Checkbox> allPrivacy = Checkbox.allPrivacy;
+  List<Checkbox> allComment = Checkbox.allComment;
 
   TextEditingController titleController = TextEditingController();
   TextEditingController textController = TextEditingController();
@@ -31,15 +31,15 @@ class _CreateHistoryState extends State<CreateHistory> {
 
   void _setHistory() {
     // _newHistory = {
-    //   historyId: "",
-    //   historyTitle: titleController.text,
-    //   historyText: textController.text,
-    //   historyDate: "",
-    //   historyComment: "",
-    //   historyAnonymous: "",
-    //   historyEdit: "",
-    //   historyDelete: "",
-    //   userId: "",
+    //   id: "",
+    //   title: titleController.text,
+    //   text: textController.text,
+    //   date: "",
+    //   isComment: "",
+    //   isAnonymous: "",
+    //   edit: "",
+    //   delete: "",
+    //   id: "",
     //   categories: [],
     // };
     print(titleController.text);

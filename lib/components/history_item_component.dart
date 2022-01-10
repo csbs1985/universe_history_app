@@ -12,7 +12,7 @@ import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class HistoryItemComponent extends StatefulWidget {
   const HistoryItemComponent(this.allHistory);
-  final List<HistoryModel> allHistory;
+  final List<History> allHistory;
 
   @override
   _HistoryItemComponentState createState() => _HistoryItemComponentState();
@@ -34,18 +34,18 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                widget.allHistory[index].historyTitle,
+                widget.allHistory[index].title,
                 style: uiTextStyle.header1,
               ),
               Text(
-                widget.allHistory[index].historyDate + ' - anonimo',
+                widget.allHistory[index].date + ' - anonimo',
                 style: uiTextStyle.text2,
               ),
               const SizedBox(
                 height: 10,
               ),
               ExpandableText(
-                widget.allHistory[index].historyText,
+                widget.allHistory[index].text,
                 style: uiTextStyle.text1,
                 expandText: 'continuar lendo',
                 collapseText: 'fechar',
@@ -63,7 +63,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      if (widget.allHistory[index].historyComment)
+                      if (widget.allHistory[index].isComment)
                         IconButton(
                             onPressed: () {},
                             icon: SvgPicture.asset(uiSvg.comment)),
