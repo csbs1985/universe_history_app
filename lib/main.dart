@@ -6,8 +6,8 @@ import 'package:universe_history_app/pages/notification_page.dart';
 import 'package:universe_history_app/pages/settings_page.dart';
 import 'package:universe_history_app/pages/splash_page.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:universe_history_app/theme/ui_theme.dart';
+import 'package:page_transition/page_transition.dart';
 
 void main() {
   runApp(const MyApp());
