@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
 import 'package:universe_history_app/components/call_create_component.dart';
 import 'package:universe_history_app/components/history_item_component.dart';
+import 'package:universe_history_app/components/login_component.dart';
 import 'package:universe_history_app/components/menu_category_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
@@ -28,10 +29,11 @@ class _HomePageState extends State<HomePage> {
 
   bool _isLoading = true;
   bool _notification = true;
+  bool _login = false;
 
   @override
   void initState() {
-    Future.delayed(const Duration(milliseconds: 300), () {
+    Future.delayed(const Duration(milliseconds: 600), () {
       setState(() => _isLoading = false);
     });
     super.initState();
@@ -116,11 +118,11 @@ class _HomePageState extends State<HomePage> {
                           child: MenuCategoryComponent(),
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 10,
                         ),
-                        SizedBox(
-                          height: 149,
-                          child: CallCreateComponent(),
+                        Container(
+                          child:
+                              _login ? CallCreateComponent() : LoginComponent(),
                         ),
                         Flexible(
                           child: HistoryItemComponent(allHistory),

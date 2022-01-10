@@ -5,7 +5,7 @@ import 'package:universe_history_app/theme/ui_button.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
-class CallCreateComponent extends StatelessWidget {
+class LoginComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -20,14 +20,14 @@ class CallCreateComponent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Escreva sua história, quem sabe alguém pode te ajudar',
+                'Você não se identificou ainda para escrever histórias e comentarios',
                 style: uiTextStyle.header1,
               ),
               const SizedBox(
                 height: 10,
               ),
               const Text(
-                'Todos nós temos uma história pra contar',
+                'Entre ou crie sua conta',
                 style: uiTextStyle.text1,
               ),
               const SizedBox(
@@ -35,12 +35,10 @@ class CallCreateComponent extends StatelessWidget {
               ),
               TextButton(
                 child: const Text(
-                  'escrever',
+                  'entrar',
                   style: uiTextStyle.button1,
                 ),
-                onPressed: () {
-                  Navigator.of(context).pushNamed("/create");
-                },
+                onPressed: () {},
                 style: uiButton.button1,
               ),
             ],

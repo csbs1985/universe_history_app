@@ -60,7 +60,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
         physics: NeverScrollableScrollPhysics(),
         itemCount: widget.allHistory.length,
         itemBuilder: (BuildContext context, int index) => Padding(
-          padding: const EdgeInsets.only(top: 20),
+          padding: const EdgeInsets.only(top: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -89,12 +89,9 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   !widget.allHistory[index].isComment
-                      ? Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Text(
-                            'comentários desabilitados',
-                            style: uiTextStyle.text2,
-                          ),
+                      ? Text(
+                          'comentários desabilitados',
+                          style: uiTextStyle.text2,
                         )
                       : TextButton(
                           child: Text(
