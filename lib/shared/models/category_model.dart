@@ -12,8 +12,8 @@ class CategoryModel {
   });
 
   static List<CategoryModel> allCategories = [
-    new CategoryModel(id: 'minhas', label: 'minhas', disabled: false),
     new CategoryModel(id: 'todas', label: 'todas', disabled: false),
+    new CategoryModel(id: 'minhas', label: 'minhas', disabled: false),
     new CategoryModel(id: 'favoritas', label: 'favoritas', disabled: false),
     new CategoryModel(id: 'animais', label: 'animais', disabled: false),
     new CategoryModel(id: 'astrologia', label: 'astrologia', disabled: false),

@@ -67,7 +67,7 @@ class HistoryModel {
       delete: false,
       isAnonymous: false,
       user: 'fbjfbdj01',
-      qtdComment: 1,
+      qtdComment: 23,
       categories: ['fbjfbdj01', 'gfsdgdg02'],
     ),
     new HistoryModel(
