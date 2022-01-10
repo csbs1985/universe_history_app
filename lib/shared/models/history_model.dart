@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, unnecessary_new
 
-class History {
+class HistoryModel {
   final String id;
   final String title;
   final String text;
@@ -13,7 +13,7 @@ class History {
   final int quantity;
   final List<String> categories;
 
-  History({
+  HistoryModel({
     required this.id,
     required this.title,
     required this.text,
@@ -27,8 +27,8 @@ class History {
     required this.categories,
   });
 
-  static List<History> allHistory = [
-    new History(
+  static List<HistoryModel> allHistory = [
+    new HistoryModel(
       id: 'bvjbsbvsu01',
       title: 'Quando penso no que fiz',
       text:
@@ -42,7 +42,7 @@ class History {
       quantity: 1,
       categories: ['fbjfbdj01', 'gfsdgdg02'],
     ),
-    new History(
+    new HistoryModel(
       id: 'bvjbsbvsu01',
       title: 'O dia em que quase morri por três vezes',
       text:
@@ -56,7 +56,7 @@ class History {
       quantity: 1,
       categories: ['fbjfbdj01', 'gfsdgdg02'],
     ),
-    new History(
+    new HistoryModel(
       id: 'bvjbsbvsu01',
       title: 'Quando penso no que fiz',
       text:
@@ -70,7 +70,7 @@ class History {
       quantity: 1,
       categories: ['fbjfbdj01', 'gfsdgdg02'],
     ),
-    new History(
+    new HistoryModel(
       id: 'bvjbsbvsu01',
       title: 'O dia em que quase morri por três vezes',
       text:

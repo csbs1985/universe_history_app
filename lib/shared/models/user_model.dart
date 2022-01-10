@@ -1,13 +1,13 @@
 // ignore_for_file: unnecessary_new
 
-class User {
+class UserModel {
   final String id;
   final String name;
   final String nickname;
   final String dateRegister;
   final bool disabled;
 
-  User({
+  UserModel({
     required this.id,
     required this.name,
     required this.nickname,
@@ -15,8 +15,8 @@ class User {
     required this.disabled,
   });
 
-  static Set<User> user = {
-    new User(
+  static Set<UserModel> user = {
+    new UserModel(
         id: 'charlesSantos',
         name: 'Charles Santos',
         nickname: 'charles.sbs',

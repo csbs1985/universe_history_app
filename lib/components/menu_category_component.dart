@@ -1,18 +1,18 @@
 // // ignore_for_file: use_key_in_widget_constructors, must_be_immutable, avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:universe_history_app/shared/models/category.dart';
+import 'package:universe_history_app/shared/models/category_model.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
-class MenuCategories extends StatefulWidget {
-  const MenuCategories({Key? key}) : super(key: key);
+class MenuCategoryComponent extends StatefulWidget {
+  const MenuCategoryComponent({Key? key}) : super(key: key);
 
   @override
   _MenuCategoriesState createState() => _MenuCategoriesState();
 }
 
-class _MenuCategoriesState extends State<MenuCategories> {
-  List<Category> allCategories = Category.allCategories;
+class _MenuCategoriesState extends State<MenuCategoryComponent> {
+  List<CategoryModel> allCategories = CategoryModel.allCategories;
   String isSelected = 'todas';
 
   void _setSelected(String id) {

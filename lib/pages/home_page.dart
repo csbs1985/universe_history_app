@@ -9,11 +9,11 @@ import 'package:scroll_app_bar/scroll_app_bar.dart';
 import 'package:universe_history_app/components/call_create_component.dart';
 import 'package:universe_history_app/components/history_item_component.dart';
 import 'package:universe_history_app/components/menu_category_component.dart';
-import 'package:universe_history_app/components/skeleton_history_item.dart';
-import 'package:universe_history_app/shared/models/history.dart';
-import 'package:universe_history_app/theme/ui_colors.dart';
-import 'package:universe_history_app/theme/ui_images.dart';
-import 'package:universe_history_app/theme/ui_svgs.dart';
+import 'package:universe_history_app/components/skeleton_history_item_component.dart';
+import 'package:universe_history_app/shared/models/history_model.dart';
+import 'package:universe_history_app/theme/ui_color.dart';
+import 'package:universe_history_app/theme/ui_image.dart';
+import 'package:universe_history_app/theme/ui_svg.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,7 +24,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _scrollController = ScrollController();
-  List<History> allHistory = History.allHistory;
+  List<HistoryModel> allHistory = HistoryModel.allHistory;
 
   bool _isLoading = true;
   bool _notification = true;
@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
               GestureDetector(
                 onTap: _scrollToTop,
                 child: Image.asset(
-                  uiImages.logo,
+                  uiImage.logo,
                   height: 28,
                 ),
               ),
@@ -101,7 +101,9 @@ class _HomePageState extends State<HomePage> {
           controller: _scrollController.appBar,
           child: _isLoading
               ? Column(
-                  children: [for (var i = 0; i < 3; i++) SkeletonHistoryItem()],
+                  children: [
+                    for (var i = 0; i < 3; i++) SkeletonHistoryItemComponent()
+                  ],
                 )
               : Container(
                   child: SingleChildScrollView(
@@ -111,14 +113,14 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         SizedBox(
                           height: 36,
-                          child: MenuCategories(),
+                          child: MenuCategoryComponent(),
                         ),
                         SizedBox(
                           height: 20,
                         ),
                         SizedBox(
                           height: 149,
-                          child: CallCreate(),
+                          child: CallCreateComponent(),
                         ),
                         Flexible(
                           child: HistoryItemComponent(allHistory),

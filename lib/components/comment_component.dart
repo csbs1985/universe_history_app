@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:universe_history_app/components/comment_empty_component.dart';
 
-class Comment extends StatefulWidget {
-  const Comment({Key? key}) : super(key: key);
+class CommentComponent extends StatefulWidget {
+  const CommentComponent({Key? key}) : super(key: key);
 
   @override
   _CommentState createState() => _CommentState();
 }
 
-class _CommentState extends State<Comment> {
+class _CommentState extends State<CommentComponent> {
   bool _comments = false;
 
   @override

@@ -5,7 +5,7 @@ import 'package:universe_history_app/pages/home_page.dart';
 import 'package:universe_history_app/pages/notification_page.dart';
 import 'package:universe_history_app/pages/settings_page.dart';
 import 'package:universe_history_app/pages/splash_page.dart';
-import 'package:universe_history_app/theme/ui_colors.dart';
+import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:universe_history_app/theme/ui_theme.dart';
 
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const SplashPage(),
-      theme: ProjectTheme.theme1,
+      theme: uiTheme.theme1,
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/home':

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:universe_history_app/theme/ui_button.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
-class CallCreate extends StatelessWidget {
+class CallCreateComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -35,7 +35,7 @@ class CallCreate extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).pushNamed("/create");
             },
-            style: ButtonsTheme.button1,
+            style: uiButton.button1,
           ),
         ],
       ),

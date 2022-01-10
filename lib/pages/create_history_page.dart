@@ -2,12 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:universe_history_app/components/checkbox_component.dart';
 import 'package:universe_history_app/components/radio_component.dart';
-import 'package:universe_history_app/shared/models/category.dart';
-import 'package:universe_history_app/shared/models/checkbox.dart';
-import 'package:universe_history_app/theme/ui_colors.dart';
-import 'package:universe_history_app/theme/ui_svgs.dart';
+import 'package:universe_history_app/components/select_component.dart';
+import 'package:universe_history_app/shared/models/category_model.dart';
+import 'package:universe_history_app/shared/models/select_modal.dart';
+import 'package:universe_history_app/theme/ui_color.dart';
+import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class CreateHistory extends StatefulWidget {
@@ -20,14 +20,14 @@ class CreateHistory extends StatefulWidget {
 class _CreateHistoryState extends State<CreateHistory> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
-  List<Category> allCategories = Category.allCategories;
-  List<Category> categoriesSelected = [];
-  List<Checkbox> allPrivacy = Checkbox.allPrivacy;
-  List<Checkbox> allComment = Checkbox.allComment;
+  List<CategoryModel> allCategories = CategoryModel.allCategories;
+  List<CategoryModel> categoriesSelected = [];
+  List<SelectModel> allPrivacy = SelectModel.allPrivacy;
+  List<SelectModel> allComment = SelectModel.allComment;
 
   TextEditingController titleController = TextEditingController();
   TextEditingController textController = TextEditingController();
-  // late History _newHistory;
+  // late HistoryModel _newHistory;
 
   void _setHistory() {
     // _newHistory = {
@@ -113,15 +113,15 @@ class _CreateHistoryState extends State<CreateHistory> {
                   ),
                 ),
               ),
-              CheckboxCuston(
+              SelectComponent(
                 'Privacidade',
                 allPrivacy,
               ),
-              CheckboxCuston(
+              SelectComponent(
                 'Habilitar comentários',
                 allComment,
               ),
-              RadioCuston('Categorias', allCategories),
+              RadioComponent('Categorias', allCategories),
             ],
           ),
         ),

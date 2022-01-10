@@ -1,20 +1,20 @@
-// ignore_for_file: use_key_in_widget_constructors, avoid_print
+// ignore_for_file: use_key_in_widget_constructors, avoid_print, unused_import
 
 import 'package:flutter/material.dart';
-import 'package:universe_history_app/shared/models/checkbox.dart';
+import 'package:universe_history_app/shared/models/select_modal.dart';
 import 'package:universe_history_app/theme/ui_button.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
-class CheckboxCuston extends StatefulWidget {
-  const CheckboxCuston(this.title, this.content);
+class SelectComponent extends StatefulWidget {
+  const SelectComponent(this.title, this.content);
   final String title;
-  final List<Checkbox> content;
+  final List<SelectModel> content;
 
   @override
-  _CheckboxCustonState createState() => _CheckboxCustonState();
+  _SelectCustonState createState() => _SelectCustonState();
 }
 
-class _CheckboxCustonState extends State<CheckboxCuston> {
+class _SelectCustonState extends State<SelectComponent> {
   int isSelected = 0;
 
   void _setSelected(int id) {
@@ -52,9 +52,8 @@ class _CheckboxCustonState extends State<CheckboxCuston> {
                         : uiTextStyle.chips,
                   ),
                   onPressed: () => _setSelected(item.id),
-                  style: _getSelected(item.id)
-                      ? ButtonsTheme.active
-                      : ButtonsTheme.chips),
+                  style:
+                      _getSelected(item.id) ? uiButton.active : uiButton.chips),
           ],
         ),
         const SizedBox(

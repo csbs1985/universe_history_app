@@ -2,10 +2,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:skeleton_animation/skeleton_animation.dart';
-import 'package:universe_history_app/theme/ui_colors.dart';
+import 'package:universe_history_app/theme/ui_color.dart';
 
-class SkeletonHistoryItem extends StatelessWidget {
-  const SkeletonHistoryItem({Key? key}) : super(key: key);
+class SkeletonHistoryItemComponent extends StatelessWidget {
+  const SkeletonHistoryItemComponent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

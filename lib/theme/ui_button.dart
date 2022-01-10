@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:universe_history_app/theme/ui_colors.dart';
+import 'package:universe_history_app/theme/ui_color.dart';
 
-class ButtonsTheme {
+class uiButton {
   static ButtonStyle button1 = ButtonStyle(
     padding: MaterialStateProperty.all<EdgeInsets>(
         const EdgeInsets.fromLTRB(20, 8, 20, 10)),

@@ -5,20 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/comment_component.dart';
-import 'package:universe_history_app/shared/models/history.dart';
-import 'package:universe_history_app/theme/ui_colors.dart';
-import 'package:universe_history_app/theme/ui_svgs.dart';
+import 'package:universe_history_app/shared/models/history_model.dart';
+import 'package:universe_history_app/theme/ui_color.dart';
+import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class HistoryItemComponent extends StatefulWidget {
   const HistoryItemComponent(this.allHistory);
-  final List<History> allHistory;
+  final List<HistoryModel> allHistory;
 
   @override
-  _HistoryItemComponentState createState() => _HistoryItemComponentState();
+  _HistoryItemState createState() => _HistoryItemState();
 }
 
-class _HistoryItemComponentState extends State<HistoryItemComponent> {
+class _HistoryItemState extends State<HistoryItemComponent> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -80,7 +80,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                           backgroundColor: uiColor.second,
                           builder: (context) => SingleChildScrollView(
                             controller: ModalScrollController.of(context),
-                            child: Comment(),
+                            child: CommentComponent(),
                           ),
                         ),
                       ),

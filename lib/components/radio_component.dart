@@ -1,24 +1,24 @@
 // ignore_for_file: use_key_in_widget_constructors, iterable_contains_unrelated_type
 
 import 'package:flutter/material.dart';
-import 'package:universe_history_app/shared/models/category.dart';
+import 'package:universe_history_app/shared/models/category_model.dart';
 import 'package:universe_history_app/theme/ui_button.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
-class RadioCuston extends StatefulWidget {
-  const RadioCuston(
+class RadioComponent extends StatefulWidget {
+  const RadioComponent(
     this.title,
     this.content,
   );
 
   final String title;
-  final List<Category> content;
+  final List<CategoryModel> content;
 
   @override
   _RadioCustonState createState() => _RadioCustonState();
 }
 
-class _RadioCustonState extends State<RadioCuston> {
+class _RadioCustonState extends State<RadioComponent> {
   List<String> listSelect = [];
 
   bool _filterList(String id) {
@@ -63,8 +63,8 @@ class _RadioCustonState extends State<RadioCuston> {
                           : uiTextStyle.chips,
                     ),
                     style: _getSelected(item.id)
-                        ? ButtonsTheme.active
-                        : ButtonsTheme.chips,
+                        ? uiButton.active
+                        : uiButton.chips,
                   ),
                 ),
           ],

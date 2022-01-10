@@ -3,8 +3,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:universe_history_app/theme/ui_colors.dart';
-import 'package:universe_history_app/theme/ui_images.dart';
+import 'package:universe_history_app/theme/ui_color.dart';
+import 'package:universe_history_app/theme/ui_image.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -38,7 +38,7 @@ class _SplashPageState extends State<SplashPage> {
               SizedBox(
                 height: 52,
                 child: Image.asset(
-                  uiImages.logo,
+                  uiImage.logo,
                 ),
               ),
             ],

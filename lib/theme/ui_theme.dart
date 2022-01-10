@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:universe_history_app/theme/ui_colors.dart';
+// ignore_for_file: camel_case_types
 
-class ProjectTheme {
+import 'package:flutter/material.dart';
+import 'package:universe_history_app/theme/ui_color.dart';
+
+class uiTheme {
   static ThemeData theme1 = ThemeData(
     scaffoldBackgroundColor: uiColor.second,
     fontFamily: 'segoe',
