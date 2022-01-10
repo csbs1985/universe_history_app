@@ -1,10 +1,11 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, unused_field
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, unused_field, iterable_contains_unrelated_type, list_remove_unrelated_type, no_logic_in_create_state, unnecessary_new
 
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/comment_component.dart';
+import 'package:universe_history_app/shared/models/favorite_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
@@ -15,10 +16,41 @@ class HistoryItemComponent extends StatefulWidget {
   final List<HistoryModel> allHistory;
 
   @override
-  _HistoryItemState createState() => _HistoryItemState();
+  _HistoryItemState createState() => _HistoryItemState(allHistory);
 }
 
 class _HistoryItemState extends State<HistoryItemComponent> {
+  _HistoryItemState(this.allHistory);
+  final List<HistoryModel> allHistory;
+  List<FavoriteModel> allFavorite = FavoriteModel.allFavorite;
+
+  void showModal(String id) {
+    showMaterialModalBottomSheet(
+      expand: true,
+      barrierColor: Colors.white10,
+      context: context,
+      backgroundColor: uiColor.second,
+      builder: (context) => SingleChildScrollView(
+        controller: ModalScrollController.of(context),
+        child: CommentComponent(id),
+      ),
+    );
+  }
+
+  void _setFavorited(String id) {
+    const user = 'charlesSantos';
+    FavoriteModel favorite =
+        new FavoriteModel(id: '4', history: id, user: user);
+
+    allFavorite.contains(id)
+        ? allFavorite.remove(id)
+        : allFavorite.add(favorite);
+  }
+
+  bool _getFavorited(String id) {
+    return allHistory.contains(id) ? true : false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -57,47 +89,42 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   !widget.allHistory[index].isComment
-                      ? Text(
-                          'comentários desabilitados',
-                          style: uiTextStyle.text2,
+                      ? Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Text(
+                            'comentários desabilitados',
+                            style: uiTextStyle.text2,
+                          ),
                         )
                       : TextButton(
                           child: Text(
-                            widget.allHistory[index].qtdComment > 1
-                                ? widget.allHistory[index].qtdComment
-                                        .toString() +
-                                    ' comentários'
-                                : widget.allHistory[index].qtdComment
-                                        .toString() +
-                                    ' comentário',
+                            widget.allHistory[index].qtdComment.toString() +
+                                (widget.allHistory[index].qtdComment > 1
+                                    ? ' comentários'
+                                    : ' comentário'),
                             style: uiTextStyle.text2,
                           ),
-                          onPressed:
-                              widget.allHistory[index].isComment ? () {} : null,
+                          onPressed: () =>
+                              showModal(widget.allHistory[index].id),
                         ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       if (widget.allHistory[index].isComment)
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () =>
+                                showModal(widget.allHistory[index].id),
                             icon: SvgPicture.asset(uiSvg.comment)),
                       IconButton(
-                        onPressed: () {},
-                        icon: SvgPicture.asset(uiSvg.favorite),
+                        onPressed: () =>
+                            _setFavorited(widget.allHistory[index].id),
+                        icon: _getFavorited(widget.allHistory[index].id)
+                            ? SvgPicture.asset(uiSvg.favorited)
+                            : SvgPicture.asset(uiSvg.favorite),
                       ),
                       IconButton(
                         icon: SvgPicture.asset(uiSvg.options),
-                        onPressed: () => showMaterialModalBottomSheet(
-                          expand: true,
-                          barrierColor: Colors.white10,
-                          context: context,
-                          backgroundColor: uiColor.second,
-                          builder: (context) => SingleChildScrollView(
-                            controller: ModalScrollController.of(context),
-                            child: CommentComponent(),
-                          ),
-                        ),
+                        onPressed: () {},
                       ),
                     ],
                   )
