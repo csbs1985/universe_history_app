@@ -10,7 +10,7 @@ class HistoryModel {
   final bool edit;
   final bool delete;
   final String user;
-  final int quantity;
+  final int qtdComment;
   final List<String> categories;
 
   HistoryModel({
@@ -23,7 +23,7 @@ class HistoryModel {
     required this.edit,
     required this.delete,
     required this.user,
-    required this.quantity,
+    required this.qtdComment,
     required this.categories,
   });
 
@@ -39,7 +39,7 @@ class HistoryModel {
       delete: false,
       isAnonymous: false,
       user: 'fbjfbdj01',
-      quantity: 1,
+      qtdComment: 1,
       categories: ['fbjfbdj01', 'gfsdgdg02'],
     ),
     new HistoryModel(
@@ -53,7 +53,7 @@ class HistoryModel {
       delete: false,
       isAnonymous: true,
       user: 'fbjfbdj01',
-      quantity: 1,
+      qtdComment: 1,
       categories: ['fbjfbdj01', 'gfsdgdg02'],
     ),
     new HistoryModel(
@@ -67,7 +67,7 @@ class HistoryModel {
       delete: false,
       isAnonymous: false,
       user: 'fbjfbdj01',
-      quantity: 1,
+      qtdComment: 1,
       categories: ['fbjfbdj01', 'gfsdgdg02'],
     ),
     new HistoryModel(
@@ -81,7 +81,7 @@ class HistoryModel {
       delete: false,
       isAnonymous: true,
       user: 'fbjfbdj01',
-      quantity: 1,
+      qtdComment: 1,
       categories: ['fbjfbdj01', 'gfsdgdg02'],
     ),
   ];

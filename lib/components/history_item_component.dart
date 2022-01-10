@@ -56,9 +56,16 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'comentários',
-                    style: uiTextStyle.text2,
+                  TextButton(
+                    child: Text(
+                      widget.allHistory[index].isComment
+                          ? widget.allHistory[index].qtdComment.toString() +
+                              ' comentários'
+                          : 'comentários desabilitados',
+                      style: uiTextStyle.text2,
+                    ),
+                    onPressed:
+                        widget.allHistory[index].isComment ? () {} : null,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
