@@ -1,6 +1,7 @@
 // ignore_for_file: camel_case_types
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 
 class uiTextStyle {
@@ -34,6 +35,12 @@ class uiTextStyle {
     color: uiColor.first,
   );
 
+  static const TextStyle text4 = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: uiColor.third,
+  );
+
   static const TextStyle button1 = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w400,
@@ -44,6 +51,12 @@ class uiTextStyle {
     fontSize: 20,
     fontWeight: FontWeight.w400,
     color: uiColor.first,
+  );
+
+  static const TextStyle ButtonDisabled = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+    color: Colors.transparent,
   );
 
   static const TextStyle chips = TextStyle(

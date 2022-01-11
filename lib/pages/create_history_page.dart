@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:universe_history_app/components/button_disabled.component.dart';
 import 'package:universe_history_app/components/radio_component.dart';
 import 'package:universe_history_app/components/select_component.dart';
 import 'package:universe_history_app/shared/models/category_model.dart';
@@ -28,6 +29,8 @@ class _CreateHistoryState extends State<CreateHistory> {
   TextEditingController titleController = TextEditingController();
   TextEditingController textController = TextEditingController();
   // late HistoryModel _newHistory;
+  final String buttonText = 'publicar';
+  bool _isHistory = false;
 
   void _setHistory() {
     // _newHistory = {
@@ -57,16 +60,17 @@ class _CreateHistoryState extends State<CreateHistory> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 10),
-            child: TextButton(
-              onPressed: () {
-                _setHistory;
-                Navigator.of(context).pop();
-              },
-              child: const Text(
-                'publicar',
-                style: uiTextStyle.button2,
-              ),
-            ),
+            child: !_isHistory
+                ? ButtonDisabledComponent(buttonText)
+                : TextButton(
+                    child: Text(
+                      buttonText,
+                      style: uiTextStyle.button2,
+                    ),
+                    onPressed: () {
+                      _setHistory;
+                      Navigator.of(context).pop();
+                    }),
           ),
         ],
       ),

@@ -3,7 +3,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/comment_empty_component.dart';
-import 'package:universe_history_app/components/input_comment_component.dart';
 
 class CommentComponent extends StatefulWidget {
   const CommentComponent(this.id);
@@ -31,7 +30,6 @@ class _CommentState extends State<CommentComponent> {
       child: ListView(
         children: const [
           CommentEmpty(),
-          InputCommentComponent(),
         ],
       ),
     );

@@ -1,8 +1,9 @@
-// ignore_for_file: avoid_unnecessary_containers
+// ignore_for_file: avoid_unnecessary_containers, dead_code, use_key_in_widget_constructors
 
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:universe_history_app/components/comment_component.dart';
 import 'package:universe_history_app/components/comment_empty_component.dart';
 import 'package:universe_history_app/components/input_comment_component.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
@@ -23,6 +24,7 @@ class ModalCommentComponent extends StatefulWidget {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
+        systemNavigationBarColor: uiColor.comp_1,
       ),
     );
 
@@ -45,8 +47,13 @@ class ModalCommentComponent extends StatefulWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Expanded(
-                    child: CommentEmpty(),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                      child: _comments
+                          ? CommentComponent(id)
+                          : const CommentEmpty(),
+                    ),
                   ),
                   InputCommentComponent(openKeyboard),
                 ],
