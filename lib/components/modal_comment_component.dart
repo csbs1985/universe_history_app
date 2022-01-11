@@ -17,7 +17,7 @@ class ModalCommentComponent extends StatefulWidget {
   _ModalCommentComponentState createState() => _ModalCommentComponentState();
 
   static showModal(BuildContext context, String id, bool openKeyboard) {
-    bool _comments = false;
+    bool _comments = true;
 
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(

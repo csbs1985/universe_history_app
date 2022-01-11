@@ -1,8 +1,7 @@
-// ignore_for_file: no_logic_in_create_state, prefer_final_fields
+// ignore_for_file: no_logic_in_create_state, prefer_final_fields, use_key_in_widget_constructors
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:universe_history_app/components/comment_empty_component.dart';
 
 class CommentComponent extends StatefulWidget {
   const CommentComponent(this.id);
@@ -19,19 +18,9 @@ class _CommentState extends State<CommentComponent> {
   final String id;
 
   @override
-  void initState() {
-    super.initState();
-    print('idHistory: ' + id);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: ListView(
-        children: const [
-          CommentEmpty(),
-        ],
-      ),
+    return Column(
+      children: const [Text('data')],
     );
   }
 }
