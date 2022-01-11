@@ -75,10 +75,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   !widget.allHistory[index].isComment
-                      ? Text(
-                          'comentários desabilitados',
-                          style: uiTextStyle.text2,
-                        )
+                      ? SizedBox()
                       : TextButton(
                           child: Text(
                             widget.allHistory[index].qtdComment.toString() +

@@ -27,7 +27,7 @@ class CommentEmpty extends StatelessWidget {
             height: 10,
           ),
           const Text(
-            'Suas palavras podem ajudar e confortar alguém.',
+            'Suas palavras podem ajudar a confortar alguém.',
             style: uiTextStyle.text2,
           ),
         ],

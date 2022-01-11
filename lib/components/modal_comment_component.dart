@@ -17,8 +17,6 @@ class ModalCommentComponent extends StatefulWidget {
   _ModalCommentComponentState createState() => _ModalCommentComponentState();
 
   static showModal(BuildContext context, String id, bool openKeyboard) {
-    double size = MediaQueryData.fromWindow(window).padding.top.toDouble();
-
     bool _comments = false;
 
     SystemChrome.setSystemUIOverlayStyle(
@@ -35,7 +33,8 @@ class ModalCommentComponent extends StatefulWidget {
         backgroundColor: Colors.transparent,
         builder: (BuildContext context) {
           return Padding(
-            padding: EdgeInsets.only(top: size),
+            padding: EdgeInsets.only(
+                top: MediaQueryData.fromWindow(window).padding.top),
             child: Container(
               decoration: const BoxDecoration(
                 color: uiColor.second,
@@ -44,18 +43,19 @@ class ModalCommentComponent extends StatefulWidget {
                   topRight: Radius.circular(10),
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Stack(
                 children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                      child: _comments
-                          ? CommentComponent(id)
-                          : const CommentEmpty(),
-                    ),
+                  Flexible(
+                    flex: 1,
+                    child:
+                        _comments ? CommentComponent(id) : const CommentEmpty(),
                   ),
-                  InputCommentComponent(openKeyboard),
+                  Positioned(
+                    bottom: MediaQuery.of(context).viewInsets.bottom,
+                    left: 0,
+                    right: 0,
+                    child: InputCommentComponent(openKeyboard),
+                  ),
                 ],
               ),
             ),
