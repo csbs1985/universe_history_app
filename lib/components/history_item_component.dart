@@ -3,8 +3,7 @@
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:universe_history_app/components/comment_component.dart';
+import 'package:universe_history_app/components/modal_comment_component.dart';
 import 'package:universe_history_app/shared/models/favorite_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
@@ -23,19 +22,6 @@ class _HistoryItemState extends State<HistoryItemComponent> {
   _HistoryItemState(this.allHistory);
   final List<HistoryModel> allHistory;
   List<FavoriteModel> allFavorite = FavoriteModel.allFavorite;
-
-  void showModal(String id) {
-    showMaterialModalBottomSheet(
-      expand: true,
-      barrierColor: Colors.white10,
-      context: context,
-      backgroundColor: uiColor.second,
-      builder: (context) => SingleChildScrollView(
-        controller: ModalScrollController.of(context),
-        child: CommentComponent(id),
-      ),
-    );
-  }
 
   void _setFavorited(String id) {
     const user = 'charlesSantos';
@@ -101,16 +87,16 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                                     : ' comentário'),
                             style: uiTextStyle.text2,
                           ),
-                          onPressed: () =>
-                              showModal(widget.allHistory[index].id),
+                          onPressed: () => ModalCommentComponent.showModal(
+                              context, widget.allHistory[index].id),
                         ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       if (widget.allHistory[index].isComment)
                         IconButton(
-                            onPressed: () =>
-                                showModal(widget.allHistory[index].id),
+                            onPressed: () => ModalCommentComponent.showModal(
+                                context, widget.allHistory[index].id),
                             icon: SvgPicture.asset(uiSvg.comment)),
                       IconButton(
                         onPressed: () =>

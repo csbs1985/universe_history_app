@@ -1,5 +1,6 @@
 // ignore_for_file: sized_box_for_whitespace
 
+import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
@@ -14,9 +15,6 @@ class CommentEmpty extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(
-            height: 100,
-          ),
           SvgPicture.asset(uiSvg.commentEmpty),
           const SizedBox(
             height: 10,
