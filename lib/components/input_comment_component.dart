@@ -1,9 +1,11 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
 
 class InputCommentComponent extends StatefulWidget {
-  const InputCommentComponent({Key? key}) : super(key: key);
+  const InputCommentComponent(this.openKeyboard);
+
+  final bool openKeyboard;
 
   @override
   _InputCommentComponentState createState() => _InputCommentComponentState();
@@ -30,6 +32,7 @@ class _InputCommentComponentState extends State<InputCommentComponent> {
         Expanded(
           child: TextField(
             controller: _commentController,
+            autofocus: widget.openKeyboard,
             minLines: 1,
             maxLines: 10,
             style: const TextStyle(fontSize: 20, color: Color(0XffC9D1D9)),

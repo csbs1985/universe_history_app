@@ -8,12 +8,14 @@ import 'package:universe_history_app/components/input_comment_component.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 
 class ModalCommentComponent extends StatefulWidget {
-  const ModalCommentComponent({Key? key}) : super(key: key);
+  const ModalCommentComponent(this.openKeyboard);
+
+  final bool openKeyboard;
 
   @override
   _ModalCommentComponentState createState() => _ModalCommentComponentState();
 
-  static showModal(BuildContext context, String id) {
+  static showModal(BuildContext context, String id, bool openKeyboard) {
     double size = MediaQueryData.fromWindow(window).padding.top.toDouble();
 
     bool _comments = false;
@@ -41,10 +43,12 @@ class ModalCommentComponent extends StatefulWidget {
                 ),
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: const [
-                  CommentEmpty(),
-                  InputCommentComponent(),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Expanded(
+                    child: CommentEmpty(),
+                  ),
+                  InputCommentComponent(openKeyboard),
                 ],
               ),
             ),

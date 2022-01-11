@@ -88,7 +88,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                             style: uiTextStyle.text2,
                           ),
                           onPressed: () => ModalCommentComponent.showModal(
-                              context, widget.allHistory[index].id),
+                              context, widget.allHistory[index].id, false),
                         ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -96,7 +96,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                       if (widget.allHistory[index].isComment)
                         IconButton(
                             onPressed: () => ModalCommentComponent.showModal(
-                                context, widget.allHistory[index].id),
+                                context, widget.allHistory[index].id, true),
                             icon: SvgPicture.asset(uiSvg.comment)),
                       IconButton(
                         onPressed: () =>
