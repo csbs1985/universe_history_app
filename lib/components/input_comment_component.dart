@@ -32,39 +32,43 @@ class _InputCommentComponentState extends State<InputCommentComponent> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       color: uiColor.comp_1,
-      child: Row(children: [
-        Expanded(
-          child: TextField(
-            controller: _commentController,
-            autofocus: widget.openKeyboard,
-            minLines: 1,
-            maxLines: 10,
-            style: uiTextStyle.text4,
-            decoration: const InputDecoration.collapsed(
-              hintText: "Seu comentário pode ajudar alguém...",
-              hintStyle: uiTextStyle.text2,
+      child: SizedBox(
+        width: double.infinity,
+        height: 54,
+        child: Row(children: [
+          Expanded(
+            child: TextField(
+              controller: _commentController,
+              autofocus: widget.openKeyboard,
+              minLines: 1,
+              maxLines: 10,
+              style: uiTextStyle.text4,
+              decoration: const InputDecoration.collapsed(
+                hintText: "Seu comentário pode ajudar alguém...",
+                hintStyle: uiTextStyle.text2,
+              ),
+              onChanged: (text) {
+                setState(() {
+                  _isComment = text.isNotEmpty;
+                });
+              },
+              onSubmitted: (text) {
+                _reset();
+              },
             ),
-            onChanged: (text) {
-              setState(() {
-                _isComment = text.isNotEmpty;
-              });
-            },
-            onSubmitted: (text) {
-              _reset();
-            },
           ),
-        ),
-        !_isComment
-            ? ButtonDisabledComponent(buttonText)
-            : TextButton(
-                child: Text(
-                  buttonText,
-                  style: uiTextStyle.button2,
-                ),
-                onPressed: () {
-                  _reset();
-                })
-      ]),
+          !_isComment
+              ? ButtonDisabledComponent(buttonText)
+              : TextButton(
+                  child: Text(
+                    buttonText,
+                    style: uiTextStyle.button2,
+                  ),
+                  onPressed: () {
+                    _reset();
+                  })
+        ]),
+      ),
     );
   }
 }

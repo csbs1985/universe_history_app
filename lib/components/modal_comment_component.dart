@@ -22,7 +22,6 @@ class ModalCommentComponent extends StatefulWidget {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        systemNavigationBarColor: uiColor.comp_1,
       ),
     );
 
@@ -39,23 +38,22 @@ class ModalCommentComponent extends StatefulWidget {
               decoration: const BoxDecoration(
                 color: uiColor.second,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
                 ),
               ),
-              child: Stack(
+              child: Column(
                 children: [
-                  Flexible(
-                    flex: 1,
+                  Expanded(
                     child:
                         _comments ? CommentComponent(id) : const CommentEmpty(),
                   ),
-                  Positioned(
-                    bottom: MediaQuery.of(context).viewInsets.bottom,
-                    left: 0,
-                    right: 0,
-                    child: InputCommentComponent(openKeyboard),
-                  ),
+                  // InputCommentComponent(openKeyboard),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 54,
+                    child: Text('comentar'),
+                  )
                 ],
               ),
             ),
