@@ -48,15 +48,15 @@ class uiTextStyle {
   );
 
   static const TextStyle button2 = TextStyle(
-    fontSize: 20,
+    fontSize: 14,
     fontWeight: FontWeight.w400,
     color: uiColor.first,
   );
 
   static const TextStyle ButtonDisabled = TextStyle(
-    fontSize: 20,
+    fontSize: 14,
     fontWeight: FontWeight.w400,
-    color: Colors.transparent,
+    color: uiColor.comp_1,
   );
 
   static const TextStyle chips = TextStyle(

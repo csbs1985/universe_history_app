@@ -1,8 +1,11 @@
-// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, unused_local_variable, prefer_is_empty
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/components/button_disabled.component.dart';
+import 'package:universe_history_app/services/variable.global.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
+import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class InputCommentComponent extends StatefulWidget {
@@ -18,53 +21,79 @@ class _InputCommentComponentState extends State<InputCommentComponent> {
   final TextEditingController _commentController = TextEditingController();
   final String buttonText = 'publicar';
 
-  bool _isComment = false;
+  FocusNode inputNode = FocusNode();
 
-  void _reset() {
+  bool _textField = false;
+  bool _textEmpty = false;
+
+  void keyUp(String text) {
+    setState(() {
+      _textEmpty = _commentController.text.length > 0 ? false : true;
+    });
+  }
+
+  void _toggleTextField() {
+    setState(() {
+      _textField = !_textField;
+    });
+  }
+
+  void _sendComment() {
     _commentController.clear();
     setState(() {
-      _isComment = false;
+      _textEmpty = true;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      color: uiColor.comp_1,
-      child: Row(
+      decoration: BoxDecoration(
+        color: uiColor.second,
+        border: Border(
+          top: BorderSide(
+            color: uiColor.comp_1,
+            width: 0.5,
+          ),
+        ),
+      ),
+      child: Column(
         children: [
-          Expanded(
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
             child: TextField(
               controller: _commentController,
-              autofocus: widget.openKeyboard,
-              minLines: 1,
-              maxLines: 10,
+              onChanged: (value) => keyUp(value),
+              autofocus: false,
+              maxLines: 2,
               style: uiTextStyle.text4,
               decoration: const InputDecoration.collapsed(
-                hintText: "Seu comentário pode ajudar alguém...",
+                hintText: "Seu comentário...",
                 hintStyle: uiTextStyle.text2,
               ),
-              onChanged: (text) {
-                setState(() {
-                  _isComment = text.isNotEmpty;
-                });
-              },
-              onSubmitted: (text) {
-                _reset();
-              },
             ),
           ),
-          !_isComment
-              ? ButtonDisabledComponent(buttonText)
-              : TextButton(
-                  child: Text(
-                    buttonText,
-                    style: uiTextStyle.button2,
-                  ),
-                  onPressed: () {
-                    _reset();
-                  })
+          if (MediaQuery.of(context).viewInsets.bottom > 0)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                    icon: _textField
+                        ? SvgPicture.asset(uiSvg.minimize)
+                        : SvgPicture.asset(uiSvg.maximize),
+                    onPressed: () => _toggleTextField()),
+                _textEmpty
+                    ? ButtonDisabledComponent(buttonText)
+                    : TextButton(
+                        child: Text(
+                          buttonText,
+                          style: uiTextStyle.button2,
+                        ),
+                        onPressed: () {
+                          _sendComment();
+                        }),
+              ],
+            ),
         ],
       ),
     );

@@ -18,6 +18,7 @@ dependencies:
   skeleton_animation: ^0.1.4
   circle_button: ^1.1.0
   flutter_launcher_icons: ^0.9.2
+  flutter_keyboard_visibility: ^5.1.1
 
 dev_dependencies:
   flutter_test:
