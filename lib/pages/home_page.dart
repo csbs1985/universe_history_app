@@ -59,7 +59,6 @@ class _HomePageState extends State<HomePage> {
     return WillPopScope(
       onWillPop: () => exit(0),
       child: Scaffold(
-        resizeToAvoidBottomInset: true,
         appBar: ScrollAppBar(
           controller: _scrollController,
           automaticallyImplyLeading: false,

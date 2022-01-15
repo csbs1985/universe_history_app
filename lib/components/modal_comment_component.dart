@@ -22,6 +22,8 @@ class ModalCommentComponent extends StatelessWidget {
       child: Stack(
         children: [
           Container(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom + 48),
             child:
                 _comments ? CommentComponent(historyId) : const CommentEmpty(),
           ),
