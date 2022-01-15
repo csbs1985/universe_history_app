@@ -22,8 +22,7 @@ class _CommentState extends State<CommentComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        child: Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
@@ -76,6 +75,6 @@ class _CommentState extends State<CommentComponent> {
           ),
         ),
       ],
-    ));
+    );
   }
 }

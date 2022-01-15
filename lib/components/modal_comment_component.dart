@@ -1,7 +1,5 @@
 // ignore_for_file: use_key_in_widget_constructors
 
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/comment_component.dart';
 import 'package:universe_history_app/components/comment_empty_component.dart';
