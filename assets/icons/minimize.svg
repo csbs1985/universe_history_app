@@ -1,12 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="15.414" height="15.414" viewBox="0 0 15.414 15.414">
-  <g id="minimize" transform="translate(-2.293 -2.293)">
-    <path id="Caminho_11" data-name="Caminho 11" d="M4,14H8.667v4.667" transform="translate(-0.222 -2.444)" fill="none"
-      stroke="#8b949e" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
-    <path id="Caminho_12" data-name="Caminho 12" d="M18.667,8.667H14V4" transform="translate(-2.444 -0.222)" fill="none"
-      stroke="#8b949e" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
-    <line id="Linha_13" data-name="Linha 13" y1="5.444" x2="5.444" transform="translate(11.556 3)" fill="none"
-      stroke="#8b949e" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
-    <line id="Linha_14" data-name="Linha 14" y1="5.444" x2="5.444" transform="translate(3 11.556)" fill="none"
-      stroke="#8b949e" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="15.414" height="15.414"><g fill="none" stroke="#8b949e" stroke-linecap="round" stroke-linejoin="round"><path data-name="Caminho 11" d="M1.485 9.263h4.667v4.667"/><path data-name="Caminho 12" d="M13.93 6.152H9.263V1.485"/><path data-name="Linha 13" d="M9.263 6.151 14.707.707"/><path data-name="Linha 14" d="m.707 14.707 5.444-5.444"/></g></svg>

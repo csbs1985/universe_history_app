@@ -24,7 +24,8 @@ class _InputCommentComponentState extends State<InputCommentComponent> {
   FocusNode inputNode = FocusNode();
 
   bool _textField = false;
-  bool _textEmpty = false;
+  bool _textEmpty = true;
+  bool _textAnonimous = false;
 
   void keyUp(String text) {
     setState(() {
@@ -35,6 +36,12 @@ class _InputCommentComponentState extends State<InputCommentComponent> {
   void _toggleTextField() {
     setState(() {
       _textField = !_textField;
+    });
+  }
+
+  void _toggleAnonimous() {
+    setState(() {
+      _textAnonimous = !_textAnonimous;
     });
   }
 
@@ -77,11 +84,20 @@ class _InputCommentComponentState extends State<InputCommentComponent> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                    icon: _textField
-                        ? SvgPicture.asset(uiSvg.minimize)
-                        : SvgPicture.asset(uiSvg.maximize),
-                    onPressed: () => _toggleTextField()),
+                Row(
+                  children: [
+                    IconButton(
+                        icon: _textAnonimous
+                            ? SvgPicture.asset(uiSvg.minimize)
+                            : SvgPicture.asset(uiSvg.maximize),
+                        onPressed: () => _toggleAnonimous()),
+                    IconButton(
+                        icon: _textField
+                            ? SvgPicture.asset(uiSvg.lock)
+                            : SvgPicture.asset(uiSvg.unlock),
+                        onPressed: () => _toggleTextField()),
+                  ],
+                ),
                 _textEmpty
                     ? ButtonDisabledComponent(buttonText)
                     : TextButton(
