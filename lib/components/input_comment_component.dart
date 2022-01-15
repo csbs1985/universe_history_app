@@ -32,10 +32,8 @@ class _InputCommentComponentState extends State<InputCommentComponent> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       color: uiColor.comp_1,
-      child: SizedBox(
-        width: double.infinity,
-        height: 54,
-        child: Row(children: [
+      child: Row(
+        children: [
           Expanded(
             child: TextField(
               controller: _commentController,
@@ -67,7 +65,7 @@ class _InputCommentComponentState extends State<InputCommentComponent> {
                   onPressed: () {
                     _reset();
                   })
-        ]),
+        ],
       ),
     );
   }

@@ -2,7 +2,9 @@
 
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/modal_comment_component.dart';
 import 'package:universe_history_app/shared/models/favorite_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
@@ -31,6 +33,22 @@ class _HistoryItemState extends State<HistoryItemComponent> {
     allFavorite.contains(id)
         ? allFavorite.remove(id)
         : allFavorite.add(favorite);
+  }
+
+  void _showModal(BuildContext context, String historyId, bool openKeyboard) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      ),
+    );
+
+    showCupertinoModalBottomSheet(
+      expand: true,
+      context: context,
+      barrierColor: Colors.black87,
+      duration: const Duration(milliseconds: 300),
+      builder: (context) => ModalCommentComponent(historyId, openKeyboard),
+    );
   }
 
   bool _getFavorited(String id) {
@@ -67,7 +85,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                 style: uiTextStyle.text1,
                 expandText: 'continuar lendo',
                 collapseText: 'fechar',
-                maxLines: 20,
+                maxLines: 8,
                 linkColor: uiColor.first,
               ),
               Row(
@@ -84,7 +102,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                                     : ' comentário'),
                             style: uiTextStyle.text2,
                           ),
-                          onPressed: () => ModalCommentComponent.showModal(
+                          onPressed: () => _showModal(
                               context, widget.allHistory[index].id, false),
                         ),
                   Row(
@@ -92,7 +110,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                     children: [
                       if (widget.allHistory[index].isComment)
                         IconButton(
-                            onPressed: () => ModalCommentComponent.showModal(
+                            onPressed: () => _showModal(
                                 context, widget.allHistory[index].id, true),
                             icon: SvgPicture.asset(uiSvg.comment)),
                       IconButton(
