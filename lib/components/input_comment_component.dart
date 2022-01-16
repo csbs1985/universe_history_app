@@ -1,9 +1,8 @@
-// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, unused_local_variable, prefer_is_empty
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/components/button_disabled.component.dart';
-import 'package:universe_history_app/services/variable.global.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -21,9 +20,7 @@ class _InputCommentComponentState extends State<InputCommentComponent> {
   final TextEditingController _commentController = TextEditingController();
   final String buttonText = 'publicar';
 
-  FocusNode inputNode = FocusNode();
-
-  bool _textField = false;
+  bool _textExpanded = false;
   bool _textEmpty = true;
   bool _textAnonimous = false;
 
@@ -33,9 +30,9 @@ class _InputCommentComponentState extends State<InputCommentComponent> {
     });
   }
 
-  void _toggleTextField() {
+  void _toggleTextExpanded() {
     setState(() {
-      _textField = !_textField;
+      _textExpanded = !_textExpanded;
     });
   }
 
@@ -87,15 +84,17 @@ class _InputCommentComponentState extends State<InputCommentComponent> {
                 Row(
                   children: [
                     IconButton(
-                        icon: _textAnonimous
+                        icon: _textExpanded
                             ? SvgPicture.asset(uiSvg.minimize)
                             : SvgPicture.asset(uiSvg.maximize),
-                        onPressed: () => _toggleAnonimous()),
+                        onPressed: () {
+                          _toggleTextExpanded();
+                        }),
                     IconButton(
-                        icon: _textField
+                        icon: _textAnonimous
                             ? SvgPicture.asset(uiSvg.lock)
                             : SvgPicture.asset(uiSvg.unlock),
-                        onPressed: () => _toggleTextField()),
+                        onPressed: () => _toggleAnonimous()),
                   ],
                 ),
                 _textEmpty
@@ -107,7 +106,8 @@ class _InputCommentComponentState extends State<InputCommentComponent> {
                         ),
                         onPressed: () {
                           _sendComment();
-                        }),
+                        },
+                      ),
               ],
             ),
         ],
