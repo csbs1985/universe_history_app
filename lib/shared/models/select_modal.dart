@@ -10,7 +10,7 @@ class SelectModel {
   });
 
   static List<SelectModel> allPrivacy = [
-    new SelectModel(id: 0, label: "assinar história como anonimo"),
+    new SelectModel(id: 0, label: "assinar história como anônimo"),
     new SelectModel(id: 1, label: "assinar história com seu nome de usuário"),
   ];
 

@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    Future.delayed(const Duration(milliseconds: 600), () {
+    Future.delayed(const Duration(milliseconds: 300), () {
       setState(() => _isLoading = false);
     });
     super.initState();

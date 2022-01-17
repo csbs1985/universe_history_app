@@ -7,6 +7,7 @@ import 'package:universe_history_app/pages/home_page.dart';
 import 'package:universe_history_app/pages/notification_page.dart';
 import 'package:universe_history_app/pages/settings_page.dart';
 import 'package:universe_history_app/pages/splash_page.dart';
+import 'package:universe_history_app/pages/terms_page.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_theme.dart';
 import 'package:page_transition/page_transition.dart';
@@ -55,6 +56,11 @@ class MyApp extends StatelessWidget {
             return PageTransition(
                 child: const NotificationPage(),
                 type: PageTransitionType.topToBottom,
+                settings: settings);
+          case '/terms':
+            return PageTransition(
+                child: const TermsPage(),
+                type: PageTransitionType.leftToRight,
                 settings: settings);
           default:
             return null;

@@ -17,10 +17,11 @@ class UserModel {
 
   static Set<UserModel> user = {
     new UserModel(
-        id: 'charlesSantos',
-        name: 'Charles Santos',
-        nickname: 'charles.sbs',
-        dateRegister: '2 de janeiro de 2022',
-        disabled: false)
+      id: 'charlesSantos',
+      name: 'Charles Santos',
+      nickname: 'charles.sbs',
+      dateRegister: '2 de janeiro de 2022',
+      disabled: false,
+    )
   };
 }

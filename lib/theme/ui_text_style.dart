@@ -41,6 +41,18 @@ class uiTextStyle {
     color: uiColor.third,
   );
 
+  static const TextStyle text5 = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+    color: uiColor.third,
+  );
+
+  static const TextStyle text6 = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: uiColor.third,
+  );
+
   static const TextStyle button1 = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w400,

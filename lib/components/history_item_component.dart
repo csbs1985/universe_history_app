@@ -74,7 +74,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                 style: uiTextStyle.header1,
               ),
               Text(
-                widget.allHistory[index].date + ' - anonimo',
+                widget.allHistory[index].date + ' - anônimo',
                 style: uiTextStyle.text2,
               ),
               const SizedBox(
