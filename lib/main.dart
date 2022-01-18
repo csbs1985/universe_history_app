@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:universe_history_app/pages/blocked_users_page.dart';
 import 'package:universe_history_app/pages/create_history_page.dart';
 import 'package:universe_history_app/pages/home_page.dart';
 import 'package:universe_history_app/pages/notification_page.dart';
@@ -38,6 +39,11 @@ class MyApp extends StatelessWidget {
       theme: uiTheme.theme1,
       onGenerateRoute: (settings) {
         switch (settings.name) {
+          case '/blocked':
+            return PageTransition(
+                child: const blockedUsersPage(),
+                type: PageTransitionType.rightToLeft,
+                settings: settings);
           case '/create':
             return PageTransition(
                 child: const CreateHistory(),

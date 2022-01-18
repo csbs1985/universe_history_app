@@ -1,8 +1,4 @@
-import 'package:adaptive_dialog/adaptive_dialog.dart';
-import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dropdown_alert/alert_controller.dart';
-import 'package:flutter_dropdown_alert/model/data_alert.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:universe_history_app/theme/ui_button.dart';
@@ -165,7 +161,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     style: uiTextStyle.text1,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () => Navigator.of(context).pushNamed("/blocked"),
               ),
             ),
             SizedBox(
