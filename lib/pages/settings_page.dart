@@ -1,5 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dropdown_alert/alert_controller.dart';
+import 'package:flutter_dropdown_alert/model/data_alert.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:universe_history_app/theme/ui_button.dart';
@@ -28,7 +31,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
   void _toggleNotification(bool value) {
     setState(() {
-      print('value: ' + value.toString());
       notification = value;
     });
   }
@@ -202,7 +204,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     style: uiTextStyle.text1,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () => _showAlertDelete(context),
               ),
             ),
             Padding(
@@ -243,4 +245,58 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
     );
   }
+}
+
+Future<Future> _showAlertDelete(BuildContext context) async {
+  return showDialog(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      var child;
+      return AlertDialog(
+        backgroundColor: uiColor.second,
+        title: const Text(
+          'Deletar conta',
+          style: uiTextStyle.text5,
+        ),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: const [
+              Text(
+                'Você não poderá mais acessar suas hitórias e comentários. Tem certeza que deseja deletar sua conta definitivamente?',
+                style: uiTextStyle.text1,
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed("/home");
+                  },
+                  child: const Text(
+                    'Deletar',
+                    style: uiTextStyle.text3,
+                  ),
+                ),
+                TextButton(
+                  style: uiButton.button1,
+                  child: const Text(
+                    'Cancelar',
+                    style: uiTextStyle.text1,
+                  ),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    },
+  );
 }

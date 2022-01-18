@@ -38,20 +38,16 @@ class MyApp extends StatelessWidget {
       theme: uiTheme.theme1,
       onGenerateRoute: (settings) {
         switch (settings.name) {
-          case '/home':
-            return PageTransition(
-                child: const HomePage(),
-                type: PageTransitionType.fade,
-                settings: settings);
           case '/create':
             return PageTransition(
                 child: const CreateHistory(),
                 type: PageTransitionType.bottomToTop,
                 settings: settings);
-          case '/settings':
+          case '/':
+          case '/home':
             return PageTransition(
-                child: const SettingsPage(),
-                type: PageTransitionType.topToBottom,
+                child: const HomePage(),
+                type: PageTransitionType.fade,
                 settings: settings);
           case '/notification':
             return PageTransition(
@@ -61,6 +57,11 @@ class MyApp extends StatelessWidget {
           case '/privacy':
             return PageTransition(
                 child: const PrivacyPage(),
+                type: PageTransitionType.rightToLeft,
+                settings: settings);
+          case '/settings':
+            return PageTransition(
+                child: const SettingsPage(),
                 type: PageTransitionType.rightToLeft,
                 settings: settings);
           case '/terms':
