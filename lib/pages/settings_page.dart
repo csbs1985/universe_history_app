@@ -189,7 +189,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     style: uiTextStyle.text1,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () => Navigator.of(context).pushNamed("/privacy"),
               ),
             ),
             SizedBox(
