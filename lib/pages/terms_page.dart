@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: unused_element
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:styled_text/styled_text.dart';
@@ -33,7 +34,6 @@ class TermsPage extends StatelessWidget {
               StyledText(
                   style: uiTextStyle.text6,
                   tags: {
-                    's': StyledTextTag(),
                     'b': StyledTextTag(
                       style: const TextStyle(fontWeight: FontWeight.w700),
                     ),
@@ -155,7 +155,7 @@ class TermsPage extends StatelessWidget {
                       '\n\n'
                       'Limitação de responsabilidade'
                       '\n\n'
-                      'AS PARTES DO HISTORY NÃO SERÃO RESPONSÁVEIS POR QUAISQUER LUCROS PERDIDOS OU CONSEQUENTES, ESPECIAIS, PUNITIVOS, NDIRETOS OU INCIDENTAIS RELACIONADOS'
+                      'AS PARTES DO HISTORY NÃO SERÃO RESPONSÁVEIS POR QUAISQUER LUCROS PERDIDOS OU CONSEQUENTES, ESPECIAIS, PUNITIVOS, DIRETOS OU INCIDENTAIS RELACIONADOS'
                       ' A, DECORRENTES DE, OU DE QUALQUER FORMA EM CONEXÃO COM NOSSOS TERMOS, OU NOSSOS SERVIÇOS, MESMO SE AS PARTES DO HISTORY SÃO AVISADAS DA POSSIBILIDADE'
                       ' DE TAIS DANOS. NOSSA RESPONSABILIDADE AGREGADA RELACIONADA A, DECORRENTE DE, OU DE QUALQUER FORMA EM CONEXÃO COM NOSSOS TERMOS, NÓS OU NOSSOS SERVIÇOS'
                       ' NÃO EXCEDERÁ CEMTAVOS DE DÓLARES AMERICANO OU QUALQUER MOEDA FISICA OU DIGITAL. A ISENÇÃO DE RESPONSABILIDADE ANTERIOR DE CERTOS DANOS E LIMITAÇÃO DE'

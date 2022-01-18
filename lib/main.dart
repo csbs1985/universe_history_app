@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
           case '/terms':
             return PageTransition(
                 child: const TermsPage(),
-                type: PageTransitionType.leftToRight,
+                type: PageTransitionType.rightToLeft,
                 settings: settings);
           default:
             return null;
