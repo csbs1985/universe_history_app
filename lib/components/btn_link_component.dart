@@ -22,12 +22,12 @@ class _BtnLinkComponentState extends State<BtnLinkComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Material(
-        color: uiColor.second,
-        child: SizedBox(
-          width: double.infinity,
-          height: 48,
+    return Material(
+      color: uiColor.second,
+      child: SizedBox(
+        width: double.infinity,
+        height: 48,
+        child: TextButton(
           child: Container(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -35,9 +35,9 @@ class _BtnLinkComponentState extends State<BtnLinkComponent> {
               style: uiTextStyle.text1,
             ),
           ),
+          onPressed: () => Navigator.of(context).pushNamed(link),
         ),
       ),
-      onTap: () => Navigator.of(context).pushNamed(link),
     );
   }
 }

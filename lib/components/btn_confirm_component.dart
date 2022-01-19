@@ -26,22 +26,25 @@ class _BtnLinkComponentState extends State<BtnConfirmComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 0, 8, 10),
       child: Material(
         color: uiColor.second,
         child: SizedBox(
           width: double.infinity,
           height: 48,
-          child: Container(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              title,
-              style: uiTextStyle.text1,
+          child: TextButton(
+            child: Container(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                title,
+                style: uiTextStyle.text1,
+              ),
             ),
+            onPressed: () => _showAlertConfirm(context, title, text, link),
           ),
         ),
       ),
-      onTap: () => _showAlertConfirm(context, title, text, link),
     );
   }
 }

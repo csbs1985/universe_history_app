@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/theme/ui_image.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -17,21 +18,17 @@ class AboutPage extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Sobre',
-                style: uiTextStyle.header1,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
+              child: TitleComponent('Sobre'),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Column(
                 children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
                   SizedBox(
                     height: 25,
                     child: Image.asset(
@@ -69,8 +66,8 @@ class AboutPage extends StatelessWidget {
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

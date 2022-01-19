@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:universe_history_app/components/btn_confirm_component.dart';
 import 'package:universe_history_app/components/btn_link_component.dart';
+import 'package:universe_history_app/components/title_component.dart';
+import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -46,24 +48,9 @@ class _SettingsPageState extends State<SettingsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Configurações',
-                style: uiTextStyle.header1,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                'Conta',
-                style: uiTextStyle.header2,
-              ),
-              const Text(
-                'Mantenha seus dados atualizados e consulte seu conteúdo.',
-                style: uiTextStyle.text2,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
+              const TitleComponent('Configurações'),
+              const TitleResumeComponent('Conta',
+                  'Mantenha seus dados atualizados e consulte seu conteúdo.'),
               const BtnLinkComponent('Nome de usuário', '/account'),
 
               // TextField(
@@ -86,10 +73,10 @@ class _SettingsPageState extends State<SettingsPage> {
 
               const BtnLinkComponent('Minhas histórias', '/myHistory'),
               const BtnLinkComponent('Meus comentário', '/myComment'),
-              GestureDetector(
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 48,
+              SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: TextButton(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -113,34 +100,30 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                     ],
                   ),
+                  onPressed: () => _toggleNotification(!notification),
                 ),
-                onTap: () => _toggleNotification(!notification),
               ),
               const BtnLinkComponent('Bloqueados', '/blocked'),
+              const SizedBox(
+                height: 20,
+              ),
+              const TitleResumeComponent(
+                  'Definições', 'Sobre o History, políticas e termos.'),
+              const BtnLinkComponent('Perguntas frequentes', '/questions'),
+              const BtnLinkComponent('Termo de uso', '/terms'),
+              const BtnLinkComponent('Política de privacidade', '/privacy'),
+              const BtnLinkComponent('Sobre', '/about'),
+              const SizedBox(
+                height: 20,
+              ),
+              const TitleResumeComponent(
+                  'Saindo', 'Foi algo que eu fiz? Não vá.'),
               const BtnLinkComponent('Sair', '/blocked'),
               const BtnConfirmComponent(
                 'Deletar conta',
                 'Você não poderá mais acessar suas hitórias e comentários. Tem certeza que deseja deletar sua conta definitivamente?',
                 '/home',
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                'Definições',
-                style: uiTextStyle.header2,
-              ),
-              const Text(
-                'Sobre o History, políticas e termos.',
-                style: uiTextStyle.text2,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const BtnLinkComponent('Perguntas frequentes', '/questions'),
-              const BtnLinkComponent('Termo de uso', '/terms'),
-              const BtnLinkComponent('Política de privacidade', '/privacy'),
-              const BtnLinkComponent('Sobre', '/about'),
             ],
           ),
         ),
