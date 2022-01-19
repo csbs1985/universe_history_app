@@ -1,9 +1,11 @@
-// ignore_for_file: camel_case_types, prefer_is_empty
+// ignore_for_file: camel_case_types, prefer_is_empty, unnecessary_brace_in_string_interps
 
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/shared/models/blocked_model.dart';
 import 'package:universe_history_app/theme/ui_button.dart';
+import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -28,7 +30,15 @@ class _blockedUsersPageState extends State<blockedUsersPage> {
 
   void _unlockUser(String blocked) {
     setState(() {
-      print('usuário: ' + blocked);
+      showToast(
+        '${blocked} desbloqueado(a).',
+        context: context,
+        position: StyledToastPosition.bottom,
+        textStyle: uiTextStyle.text1,
+        backgroundColor: uiColor.comp_1,
+        animation: StyledToastAnimation.slideToBottomFade,
+        reverseAnimation: StyledToastAnimation.slideFromBottomFade,
+      );
     });
   }
 
@@ -43,7 +53,7 @@ class _blockedUsersPageState extends State<blockedUsersPage> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-            padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+            padding: const EdgeInsets.all(10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -76,7 +86,7 @@ class _blockedUsersPageState extends State<blockedUsersPage> {
                         ),
                         TextButton(
                           child: const Text('Desbloquear',
-                              style: uiTextStyle.button1),
+                              style: uiTextStyle.text4),
                           style: uiButton.button1,
                           onPressed: () => _unlockUser(item.blocked),
                         ),

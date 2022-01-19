@@ -12,6 +12,12 @@ class uiTextStyle {
   );
 
   static const TextStyle header2 = TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.w700,
+    color: uiColor.third,
+  );
+
+  static const TextStyle header3 = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w700,
     color: uiColor.first,
@@ -51,6 +57,12 @@ class uiTextStyle {
     fontSize: 14,
     fontWeight: FontWeight.w400,
     color: uiColor.third,
+  );
+
+  static const TextStyle text7 = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+    color: uiColor.comp_2,
   );
 
   static const TextStyle button1 = TextStyle(

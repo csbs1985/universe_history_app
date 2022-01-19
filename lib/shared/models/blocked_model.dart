@@ -22,7 +22,7 @@ class BlockedModel {
     new BlockedModel(
         id: '0',
         user: 'charles.sbs',
-        blocked: 'sabirna',
+        blocked: 'sabrina',
         date: '18 de janeiro de 2022 às 16:26'),
   ];
 }

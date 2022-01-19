@@ -43,7 +43,7 @@ class _RadioCustonState extends State<RadioComponent> {
       children: [
         Text(
           widget.title,
-          style: uiTextStyle.header2,
+          style: uiTextStyle.header3,
         ),
         const SizedBox(
           height: 10,

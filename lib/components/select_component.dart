@@ -35,7 +35,7 @@ class _SelectCustonState extends State<SelectComponent> {
       children: [
         Text(
           widget.title,
-          style: uiTextStyle.header2,
+          style: uiTextStyle.header3,
         ),
         const SizedBox(
           height: 10,

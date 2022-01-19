@@ -41,202 +41,223 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.fromLTRB(10, 10, 10, 20),
-              child: Text(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
                 'Configurações',
                 style: uiTextStyle.header1,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: Column(
-                children: [
-                  const Align(
+              const SizedBox(
+                height: 20,
+              ),
+              const Text(
+                'Conta',
+                style: uiTextStyle.header2,
+              ),
+              const Text(
+                'Mantenha seus dados atualizados e consulte seu conteúdo.',
+                style: uiTextStyle.text2,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  child: const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Nome de usuário',
                       style: uiTextStyle.text1,
-                      textAlign: TextAlign.left,
                     ),
                   ),
-                  TextField(
-                    controller: _nickNameController,
-                    minLines: 1,
-                    maxLines: 1,
-                    style: uiTextStyle.header2,
-                    decoration: const InputDecoration(
-                      counterText: "",
-                      hintText: 'Título com até 60 caracteres',
-                      hintStyle: uiTextStyle.header2,
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: uiColor.second),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: uiColor.second),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                child: const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Minhas histórias',
-                    style: uiTextStyle.text1,
-                  ),
+                  onPressed: () {},
                 ),
-                onPressed: () {},
               ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                child: const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Meus comentários',
-                    style: uiTextStyle.text1,
-                  ),
-                ),
-                onPressed: () {},
-              ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Notificações',
+
+              // TextField(
+              //   controller: _nickNameController,
+              //   minLines: 1,
+              //   maxLines: 1,
+              //   style: uiTextStyle.header3,
+              //   decoration: InputDecoration(
+              //     counterText: "",
+              //     hintText: _nickNameController.text,
+              //     hintStyle: uiTextStyle.header3,
+              //     enabledBorder: const UnderlineInputBorder(
+              //       borderSide: BorderSide(color: uiColor.second),
+              //     ),
+              //     focusedBorder: const UnderlineInputBorder(
+              //       borderSide: BorderSide(color: uiColor.second),
+              //     ),
+              //   ),
+              // ),
+
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  child: const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Minhas histórias',
                       style: uiTextStyle.text1,
                     ),
-                    FlutterSwitch(
-                      value: notification,
-                      activeText: "ligada",
-                      inactiveText: "desligada",
-                      width: 80,
-                      height: 30,
-                      valueFontSize: 12,
-                      toggleSize: 20,
-                      toggleColor: uiColor.third,
-                      activeColor: uiColor.first,
-                      inactiveColor: uiColor.comp_1,
-                      showOnOff: true,
-                      onToggle: (value) => _toggleNotification(value),
-                    ),
-                  ],
-                ),
-                onPressed: () => _toggleNotification(!notification),
-              ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                child: const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Perguntas frequentes',
-                    style: uiTextStyle.text1,
                   ),
+                  onPressed: () {},
                 ),
-                onPressed: () {},
               ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                child: const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Bloqueados',
-                    style: uiTextStyle.text1,
-                  ),
-                ),
-                onPressed: () => Navigator.of(context).pushNamed("/blocked"),
-              ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                child: const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Termo de uso',
-                    style: uiTextStyle.text1,
-                  ),
-                ),
-                onPressed: () => Navigator.of(context).pushNamed("/terms"),
-              ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                child: const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Política de privacidade',
-                    style: uiTextStyle.text1,
-                  ),
-                ),
-                onPressed: () => Navigator.of(context).pushNamed("/privacy"),
-              ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                child: const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Deletar conta',
-                    style: uiTextStyle.text1,
-                  ),
-                ),
-                onPressed: () => _showAlertDelete(context),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 80, 10, 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 25,
-                    child: Image.asset(
-                      uiImage.logo,
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  child: const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Meus comentários',
+                      style: uiTextStyle.text1,
                     ),
                   ),
-                  const Text(
-                    'v1.0.0(c)',
-                    style: uiTextStyle.text2,
-                  ),
-                  const Text(
-                    '17 de janeiro de 2022 às 10:20',
-                    style: uiTextStyle.text2,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                    child: TextButton(
-                      child: const Text(
-                        'Sair',
-                        style: uiTextStyle.button1,
+                  onPressed: () {},
+                ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Notificações',
+                        style: uiTextStyle.text1,
                       ),
-                      style: uiButton.button1,
-                      onPressed: () {},
+                      FlutterSwitch(
+                        value: notification,
+                        activeText: "Ligada",
+                        inactiveText: "Desligada",
+                        width: 80,
+                        height: 30,
+                        valueFontSize: 12,
+                        toggleSize: 20,
+                        toggleColor: uiColor.third,
+                        activeColor: uiColor.first,
+                        inactiveColor: uiColor.comp_1,
+                        showOnOff: true,
+                        onToggle: (value) => _toggleNotification(value),
+                      ),
+                    ],
+                  ),
+                  onPressed: () => _toggleNotification(!notification),
+                ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  child: const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Bloqueados',
+                      style: uiTextStyle.text1,
                     ),
                   ),
-                ],
+                  onPressed: () => Navigator.of(context).pushNamed("/blocked"),
+                ),
               ),
-            ),
-          ],
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  child: const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Deletar conta',
+                      style: uiTextStyle.text1,
+                    ),
+                  ),
+                  onPressed: () => _showAlertDelete(context),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text(
+                'Definições',
+                style: uiTextStyle.header2,
+              ),
+              const Text(
+                'Sobre o History, políticas e termos.',
+                style: uiTextStyle.text2,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  child: const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Perguntas frequentes',
+                      style: uiTextStyle.text1,
+                    ),
+                  ),
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed("/questions"),
+                ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  child: const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Termo de uso',
+                      style: uiTextStyle.text1,
+                    ),
+                  ),
+                  onPressed: () => Navigator.of(context).pushNamed("/terms"),
+                ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  child: const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Política de privacidade',
+                      style: uiTextStyle.text1,
+                    ),
+                  ),
+                  onPressed: () => Navigator.of(context).pushNamed("/privacy"),
+                ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  child: const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Sobre',
+                      style: uiTextStyle.text1,
+                    ),
+                  ),
+                  onPressed: () => Navigator.of(context).pushNamed("/about"),
+                  // onPressed: () => _showAlertDelete(context),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                child: TextButton(
+                  child: const Text(
+                    'Sair',
+                    style: uiTextStyle.button1,
+                  ),
+                  style: uiButton.button1,
+                  onPressed: () {},
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

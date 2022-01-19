@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:universe_history_app/pages/about_page.dart';
 import 'package:universe_history_app/pages/blocked_users_page.dart';
+import 'package:universe_history_app/pages/common_questions_page.dart';
 import 'package:universe_history_app/pages/create_history_page.dart';
 import 'package:universe_history_app/pages/home_page.dart';
 import 'package:universe_history_app/pages/notification_page.dart';
@@ -39,6 +41,11 @@ class MyApp extends StatelessWidget {
       theme: uiTheme.theme1,
       onGenerateRoute: (settings) {
         switch (settings.name) {
+          case '/about':
+            return PageTransition(
+                child: const AboutPage(),
+                type: PageTransitionType.rightToLeft,
+                settings: settings);
           case '/blocked':
             return PageTransition(
                 child: const blockedUsersPage(),
@@ -59,6 +66,11 @@ class MyApp extends StatelessWidget {
             return PageTransition(
                 child: const NotificationPage(),
                 type: PageTransitionType.topToBottom,
+                settings: settings);
+          case '/questions':
+            return PageTransition(
+                child: CommonQuestionsPage(),
+                type: PageTransitionType.rightToLeft,
                 settings: settings);
           case '/privacy':
             return PageTransition(
