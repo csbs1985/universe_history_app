@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                       height: 36,
                       child: SvgPicture.asset(uiSvg.notification),
                       borderWidth: 0,
-                      borderColor: Colors.transparent,
+                      borderColor: uiColor.second,
                       backgroundColor:
                           _notification ? uiColor.comp_1 : uiColor.second),
                   IconButton(

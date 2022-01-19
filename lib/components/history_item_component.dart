@@ -36,12 +36,6 @@ class _HistoryItemState extends State<HistoryItemComponent> {
   }
 
   void _showModal(BuildContext context, String historyId, bool openKeyboard) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-      ),
-    );
-
     showCupertinoModalBottomSheet(
       expand: true,
       context: context,
