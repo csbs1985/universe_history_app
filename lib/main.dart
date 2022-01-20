@@ -6,6 +6,7 @@ import 'package:universe_history_app/pages/about_page.dart';
 import 'package:universe_history_app/pages/blocked_users_page.dart';
 import 'package:universe_history_app/pages/common_questions_page.dart';
 import 'package:universe_history_app/pages/create_history_page.dart';
+import 'package:universe_history_app/pages/delete_account_page.dart';
 import 'package:universe_history_app/pages/home_page.dart';
 import 'package:universe_history_app/pages/notification_page.dart';
 import 'package:universe_history_app/pages/privacy_page.dart';
@@ -41,6 +42,12 @@ class MyApp extends StatelessWidget {
       theme: uiTheme.theme1,
       onGenerateRoute: (settings) {
         switch (settings.name) {
+          case '/':
+          case '/home':
+            return PageTransition(
+                child: const HomePage(),
+                type: PageTransitionType.fade,
+                settings: settings);
           case '/about':
             return PageTransition(
                 child: const AboutPage(),
@@ -56,11 +63,10 @@ class MyApp extends StatelessWidget {
                 child: const CreateHistory(),
                 type: PageTransitionType.bottomToTop,
                 settings: settings);
-          case '/':
-          case '/home':
+          case '/delete-account':
             return PageTransition(
-                child: const HomePage(),
-                type: PageTransitionType.fade,
+                child: const DeleteAccountPage(),
+                type: PageTransitionType.rightToLeft,
                 settings: settings);
           case '/notification':
             return PageTransition(

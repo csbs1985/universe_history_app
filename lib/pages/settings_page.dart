@@ -3,8 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:universe_history_app/components/btn_confirm_component.dart';
 import 'package:universe_history_app/components/btn_link_component.dart';
+import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
+import 'package:universe_history_app/pages/appbar_back_component.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -36,12 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: SvgPicture.asset(uiSvg.closed),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ),
+      appBar: const AppbarBackComponent(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -107,8 +104,10 @@ class _SettingsPageState extends State<SettingsPage> {
               const SizedBox(
                 height: 20,
               ),
-              const TitleResumeComponent(
-                  'Definições', 'Sobre o History, políticas e termos.'),
+              const DividerComponent(),
+              const TitleResumeComponent('Informações',
+                  'Sobre o History, perguntas, políticas e termos.'),
+              // const BtnLinkComponent('Avaliação', '/questions'), TODO: adicionar feedback nas lojas de aplicativos.
               const BtnLinkComponent('Perguntas frequentes', '/questions'),
               const BtnLinkComponent('Termo de uso', '/terms'),
               const BtnLinkComponent('Política de privacidade', '/privacy'),
@@ -116,14 +115,16 @@ class _SettingsPageState extends State<SettingsPage> {
               const SizedBox(
                 height: 20,
               ),
-              const TitleResumeComponent(
-                  'Saindo', 'Foi algo que eu fiz? Não vá.'),
+              const DividerComponent(),
+              const TitleResumeComponent('Finalizar',
+                  'Sair temporariamente ou deletar a conta History.'),
               const BtnLinkComponent('Sair', '/blocked'),
-              const BtnConfirmComponent(
-                'Deletar conta',
-                'Você não poderá mais acessar suas hitórias e comentários. Tem certeza que deseja deletar sua conta definitivamente?',
-                '/home',
-              ),
+              const BtnLinkComponent('Deletar conta', '/delete-account'),
+              // const BtnConfirmComponent(
+              //   'Deletar conta',
+              //   'Você não poderá mais acessar suas hitórias e comentários. Tem certeza que deseja deletar sua conta definitivamente?',
+              //   '/home',
+              // ),
             ],
           ),
         ),
