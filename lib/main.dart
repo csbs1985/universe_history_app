@@ -8,6 +8,7 @@ import 'package:universe_history_app/pages/common_questions_page.dart';
 import 'package:universe_history_app/pages/create_history_page.dart';
 import 'package:universe_history_app/pages/delete_account_page.dart';
 import 'package:universe_history_app/pages/home_page.dart';
+import 'package:universe_history_app/pages/justify_page.dart';
 import 'package:universe_history_app/pages/notification_page.dart';
 import 'package:universe_history_app/pages/privacy_page.dart';
 import 'package:universe_history_app/pages/settings_page.dart';
@@ -66,6 +67,11 @@ class MyApp extends StatelessWidget {
           case '/delete-account':
             return PageTransition(
                 child: const DeleteAccountPage(),
+                type: PageTransitionType.rightToLeft,
+                settings: settings);
+          case '/justify':
+            return PageTransition(
+                child: const JustifyPage(),
                 type: PageTransitionType.rightToLeft,
                 settings: settings);
           case '/notification':
