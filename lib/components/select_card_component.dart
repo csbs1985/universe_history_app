@@ -41,8 +41,8 @@ class _SelectCustonState extends State<SelectCardComponent> {
                   child: Text(
                     item.label,
                     style: _getSelected(item.id)
-                        ? uiTextStyle.active
-                        : uiTextStyle.chips,
+                        ? uiTextStyle.chipActive
+                        : uiTextStyle.chip,
                   ),
                   onPressed: () => _setSelected(item.id),
                   style: _getSelected(item.id)

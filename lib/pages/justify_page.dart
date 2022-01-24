@@ -4,7 +4,7 @@ import 'package:universe_history_app/components/btn_card_component.dart';
 import 'package:universe_history_app/components/select_card_component.dart';
 import 'package:universe_history_app/components/select_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
-import 'package:universe_history_app/pages/appbar_back_component.dart';
+import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/shared/models/justtify_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';

@@ -83,15 +83,15 @@ class uiTextStyle {
     color: uiColor.comp_1,
   );
 
-  static const TextStyle chips = TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.w400,
-    color: uiColor.first,
-  );
-
-  static const TextStyle active = TextStyle(
+  static const TextStyle chip = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w400,
     color: uiColor.third,
+  );
+
+  static const TextStyle chipActive = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+    color: uiColor.first,
   );
 }

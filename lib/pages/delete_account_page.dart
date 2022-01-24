@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/btn_card_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
-import 'package:universe_history_app/pages/appbar_back_component.dart';
+import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class DeleteAccountPage extends StatefulWidget {

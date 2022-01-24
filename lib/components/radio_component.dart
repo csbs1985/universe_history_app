@@ -58,13 +58,10 @@ class _RadioCustonState extends State<RadioComponent> {
                     onPressed: () => _setSelected(item.id),
                     child: Text(
                       item.label,
-                      style: _getSelected(item.id)
-                          ? uiTextStyle.active
-                          : uiTextStyle.chips,
                     ),
                     style: _getSelected(item.id)
-                        ? uiButton.active
-                        : uiButton.chips,
+                        ? uiButton.chipActive
+                        : uiButton.chip,
                   ),
                 ),
           ],

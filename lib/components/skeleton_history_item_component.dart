@@ -19,6 +19,7 @@ class SkeletonHistoryItemComponent extends StatelessWidget {
             width: double.infinity,
             height: 28,
             textColor: uiColor.comp_1,
+            borderRadius: BorderRadius.circular(5),
           ),
           const SizedBox(
             height: 10,
@@ -29,6 +30,7 @@ class SkeletonHistoryItemComponent extends StatelessWidget {
                 width: 100,
                 height: 16,
                 textColor: uiColor.comp_1,
+                borderRadius: BorderRadius.circular(5),
               ),
               const SizedBox(
                 width: 10,
@@ -37,6 +39,7 @@ class SkeletonHistoryItemComponent extends StatelessWidget {
                 width: 100,
                 height: 16,
                 textColor: uiColor.comp_1,
+                borderRadius: BorderRadius.circular(5),
               ),
             ],
           ),
@@ -47,6 +50,7 @@ class SkeletonHistoryItemComponent extends StatelessWidget {
             width: double.infinity,
             height: 100,
             textColor: uiColor.comp_1,
+            borderRadius: BorderRadius.circular(5),
           ),
           const SizedBox(
             height: 10,
@@ -58,6 +62,7 @@ class SkeletonHistoryItemComponent extends StatelessWidget {
                 width: 120,
                 height: 20,
                 textColor: uiColor.comp_1,
+                borderRadius: BorderRadius.circular(5),
               ),
               Container(
                 child: Row(
@@ -67,6 +72,7 @@ class SkeletonHistoryItemComponent extends StatelessWidget {
                       width: 40,
                       height: 20,
                       textColor: uiColor.comp_1,
+                      borderRadius: BorderRadius.circular(5),
                     ),
                     const SizedBox(
                       width: 10,
@@ -75,6 +81,7 @@ class SkeletonHistoryItemComponent extends StatelessWidget {
                       width: 40,
                       height: 20,
                       textColor: uiColor.comp_1,
+                      borderRadius: BorderRadius.circular(5),
                     ),
                     const SizedBox(
                       width: 10,
@@ -83,6 +90,7 @@ class SkeletonHistoryItemComponent extends StatelessWidget {
                       width: 40,
                       height: 20,
                       textColor: uiColor.comp_1,
+                      borderRadius: BorderRadius.circular(5),
                     ),
                   ],
                 ),
