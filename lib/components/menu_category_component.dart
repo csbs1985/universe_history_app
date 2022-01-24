@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/shared/models/category_model.dart';
+import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class MenuCategoryComponent extends StatefulWidget {
@@ -28,7 +29,7 @@ class _MenuCategoriesState extends State<MenuCategoryComponent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFF161d27),
+      color: uiColor.second,
       child: ListView.builder(
         itemCount: allCategories.length,
         scrollDirection: Axis.horizontal,
@@ -42,14 +43,14 @@ class _MenuCategoriesState extends State<MenuCategoryComponent> {
           ),
           child: Container(
             height: double.infinity,
-            color: _getSelected(allCategories[index].id)
-                ? Color(0xFF1f2938)
-                : Color(0xFF161d27),
+            color: uiColor.second,
             child: Padding(
               padding: EdgeInsets.all(10),
               child: Text(
                 allCategories[index].label,
-                style: uiTextStyle.text1,
+                style: _getSelected(allCategories[index].id)
+                    ? uiTextStyle.text3
+                    : uiTextStyle.text1,
               ),
             ),
           ),

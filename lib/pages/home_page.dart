@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
 import 'package:universe_history_app/components/call_create_component.dart';
+import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/history_item_component.dart';
 import 'package:universe_history_app/components/login_component.dart';
 import 'package:universe_history_app/components/menu_category_component.dart';
@@ -60,6 +61,7 @@ class _HomePageState extends State<HomePage> {
       onWillPop: () => exit(0),
       child: Scaffold(
         appBar: ScrollAppBar(
+          backgroundColor: uiColor.second,
           controller: _scrollController,
           automaticallyImplyLeading: false,
           elevation: 0,
@@ -108,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 )
               : Container(
-                  color: Color(0xFF1f2938),
+                  color: uiColor.second,
                   child: SingleChildScrollView(
                     controller: _scrollController,
                     child: Column(

@@ -17,20 +17,20 @@ class CallCreateComponent extends StatelessWidget {
         elevation: 0,
         color: uiColor.second,
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(4),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Escreva sua história, quem sabe alguém pode te ajudar',
+              Text(
+                'Escreva sua história'.toUpperCase(),
                 style: uiTextStyle.header2,
               ),
               const SizedBox(
                 height: 10,
               ),
               const Text(
-                'Todos nós temos uma história pra contar',
+                'Todos nós temos uma história pra contar. Quem sabe alguém pode te ajudar',
                 style: uiTextStyle.text7,
               ),
               const SizedBox(
@@ -38,7 +38,7 @@ class CallCreateComponent extends StatelessWidget {
               ),
               TextButton(
                 child: const Text(
-                  'escrever',
+                  'Escrever',
                   style: uiTextStyle.button1,
                 ),
                 onPressed: () {
