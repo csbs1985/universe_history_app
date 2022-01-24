@@ -1,4 +1,4 @@
-// // ignore_for_file: use_key_in_widget_constructors, must_be_immutable, avoid_print
+// ignore_for_file: use_key_in_widget_constructors, must_be_immutable, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/shared/models/category_model.dart';
@@ -27,19 +27,36 @@ class _MenuCategoriesState extends State<MenuCategoryComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: allCategories.length,
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (BuildContext context, int index) => TextButton(
-        child: Text(
-          allCategories[index].label,
-          style: _getSelected(allCategories[index].id)
-              ? uiTextStyle.text3
-              : uiTextStyle.text1,
+    return Container(
+      color: Color(0xFF161d27),
+      child: ListView.builder(
+        itemCount: allCategories.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (BuildContext context, int index) => TextButton(
+          style: TextButton.styleFrom(
+            padding: EdgeInsets.zero,
+            alignment: Alignment.center,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+          child: Container(
+            height: double.infinity,
+            color: _getSelected(allCategories[index].id)
+                ? Color(0xFF1f2938)
+                : Color(0xFF161d27),
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: Text(
+                allCategories[index].label,
+                style: uiTextStyle.text1,
+              ),
+            ),
+          ),
+          onPressed: () {
+            _setSelected(allCategories[index].id);
+          },
         ),
-        onPressed: () {
-          _setSelected(allCategories[index].id);
-        },
       ),
     );
   }

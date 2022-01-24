@@ -2,9 +2,9 @@
 
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/modal_comment_component.dart';
 import 'package:universe_history_app/shared/models/favorite_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
@@ -52,13 +52,13 @@ class _HistoryItemState extends State<HistoryItemComponent> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
       child: ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemCount: widget.allHistory.length,
         itemBuilder: (BuildContext context, int index) => Padding(
-          padding: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,

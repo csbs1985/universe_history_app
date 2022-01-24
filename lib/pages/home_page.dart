@@ -108,13 +108,14 @@ class _HomePageState extends State<HomePage> {
                   ],
                 )
               : Container(
+                  color: Color(0xFF1f2938),
                   child: SingleChildScrollView(
                     controller: _scrollController,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         SizedBox(
-                          height: 36,
+                          height: 44,
                           child: MenuCategoryComponent(),
                         ),
                         SizedBox(

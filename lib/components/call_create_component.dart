@@ -11,27 +11,30 @@ class CallCreateComponent extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
       child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(0),
+        ),
         elevation: 0,
-        color: uiColor.comp_1,
+        color: uiColor.second,
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
                 'Escreva sua história, quem sabe alguém pode te ajudar',
-                style: uiTextStyle.header1,
+                style: uiTextStyle.header2,
               ),
               const SizedBox(
                 height: 10,
               ),
               const Text(
                 'Todos nós temos uma história pra contar',
-                style: uiTextStyle.text1,
+                style: uiTextStyle.text7,
               ),
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
               TextButton(
                 child: const Text(

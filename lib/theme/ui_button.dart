@@ -17,11 +17,11 @@ class uiButton {
 
   static ButtonStyle button1 = ButtonStyle(
     padding: MaterialStateProperty.all<EdgeInsets>(
-        const EdgeInsets.fromLTRB(20, 8, 20, 10)),
+        const EdgeInsets.fromLTRB(16, 8, 16, 8)),
     backgroundColor: MaterialStateProperty.all<Color>(uiColor.first),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(50),
+        borderRadius: BorderRadius.circular(0),
         side: const BorderSide(color: uiColor.first),
       ),
     ),
