@@ -1,7 +1,8 @@
-// ignore_for_file: unused_import, unused_field
+// ignore_for_file: unused_import, unused_field, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:universe_history_app/components/appBar_component.dart';
 import 'package:universe_history_app/components/button_disabled.component.dart';
 import 'package:universe_history_app/components/radio_component.dart';
 import 'package:universe_history_app/components/select_component.dart';
@@ -28,51 +29,28 @@ class _CreateHistoryState extends State<CreateHistory> {
 
   TextEditingController titleController = TextEditingController();
   TextEditingController textController = TextEditingController();
-  // late HistoryModel _newHistory;
-  final String buttonText = 'publicar';
-  bool _isHistory = false;
 
-  void _setHistory() {
-    // _newHistory = {
-    //   id: "",
-    //   title: titleController.text,
-    //   text: textController.text,
-    //   date: "",
-    //   isComment: "",
-    //   isAnonymous: "",
-    //   edit: "",
-    //   delete: "",
-    //   id: "",
-    //   categories: [],
-    // };
-    print(titleController.text);
+  final String buttonText = 'publicar';
+
+  bool _btnPublish = false;
+
+  void _setContent() {
+    setState(() {
+      if (titleController.text.isNotEmpty && textController.text.isNotEmpty) {
+        _btnPublish = true;
+        return;
+      }
+      _btnPublish = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: SvgPicture.asset(uiSvg.closed),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: !_isHistory
-                ? ButtonDisabledComponent(buttonText)
-                : TextButton(
-                    child: Text(
-                      buttonText,
-                      style: uiTextStyle.button2,
-                    ),
-                    onPressed: () {
-                      _setHistory;
-                      Navigator.of(context).pop();
-                    }),
-          ),
-        ],
+      appBar: AppbarComponent(
+        btnBack: true,
+        btnPublish: _btnPublish,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -88,6 +66,7 @@ class _CreateHistoryState extends State<CreateHistory> {
                 maxLength: 60,
                 autofocus: true,
                 style: uiTextStyle.header1,
+                onChanged: (value) => _setContent(),
                 decoration: const InputDecoration(
                   counterText: "",
                   hintText: 'Título com até 60 caracteres',
@@ -106,6 +85,7 @@ class _CreateHistoryState extends State<CreateHistory> {
                 minLines: 10,
                 maxLines: 20,
                 style: uiTextStyle.text1,
+                onChanged: (value) => _setContent(),
                 decoration: const InputDecoration(
                   hintText: 'Sua história',
                   hintStyle: uiTextStyle.text1,
