@@ -5,10 +5,10 @@ import 'package:universe_history_app/theme/ui_color.dart';
 
 class uiTheme {
   static ThemeData theme1 = ThemeData(
-    scaffoldBackgroundColor: uiColor.second,
+    scaffoldBackgroundColor: uiColor.comp_1,
     fontFamily: 'segoe',
     appBarTheme: const AppBarTheme(
-      backgroundColor: uiColor.second,
+      backgroundColor: uiColor.comp_1,
       elevation: 0,
     ),
   );

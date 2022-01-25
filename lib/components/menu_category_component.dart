@@ -43,15 +43,12 @@ class _MenuCategoriesState extends State<MenuCategoryComponent> {
           ),
           child: Container(
             height: double.infinity,
-            color: uiColor.second,
+            color: _getSelected(allCategories[index].id)
+                ? uiColor.comp_1
+                : uiColor.second,
             child: Padding(
-              padding: EdgeInsets.all(10),
-              child: Text(
-                allCategories[index].label,
-                style: _getSelected(allCategories[index].id)
-                    ? uiTextStyle.text3
-                    : uiTextStyle.text1,
-              ),
+              padding: const EdgeInsets.all(10),
+              child: Text(allCategories[index].label, style: uiTextStyle.text1),
             ),
           ),
           onPressed: () {

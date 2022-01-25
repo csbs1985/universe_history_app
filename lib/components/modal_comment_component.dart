@@ -16,7 +16,7 @@ class ModalCommentComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: uiColor.second,
+      color: uiColor.comp_1,
       child: Stack(
         children: [
           Container(

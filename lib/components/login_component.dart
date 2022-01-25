@@ -12,7 +12,7 @@ class LoginComponent extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
       child: Card(
         elevation: 0,
-        color: uiColor.comp_1,
+        color: uiColor.comp_3,
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(

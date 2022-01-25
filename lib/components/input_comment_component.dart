@@ -53,10 +53,10 @@ class _InputCommentComponentState extends State<InputCommentComponent> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: uiColor.second,
+        color: uiColor.comp_1,
         border: Border(
           top: BorderSide(
-            color: uiColor.comp_1,
+            color: uiColor.comp_3,
             width: 0.5,
           ),
         ),

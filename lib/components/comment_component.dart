@@ -45,7 +45,7 @@ class _CommentState extends State<CommentComponent> {
                 children: [
                   GestureDetector(
                     child: Card(
-                      color: uiColor.comp_1,
+                      color: uiColor.comp_3,
                       margin: EdgeInsets.all(0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),

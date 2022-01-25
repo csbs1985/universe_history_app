@@ -23,7 +23,7 @@ class _BtnLinkComponentState extends State<BtnLinkComponent> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: uiColor.second,
+      color: uiColor.comp_1,
       child: SizedBox(
         width: double.infinity,
         height: 48,

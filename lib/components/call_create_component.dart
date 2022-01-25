@@ -15,7 +15,7 @@ class CallCreateComponent extends StatelessWidget {
           borderRadius: BorderRadius.circular(0),
         ),
         elevation: 0,
-        color: uiColor.comp_1,
+        color: uiColor.comp_3,
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(

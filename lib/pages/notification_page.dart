@@ -50,7 +50,7 @@ class _NotificationPageState extends State<NotificationPage> {
                 onTap: () => _readNotification(item.history),
                 child: Container(
                   width: double.infinity,
-                  color: item.read ? uiColor.second : uiColor.comp_1,
+                  color: item.read ? uiColor.comp_1 : uiColor.comp_3,
                   child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: Column(

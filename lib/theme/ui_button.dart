@@ -6,11 +6,11 @@ import 'package:universe_history_app/theme/ui_color.dart';
 class uiButton {
   static ButtonStyle btnCard = ButtonStyle(
     alignment: Alignment.bottomLeft,
-    backgroundColor: MaterialStateProperty.all<Color>(uiColor.comp_1),
+    backgroundColor: MaterialStateProperty.all<Color>(uiColor.comp_3),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
-        side: const BorderSide(color: uiColor.comp_1),
+        side: const BorderSide(color: uiColor.comp_3),
       ),
     ),
   );
@@ -30,7 +30,7 @@ class uiButton {
   static ButtonStyle chip = ButtonStyle(
     padding: MaterialStateProperty.all<EdgeInsets>(
         const EdgeInsets.fromLTRB(20, 8, 20, 10)),
-    backgroundColor: MaterialStateProperty.all<Color>(uiColor.second),
+    backgroundColor: MaterialStateProperty.all<Color>(uiColor.comp_1),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(50),
@@ -54,11 +54,11 @@ class uiButton {
   static ButtonStyle selectCard = ButtonStyle(
     padding: MaterialStateProperty.all<EdgeInsets>(
         const EdgeInsets.fromLTRB(20, 8, 20, 10)),
-    backgroundColor: MaterialStateProperty.all<Color>(uiColor.comp_1),
+    backgroundColor: MaterialStateProperty.all<Color>(uiColor.comp_3),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
-        side: const BorderSide(color: uiColor.comp_1),
+        side: const BorderSide(color: uiColor.comp_3),
       ),
     ),
   );
@@ -66,7 +66,7 @@ class uiButton {
   static ButtonStyle selectCardActived = ButtonStyle(
     padding: MaterialStateProperty.all<EdgeInsets>(
         const EdgeInsets.fromLTRB(20, 8, 20, 10)),
-    backgroundColor: MaterialStateProperty.all<Color>(uiColor.comp_1),
+    backgroundColor: MaterialStateProperty.all<Color>(uiColor.comp_3),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),

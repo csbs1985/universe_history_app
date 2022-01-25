@@ -35,7 +35,7 @@ class _blockedUsersPageState extends State<blockedUsersPage> {
         context: context,
         position: StyledToastPosition.bottom,
         textStyle: uiTextStyle.text1,
-        backgroundColor: uiColor.comp_1,
+        backgroundColor: uiColor.comp_3,
         animation: StyledToastAnimation.slideToBottomFade,
         reverseAnimation: StyledToastAnimation.slideFromBottomFade,
       );

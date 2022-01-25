@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
 import 'package:universe_history_app/components/call_create_component.dart';
-import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/history_item_component.dart';
 import 'package:universe_history_app/components/login_component.dart';
 import 'package:universe_history_app/components/menu_category_component.dart';
@@ -49,10 +48,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        statusBarColor: uiColor.second,
+        statusBarColor: uiColor.first,
         statusBarIconBrightness: Brightness.light,
         statusBarBrightness: Brightness.light,
-        systemNavigationBarColor: uiColor.second,
+        systemNavigationBarColor: uiColor.comp_1,
         systemNavigationBarIconBrightness: Brightness.light,
       ),
     );
@@ -61,7 +60,7 @@ class _HomePageState extends State<HomePage> {
       onWillPop: () => exit(0),
       child: Scaffold(
         appBar: ScrollAppBar(
-          backgroundColor: uiColor.second,
+          backgroundColor: uiColor.first,
           controller: _scrollController,
           automaticallyImplyLeading: false,
           elevation: 0,
@@ -87,9 +86,9 @@ class _HomePageState extends State<HomePage> {
                       height: 36,
                       child: SvgPicture.asset(uiSvg.notification),
                       borderWidth: 0,
-                      borderColor: uiColor.second,
+                      borderColor: uiColor.comp_1,
                       backgroundColor:
-                          _notification ? uiColor.comp_1 : uiColor.second),
+                          _notification ? uiColor.comp_3 : uiColor.comp_1),
                   IconButton(
                     onPressed: () {
                       Navigator.of(context).pushNamed("/settings");
@@ -110,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 )
               : Container(
-                  color: uiColor.second,
+                  color: uiColor.comp_1,
                   child: SingleChildScrollView(
                     controller: _scrollController,
                     child: Column(

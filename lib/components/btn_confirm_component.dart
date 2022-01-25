@@ -29,7 +29,7 @@ class _BtnLinkComponentState extends State<BtnConfirmComponent> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 0, 8, 10),
       child: Material(
-        color: uiColor.second,
+        color: uiColor.comp_1,
         child: SizedBox(
           width: double.infinity,
           height: 48,
@@ -56,7 +56,7 @@ Future<Future> _showAlertConfirm(
     barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(
-        backgroundColor: uiColor.second,
+        backgroundColor: uiColor.comp_1,
         title: Text(
           title,
           style: uiTextStyle.text5,

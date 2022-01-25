@@ -57,10 +57,10 @@ class _SettingsPageState extends State<SettingsPage> {
               //     hintText: _nickNameController.text,
               //     hintStyle: uiTextStyle.header3,
               //     enabledBorder: const UnderlineInputBorder(
-              //       borderSide: BorderSide(color: uiColor.second),
+              //       borderSide: BorderSide(color: uiColor.comp_1),
               //     ),
               //     focusedBorder: const UnderlineInputBorder(
-              //       borderSide: BorderSide(color: uiColor.second),
+              //       borderSide: BorderSide(color: uiColor.comp_1),
               //     ),
               //   ),
               // ),
@@ -88,7 +88,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         toggleSize: 20,
                         toggleColor: uiColor.third,
                         activeColor: uiColor.first,
-                        inactiveColor: uiColor.comp_1,
+                        inactiveColor: uiColor.comp_3,
                         showOnOff: true,
                         onToggle: (value) => _toggleNotification(value),
                       ),
