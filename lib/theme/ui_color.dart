@@ -10,4 +10,23 @@ class uiColor {
   static const Color comp_1 = const Color(0xFF0d1117);
   static const Color comp_2 = const Color(0xFF8b949e);
   static const Color comp_3 = const Color(0xFF21262d);
+  static const Color notification = const Color(0xFFFF0000);
 }
+
+/*
+#7291d5
+#6987c6
+#607db7
+#5873a8
+#506a99
+#48608b
+#40577c
+#394e6f
+#324461
+#2c3b54
+#263347
+#202a3a
+#1a222e
+#141a22
+#0d1117
+ */

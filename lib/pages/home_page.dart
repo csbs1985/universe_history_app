@@ -1,7 +1,6 @@
 // ignore_for_file: unnecessary_new, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, use_key_in_widget_constructors, must_be_immutable, prefer_final_fields
 
 import 'dart:io';
-import 'package:circle_button/circle_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -78,17 +77,25 @@ class _HomePageState extends State<HomePage> {
               ),
               Row(
                 children: [
-                  CircleButton(
-                      onTap: () {
-                        Navigator.of(context).pushNamed("/notification");
-                      },
-                      width: 36,
-                      height: 36,
-                      child: SvgPicture.asset(uiSvg.notification),
-                      borderWidth: 0,
-                      borderColor: uiColor.comp_1,
-                      backgroundColor:
-                          _notification ? uiColor.comp_3 : uiColor.comp_1),
+                  Stack(
+                    children: [
+                      IconButton(
+                        icon: SvgPicture.asset(uiSvg.notification),
+                        onPressed: () {
+                          Navigator.of(context).pushNamed("/notification");
+                        },
+                      ),
+                      if (_notification)
+                        Positioned(
+                          top: 8,
+                          right: 12,
+                          child: CircleAvatar(
+                            radius: 5,
+                            backgroundColor: uiColor.notification,
+                          ),
+                        ),
+                    ],
+                  ),
                   IconButton(
                     onPressed: () {
                       Navigator.of(context).pushNamed("/settings");
