@@ -15,9 +15,9 @@ class CallCreateComponent extends StatelessWidget {
           borderRadius: BorderRadius.circular(0),
         ),
         elevation: 0,
-        color: uiColor.second,
+        color: uiColor.comp_1,
         child: Padding(
-          padding: const EdgeInsets.all(4),
+          padding: const EdgeInsets.all(16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +30,7 @@ class CallCreateComponent extends StatelessWidget {
                 height: 10,
               ),
               const Text(
-                'Todos nós temos uma história pra contar. Quem sabe alguém pode te ajudar',
+                'Todos nós temos uma história pra contar. Quem sabe alguém pode te ajudar.',
                 style: uiTextStyle.text7,
               ),
               const SizedBox(
