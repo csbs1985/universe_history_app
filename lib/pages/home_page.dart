@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                           top: 8,
                           right: 12,
                           child: CircleAvatar(
-                            radius: 5,
+                            radius: 4,
                             backgroundColor: uiColor.notification,
                           ),
                         ),

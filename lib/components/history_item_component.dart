@@ -4,7 +4,6 @@ import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/modal_comment_component.dart';
 import 'package:universe_history_app/shared/models/favorite_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
@@ -51,79 +50,76 @@ class _HistoryItemState extends State<HistoryItemComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-      child: ListView.builder(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: widget.allHistory.length,
-        itemBuilder: (BuildContext context, int index) => Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                widget.allHistory[index].title,
-                style: uiTextStyle.header1,
-              ),
-              Text(
-                widget.allHistory[index].date + ' - anônimo',
-                style: uiTextStyle.text2,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              ExpandableText(
-                widget.allHistory[index].text,
-                style: uiTextStyle.text1,
-                expandText: 'continuar lendo',
-                collapseText: 'fechar',
-                maxLines: 8,
-                linkColor: uiColor.first,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  !widget.allHistory[index].isComment
-                      ? SizedBox()
-                      : TextButton(
-                          child: Text(
-                            widget.allHistory[index].qtdComment.toString() +
-                                (widget.allHistory[index].qtdComment > 1
-                                    ? ' comentários'
-                                    : ' comentário'),
-                            style: uiTextStyle.text2,
-                          ),
-                          onPressed: () => _showModal(
-                              context, widget.allHistory[index].id, false),
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: widget.allHistory.length,
+      itemBuilder: (BuildContext context, int index) => Padding(
+        padding: const EdgeInsets.fromLTRB(12, 20, 12, 0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              widget.allHistory[index].title,
+              style: uiTextStyle.header1,
+            ),
+            Text(
+              widget.allHistory[index].date + ' - anônimo',
+              style: uiTextStyle.text2,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ExpandableText(
+              widget.allHistory[index].text,
+              style: uiTextStyle.text1,
+              expandText: 'continuar lendo',
+              collapseText: 'fechar',
+              maxLines: 8,
+              linkColor: uiColor.first,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                !widget.allHistory[index].isComment
+                    ? SizedBox()
+                    : TextButton(
+                        child: Text(
+                          widget.allHistory[index].qtdComment.toString() +
+                              (widget.allHistory[index].qtdComment > 1
+                                  ? ' comentários'
+                                  : ' comentário'),
+                          style: uiTextStyle.text2,
                         ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      if (widget.allHistory[index].isComment)
-                        IconButton(
-                            onPressed: () => _showModal(
-                                context, widget.allHistory[index].id, true),
-                            icon: SvgPicture.asset(uiSvg.comment)),
-                      IconButton(
-                        onPressed: () =>
-                            _setFavorited(widget.allHistory[index].id),
-                        icon: _getFavorited(widget.allHistory[index].id)
-                            ? SvgPicture.asset(uiSvg.favorited)
-                            : SvgPicture.asset(uiSvg.favorite),
+                        onPressed: () => _showModal(
+                            context, widget.allHistory[index].id, false),
                       ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (widget.allHistory[index].isComment)
                       IconButton(
-                        icon: SvgPicture.asset(uiSvg.options),
-                        onPressed: () {},
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ],
-          ),
+                          onPressed: () => _showModal(
+                              context, widget.allHistory[index].id, true),
+                          icon: SvgPicture.asset(uiSvg.comment)),
+                    IconButton(
+                      onPressed: () =>
+                          _setFavorited(widget.allHistory[index].id),
+                      icon: _getFavorited(widget.allHistory[index].id)
+                          ? SvgPicture.asset(uiSvg.favorited)
+                          : SvgPicture.asset(uiSvg.favorite),
+                    ),
+                    IconButton(
+                      icon: SvgPicture.asset(uiSvg.options),
+                      onPressed: () {},
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ],
         ),
       ),
     );
