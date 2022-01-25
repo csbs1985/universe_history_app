@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, unused_field, avoid_print
+// ignore_for_file: unused_import, unused_field, avoid_print, prefer_final_fields
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -32,15 +32,43 @@ class _CreateHistoryState extends State<CreateHistory> {
 
   final String buttonText = 'publicar';
 
+  Map _form = {
+    "privacy": 0,
+    "comment": 0,
+    "categories": [],
+    "title": '',
+    "text": ''
+  };
+
   bool _btnPublish = false;
 
   void _setContent() {
     setState(() {
-      if (titleController.text.isNotEmpty && textController.text.isNotEmpty) {
-        _btnPublish = true;
-      } else {
-        _btnPublish = false;
-      }
+      print(titleController.text);
+      print(textController.text);
+      _btnPublish =
+          (titleController.text.isNotEmpty && textController.text.isNotEmpty)
+              ? true
+              : false;
+    });
+  }
+
+  void _setPrivacy(value) {
+    setState(() {
+      // _form = value;
+      print(value);
+    });
+  }
+
+  void _setComment(value) {
+    setState(() {
+      print(value);
+    });
+  }
+
+  void _setCategories(value) {
+    setState(() {
+      print(value);
     });
   }
 
@@ -99,13 +127,21 @@ class _CreateHistoryState extends State<CreateHistory> {
               ),
               SelectComponent(
                 title: 'Privacidade',
+                type: 'privacy',
                 content: allPrivacy,
+                callback: (value) => _setPrivacy(value),
               ),
               SelectComponent(
                 title: 'Habilitar comentários',
+                type: 'comment',
                 content: allComment,
+                callback: (value) => _setComment(value),
               ),
-              RadioComponent('Categorias', allCategories),
+              RadioComponent(
+                title: 'Categorias',
+                content: allCategories,
+                callback: (value) => _setCategories(value),
+              ),
             ],
           ),
         ),

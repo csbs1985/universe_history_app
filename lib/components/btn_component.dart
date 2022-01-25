@@ -38,8 +38,7 @@ class _BtnComponentState extends State<BtnComponent> {
         ),
         child: Text(
           widget._label,
-          style:
-              widget._enabled ? uiTextStyle.button2 : uiTextStyle.btnDisabled,
+          style: widget._enabled ? uiTextStyle.btn : uiTextStyle.btnDisabled,
         ),
         onPressed: () => widget._enabled ? _onPressed() : null,
       ),

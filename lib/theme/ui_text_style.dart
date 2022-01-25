@@ -5,6 +5,31 @@ import 'package:flutter/material.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 
 class uiTextStyle {
+  static const TextStyle btnFlex = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+    color: uiColor.third,
+  );
+
+  static const TextStyle btnFlexActived = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+    color: uiColor.comp_1,
+  );
+
+  static const TextStyle btn = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: uiColor.first,
+  );
+
+  static const TextStyle btnDisabled = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: uiColor.comp_3,
+  );
+
+  ///////////////////
   static const TextStyle header1 = TextStyle(
     fontSize: 28,
     fontWeight: FontWeight.w700,
@@ -62,19 +87,13 @@ class uiTextStyle {
   static const TextStyle button1 = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w400,
-    color: uiColor.comp_1,
+    color: uiColor.third,
   );
 
   static const TextStyle button2 = TextStyle(
-    fontSize: 14,
+    fontSize: 20,
     fontWeight: FontWeight.w400,
-    color: uiColor.first,
-  );
-
-  static const TextStyle btnDisabled = TextStyle(
-    fontSize: 14,
-    fontWeight: FontWeight.w400,
-    color: uiColor.comp_3,
+    color: uiColor.third,
   );
 
   static const TextStyle chip = TextStyle(
