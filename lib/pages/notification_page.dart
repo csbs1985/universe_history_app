@@ -1,6 +1,7 @@
 // ignore_for_file: iterable_contains_unrelated_type, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/shared/models/notification_model.dart';
@@ -28,6 +29,12 @@ class _NotificationPageState extends State<NotificationPage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: uiColor.comp_1,
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(

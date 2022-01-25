@@ -1,4 +1,4 @@
-// ignore_for_file: override_on_non_overriding_member, prefer_const_constructors, unused_element, use_key_in_widget_constructors, file_names
+// ignore_for_file: override_on_non_overriding_member, prefer_const_constructors, unused_element, use_key_in_widget_constructors, file_names, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -54,17 +54,10 @@ class _AppbarComponentState extends State<AppbarComponent> {
         Padding(
           padding: const EdgeInsets.only(right: 10),
           child: BtnComponent(
+            callback: (value) => _onPressed(context),
             enabled: widget._btnPublish,
           ),
         ),
-        // child: TextButton(
-        //     child: Text(
-        //       _btnPublishText,
-        //       style: uiTextStyle.button2,
-        //     ),
-        //     onPressed: () {
-        //       _onPressed(context);
-        //     })),
       ],
     );
   }

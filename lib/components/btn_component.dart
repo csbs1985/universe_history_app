@@ -21,9 +21,7 @@ class BtnComponent extends StatefulWidget {
 
 class _BtnComponentState extends State<BtnComponent> {
   void _onPressed() {
-    setState(() {
-      widget._callback!(true);
-    });
+    widget._callback!(true);
   }
 
   @override
