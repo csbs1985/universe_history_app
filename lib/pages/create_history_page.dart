@@ -38,9 +38,9 @@ class _CreateHistoryState extends State<CreateHistory> {
     setState(() {
       if (titleController.text.isNotEmpty && textController.text.isNotEmpty) {
         _btnPublish = true;
-        return;
+      } else {
+        _btnPublish = false;
       }
-      _btnPublish = false;
     });
   }
 
@@ -54,7 +54,7 @@ class _CreateHistoryState extends State<CreateHistory> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -98,12 +98,12 @@ class _CreateHistoryState extends State<CreateHistory> {
                 ),
               ),
               SelectComponent(
-                'Privacidade',
-                allPrivacy,
+                title: 'Privacidade',
+                content: allPrivacy,
               ),
               SelectComponent(
-                'Habilitar comentários',
-                allComment,
+                title: 'Habilitar comentários',
+                content: allComment,
               ),
               RadioComponent('Categorias', allCategories),
             ],

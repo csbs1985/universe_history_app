@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/shared/models/common_questions_model.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -21,17 +22,11 @@ class CommonQuestionsPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Perguntas frequentes',
-                style: uiTextStyle.header1,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
+              const TitleComponent('Perguntas frequentes'),
               for (var item in allQuestions)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

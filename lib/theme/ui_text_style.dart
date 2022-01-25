@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, constant_identifier_names
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,12 +53,6 @@ class uiTextStyle {
     color: uiColor.third,
   );
 
-  static const TextStyle text6 = TextStyle(
-    fontSize: 14,
-    fontWeight: FontWeight.w400,
-    color: uiColor.third,
-  );
-
   static const TextStyle text7 = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w400,
@@ -77,7 +71,7 @@ class uiTextStyle {
     color: uiColor.first,
   );
 
-  static const TextStyle ButtonDisabled = TextStyle(
+  static const TextStyle btnDisabled = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w400,
     color: uiColor.comp_3,

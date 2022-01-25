@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:universe_history_app/components/btn_confirm_component.dart';
 import 'package:universe_history_app/components/btn_link_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
@@ -38,11 +39,14 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: const AppbarBackComponent(),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          padding: const EdgeInsets.fromLTRB(10, 0, 20, 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const TitleComponent('Configurações'),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: TitleComponent('Configurações'),
+              ),
               const TitleResumeComponent('Conta',
                   'Mantenha seus dados atualizados e consulte seu conteúdo.'),
               const BtnLinkComponent('Nome de usuário', '/account'),
@@ -80,8 +84,8 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       FlutterSwitch(
                         value: notification,
-                        activeText: "Ligada",
-                        inactiveText: "Desligada",
+                        activeText: "ligada",
+                        inactiveText: "desligada",
                         width: 80,
                         height: 30,
                         valueFontSize: 12,
@@ -89,6 +93,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         toggleColor: uiColor.third,
                         activeColor: uiColor.first,
                         inactiveColor: uiColor.comp_3,
+                        borderRadius: 0,
                         showOnOff: true,
                         onToggle: (value) => _toggleNotification(value),
                       ),
@@ -115,13 +120,15 @@ class _SettingsPageState extends State<SettingsPage> {
               const DividerComponent(),
               const TitleResumeComponent('Finalizar',
                   'Sair temporariamente ou deletar a conta History.'),
-              const BtnLinkComponent('Sair', '/blocked'),
+              const BtnConfirmComponent(
+                title: 'Sair',
+                btnPrimaryLabel: 'Cancelar',
+                btnSecondaryLabel: 'Sair',
+                link: '/home',
+                text:
+                    'Dar uma tempo e mandar meu conteúdo no History. Sua conta volta a ficar ativa quando entrar novamente com sua conta Apple ou Google cadastrada.',
+              ),
               const BtnLinkComponent('Deletar conta', '/delete-account'),
-              // const BtnConfirmComponent(
-              //   'Deletar conta',
-              //   'Você não poderá mais acessar suas hitórias e comentários. Tem certeza que deseja deletar sua conta definitivamente?',
-              //   '/home',
-              // ),
             ],
           ),
         ),

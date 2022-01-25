@@ -12,7 +12,7 @@ class ButtonDisabledComponent extends StatelessWidget {
     return TextButton(
       child: Text(
         buttonText,
-        style: uiTextStyle.ButtonDisabled,
+        style: uiTextStyle.btnDisabled,
       ),
       onPressed: null,
     );

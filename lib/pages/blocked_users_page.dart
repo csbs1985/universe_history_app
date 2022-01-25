@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/shared/models/blocked_model.dart';
 import 'package:universe_history_app/theme/ui_button.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
@@ -53,17 +54,11 @@ class _blockedUsersPageState extends State<blockedUsersPage> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  numBlocked,
-                  style: uiTextStyle.header1,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
+                TitleComponent(numBlocked),
                 const Text(
                   'Quando você bloqueia uma pessoa, este usuário não poderá mais ler suas histórias e comentários e comentar o que você escreve.',
                   style: uiTextStyle.text2,

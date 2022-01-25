@@ -1,14 +1,12 @@
-// ignore_for_file: unnecessary_new, unnecessary_import, override_on_non_overriding_member, prefer_const_constructors, non_constant_identifier_names, use_key_in_widget_constructors
+// ignore_for_file: override_on_non_overriding_member, prefer_const_constructors, unused_element, use_key_in_widget_constructors, file_names
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:universe_history_app/components/button_disabled.component.dart';
+import 'package:universe_history_app/components/btn_component.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
-import 'package:universe_history_app/theme/ui_text_style.dart';
 
-class AppbarComponent extends StatelessWidget with PreferredSizeWidget {
-  AppbarComponent(
+class AppbarComponent extends StatefulWidget with PreferredSizeWidget {
+  const AppbarComponent(
       {Function? callback, bool btnBack = false, bool btnPublish = false})
       : _btnBack = btnBack,
         _btnPublish = btnPublish,
@@ -16,27 +14,37 @@ class AppbarComponent extends StatelessWidget with PreferredSizeWidget {
 
   final bool _btnBack;
   final bool _btnPublish;
-  final String _btnPublishText = 'publicar';
   final Function? _callback;
 
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+
+  @override
+  _AppbarComponentState createState() => _AppbarComponentState();
+}
+
+class _AppbarComponentState extends State<AppbarComponent> {
   void _onPressed(BuildContext context) {
-    if (_callback != null) {
-      _callback!(true);
-    }
-    _back(context);
+    setState(() {
+      if (widget._callback != null) {
+        widget._callback!(true);
+      }
+      _back(context);
+    });
   }
 
   void _back(BuildContext context) {
     Navigator.of(context).pop();
   }
 
-  @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  void _setForm() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: _btnBack
+      leading: widget._btnBack
           ? IconButton(
               icon: SvgPicture.asset(uiSvg.closed),
               onPressed: () => _back(context),
@@ -45,17 +53,18 @@ class AppbarComponent extends StatelessWidget with PreferredSizeWidget {
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 10),
-          child: _btnPublish
-              ? TextButton(
-                  child: Text(
-                    _btnPublishText,
-                    style: uiTextStyle.button2,
-                  ),
-                  onPressed: () {
-                    _onPressed(context);
-                  })
-              : ButtonDisabledComponent(_btnPublishText),
+          child: BtnComponent(
+            enabled: widget._btnPublish,
+          ),
         ),
+        // child: TextButton(
+        //     child: Text(
+        //       _btnPublishText,
+        //       style: uiTextStyle.button2,
+        //     ),
+        //     onPressed: () {
+        //       _onPressed(context);
+        //     })),
       ],
     );
   }

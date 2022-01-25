@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, avoid_print, unused_import
+// ignore_for_file: use_key_in_widget_constructors, avoid_print, unused_import, unused_field, avoid_web_libraries_in_flutter, no_logic_in_create_state
 
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/title_component.dart';
@@ -7,9 +7,15 @@ import 'package:universe_history_app/theme/ui_button.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class SelectComponent extends StatefulWidget {
-  const SelectComponent(this.title, this.content);
-  final String title;
-  final List<SelectModel> content;
+  final Function? _callback;
+  final List<SelectModel> _content;
+  final String? _title;
+
+  const SelectComponent(
+      {Function? callback, String? title, required List<SelectModel> content})
+      : _callback = callback,
+        _content = content,
+        _title = title;
 
   @override
   _SelectCustonState createState() => _SelectCustonState();
@@ -18,10 +24,9 @@ class SelectComponent extends StatefulWidget {
 class _SelectCustonState extends State<SelectComponent> {
   int isSelected = 0;
 
-  void _setSelected(int id) {
+  void _setSelected(item) {
     setState(() {
-      isSelected = id;
-      print(isSelected);
+      widget._callback!(item);
     });
   }
 
@@ -34,22 +39,17 @@ class _SelectCustonState extends State<SelectComponent> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TitleComponent(widget.title),
+        // if (widget._title) TitleComponent(widget._title),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            for (var item in widget.content)
+            for (var item in widget._content)
               TextButton(
-                  child: Text(
-                    item.label,
-                    style: _getSelected(item.id)
-                        ? uiTextStyle.chipActive
-                        : uiTextStyle.chip,
-                  ),
-                  onPressed: () => _setSelected(item.id),
-                  style: _getSelected(item.id)
-                      ? uiButton.chipActive
-                      : uiButton.chip),
+                child: Text(item.label),
+                onPressed: () => _setSelected(item),
+                style:
+                    _getSelected(item.id) ? uiButton.button1 : uiButton.button1,
+              ),
           ],
         ),
         const SizedBox(

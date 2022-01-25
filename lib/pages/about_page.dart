@@ -18,56 +18,52 @@ class AboutPage extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
-              child: TitleComponent('Sobre'),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 25,
-                    child: Image.asset(
-                      uiImage.logo,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  const Text(
-                    'Versão',
-                    style: uiTextStyle.text2,
-                  ),
-                  const Text(
-                    'v1.0.0(c)',
-                    style: uiTextStyle.text1,
-                  ),
-                  const Text(
-                    '17 de janeiro de 2022 às 10:20',
-                    style: uiTextStyle.text1,
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  const Text(
-                    'History e os logotipos e logomarcas do History são marcas registradas de Universe Inc. Todos os direitos registrados.',
-                    style: uiTextStyle.text1,
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  const Text(
-                    'History foi construído usando software de código aberto e licenciado.',
-                    style: uiTextStyle.text1,
-                  ),
-                ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const TitleComponent('Sobre'),
+              const SizedBox(
+                height: 10,
               ),
-            ),
-          ],
+              SizedBox(
+                height: 30,
+                child: Image.asset(
+                  uiImage.logo,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text(
+                'Versão',
+                style: uiTextStyle.text2,
+              ),
+              const Text(
+                'v1.0.0(c)',
+                style: uiTextStyle.text1,
+              ),
+              const Text(
+                '17 de janeiro de 2022 às 10:20',
+                style: uiTextStyle.text1,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              const Text(
+                'History e os logotipos e logomarcas do History são marcas registradas de Universe Inc. Todos os direitos registrados.',
+                style: uiTextStyle.text1,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              const Text(
+                'History foi construído usando software de código aberto e licenciado.',
+                style: uiTextStyle.text1,
+              ),
+            ],
+          ),
         ),
       ),
     );

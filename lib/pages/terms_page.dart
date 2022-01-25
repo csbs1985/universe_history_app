@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:styled_text/styled_text.dart';
+import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -20,19 +21,13 @@ class TermsPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Termo de uso',
-                style: uiTextStyle.header1,
-              ),
-              const SizedBox(
-                height: 30,
-              ),
+              const TitleComponent('Termo de uso'),
               StyledText(
-                  style: uiTextStyle.text6,
+                  style: uiTextStyle.text4,
                   tags: {
                     'b': StyledTextTag(
                       style: const TextStyle(fontWeight: FontWeight.w700),

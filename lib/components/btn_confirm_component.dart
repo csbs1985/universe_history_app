@@ -6,24 +6,32 @@ import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class BtnConfirmComponent extends StatefulWidget {
-  const BtnConfirmComponent(this.title, this.text, this.link);
+  const BtnConfirmComponent({
+    required String title,
+    required String text,
+    required String link,
+    Function? callback,
+    String? btnPrimaryLabel = 'Ok',
+    String? btnSecondaryLabel = 'Cancelar',
+  })  : _callback = callback,
+        _title = title,
+        _text = text,
+        _btnPrimaryLabel = btnPrimaryLabel,
+        _btnSecondaryLabel = btnSecondaryLabel,
+        _link = link;
 
-  final String title;
-  final String text;
-  final String link;
+  final Function? _callback;
+  final String _title;
+  final String _text;
+  final String? _btnPrimaryLabel;
+  final String? _btnSecondaryLabel;
+  final String _link;
 
   @override
-  _BtnLinkComponentState createState() =>
-      _BtnLinkComponentState(title, text, link);
+  _BtnLinkComponentState createState() => _BtnLinkComponentState();
 }
 
 class _BtnLinkComponentState extends State<BtnConfirmComponent> {
-  _BtnLinkComponentState(this.title, this.text, this.link);
-
-  final String title;
-  final String text;
-  final String link;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -37,11 +45,18 @@ class _BtnLinkComponentState extends State<BtnConfirmComponent> {
             child: Container(
               alignment: Alignment.centerLeft,
               child: Text(
-                title,
+                widget._title,
                 style: uiTextStyle.text1,
               ),
             ),
-            onPressed: () => _showAlertConfirm(context, title, text, link),
+            onPressed: () => _showAlertConfirm(
+              context,
+              widget._title,
+              widget._text,
+              widget._link,
+              widget._btnPrimaryLabel,
+              widget._btnSecondaryLabel,
+            ),
           ),
         ),
       ),
@@ -50,7 +65,12 @@ class _BtnLinkComponentState extends State<BtnConfirmComponent> {
 }
 
 Future<Future> _showAlertConfirm(
-    BuildContext context, String title, String text, String link) async {
+    BuildContext context,
+    String title,
+    String text,
+    String link,
+    String? _btnPrimaryLabel,
+    String? _btnSecondaryLabel) async {
   return showDialog(
     context: context,
     barrierDismissible: false,
@@ -73,7 +93,7 @@ Future<Future> _showAlertConfirm(
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -81,15 +101,15 @@ Future<Future> _showAlertConfirm(
                   onTap: () {
                     Navigator.of(context).pushNamed("/home");
                   },
-                  child: const Text(
-                    'Deletar',
+                  child: Text(
+                    _btnSecondaryLabel!,
                     style: uiTextStyle.text3,
                   ),
                 ),
                 TextButton(
                   style: uiButton.button1,
-                  child: const Text(
-                    'Cancelar',
+                  child: Text(
+                    _btnPrimaryLabel!,
                     style: uiTextStyle.text1,
                   ),
                   onPressed: () => Navigator.pop(context),

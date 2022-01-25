@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/shared/models/notification_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
@@ -39,18 +40,15 @@ class _NotificationPageState extends State<NotificationPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Padding(
-              padding: EdgeInsets.fromLTRB(10, 10, 10, 20),
-              child: Text(
-                'Notificações',
-                style: uiTextStyle.header1,
-              ),
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+              child: const TitleComponent('Notificações'),
             ),
             for (var item in allNotification)
               GestureDetector(
                 onTap: () => _readNotification(item.history),
                 child: Container(
                   width: double.infinity,
-                  color: item.read ? uiColor.comp_1 : uiColor.comp_3,
+                  color: item.read ? uiColor.second : uiColor.comp_1,
                   child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: Column(

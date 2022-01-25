@@ -1,12 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:universe_history_app/components/btn_card_component.dart';
 import 'package:universe_history_app/components/select_card_component.dart';
-import 'package:universe_history_app/components/select_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/shared/models/justtify_model.dart';
-import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class JustifyPage extends StatefulWidget {
@@ -34,11 +30,11 @@ class _JustifyPageState extends State<JustifyPage> {
                 padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                 child: Column(
                   children: [
-                    Text(
+                    const Text(
                       'Antes me diga o motivo do porque esta deletando sua conta History.',
                       style: uiTextStyle.text2,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     SelectCardComponent(allJustify),
