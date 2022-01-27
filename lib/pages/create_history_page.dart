@@ -1,12 +1,15 @@
-// ignore_for_file: unused_import, unused_field, avoid_print, prefer_final_fields, unnecessary_new, prefer_is_empty
+// ignore_for_file: unused_import, unused_field, avoid_print, prefer_final_fields, unnecessary_new, prefer_is_empty, todo
 
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/components/appBar_component.dart';
 import 'package:universe_history_app/components/button_disabled.component.dart';
 import 'package:universe_history_app/components/select_categories_component.dart';
 import 'package:universe_history_app/components/select_component.dart';
+import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/shared/models/category_model.dart';
+import 'package:universe_history_app/shared/models/enums/type_toast_enum.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/shared/models/select_modal.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
@@ -31,6 +34,8 @@ class _CreateHistoryState extends State<CreateHistory> {
 
   TextEditingController titleController = TextEditingController();
   TextEditingController textController = TextEditingController();
+
+  final ToastComponent toast = new ToastComponent();
 
   final String buttonText = 'publicar';
   bool _isAnonymous = true;
@@ -71,8 +76,7 @@ class _CreateHistoryState extends State<CreateHistory> {
     });
   }
 
-  void _publishHIstory() {
-    print('história publicada com sucesso!');
+  void _publishHIstory(BuildContext context) {
     Map<String, dynamic> _form = {
       'title': titleController.text,
       'text': textController.text,
@@ -85,8 +89,10 @@ class _CreateHistoryState extends State<CreateHistory> {
       'qtyComment': 0,
       'categories': _categories,
     };
-    print(_form);
-    // Navigator.of(context).pop();
+
+    print(_form); // TODO: remover quando salvar no banco.
+    toast.toast(context, ToastEnum.SUCCESS, 'Sua história foi publicada!');
+    Navigator.of(context).pop();
   }
 
   @override
@@ -96,7 +102,7 @@ class _CreateHistoryState extends State<CreateHistory> {
       appBar: AppbarComponent(
         btnBack: true,
         btnPublish: _btnPublish,
-        callback: (value) => _publishHIstory(),
+        callback: (value) => _publishHIstory(context),
       ),
       body: SingleChildScrollView(
         child: Padding(
