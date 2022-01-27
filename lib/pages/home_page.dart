@@ -10,7 +10,6 @@ import 'package:universe_history_app/components/history_item_component.dart';
 import 'package:universe_history_app/components/login_component.dart';
 import 'package:universe_history_app/components/menu_category_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
-import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_image.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
@@ -24,11 +23,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _scrollController = ScrollController();
-  List<HistoryModel> allHistory = HistoryModel.allHistory;
 
   bool _isLoading = true;
   bool _notification = true;
   bool _login = true;
+
+  String _itemSelectedMenu = 'todas';
 
   @override
   void initState() {
@@ -41,6 +41,12 @@ class _HomePageState extends State<HomePage> {
   void _scrollToTop() {
     _scrollController.animateTo(0,
         duration: Duration(milliseconds: 300), curve: Curves.linear);
+  }
+
+  void _selectMenu(value) {
+    setState(() {
+      _itemSelectedMenu = value;
+    });
   }
 
   @override
@@ -124,7 +130,9 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         SizedBox(
                           height: 44,
-                          child: MenuCategoryComponent(),
+                          child: MenuCategoryComponent(
+                            callback: (value) => _selectMenu(value),
+                          ),
                         ),
                         SizedBox(
                           height: 10,
@@ -134,7 +142,8 @@ class _HomePageState extends State<HomePage> {
                               _login ? CallCreateComponent() : LoginComponent(),
                         ),
                         Flexible(
-                          child: HistoryItemComponent(allHistory),
+                          child: HistoryItemComponent(
+                              itemSelectedMenu: _itemSelectedMenu),
                         ),
                       ],
                     ),

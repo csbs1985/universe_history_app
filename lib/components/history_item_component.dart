@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, unused_field, iterable_contains_unrelated_type, list_remove_unrelated_type, no_logic_in_create_state, unnecessary_new
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, unused_field, iterable_contains_unrelated_type, list_remove_unrelated_type, no_logic_in_create_state, unnecessary_new, prefer_final_fields
 
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
@@ -12,17 +12,30 @@ import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class HistoryItemComponent extends StatefulWidget {
-  const HistoryItemComponent(this.allHistory);
-  final List<HistoryModel> allHistory;
+  const HistoryItemComponent(
+      {Function? callback, required String itemSelectedMenu})
+      : _itemSelectedMenu = itemSelectedMenu,
+        _callback = callback;
+
+  final String _itemSelectedMenu;
+  final Function? _callback;
 
   @override
-  _HistoryItemState createState() => _HistoryItemState(allHistory);
+  _HistoryItemState createState() => _HistoryItemState();
 }
 
 class _HistoryItemState extends State<HistoryItemComponent> {
-  _HistoryItemState(this.allHistory);
-  final List<HistoryModel> allHistory;
   List<FavoriteModel> allFavorite = FavoriteModel.allFavorite;
+  List<HistoryModel> _allHistory = HistoryModel.allHistory;
+  List<HistoryModel> _allHistorySelected = HistoryModel.allHistory;
+
+  void refresh() {
+    setState(() {
+      _allHistorySelected = _allHistory
+          .where((i) => i.categories.contains(widget._itemSelectedMenu))
+          .toList();
+    });
+  }
 
   void _setFavorited(String id) {
     const user = 'charlesSantos';
@@ -45,7 +58,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
   }
 
   bool _getFavorited(String id) {
-    return allHistory.contains(id) ? true : false;
+    return _allHistorySelected.contains(id) ? true : false;
   }
 
   @override
@@ -53,7 +66,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
     return ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      itemCount: widget.allHistory.length,
+      itemCount: _allHistorySelected.length,
       itemBuilder: (BuildContext context, int index) => Padding(
         padding: const EdgeInsets.fromLTRB(12, 20, 12, 0),
         child: Column(
@@ -61,18 +74,18 @@ class _HistoryItemState extends State<HistoryItemComponent> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              widget.allHistory[index].title,
+              _allHistorySelected[index].title,
               style: uiTextStyle.header1,
             ),
             Text(
-              widget.allHistory[index].date + ' - anônimo',
+              _allHistorySelected[index].date + ' - anônimo',
               style: uiTextStyle.text2,
             ),
             const SizedBox(
               height: 10,
             ),
             ExpandableText(
-              widget.allHistory[index].text,
+              _allHistorySelected[index].text,
               style: uiTextStyle.text1,
               expandText: 'continuar lendo',
               collapseText: 'fechar',
@@ -83,31 +96,31 @@ class _HistoryItemState extends State<HistoryItemComponent> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                !widget.allHistory[index].isComment
+                !_allHistorySelected[index].isComment
                     ? SizedBox()
                     : TextButton(
                         child: Text(
-                          widget.allHistory[index].qtyComment.toString() +
-                              (widget.allHistory[index].qtyComment > 1
+                          _allHistorySelected[index].qtyComment.toString() +
+                              (_allHistorySelected[index].qtyComment > 1
                                   ? ' comentários'
                                   : ' comentário'),
                           style: uiTextStyle.text2,
                         ),
                         onPressed: () => _showModal(
-                            context, widget.allHistory[index].id, false),
+                            context, _allHistorySelected[index].id, false),
                       ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    if (widget.allHistory[index].isComment)
+                    if (_allHistorySelected[index].isComment)
                       IconButton(
                           onPressed: () => _showModal(
-                              context, widget.allHistory[index].id, true),
+                              context, _allHistorySelected[index].id, true),
                           icon: SvgPicture.asset(uiSvg.comment)),
                     IconButton(
                       onPressed: () =>
-                          _setFavorited(widget.allHistory[index].id),
-                      icon: _getFavorited(widget.allHistory[index].id)
+                          _setFavorited(_allHistorySelected[index].id),
+                      icon: _getFavorited(_allHistorySelected[index].id)
                           ? SvgPicture.asset(uiSvg.favorited)
                           : SvgPicture.asset(uiSvg.favorite),
                     ),

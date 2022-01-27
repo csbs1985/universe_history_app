@@ -6,7 +6,9 @@ import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class MenuCategoryComponent extends StatefulWidget {
-  const MenuCategoryComponent({Key? key}) : super(key: key);
+  const MenuCategoryComponent({Function? callback}) : _callback = callback;
+
+  final Function? _callback;
 
   @override
   _MenuCategoriesState createState() => _MenuCategoriesState();
@@ -19,6 +21,7 @@ class _MenuCategoriesState extends State<MenuCategoryComponent> {
   void _setSelected(String id) {
     setState(() {
       isSelected = id;
+      widget._callback!(isSelected);
     });
   }
 
