@@ -30,10 +30,8 @@ class ToastComponent {
       position: StyledToastPosition.bottom,
       textStyle: uiTextStyle.text1,
       backgroundColor: _style,
-      textAlign: TextAlign.left,
       animation: StyledToastAnimation.slideToBottomFade,
       reverseAnimation: StyledToastAnimation.slideFromBottomFade,
-      fullWidth: true,
       borderRadius: BorderRadius.circular(0),
     );
   }

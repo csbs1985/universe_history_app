@@ -116,7 +116,6 @@ class _CreateHistoryState extends State<CreateHistory> {
                 minLines: 1,
                 maxLines: 2,
                 maxLength: 60,
-                textCapitalization: TextCapitalization.words,
                 autofocus: true,
                 style: uiTextStyle.header1,
                 onChanged: (value) => _canPublish(),
