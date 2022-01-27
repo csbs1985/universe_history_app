@@ -19,3 +19,11 @@ class SelectModel {
     new SelectModel(id: 1, label: "desabilitar comentários na história"),
   ];
 }
+
+bool isAnonymous(value) {
+  return value == 0 ? true : false;
+}
+
+bool isComment(value) {
+  return value == 0 ? true : false;
+}

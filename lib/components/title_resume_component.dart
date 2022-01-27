@@ -11,24 +11,21 @@ class TitleResumeComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: uiTextStyle.header2,
-          ),
-          Text(
-            resume,
-            style: uiTextStyle.text2,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: uiTextStyle.header2,
+        ),
+        Text(
+          resume,
+          style: uiTextStyle.text2,
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+      ],
     );
   }
 }

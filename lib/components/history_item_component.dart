@@ -87,8 +87,8 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                     ? SizedBox()
                     : TextButton(
                         child: Text(
-                          widget.allHistory[index].qtdComment.toString() +
-                              (widget.allHistory[index].qtdComment > 1
+                          widget.allHistory[index].qtyComment.toString() +
+                              (widget.allHistory[index].qtyComment > 1
                                   ? ' comentários'
                                   : ' comentário'),
                           style: uiTextStyle.text2,

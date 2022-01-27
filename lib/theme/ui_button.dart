@@ -62,7 +62,7 @@ class uiButton {
     backgroundColor: MaterialStateProperty.all<Color>(uiColor.first),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(50),
+        borderRadius: BorderRadius.circular(0),
         side: const BorderSide(color: uiColor.first),
       ),
     ),

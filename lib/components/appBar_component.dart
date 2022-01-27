@@ -29,16 +29,11 @@ class _AppbarComponentState extends State<AppbarComponent> {
       if (widget._callback != null) {
         widget._callback!(true);
       }
-      _back(context);
     });
   }
 
   void _back(BuildContext context) {
     Navigator.of(context).pop();
-  }
-
-  void _setForm() {
-    setState(() {});
   }
 
   @override

@@ -5,13 +5,14 @@ class HistoryModel {
   final String title;
   final String text;
   final String date;
+  final String userId;
   final bool isComment;
   final bool isAnonymous;
-  final bool edit;
-  final bool delete;
-  final String user;
-  final int qtdComment;
+  final bool isEdit;
+  final bool isDelete;
+  final int qtyComment;
   final List<String> categories;
+  // final List<CategoryModel> categories; TODO: trocar pela linha de cima quando correto.
 
   HistoryModel({
     required this.id,
@@ -20,12 +21,39 @@ class HistoryModel {
     required this.date,
     required this.isComment,
     required this.isAnonymous,
-    required this.edit,
-    required this.delete,
-    required this.user,
-    required this.qtdComment,
+    required this.isEdit,
+    required this.isDelete,
+    required this.userId,
+    required this.qtyComment,
     required this.categories,
   });
+
+  HistoryModel.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        title = json['title'],
+        text = json['text'],
+        date = json['date'],
+        isComment = json['isComment'],
+        isAnonymous = json['isAnonymous'],
+        isEdit = json['isEdit'],
+        isDelete = json['isDelete'],
+        userId = json['userId'],
+        qtyComment = json['qtyComment'],
+        categories = json['categories'];
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'title': title,
+        'text': text,
+        'date': date,
+        'isComment': isComment,
+        'isAnonymous': isAnonymous,
+        'isEdit': isEdit,
+        'isDelete': isDelete,
+        'userId': userId,
+        'qtyComment': qtyComment,
+        'categories': categories,
+      };
 
   static List<HistoryModel> allHistory = [
     new HistoryModel(
@@ -35,11 +63,11 @@ class HistoryModel {
           'Mussum Ipsum, cacilds vidis litro abertis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis! Casamentiss faiz malandris se pirulitá. Mé faiz elementum girarzis, nisi eros vermeio. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Mussum Ipsum, cacilds vidis litro abertis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis! Casamentiss faiz malandris se pirulitá. Mé faiz elementum girarzis, nisi eros vermeio. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Mussum Ipsum, cacilds vidis litro abertis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis! Casamentiss faiz malandris se pirulitá. Mé faiz elementum girarzis, nisi eros vermeio. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Mussum Ipsum, cacilds vidis litro abertis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis! Casamentiss faiz malandris se pirulitá. Mé faiz elementum girarzis, nisi eros vermeio. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Mussum Ipsum, cacilds vidis litro abertis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis! Casamentiss faiz malandris se pirulitá. Mé faiz elementum girarzis, nisi eros vermeio. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Mussum Ipsum, cacilds vidis litro abertis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis! Casamentiss faiz malandris se pirulitá. Mé faiz elementum girarzis, nisi eros vermeio. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Mussum Ipsum, cacilds vidis litro abertis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis! Casamentiss faiz malandris se pirulitá. Mé faiz elementum girarzis, nisi eros vermeio. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Mussum Ipsum, cacilds vidis litro abertis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis! Casamentiss faiz malandris se pirulitá. Mé faiz elementum girarzis, nisi eros vermeio. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Mussum Ipsum, cacilds vidis litro abertis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis! Casamentiss faiz malandris se pirulitá. Mé faiz elementum girarzis, nisi eros vermeio. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Mussum Ipsum, cacilds vidis litro abertis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis! Casamentiss faiz malandris se pirulitá. Mé faiz elementum girarzis, nisi eros vermeio. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Mussum Ipsum, cacilds vidis litro abertis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis! Casamentiss faiz malandris se pirulitá. Mé faiz elementum girarzis, nisi eros vermeio. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Mussum Ipsum, cacilds vidis litro abertis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis! Casamentiss faiz malandris se pirulitá. Mé faiz elementum girarzis, nisi eros vermeio. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis.',
       date: '2 de janeiro de 2022',
       isComment: true,
-      edit: false,
-      delete: false,
+      isEdit: false,
+      isDelete: false,
       isAnonymous: false,
-      user: 'fbjfbdj01',
-      qtdComment: 1,
+      userId: 'fbjfbdj01',
+      qtyComment: 1,
       categories: ['fbjfbdj01', 'gfsdgdg02'],
     ),
     new HistoryModel(
@@ -49,11 +77,11 @@ class HistoryModel {
           'Mussum Ipsum, cacilds vidis litro abertis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis! Casamentiss faiz malandris se pirulitá. Mé faiz elementum girarzis, nisi eros vermeio. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis.',
       date: '2 de janeiro de 2022',
       isComment: false,
-      edit: false,
-      delete: false,
+      isEdit: false,
+      isDelete: false,
       isAnonymous: true,
-      user: 'fbjfbdj01',
-      qtdComment: 1,
+      userId: 'fbjfbdj01',
+      qtyComment: 1,
       categories: ['fbjfbdj01', 'gfsdgdg02'],
     ),
     new HistoryModel(
@@ -63,11 +91,11 @@ class HistoryModel {
           'Mussum Ipsum, cacilds vidis litro abertis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis! Casamentiss faiz malandris se pirulitá. Mé faiz elementum girarzis, nisi eros vermeio. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis.',
       date: '2 de janeiro de 2022',
       isComment: true,
-      edit: false,
-      delete: false,
+      isEdit: false,
+      isDelete: false,
       isAnonymous: false,
-      user: 'fbjfbdj01',
-      qtdComment: 23,
+      userId: 'fbjfbdj01',
+      qtyComment: 23,
       categories: ['fbjfbdj01', 'gfsdgdg02'],
     ),
     new HistoryModel(
@@ -77,11 +105,11 @@ class HistoryModel {
           'Mussum Ipsum, cacilds vidis litro abertis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis! Casamentiss faiz malandris se pirulitá. Mé faiz elementum girarzis, nisi eros vermeio. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis.',
       date: '2 de janeiro de 2022',
       isComment: false,
-      edit: false,
-      delete: false,
+      isEdit: false,
+      isDelete: false,
       isAnonymous: true,
-      user: 'fbjfbdj01',
-      qtdComment: 1,
+      userId: 'fbjfbdj01',
+      qtyComment: 1,
       categories: ['fbjfbdj01', 'gfsdgdg02'],
     ),
   ];

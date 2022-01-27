@@ -5,14 +5,14 @@ class UserModel {
   final String name;
   final String nickname;
   final String dateRegister;
-  final bool disabled;
+  final bool isDisabled;
 
   UserModel({
     required this.id,
     required this.name,
     required this.nickname,
     required this.dateRegister,
-    required this.disabled,
+    required this.isDisabled,
   });
 
   static Set<UserModel> user = {
@@ -21,7 +21,11 @@ class UserModel {
       name: 'Charles Santos',
       nickname: 'charles.sbs',
       dateRegister: '2 de janeiro de 2022',
-      disabled: false,
+      isDisabled: false,
     )
   };
+}
+
+String getCurrentId() {
+  return 'charles.sbs';
 }
