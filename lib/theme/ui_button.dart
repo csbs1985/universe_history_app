@@ -44,6 +44,16 @@ class uiButton {
     ),
   );
 
+  static ButtonStyle btnLogin = ButtonStyle(
+    alignment: Alignment.center,
+    backgroundColor: MaterialStateProperty.all<Color>(uiColor.second),
+    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(0),
+      ),
+    ),
+  );
+
   ///////////////////////
   static ButtonStyle btnCard = ButtonStyle(
     alignment: Alignment.bottomLeft,

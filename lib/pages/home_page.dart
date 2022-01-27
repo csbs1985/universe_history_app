@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
 
   bool _isLoading = true;
   bool _notification = true;
-  bool _login = true;
+  bool _login = false;
 
   String _itemSelectedMenu = 'todas';
 

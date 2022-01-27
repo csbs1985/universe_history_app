@@ -7,6 +7,7 @@ import 'package:universe_history_app/pages/create_history_page.dart';
 import 'package:universe_history_app/pages/delete_account_page.dart';
 import 'package:universe_history_app/pages/home_page.dart';
 import 'package:universe_history_app/pages/justify_page.dart';
+import 'package:universe_history_app/pages/login_page.dart';
 import 'package:universe_history_app/pages/notification_page.dart';
 import 'package:universe_history_app/pages/privacy_page.dart';
 import 'package:universe_history_app/pages/settings_page.dart';
@@ -42,6 +43,12 @@ class Navigation {
       case '/justify':
         return PageTransition(
           child: const JustifyPage(),
+          type: PageTransitionType.rightToLeft,
+          settings: settings,
+        );
+      case '/login':
+        return PageTransition(
+          child: const LoginPage(),
           type: PageTransitionType.rightToLeft,
           settings: settings,
         );

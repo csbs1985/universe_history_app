@@ -38,7 +38,7 @@ class LoginComponent extends StatelessWidget {
                   'entrar',
                   style: uiTextStyle.button1,
                 ),
-                onPressed: () {},
+                onPressed: () => Navigator.of(context).pushNamed("/login"),
                 style: uiButton.button1,
               ),
             ],

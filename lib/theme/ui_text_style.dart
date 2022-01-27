@@ -78,6 +78,12 @@ class uiTextStyle {
     color: uiColor.third,
   );
 
+  static const TextStyle text6 = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: uiColor.first,
+  );
+
   static const TextStyle text7 = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w400,
