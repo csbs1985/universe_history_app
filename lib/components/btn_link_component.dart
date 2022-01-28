@@ -35,6 +35,7 @@ class _BtnLinkComponentState extends State<BtnLinkComponent> {
               style: uiTextStyle.text1,
             ),
           ),
+          style: TextButton.styleFrom(padding: EdgeInsets.zero),
           onPressed: () => Navigator.of(context).pushNamed(link),
         ),
       ),

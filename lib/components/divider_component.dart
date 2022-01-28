@@ -13,8 +13,6 @@ class DividerComponent extends StatelessWidget {
           Divider(
             height: 0.5,
             thickness: 0.5,
-            indent: 10,
-            endIndent: 10,
             color: uiColor.comp_3,
           ),
           SizedBox(

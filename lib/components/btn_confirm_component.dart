@@ -49,6 +49,7 @@ class _BtnLinkComponentState extends State<BtnConfirmComponent> {
                 style: uiTextStyle.text1,
               ),
             ),
+            style: TextButton.styleFrom(padding: EdgeInsets.zero),
             onPressed: () => _showAlertConfirm(
               context,
               widget._title,
