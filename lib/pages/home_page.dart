@@ -3,10 +3,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
 import 'package:universe_history_app/components/card_component.dart';
 import 'package:universe_history_app/components/history_item_component.dart';
+import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/menu_category_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
@@ -84,11 +84,9 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Stack(
                     children: [
-                      IconButton(
-                        icon: SvgPicture.asset(uiSvg.notification),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed("/notification");
-                        },
+                      IconComponent(
+                        svg: uiSvg.notification,
+                        route: 'notification',
                       ),
                       if (_notification)
                         Positioned(
@@ -101,11 +99,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                     ],
                   ),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed("/settings");
-                    },
-                    icon: SvgPicture.asset(uiSvg.options),
+                  IconComponent(
+                    svg: uiSvg.options,
+                    route: 'settings',
                   ),
                 ],
               )

@@ -1,9 +1,9 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, unused_field, iterable_contains_unrelated_type, list_remove_unrelated_type, no_logic_in_create_state, unnecessary_new, prefer_final_fields
+// ignore_for_file: use_key_in_widget_constructors, todo, prefer_const_constructors, unused_field, iterable_contains_unrelated_type, list_remove_unrelated_type, no_logic_in_create_state, unnecessary_new, prefer_final_fields
 
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/modal_comment_component.dart';
 import 'package:universe_history_app/shared/models/favorite_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
@@ -113,20 +113,24 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     if (_allHistorySelected[index].isComment)
-                      IconButton(
-                          onPressed: () => _showModal(
-                              context, _allHistorySelected[index].id, true),
-                          icon: SvgPicture.asset(uiSvg.comment)),
-                    IconButton(
-                      onPressed: () =>
+                      IconComponent(
+                        svg: uiSvg.comment,
+                        action: 'modal',
+                        callback: (value) => _showModal(
+                            context, _allHistorySelected[index].id, true),
+                      ),
+                    IconComponent(
+                      svg: _getFavorited(_allHistorySelected[index].id)
+                          ? uiSvg.favorited
+                          : uiSvg.favorite,
+                      // TODO: criar função para adicionar aos favoritos.
+                      callback: () =>
                           _setFavorited(_allHistorySelected[index].id),
-                      icon: _getFavorited(_allHistorySelected[index].id)
-                          ? SvgPicture.asset(uiSvg.favorited)
-                          : SvgPicture.asset(uiSvg.favorite),
                     ),
-                    IconButton(
-                      icon: SvgPicture.asset(uiSvg.options),
-                      onPressed: () {},
+                    IconComponent(
+                      svg: uiSvg.options,
+                      route: 'settings',
+                      // TODO: criar função para o botão opções da historia.
                     ),
                   ],
                 )
