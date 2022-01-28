@@ -1,4 +1,8 @@
+// ignore_for_file: avoid_print, unused_local_variable, await_only_futures
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/btn_login_component.dart';
 import 'package:universe_history_app/shared/enums/type_account_login_enum.dart';
@@ -14,6 +18,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
   void _onPressed(AccountLoginEnum account) {
     setState(() {
       account == AccountLoginEnum.APPLE ? _loginApple() : _loginGoogle();
@@ -24,9 +30,34 @@ class _LoginPageState extends State<LoginPage> {
     print(AccountLoginEnum.APPLE);
   }
 
-  void _loginGoogle() {
+  Future<User?> _loginGoogle() async {
     print(AccountLoginEnum.GOOGLE);
+
+    try {
+      final GoogleSignInAccount? googleSignInAccount =
+          await googleSignIn.signIn();
+
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount!.authentication;
+
+      final AuthCredential credential = await GoogleAuthProvider.credential(
+          idToken: googleSignInAuthentication.idToken,
+          accessToken: googleSignInAuthentication.accessToken);
+
+      final UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      final User? user = userCredential.user;
+
+      print('SUCCESS: ' + user.toString());
+      return user;
+    } catch (e) {
+      print('ERROR: ' + e.toString());
+      return null;
+    }
   }
+
+  void _getUser() {}
 
   @override
   Widget build(BuildContext context) {

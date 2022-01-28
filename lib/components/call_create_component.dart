@@ -22,8 +22,8 @@ class CallCreateComponent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Escreva sua história'.toUpperCase(),
+              const Text(
+                'Escreva sua história',
                 style: uiTextStyle.header2,
               ),
               const SizedBox(

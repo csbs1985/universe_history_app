@@ -1,5 +1,7 @@
 // ignore_for_file: unnecessary_new
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 class UserModel {
   final String id;
   final String name;
@@ -26,6 +28,12 @@ class UserModel {
   };
 }
 
-String getCurrentId() {
-  return 'charles.sbs';
+User getCurrentId() {
+  late User _currentUser;
+
+  FirebaseAuth.instance.authStateChanges().listen((user) {
+    _currentUser = user!;
+  });
+
+  return _currentUser;
 }

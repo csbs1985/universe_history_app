@@ -20,14 +20,14 @@ class LoginComponent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Você não se identificou ainda para escrever histórias e comentarios',
-                style: uiTextStyle.header1,
+                'Entre ou crie sua conta',
+                style: uiTextStyle.header2,
               ),
               const SizedBox(
                 height: 10,
               ),
               const Text(
-                'Entre ou crie sua conta',
+                'Você não se identificou ainda para escrever histórias e comentarios',
                 style: uiTextStyle.text1,
               ),
               const SizedBox(
