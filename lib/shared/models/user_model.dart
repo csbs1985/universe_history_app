@@ -28,12 +28,16 @@ class UserModel {
   };
 }
 
-User getCurrentId() {
-  late User _currentUser;
+// User getCurrentId() {
+//   late User _currentUser;
 
-  FirebaseAuth.instance.authStateChanges().listen((user) {
-    _currentUser = user!;
-  });
+//   FirebaseAuth.instance.authStateChanges().listen((user) {
+//     _currentUser = user!;
+//   });
 
-  return _currentUser;
+//   return _currentUser;
+// }
+
+String getCurrentId() {
+  return 'charles.sbs';
 }

@@ -64,11 +64,11 @@ class _SettingsPageState extends State<SettingsPage> {
                     TextButton(
                       child: const Text(
                         'entrar',
-                        style: uiTextStyle.button1,
+                        style: uiTextStyle.buttonPrimary,
                       ),
                       onPressed: () =>
                           Navigator.of(context).pushNamed("/login"),
-                      style: uiButton.button1,
+                      style: uiButton.buttonPrimary,
                     ),
                   ],
                 ),

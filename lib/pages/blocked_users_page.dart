@@ -82,7 +82,7 @@ class _blockedUsersPageState extends State<blockedUsersPage> {
                         TextButton(
                           child: const Text('Desbloquear',
                               style: uiTextStyle.text4),
-                          style: uiButton.button1,
+                          style: uiButton.buttonPrimary,
                           onPressed: () => _unlockUser(item.blocked),
                         ),
                       ],

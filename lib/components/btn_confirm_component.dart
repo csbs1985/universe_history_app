@@ -1,7 +1,7 @@
 // ignore_for_file: no_logic_in_create_state, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'package:universe_history_app/theme/ui_button.dart';
+import 'package:universe_history_app/components/btn_primary_component.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -10,21 +10,18 @@ class BtnConfirmComponent extends StatefulWidget {
     required String title,
     required String text,
     required String link,
-    Function? callback,
-    String? btnPrimaryLabel = 'Ok',
-    String? btnSecondaryLabel = 'Cancelar',
-  })  : _callback = callback,
-        _title = title,
+    String btnPrimaryLabel = 'Ok',
+    String btnSecondaryLabel = 'Cancelar',
+  })  : _title = title,
         _text = text,
         _btnPrimaryLabel = btnPrimaryLabel,
         _btnSecondaryLabel = btnSecondaryLabel,
         _link = link;
 
-  final Function? _callback;
   final String _title;
   final String _text;
-  final String? _btnPrimaryLabel;
-  final String? _btnSecondaryLabel;
+  final String _btnPrimaryLabel;
+  final String _btnSecondaryLabel;
   final String _link;
 
   @override
@@ -66,12 +63,13 @@ class _BtnLinkComponentState extends State<BtnConfirmComponent> {
 }
 
 Future<Future> _showAlertConfirm(
-    BuildContext context,
-    String title,
-    String text,
-    String link,
-    String? _btnPrimaryLabel,
-    String? _btnSecondaryLabel) async {
+  BuildContext context,
+  String title,
+  String text,
+  String link,
+  String _btnPrimaryLabel,
+  String _btnSecondaryLabel,
+) async {
   return showDialog(
     context: context,
     barrierDismissible: false,
@@ -103,17 +101,13 @@ Future<Future> _showAlertConfirm(
                     Navigator.of(context).pushNamed("/home");
                   },
                   child: Text(
-                    _btnSecondaryLabel!,
+                    _btnSecondaryLabel,
                     style: uiTextStyle.text3,
                   ),
                 ),
-                TextButton(
-                  style: uiButton.button1,
-                  child: Text(
-                    _btnPrimaryLabel!,
-                    style: uiTextStyle.text1,
-                  ),
-                  onPressed: () => Navigator.pop(context),
+                BtnPrimaryComponent(
+                  label: _btnPrimaryLabel,
+                  callback: (value) => Navigator.pop(context),
                 ),
               ],
             ),

@@ -19,10 +19,10 @@ class BtnCardComponent extends StatefulWidget {
 class _BtnCardComponentState extends State<BtnCardComponent> {
   String? _itemSelected;
 
-  void _onPressed(String _id) {
+  void _onPressed(item) {
     setState(() {
-      _itemSelected = _id;
-      widget._callback!(_id);
+      _itemSelected = item.id;
+      widget._callback!(item);
     });
   }
 
@@ -40,14 +40,12 @@ class _BtnCardComponentState extends State<BtnCardComponent> {
               SizedBox(
                 width: double.infinity,
                 child: TextButton(
-                    onPressed: () => _onPressed(item.id),
+                    onPressed: () => _onPressed(item),
                     style: _getSelected(item.id)
                         ? uiButton.btnCardActive
                         : uiButton.btnCard,
                     child: Padding(
-                      padding: item.text != null
-                          ? const EdgeInsets.all(8)
-                          : const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                      padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -55,7 +53,7 @@ class _BtnCardComponentState extends State<BtnCardComponent> {
                             item.title,
                             style: uiTextStyle.text1,
                           ),
-                          if (item.text != null)
+                          if (item.text.length > 0)
                             Text(
                               item.text,
                               style: uiTextStyle.text2,

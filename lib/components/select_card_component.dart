@@ -39,7 +39,7 @@ class _SelectCustonState extends State<SelectCardComponent> {
             for (var item in widget.content)
               TextButton(
                   child: Text(
-                    item.label,
+                    item.text,
                     style: _getSelected(item.id)
                         ? uiTextStyle.chipActive
                         : uiTextStyle.chip,

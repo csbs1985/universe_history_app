@@ -90,7 +90,13 @@ class uiTextStyle {
     color: uiColor.comp_2,
   );
 
-  static const TextStyle button1 = TextStyle(
+  static const TextStyle text8 = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+    color: uiColor.comp_1,
+  );
+
+  static const TextStyle buttonPrimary = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w400,
     color: uiColor.third,

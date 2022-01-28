@@ -17,8 +17,8 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
   final List<DeleteAccountModel> allDeleteAccount =
       DeleteAccountModel.allDeleteAccount;
 
-  void _onPressed(String type) {
-    switch (type) {
+  void _onPressed(DeleteAccountModel item) {
+    switch (item.id) {
       case '0':
         Navigator.of(context).pop();
         break;

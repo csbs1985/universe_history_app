@@ -136,24 +136,23 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(
                           height: 10,
                         ),
-                        GestureDetector(
-                          child: _login
-                              ? CardComponent(
-                                  title: 'Escreva sua história',
-                                  text:
-                                      'Todos nós temos uma história pra contar e a sua pode ajudar alguém.',
-                                  label: 'Escrever',
-                                )
-                              : CardComponent(
-                                  title: 'Entre ou crie sua conta',
-                                  text:
-                                      'Você não se identificou ainda para escrever histórias e comentarios.',
-                                  label: 'Entrar',
-                                ),
-                          onTap: () => _login
-                              ? Navigator.of(context).pushNamed("/create")
-                              : Navigator.of(context).pushNamed("/login"),
-                        ),
+                        _login
+                            ? CardComponent(
+                                title: 'Escreva sua história',
+                                text:
+                                    'Todos nós temos uma história pra contar e a sua pode ajudar alguém.',
+                                label: 'Escrever',
+                                callback: (valeu) =>
+                                    Navigator.of(context).pushNamed("/create"),
+                              )
+                            : CardComponent(
+                                title: 'Entre ou crie sua conta',
+                                text:
+                                    'Você não se identificou ainda para escrever histórias e comentarios.',
+                                label: 'Entrar',
+                                callback: (valeu) =>
+                                    Navigator.of(context).pushNamed("/login"),
+                              ),
                         Flexible(
                           child: HistoryItemComponent(
                               itemSelectedMenu: _itemSelectedMenu),
