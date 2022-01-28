@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "173547127208",
+    "project_id": "universe-history-app",
+    "storage_bucket": "universe-history-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:173547127208:android:2b8e6b85c8a15a50e51d9d",
+        "android_client_info": {
+          "package_name": "com.example.universe_history_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "173547127208-e5vm5431j05ae7bc9qtd9nglnpr0cqqm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.universe_history_app",
+            "certificate_hash": "24407fbe5b9c3ba93d5017417b830bbc8b54bc21"
+          }
+        },
+        {
+          "client_id": "173547127208-e9c60puilpankr2mctms3qpjat411je3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzg7gVF2k0SbXqY10pNwaOrDDY92HTJTg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "173547127208-e9c60puilpankr2mctms3qpjat411je3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

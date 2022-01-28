@@ -1,5 +1,7 @@
 // @dart=2.9
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,7 +10,15 @@ import 'package:universe_history_app/pages/splash_page.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_theme.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  FirebaseFirestore.instance
+      .collection('col')
+      .doc('doc')
+      .set({'name': 'charles'});
+
   runApp(
     const ProviderScope(
       child: MyApp(),

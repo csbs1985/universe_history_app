@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/btn_login_component.dart';
-import 'package:universe_history_app/shared/models/enums/type_account_login_enum.dart';
+import 'package:universe_history_app/shared/enums/type_account_login_enum.dart';
 import 'package:universe_history_app/theme/ui_image.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';

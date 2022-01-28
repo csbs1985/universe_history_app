@@ -9,7 +9,7 @@ import 'package:universe_history_app/components/select_categories_component.dart
 import 'package:universe_history_app/components/select_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/shared/models/category_model.dart';
-import 'package:universe_history_app/shared/models/enums/type_toast_enum.dart';
+import 'package:universe_history_app/shared/enums/type_toast_enum.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/shared/models/select_modal.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
