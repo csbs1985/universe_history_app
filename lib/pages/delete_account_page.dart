@@ -1,8 +1,10 @@
+// ignore_for_file: todo, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/btn_card_component.dart';
-import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
-import 'package:universe_history_app/theme/ui_text_style.dart';
+import 'package:universe_history_app/components/title_resume_component.dart';
+import 'package:universe_history_app/shared/models/delete_account_model.dart';
 
 class DeleteAccountPage extends StatefulWidget {
   const DeleteAccountPage({Key? key}) : super(key: key);
@@ -12,9 +14,30 @@ class DeleteAccountPage extends StatefulWidget {
 }
 
 class _DeleteAccountPageState extends State<DeleteAccountPage> {
+  final List<DeleteAccountModel> allDeleteAccount =
+      DeleteAccountModel.allDeleteAccount;
+
+  void _onPressed(String type) {
+    switch (type) {
+      case '0':
+        Navigator.of(context).pop();
+        break;
+      case '1':
+        _upAccount('temp');
+        break;
+      case '2':
+        Navigator.of(context).pushNamed("/justify");
+        break;
+      case '3':
+        _upAccount('delete');
+        break;
+      default:
+    }
+  }
+
   void _upAccount(String type) {
     print('deletado');
-    // mudar status do usuário
+    //TODO: mudar status do usuário
     Navigator.of(context).pushNamed("/home");
   }
 
@@ -28,43 +51,13 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const TitleComponent('Deletar conta History'),
-              const Text(
-                'Tem certeza que deseja excluir sua conta History definitivamente? Você não poderá mais ler, editar e visualizar'
-                ' suas hitórias e comentários. Somente poderá ler as histórias de outros escritores.',
-                style: uiTextStyle.text2,
+              const TitleResumeComponent(
+                'Deletar conta History',
+                'Tem certeza que deseja excluir sua conta History definitivamente? Você não poderá mais ler, editar e visualizar suas hitórias e comentários. Somente poderá ler as histórias de outros escritores.',
               ),
-              const SizedBox(height: 20),
-              GestureDetector(
-                child: const BtnCardComponent(
-                  'Cancelar',
-                  'Cancelar e seguir com sua conta History.',
-                ),
-                onTap: () => Navigator.of(context).pop(),
-              ),
-              const SizedBox(height: 20),
-              GestureDetector(
-                child: const BtnCardComponent(
-                  'Desativar temporariamente',
-                  'Dar uma tempo e mandar meu conteúdo no History. Sua conta volta a ficar ativa quando entrar novamente com sua conta Apple ou Google cadastrada.',
-                ),
-                onTap: () => _upAccount('temp'),
-              ),
-              const SizedBox(height: 20),
-              GestureDetector(
-                child: const BtnCardComponent(
-                  'Justificar e deletar',
-                  'Antes me diga o motivo do porque esta deletando sua conta.',
-                ),
-                onTap: () => Navigator.of(context).pushNamed("/justify"),
-              ),
-              const SizedBox(height: 20),
-              GestureDetector(
-                child: const BtnCardComponent(
-                  'Deletar',
-                  'Apenas deletar sua conta.',
-                ),
-                onTap: () => _upAccount('delete'),
+              BtnCardComponent(
+                content: allDeleteAccount,
+                callback: (value) => _onPressed(value),
               ),
             ],
           ),

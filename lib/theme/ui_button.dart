@@ -54,17 +54,26 @@ class uiButton {
     ),
   );
 
-  ///////////////////////
   static ButtonStyle btnCard = ButtonStyle(
     alignment: Alignment.bottomLeft,
-    backgroundColor: MaterialStateProperty.all<Color>(uiColor.comp_1),
+    backgroundColor: MaterialStateProperty.all<Color>(uiColor.comp_3),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-        side: const BorderSide(color: uiColor.comp_1),
+        borderRadius: BorderRadius.circular(0),
       ),
     ),
   );
+
+  static ButtonStyle btnCardActive = ButtonStyle(
+    alignment: Alignment.bottomLeft,
+    backgroundColor: MaterialStateProperty.all<Color>(uiColor.second),
+    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(0),
+      ),
+    ),
+  );
+  ///////////////////////
 
   static ButtonStyle button1 = ButtonStyle(
     padding: MaterialStateProperty.all<EdgeInsets>(

@@ -6,9 +6,11 @@ import 'package:universe_history_app/components/btn_component.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 
 class AppbarComponent extends StatefulWidget with PreferredSizeWidget {
-  const AppbarComponent(
-      {Function? callback, bool btnBack = false, bool btnPublish = false})
-      : _btnBack = btnBack,
+  const AppbarComponent({
+    Function? callback,
+    bool btnBack = false,
+    bool btnPublish = false,
+  })  : _btnBack = btnBack,
         _btnPublish = btnPublish,
         _callback = callback;
 

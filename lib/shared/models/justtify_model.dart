@@ -2,22 +2,28 @@
 
 class JustifyModel {
   final String id;
-  final String label;
+  final String title;
+  final String text;
 
   JustifyModel({
     required this.id,
-    required this.label,
+    required this.title,
+    required this.text,
   });
 
   static List<JustifyModel> allJustify = [
-    new JustifyModel(id: '0', label: 'Quero remover algo'),
-    new JustifyModel(id: '1', label: 'Problemas para começar'),
-    new JustifyModel(id: '2', label: 'Passo muito tempo aqui'),
-    new JustifyModel(id: '3', label: 'Não vejo motivo para usar o History'),
-    new JustifyModel(id: '4', label: 'Questões de privacidade'),
-    new JustifyModel(id: '5', label: 'Usuários não respeitam as regras'),
-    new JustifyModel(id: '6', label: 'Aplicação complicada de mexer.'),
-    new JustifyModel(id: '7', label: 'Conteúdo pouco relevante'),
-    new JustifyModel(id: '8', label: 'Layout da aplicação confusa'),
+    new JustifyModel(id: '0', title: 'Quero remover algo.', text: ''),
+    new JustifyModel(id: '1', title: 'Problemas para começar.', text: ''),
+    new JustifyModel(id: '2', title: 'Passo muito tempo aqui.', text: ''),
+    new JustifyModel(
+        id: '3', title: 'Não vejo motivo para usar o History.', text: ''),
+    new JustifyModel(id: '4', title: 'Questões de privacidade.', text: ''),
+    new JustifyModel(
+        id: '5', title: 'Usuários não respeitam as regras.', text: ''),
+    new JustifyModel(
+        id: '6', title: 'Aplicação complicada de mexer.', text: ''),
+    new JustifyModel(id: '7', title: 'Conteúdo pouco relevante.', text: ''),
+    new JustifyModel(id: '8', title: 'Layout da aplicação confusa.', text: ''),
+    new JustifyModel(id: '9', title: 'Outro motivo não listado.', text: ''),
   ];
 }

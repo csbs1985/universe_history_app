@@ -30,12 +30,10 @@ class SelectComponent extends StatefulWidget {
 class _SelectCustonState extends State<SelectComponent> {
   int isSelected = 0;
 
-  void _setSelected(id) {
+  void _setSelected(int id) {
     setState(() {
       isSelected = id;
-      if (widget._callback != null) {
-        widget._callback!({widget._type, id});
-      }
+      widget._callback!({widget._type, id});
     });
   }
 
