@@ -5,9 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
-import 'package:universe_history_app/components/call_create_component.dart';
+import 'package:universe_history_app/components/card_component.dart';
 import 'package:universe_history_app/components/history_item_component.dart';
-import 'package:universe_history_app/components/login_component.dart';
 import 'package:universe_history_app/components/menu_category_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
@@ -26,7 +25,7 @@ class _HomePageState extends State<HomePage> {
 
   bool _isLoading = true;
   bool _notification = true;
-  bool _login = false;
+  bool _login = true;
 
   String _itemSelectedMenu = 'todas';
 
@@ -137,9 +136,23 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(
                           height: 10,
                         ),
-                        Container(
-                          child:
-                              _login ? CallCreateComponent() : LoginComponent(),
+                        GestureDetector(
+                          child: _login
+                              ? CardComponent(
+                                  title: 'Escreva sua história',
+                                  text:
+                                      'Todos nós temos uma história pra contar e a sua pode ajudar alguém.',
+                                  label: 'Escrever',
+                                )
+                              : CardComponent(
+                                  title: 'Entre ou crie sua conta',
+                                  text:
+                                      'Você não se identificou ainda para escrever histórias e comentarios.',
+                                  label: 'Entrar',
+                                ),
+                          onTap: () => _login
+                              ? Navigator.of(context).pushNamed("/create")
+                              : Navigator.of(context).pushNamed("/login"),
                         ),
                         Flexible(
                           child: HistoryItemComponent(
