@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
-import 'package:universe_history_app/components/button_disabled.component.dart';
+import 'package:universe_history_app/components/btn_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
@@ -21,12 +21,12 @@ class _InputCommentComponentState extends State<InputCommentComponent> {
   final String buttonText = 'publicar';
 
   bool _textExpanded = false;
-  bool _textEmpty = true;
+  bool _isInputNotEmpty = false;
   bool _textAnonimous = false;
 
   void keyUp(String text) {
     setState(() {
-      _textEmpty = _commentController.text.length > 0 ? false : true;
+      _isInputNotEmpty = _commentController.text.length > 0 ? true : false;
     });
   }
 
@@ -45,7 +45,7 @@ class _InputCommentComponentState extends State<InputCommentComponent> {
   void _sendComment() {
     _commentController.clear();
     setState(() {
-      _textEmpty = true;
+      _isInputNotEmpty = false;
     });
   }
 
@@ -93,17 +93,14 @@ class _InputCommentComponentState extends State<InputCommentComponent> {
                     ),
                   ],
                 ),
-                _textEmpty
-                    ? ButtonDisabledComponent(buttonText)
-                    : TextButton(
-                        child: Text(
-                          buttonText,
-                          style: uiTextStyle.button2,
-                        ),
-                        onPressed: () {
-                          _sendComment();
-                        },
-                      ),
+                Container(
+                  height: 48,
+                  color: uiColor.comp_1,
+                  child: BtnComponent(
+                    enabled: _isInputNotEmpty,
+                    callback: (value) => _sendComment(),
+                  ),
+                ),
               ],
             ),
         ],
