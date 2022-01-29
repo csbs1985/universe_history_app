@@ -22,38 +22,38 @@ class AboutPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const TitleComponent(title: 'Sobre'),
-              const SizedBox(
-                height: 10,
+            children: const [
+              TitleComponent(title: 'Sobre'),
+              SizedBox(
+                height: 30,
               ),
-              IconComponent(svg: uiSvg.logo),
-              const SizedBox(
-                height: 20,
+              IconComponent(),
+              SizedBox(
+                height: 30,
               ),
-              const Text(
+              Text(
                 'Versão',
                 style: uiTextStyle.text2,
               ),
-              const Text(
+              Text(
                 'v1.0.0(c)',
                 style: uiTextStyle.text1,
               ),
-              const Text(
+              Text(
                 '17 de janeiro de 2022 às 10:20',
                 style: uiTextStyle.text1,
               ),
-              const SizedBox(
+              SizedBox(
                 height: 30,
               ),
-              const Text(
+              Text(
                 'History e os logotipos e logomarcas do History são marcas registradas de Universe Inc. Todos os direitos registrados.',
                 style: uiTextStyle.text1,
               ),
-              const SizedBox(
+              SizedBox(
                 height: 30,
               ),
-              const Text(
+              Text(
                 'History foi construído usando software de código aberto e licenciado.',
                 style: uiTextStyle.text1,
               ),

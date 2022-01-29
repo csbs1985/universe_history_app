@@ -71,9 +71,11 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             const Expanded(
               child: IconComponent(
-                svg: uiSvg.logo,
-                size: 160,
+                size: 140,
               ),
+            ),
+            const SizedBox(
+              height: 20,
             ),
             const Text(
               'Entrar ou criar conta',

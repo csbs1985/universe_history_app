@@ -70,12 +70,10 @@ class _HomePageState extends State<HomePage> {
           titleSpacing: 10,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               IconComponent(
-                svg: uiSvg.logo,
+                color: uiColor.icon_2,
                 callback: (value) => _scrollToTop(),
-                size: 90,
               ),
               Row(
                 children: [
@@ -83,6 +81,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       IconComponent(
                         svg: uiSvg.notification,
+                        color: uiColor.icon_2,
                         route: 'notification',
                       ),
                       if (_notification)
@@ -98,6 +97,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   IconComponent(
                     svg: uiSvg.options,
+                    color: uiColor.icon_2,
                     route: 'settings',
                   ),
                 ],

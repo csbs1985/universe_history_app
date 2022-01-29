@@ -46,7 +46,6 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
-    - assets/images/logo/
   fonts:
     - family: segoe
       fonts:
