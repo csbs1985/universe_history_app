@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
-import 'package:universe_history_app/theme/ui_image.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -27,12 +27,7 @@ class AboutPage extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              SizedBox(
-                height: 30,
-                child: Image.asset(
-                  uiImage.logo,
-                ),
-              ),
+              IconComponent(svg: uiSvg.logo),
               const SizedBox(
                 height: 20,
               ),
