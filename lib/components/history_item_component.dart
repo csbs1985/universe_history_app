@@ -116,7 +116,6 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                     if (_allHistorySelected[index].isComment)
                       IconComponent(
                         svg: uiSvg.comment,
-                        action: 'modal',
                         callback: (value) => _showModal(
                             context, _allHistorySelected[index].id, true),
                       ),
@@ -131,12 +130,12 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                     IconComponent(
                       svg: uiSvg.open,
                       route: 'history',
-                      // TODO: criar função para o botão opções da historia.
+                      // TODO: criar função para o botão abrir história.
                     ),
                     IconComponent(
                       svg: uiSvg.options,
                       route: 'options',
-                      // TODO: criar função para o botão opções da historia.
+                      // TODO: criar função para o botão opções da história.
                     ),
                   ],
                 )

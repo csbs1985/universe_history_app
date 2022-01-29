@@ -10,7 +10,6 @@ import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/menu_category_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
-import 'package:universe_history_app/theme/ui_image.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,7 +24,7 @@ class _HomePageState extends State<HomePage> {
 
   bool _isLoading = true;
   bool _notification = true;
-  bool _login = true;
+  bool _login = false;
 
   String _itemSelectedMenu = 'todas';
 
@@ -73,12 +72,10 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              GestureDetector(
-                onTap: _scrollToTop,
-                child: Image.asset(
-                  uiImage.logo,
-                  height: 28,
-                ),
+              IconComponent(
+                svg: uiSvg.logo,
+                callback: (value) => _scrollToTop(),
+                size: 90,
               ),
               Row(
                 children: [

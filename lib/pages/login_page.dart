@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/btn_login_component.dart';
+import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/shared/enums/type_account_login_enum.dart';
 import 'package:universe_history_app/theme/ui_image.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
@@ -69,13 +70,10 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 100),
-                child: Image.asset(
-                  uiImage.logo,
-                  fit: BoxFit.fitWidth,
-                ),
+            const Expanded(
+              child: IconComponent(
+                svg: uiSvg.logo,
+                size: 160,
               ),
             ),
             const Text(

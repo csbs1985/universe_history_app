@@ -3,8 +3,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_image.dart';
+import 'package:universe_history_app/theme/ui_svg.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -34,12 +36,9 @@ class _SplashPageState extends State<SplashPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(
-                height: 52,
-                child: Image.asset(
-                  uiImage.logo,
-                ),
+            children: const [
+              IconComponent(
+                svg: uiSvg.logo,
               ),
             ],
           ),

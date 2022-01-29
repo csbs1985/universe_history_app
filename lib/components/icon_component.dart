@@ -9,15 +9,18 @@ class IconComponent extends StatefulWidget {
     Function? callback,
     String? route,
     String? action,
+    double? size,
   })  : _action = action,
         _callback = callback,
         _svg = svg,
-        _route = route;
+        _route = route,
+        _size = size;
 
   final Function? _callback;
   final String _svg;
   final String? _route;
   final String? _action;
+  final double? _size;
 
   @override
   _IconComponentState createState() => _IconComponentState();
@@ -28,11 +31,10 @@ class _IconComponentState extends State<IconComponent> {
     setState(() {
       if (widget._route != null) {
         Navigator.of(context).pushNamed("/${widget._route}");
+        return;
       }
 
-      if (widget._action == 'modal') {
-        widget._callback!(true);
-      }
+      widget._callback!(true);
     });
   }
 
@@ -40,6 +42,7 @@ class _IconComponentState extends State<IconComponent> {
   Widget build(BuildContext context) {
     return IconButton(
       icon: SvgPicture.asset(widget._svg),
+      iconSize: widget._size ?? 14,
       onPressed: () => _onPressed(),
     );
   }
