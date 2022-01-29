@@ -3,6 +3,7 @@
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/modal_comment_component.dart';
 import 'package:universe_history_app/components/resume_component.dart';
@@ -90,19 +91,22 @@ class _HistoryItemState extends State<HistoryItemComponent> {
               maxLines: 8,
               linkColor: uiColor.first,
             ),
+            DividerComponent(top: 10, bottom: 10),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 !_allHistorySelected[index].isComment
                     ? SizedBox()
                     : GestureDetector(
-                        child: Text(
-                          _allHistorySelected[index].qtyComment.toString() +
-                              (_allHistorySelected[index].qtyComment > 1
-                                  ? ' comentários'
-                                  : ' comentário'),
-                          style: uiTextStyle.text2,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: Text(
+                            _allHistorySelected[index].qtyComment.toString() +
+                                (_allHistorySelected[index].qtyComment > 1
+                                    ? ' comentários'
+                                    : ' comentário'),
+                            style: uiTextStyle.text2,
+                          ),
                         ),
                         onTap: () => _showModal(
                           context,
@@ -141,6 +145,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                 )
               ],
             ),
+            DividerComponent(top: 10, bottom: 10),
           ],
         ),
       ),
