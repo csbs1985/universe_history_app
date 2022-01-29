@@ -96,7 +96,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
               children: [
                 !_allHistorySelected[index].isComment
                     ? SizedBox()
-                    : TextButton(
+                    : GestureDetector(
                         child: Text(
                           _allHistorySelected[index].qtyComment.toString() +
                               (_allHistorySelected[index].qtyComment > 1
@@ -104,8 +104,11 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                                   : ' comentário'),
                           style: uiTextStyle.text2,
                         ),
-                        onPressed: () => _showModal(
-                            context, _allHistorySelected[index].id, false),
+                        onTap: () => _showModal(
+                          context,
+                          _allHistorySelected[index].id,
+                          false,
+                        ),
                       ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -126,8 +129,13 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                           _setFavorited(_allHistorySelected[index].id),
                     ),
                     IconComponent(
+                      svg: uiSvg.open,
+                      route: 'history',
+                      // TODO: criar função para o botão opções da historia.
+                    ),
+                    IconComponent(
                       svg: uiSvg.options,
-                      route: 'settings',
+                      route: 'options',
                       // TODO: criar função para o botão opções da historia.
                     ),
                   ],

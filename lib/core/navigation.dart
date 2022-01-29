@@ -5,6 +5,7 @@ import 'package:universe_history_app/pages/blocked_users_page.dart';
 import 'package:universe_history_app/pages/common_questions_page.dart';
 import 'package:universe_history_app/pages/create_history_page.dart';
 import 'package:universe_history_app/pages/delete_account_page.dart';
+import 'package:universe_history_app/pages/history_item_page.dart';
 import 'package:universe_history_app/pages/home_page.dart';
 import 'package:universe_history_app/pages/justify_page.dart';
 import 'package:universe_history_app/pages/login_page.dart';
@@ -44,6 +45,12 @@ class Navigation {
         return PageTransition(
           child: const JustifyPage(),
           type: PageTransitionType.rightToLeft,
+          settings: settings,
+        );
+      case '/history':
+        return PageTransition(
+          child: const HistoryItemPage(),
+          type: PageTransitionType.bottomToTop,
           settings: settings,
         );
       case '/login':

@@ -13,6 +13,7 @@ class uiSvg {
   static const String maximize = 'assets/icons/maximize.svg';
   static const String minimize = 'assets/icons/minimize.svg';
   static const String notification = 'assets/icons/notification.svg';
+  static const String open = 'assets/icons/open.svg';
   static const String options = 'assets/icons/options.svg';
   static const String send = 'assets/icons/send.svg';
   static const String unlock = 'assets/icons/unlock.svg';
