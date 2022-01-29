@@ -48,7 +48,7 @@ class _NotificationPageState extends State<NotificationPage> {
           children: [
             const Padding(
               padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-              child: const TitleComponent('Notificações'),
+              child: TitleComponent(title: 'Notificações'),
             ),
             for (var item in allNotification)
               GestureDetector(

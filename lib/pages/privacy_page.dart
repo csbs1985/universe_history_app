@@ -24,7 +24,7 @@ class PrivacyPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
-              TitleComponent('Política de Privacidade'),
+              TitleComponent(title: 'Política de Privacidade'),
               Text(
                 'O History utiliza segurança de ponta e criptografia ponta a ponta para fornecer conteúdo privado e seus'
                 ' serviços para usuários em todo o mundo (“Serviços”). Suas mensagens são sempre criptografadas, de modo que nunca'

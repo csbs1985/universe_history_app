@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/modal_comment_component.dart';
+import 'package:universe_history_app/components/resume_component.dart';
+import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/shared/models/favorite_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
@@ -73,16 +75,12 @@ class _HistoryItemState extends State<HistoryItemComponent> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
-              _allHistorySelected[index].title,
-              style: uiTextStyle.header1,
+            TitleComponent(
+              title: _allHistorySelected[index].title,
+              bottom: 0,
             ),
-            Text(
-              _allHistorySelected[index].date + ' - anônimo',
-              style: uiTextStyle.text2,
-            ),
-            const SizedBox(
-              height: 10,
+            ResumeComponent(
+              resume: _allHistorySelected[index].date + ' - anônimo',
             ),
             ExpandableText(
               _allHistorySelected[index].text,

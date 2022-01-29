@@ -26,7 +26,7 @@ class CommonQuestionsPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const TitleComponent('Perguntas frequentes'),
+              const TitleComponent(title: 'Perguntas frequentes'),
               for (var item in allQuestions)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

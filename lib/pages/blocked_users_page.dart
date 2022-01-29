@@ -58,7 +58,7 @@ class _blockedUsersPageState extends State<blockedUsersPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TitleComponent(numBlocked),
+                TitleComponent(title: numBlocked),
                 const Text(
                   'Quando você bloqueia uma pessoa, este usuário não poderá mais ler suas histórias e comentários e comentar o que você escreve.',
                   style: uiTextStyle.text2,

@@ -25,7 +25,7 @@ class TermsPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const TitleComponent('Termo de uso'),
+              const TitleComponent(title: 'Termo de uso'),
               StyledText(
                   style: uiTextStyle.text4,
                   tags: {

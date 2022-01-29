@@ -23,7 +23,7 @@ class AboutPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const TitleComponent('Sobre'),
+              const TitleComponent(title: 'Sobre'),
               const SizedBox(
                 height: 10,
               ),

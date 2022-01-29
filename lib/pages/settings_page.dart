@@ -47,7 +47,7 @@ class _SettingsPageState extends State<SettingsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const TitleComponent('Configurações'),
+              const TitleComponent(title: 'Configurações'),
               if (!_login)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
