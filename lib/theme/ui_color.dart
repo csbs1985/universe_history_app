@@ -15,7 +15,7 @@ class uiColor {
   static const Color success = const Color(0xFF26AD63);
   static const Color info = const Color(0xFF7291d5);
 
-  static const Color icon = const Color(0xFFc9d1d9);
+  static const Color icon = const Color(0xFF8b949e);
   static const Color icon_2 = const Color(0xFFFFFFFF);
 }
 

@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       if (_notification)
                         Positioned(
-                          top: 8,
+                          top: 2,
                           right: 12,
                           child: CircleAvatar(
                             radius: 4,

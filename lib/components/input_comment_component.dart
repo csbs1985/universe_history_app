@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/components/button_disabled.component.dart';
+import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -83,18 +83,14 @@ class _InputCommentComponentState extends State<InputCommentComponent> {
               children: [
                 Row(
                   children: [
-                    IconButton(
-                        icon: _textExpanded
-                            ? SvgPicture.asset(uiSvg.minimize)
-                            : SvgPicture.asset(uiSvg.maximize),
-                        onPressed: () {
-                          _toggleTextExpanded();
-                        }),
-                    IconButton(
-                        icon: _textAnonimous
-                            ? SvgPicture.asset(uiSvg.lock)
-                            : SvgPicture.asset(uiSvg.unlock),
-                        onPressed: () => _toggleAnonimous()),
+                    IconComponent(
+                      svg: _textExpanded ? uiSvg.minimize : uiSvg.maximize,
+                      callback: (value) => _toggleTextExpanded(),
+                    ),
+                    IconComponent(
+                      svg: _textAnonimous ? uiSvg.lock : uiSvg.unlock,
+                      callback: (value) => _toggleAnonimous(),
+                    ),
                   ],
                 ),
                 _textEmpty
