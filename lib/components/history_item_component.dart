@@ -11,10 +11,10 @@ import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/shared/models/favorite_model.dart';
-import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
+import 'package:date_format/date_format.dart';
 
 class HistoryItemComponent extends StatefulWidget {
   const HistoryItemComponent(
@@ -41,6 +41,16 @@ class _HistoryItemState extends State<HistoryItemComponent> {
   //   });
   // }
 
+  _getContent() {
+    Stream<QuerySnapshot<Map<String, dynamic>>> snapshot = FirebaseFirestore
+        .instance
+        .collection('historys')
+        .orderBy('date')
+        .snapshots();
+
+    return snapshot;
+  }
+
   void _setFavorited(String id) {
     const user = 'charlesSantos';
     FavoriteModel favorite =
@@ -65,10 +75,47 @@ class _HistoryItemState extends State<HistoryItemComponent> {
     return _allHistory.contains(id) ? true : false;
   }
 
+  String _setResume(item) {
+    late String _date = '';
+    String _edit = '';
+
+    var _currentDate = item['date'].millisecondsSinceEpoch;
+    var _now = new DateTime.now().millisecondsSinceEpoch;
+    var _diff = _now - _currentDate;
+    var _diffDate = _diff.toString();
+    var _oneHours = 3600000;
+    var _twelveHours = 43200000;
+    var _oneDay = 86400000;
+    var _twoDay = 172800000;
+
+    print("_DIFF: " + _diff.toString());
+
+    if (_diff > _oneHours) {
+      _date = formatDate(DateTime.parse(_diffDate), ['à ', nn, ' min']);
+    } else if (_diff > _twelveHours) {
+      _date = formatDate(DateTime.parse(_diffDate), ['à ', HH, ' horas']);
+    } else if (_diff > _oneDay) {
+      _date = 'hoje';
+    } else if (_diff > _twoDay) {
+      _date = 'ontem';
+    } else {
+      _date = formatDate(DateTime.parse(_currentDate), [dd, ', out de ', yyyy])
+          .toString();
+    }
+
+    var author = item['isAnonymous'] ? 'anônimo' : item['userId'];
+
+    if (item['isEdit']) {
+      _edit = ' - editada';
+    }
+
+    return _date + ' - ' + author + _edit;
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('history').snapshots(),
+      stream: _getContent(),
       builder: (BuildContext context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
@@ -79,6 +126,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
             return ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
+              reverse: true,
               itemCount: documents.length,
               itemBuilder: (BuildContext context, index) {
                 return Padding(
@@ -92,7 +140,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                         bottom: 0,
                       ),
                       ResumeComponent(
-                        resume: documents[index]['date'] + ' - anônimo',
+                        resume: _setResume(documents[index]),
                       ),
                       ExpandableText(
                         documents[index]['text'],

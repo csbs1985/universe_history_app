@@ -82,18 +82,21 @@ class _CreateHistoryState extends State<CreateHistory> {
     _form = {
       'title': titleController.text,
       'text': textController.text,
-      'date': new DateTime.now().toString(),
+      'date': new DateTime.now(),
       'isComment': _isComment,
       'isAnonymous': _isAnonymous,
       'isEdit': false,
       'isDelete': false,
-      'userId': getCurrentId(),
       'qtyComment': 0,
       'categories': _categories,
+      'user': {
+        'userId': getCurrentId(),
+        'userNickName': getCurrentId(),
+      },
     };
 
     FirebaseFirestore.instance
-        .collection('history')
+        .collection('historys')
         .doc()
         .set(_form)
         .then((value) => {

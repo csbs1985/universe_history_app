@@ -107,53 +107,47 @@ class _HomePageState extends State<HomePage> {
         ),
         body: Snap(
           controller: _scrollController.appBar,
-          child: _isLoading
-              ? Column(
-                  children: [
-                    for (var i = 0; i < 3; i++) SkeletonHistoryItemComponent()
-                  ],
-                )
-              : Container(
-                  color: uiColor.comp_1,
-                  child: SingleChildScrollView(
-                    controller: _scrollController,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(
-                          height: 44,
-                          child: MenuCategoryComponent(
-                            callback: (value) => _selectMenu(value),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        _login
-                            ? CardComponent(
-                                title: 'Escreva sua história',
-                                text:
-                                    'Todos nós temos uma história pra contar e a sua pode ajudar alguém.',
-                                label: 'Escrever',
-                                callback: (valeu) =>
-                                    Navigator.of(context).pushNamed("/create"),
-                              )
-                            : CardComponent(
-                                title: 'Entre ou crie sua conta',
-                                text:
-                                    'Você não se identificou ainda para escrever histórias e comentarios.',
-                                label: 'Entrar',
-                                callback: (valeu) =>
-                                    Navigator.of(context).pushNamed("/login"),
-                              ),
-                        Flexible(
-                          child: HistoryItemComponent(
-                              itemSelectedMenu: _itemSelectedMenu),
-                        ),
-                      ],
+          child: Container(
+            color: uiColor.comp_1,
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    height: 44,
+                    child: MenuCategoryComponent(
+                      callback: (value) => _selectMenu(value),
                     ),
                   ),
-                ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _login
+                      ? CardComponent(
+                          title: 'Escreva sua história',
+                          text:
+                              'Todos nós temos uma história pra contar e a sua pode ajudar alguém.',
+                          label: 'Escrever',
+                          callback: (valeu) =>
+                              Navigator.of(context).pushNamed("/create"),
+                        )
+                      : CardComponent(
+                          title: 'Entre ou crie sua conta',
+                          text:
+                              'Você não se identificou ainda para escrever histórias e comentarios.',
+                          label: 'Entrar',
+                          callback: (valeu) =>
+                              Navigator.of(context).pushNamed("/login"),
+                        ),
+                  Flexible(
+                    child: HistoryItemComponent(
+                        itemSelectedMenu: _itemSelectedMenu),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
