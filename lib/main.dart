@@ -14,11 +14,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  // FirebaseFirestore.instance
-  //     .collection('col')
-  //     .doc('doc')
-  //     .set({'name': 'charles'});
-
   runApp(
     const ProviderScope(
       child: MyApp(),

@@ -27,7 +27,7 @@ class ToastComponent {
     showToast(
       text,
       context: context,
-      position: StyledToastPosition.bottom,
+      position: StyledToastPosition.top,
       textStyle: uiTextStyle.text1,
       backgroundColor: _style,
       animation: StyledToastAnimation.slideToBottomFade,

@@ -1,5 +1,7 @@
-// ignore_for_file: unused_import, unused_field, avoid_print, prefer_final_fields, unnecessary_new, prefer_is_empty, todo
+// ignore_for_file: unused_import, unused_field, avoid_print, prefer_final_fields, unnecessary_new, prefer_is_empty, todo, argument_type_not_assignable_to_error_handler, invalid_return_type_for_catch_error
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -77,10 +79,10 @@ class _CreateHistoryState extends State<CreateHistory> {
   }
 
   void _publishHIstory(BuildContext context) {
-    Map<String, dynamic> _form = {
+    _form = {
       'title': titleController.text,
       'text': textController.text,
-      'date': new DateTime.now(),
+      'date': new DateTime.now().toString(),
       'isComment': _isComment,
       'isAnonymous': _isAnonymous,
       'isEdit': false,
@@ -90,9 +92,20 @@ class _CreateHistoryState extends State<CreateHistory> {
       'categories': _categories,
     };
 
-    print(_form); // TODO: remover quando salvar no banco.
-    toast.toast(context, ToastEnum.SUCCESS, 'Sua história foi publicada!');
-    Navigator.of(context).pop();
+    FirebaseFirestore.instance
+        .collection('history')
+        .doc()
+        .set(_form)
+        .then((value) => {
+              Navigator.of(context).pop(),
+              toast.toast(
+                  context, ToastEnum.SUCCESS, 'Sua história foi publicada.'),
+            })
+        .catchError((error) => {
+              print('ERROR:' + error),
+              toast.toast(context, ToastEnum.WARNING,
+                  'Erro ao publicar história, tente novamente mais tarde.')
+            });
   }
 
   @override
