@@ -1,5 +1,6 @@
-// ignore_for_file: use_key_in_widget_constructors, todo, prefer_const_constructors, unused_field, iterable_contains_unrelated_type, list_remove_unrelated_type, no_logic_in_create_state, unnecessary_new, prefer_final_fields
+// ignore_for_file: use_key_in_widget_constructors, todo, prefer_const_constructors, unused_field, iterable_contains_unrelated_type, list_remove_unrelated_type, no_logic_in_create_state, unnecessary_new, prefer_final_fields, await_only_futures, avoid_print, empty_constructor_bodies
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -7,6 +8,7 @@ import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/modal_comment_component.dart';
 import 'package:universe_history_app/components/resume_component.dart';
+import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/shared/models/favorite_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
@@ -29,16 +31,15 @@ class HistoryItemComponent extends StatefulWidget {
 
 class _HistoryItemState extends State<HistoryItemComponent> {
   List<FavoriteModel> allFavorite = FavoriteModel.allFavorite;
-  List<HistoryModel> _allHistory = HistoryModel.allHistory;
-  List<HistoryModel> _allHistorySelected = HistoryModel.allHistory;
+  List<DocumentSnapshot> _allHistory = [];
 
-  void refresh() {
-    setState(() {
-      _allHistorySelected = _allHistory
-          .where((i) => i.categories.contains(widget._itemSelectedMenu))
-          .toList();
-    });
-  }
+  // void refresh() {
+  //   setState(() {
+  //     _allHistory = _allHistory
+  //         .where((i) => i.categories.contains(widget._itemSelectedMenu))
+  //         .toList();
+  //   });
+  // }
 
   void _setFavorited(String id) {
     const user = 'charlesSantos';
@@ -61,94 +62,109 @@ class _HistoryItemState extends State<HistoryItemComponent> {
   }
 
   bool _getFavorited(String id) {
-    return _allHistorySelected.contains(id) ? true : false;
+    return _allHistory.contains(id) ? true : false;
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: _allHistorySelected.length,
-      itemBuilder: (BuildContext context, int index) => Padding(
-        padding: const EdgeInsets.fromLTRB(12, 20, 12, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            TitleComponent(
-              title: _allHistorySelected[index].title,
-              bottom: 0,
-            ),
-            ResumeComponent(
-              resume: _allHistorySelected[index].date + ' - anônimo',
-            ),
-            ExpandableText(
-              _allHistorySelected[index].text,
-              style: uiTextStyle.text1,
-              expandText: 'continuar lendo',
-              collapseText: 'fechar',
-              maxLines: 8,
-              linkColor: uiColor.first,
-            ),
-            DividerComponent(top: 10, bottom: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                !_allHistorySelected[index].isComment
-                    ? SizedBox()
-                    : GestureDetector(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: Text(
-                            _allHistorySelected[index].qtyComment.toString() +
-                                (_allHistorySelected[index].qtyComment > 1
-                                    ? ' comentários'
-                                    : ' comentário'),
-                            style: uiTextStyle.text2,
-                          ),
-                        ),
-                        onTap: () => _showModal(
-                          context,
-                          _allHistorySelected[index].id,
-                          false,
-                        ),
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('history').snapshots(),
+      builder: (BuildContext context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+          case ConnectionState.waiting:
+            return SkeletonHistoryItemComponent();
+          default:
+            List<DocumentSnapshot> documents = snapshot.data!.docs;
+            return ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: documents.length,
+              itemBuilder: (BuildContext context, index) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 20, 12, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      TitleComponent(
+                        title: documents[index]['title'],
+                        bottom: 0,
                       ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    if (_allHistorySelected[index].isComment)
-                      IconComponent(
-                        svg: uiSvg.comment,
-                        callback: (value) => _showModal(
-                            context, _allHistorySelected[index].id, true),
+                      ResumeComponent(
+                        resume: documents[index]['date'] + ' - anônimo',
                       ),
-                    IconComponent(
-                      svg: _getFavorited(_allHistorySelected[index].id)
-                          ? uiSvg.favorited
-                          : uiSvg.favorite,
-                      // TODO: criar função para adicionar aos favoritos.
-                      callback: () =>
-                          _setFavorited(_allHistorySelected[index].id),
-                    ),
-                    IconComponent(
-                      svg: uiSvg.open,
-                      route: 'history',
-                      // TODO: criar função para o botão abrir história.
-                    ),
-                    IconComponent(
-                      svg: uiSvg.options,
-                      route: 'options',
-                      // TODO: criar função para o botão opções da história.
-                    ),
-                  ],
-                )
-              ],
-            ),
-            DividerComponent(top: 10, bottom: 10),
-          ],
-        ),
-      ),
+                      ExpandableText(
+                        documents[index]['text'],
+                        style: uiTextStyle.text1,
+                        expandText: 'continuar lendo',
+                        collapseText: 'fechar',
+                        maxLines: 8,
+                        linkColor: uiColor.first,
+                      ),
+                      DividerComponent(top: 10, bottom: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          !documents[index]['isComment']
+                              ? SizedBox()
+                              : GestureDetector(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 8),
+                                    child: Text(
+                                      documents[index]['qtyComment']
+                                              .toString() +
+                                          (documents[index]['qtyComment'] > 1
+                                              ? ' comentários'
+                                              : ' comentário'),
+                                      style: uiTextStyle.text2,
+                                    ),
+                                  ),
+                                  onTap: () => _showModal(
+                                    context,
+                                    documents[index].id,
+                                    false,
+                                  ),
+                                ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              if (documents[index]['isComment'])
+                                IconComponent(
+                                  svg: uiSvg.comment,
+                                  callback: (value) => _showModal(
+                                      context, documents[index].id, true),
+                                ),
+                              IconComponent(
+                                svg: _getFavorited(documents[index].id)
+                                    ? uiSvg.favorited
+                                    : uiSvg.favorite,
+                                // TODO: criar função para adicionar aos favoritos.
+                                callback: () =>
+                                    _setFavorited(documents[index].id),
+                              ),
+                              IconComponent(
+                                svg: uiSvg.open,
+                                route: 'history',
+                                // TODO: criar função para o botão abrir história.
+                              ),
+                              IconComponent(
+                                svg: uiSvg.options,
+                                route: 'options',
+                                // TODO: criar função para o botão opções da história.
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      DividerComponent(top: 10, bottom: 10),
+                    ],
+                  ),
+                );
+              },
+            );
+        }
+      },
     );
   }
 }
