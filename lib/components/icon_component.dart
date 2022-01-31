@@ -47,6 +47,7 @@ class _IconComponentState extends State<IconComponent> {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
+        color: Colors.transparent,
         padding: widget._svg == null
             ? const EdgeInsets.all(0)
             : const EdgeInsets.fromLTRB(16, 8, 16, 8),
@@ -64,5 +65,3 @@ class _IconComponentState extends State<IconComponent> {
     );
   }
 }
-
-// TODO: adicionar IconComponent no modal de comentários

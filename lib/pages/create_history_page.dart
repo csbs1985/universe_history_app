@@ -90,8 +90,8 @@ class _CreateHistoryState extends State<CreateHistory> {
       'qtyComment': 0,
       'categories': _categories,
       'user': {
-        'userId': getCurrentId(),
-        'userNickName': getCurrentId(),
+        'id': getCurrentId(),
+        'nickName': getCurrentId(),
       },
     };
 
