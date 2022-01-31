@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-String editDate(int timestamp) {
+String editDateUtil(int timestamp) {
   var now = DateTime.now();
   var date = DateTime.fromMillisecondsSinceEpoch(timestamp);
   var diff = now.difference(date);

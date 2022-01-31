@@ -14,7 +14,7 @@ import 'package:universe_history_app/shared/models/favorite_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
-import 'package:universe_history_app/utils/format_date.dart';
+import 'package:universe_history_app/utils/edit_date_util.dart';
 
 class HistoryItemComponent extends StatefulWidget {
   const HistoryItemComponent(
@@ -76,7 +76,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
   }
 
   String _setResume(item) {
-    var _date = editDate(item['date'].millisecondsSinceEpoch);
+    var _date = editDateUtil(item['date'].millisecondsSinceEpoch);
     var author = item['isAnonymous'] ? 'anônimo' : item['user']['nickName'];
     var temp = _date + ' - ' + author;
     return item['isEdit'] ? temp + ' - editada' : temp;
