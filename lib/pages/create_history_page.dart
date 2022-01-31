@@ -82,7 +82,7 @@ class _CreateHistoryState extends State<CreateHistory> {
     _form = {
       'title': titleController.text,
       'text': textController.text,
-      'date': new DateTime.now(),
+      'date': DateTime.now(),
       'isComment': _isComment,
       'isAnonymous': _isAnonymous,
       'isEdit': false,

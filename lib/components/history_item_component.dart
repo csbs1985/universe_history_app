@@ -14,6 +14,7 @@ import 'package:universe_history_app/shared/models/favorite_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
+import 'package:universe_history_app/utils/format_date.dart';
 
 class HistoryItemComponent extends StatefulWidget {
   const HistoryItemComponent(
@@ -75,52 +76,10 @@ class _HistoryItemState extends State<HistoryItemComponent> {
   }
 
   String _setResume(item) {
-    List months = [
-      'jan',
-      'feb',
-      'mar',
-      'apr',
-      'may',
-      'jun',
-      'jul',
-      'aug',
-      'sep',
-      'oct',
-      'nov',
-      'dec'
-    ];
-
-    var _currentDate = item['date'].millisecondsSinceEpoch;
-    var _now = new DateTime.now().millisecondsSinceEpoch;
-    var _diff = _now - _currentDate;
-    var _date = '';
-    var _oneHour = 3600000;
-    var _halfDay = 43200000;
-    var _oneDay = 86400000;
-    var _twoDay = 172800000;
-
-    var diff = DateTime.fromMillisecondsSinceEpoch(int.parse(_now.toString()));
-
-    if (_diff < _oneHour) {
-      var oneHour = DateTime.fromMillisecondsSinceEpoch(_oneHour);
-      var min = diff.difference(oneHour).inHours;
-      _date = 'à ' + min.toString() + ' min';
-    } else if (_diff < _halfDay) {
-      var oneHour = DateTime.fromMillisecondsSinceEpoch(_halfDay);
-      var hour = oneHour.difference(diff).inHours;
-      _date = 'à ' + hour.toString() + ' horas';
-    } else if (_diff < _oneDay) {
-      _date = 'hoje';
-    } else if (_diff < _twoDay) {
-      _date = 'ontem';
-    } else {
-      _date = '29, jan. de 2022';
-    }
-
+    var _date = editDate(item['date'].millisecondsSinceEpoch);
     var author = item['isAnonymous'] ? 'anônimo' : item['user']['nickName'];
-    var edit = item['isEdit'] ? ' - editada' : '';
-
-    return _date + ' - ' + author + edit;
+    var temp = _date + ' - ' + author;
+    return item['isEdit'] ? temp + ' - editada' : temp;
   }
 
   @override
