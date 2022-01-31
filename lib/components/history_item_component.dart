@@ -14,7 +14,6 @@ import 'package:universe_history_app/shared/models/favorite_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
-import 'package:date_format/date_format.dart';
 
 class HistoryItemComponent extends StatefulWidget {
   const HistoryItemComponent(
@@ -76,40 +75,52 @@ class _HistoryItemState extends State<HistoryItemComponent> {
   }
 
   String _setResume(item) {
-    late String _date = '';
-    String _edit = '';
+    List months = [
+      'jan',
+      'feb',
+      'mar',
+      'apr',
+      'may',
+      'jun',
+      'jul',
+      'aug',
+      'sep',
+      'oct',
+      'nov',
+      'dec'
+    ];
 
     var _currentDate = item['date'].millisecondsSinceEpoch;
     var _now = new DateTime.now().millisecondsSinceEpoch;
     var _diff = _now - _currentDate;
-    var _diffDate = _diff.toString();
-    var _oneHours = 3600000;
-    var _twelveHours = 43200000;
+    var _date = '';
+    var _oneHour = 3600000;
+    var _halfDay = 43200000;
     var _oneDay = 86400000;
     var _twoDay = 172800000;
 
-    print("_DIFF: " + _diff.toString());
+    var diff = DateTime.fromMillisecondsSinceEpoch(int.parse(_now.toString()));
 
-    if (_diff > _oneHours) {
-      _date = formatDate(DateTime.parse(_diffDate), ['à ', nn, ' min']);
-    } else if (_diff > _twelveHours) {
-      _date = formatDate(DateTime.parse(_diffDate), ['à ', HH, ' horas']);
-    } else if (_diff > _oneDay) {
+    if (_diff < _oneHour) {
+      var oneHour = DateTime.fromMillisecondsSinceEpoch(_oneHour);
+      var min = diff.difference(oneHour).inHours;
+      _date = 'à ' + min.toString() + ' min';
+    } else if (_diff < _halfDay) {
+      var oneHour = DateTime.fromMillisecondsSinceEpoch(_halfDay);
+      var hour = oneHour.difference(diff).inHours;
+      _date = 'à ' + hour.toString() + ' horas';
+    } else if (_diff < _oneDay) {
       _date = 'hoje';
-    } else if (_diff > _twoDay) {
+    } else if (_diff < _twoDay) {
       _date = 'ontem';
     } else {
-      _date = formatDate(DateTime.parse(_currentDate), [dd, ', out de ', yyyy])
-          .toString();
+      _date = '29, jan. de 2022';
     }
 
-    var author = item['isAnonymous'] ? 'anônimo' : item['userId'];
+    var author = item['isAnonymous'] ? 'anônimo' : item['user']['nickName'];
+    var edit = item['isEdit'] ? ' - editada' : '';
 
-    if (item['isEdit']) {
-      _edit = ' - editada';
-    }
-
-    return _date + ' - ' + author + _edit;
+    return _date + ' - ' + author + edit;
   }
 
   @override
