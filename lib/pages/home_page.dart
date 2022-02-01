@@ -8,7 +8,6 @@ import 'package:universe_history_app/components/card_component.dart';
 import 'package:universe_history_app/components/history_item_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/menu_category_component.dart';
-import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 

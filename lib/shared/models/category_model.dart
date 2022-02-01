@@ -29,8 +29,8 @@ class CategoryModel {
         isShowInput: false,
         isDisabled: false),
     new CategoryModel(
-        id: 'salvos',
-        label: 'salvos',
+        id: 'lerDepois',
+        label: 'ler depois',
         isShowMenu: true,
         isShowInput: false,
         isDisabled: false),
