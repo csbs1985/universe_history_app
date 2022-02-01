@@ -11,8 +11,6 @@ import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
-import 'package:universe_history_app/shared/models/favorite_model.dart';
-import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -119,25 +117,12 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          !documents[index]['isComment']
+                          documents[index]['qtyComment'] < 1
                               ? SizedBox()
-                              : GestureDetector(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 8),
-                                    child: Text(
-                                      documents[index]['qtyComment']
-                                              .toString() +
-                                          (documents[index]['qtyComment'] > 1
-                                              ? ' comentários'
-                                              : ' comentário'),
-                                      style: uiTextStyle.text2,
-                                    ),
-                                  ),
-                                  onTap: () => _showModal(
-                                    context,
-                                    documents[index].id,
-                                    false,
-                                  ),
+                              : Text(
+                                  documents[index]['qtyComment'].toString() +
+                                      ' comentários',
+                                  style: uiTextStyle.text2,
                                 ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
