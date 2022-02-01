@@ -86,7 +86,6 @@ class _CreateHistoryState extends State<CreateHistory> {
       'isComment': _isComment,
       'isAnonymous': _isAnonymous,
       'isEdit': false,
-      'isDelete': false,
       'qtyComment': 0,
       'categories': _categories,
       'user': {

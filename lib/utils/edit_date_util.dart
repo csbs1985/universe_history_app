@@ -23,7 +23,9 @@ String editDateUtil(int timestamp) {
     'dez'
   ];
 
-  if (diff.inMinutes < 60) {
+  if (diff.inSeconds < 60) {
+    time = 'agora';
+  } else if (diff.inMinutes < 60) {
     time = 'à ' + diff.inMinutes.floor().toString() + ' min';
   } else if (diff.inHours < 12) {
     time = 'à ' + diff.inHours.floor().toString() + ' horas';

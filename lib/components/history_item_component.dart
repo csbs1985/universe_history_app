@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, todo, prefer_const_constructors, unused_field, iterable_contains_unrelated_type, list_remove_unrelated_type, no_logic_in_create_state, unnecessary_new, prefer_final_fields, await_only_futures, avoid_print, empty_constructor_bodies
+// ignore_for_file: use_key_in_widget_constructors, todo, prefer_const_constructors, unused_field, iterable_contains_unrelated_type, list_remove_unrelated_type, no_logic_in_create_state, unnecessary_new, prefer_final_fields, await_only_futures, avoid_print, empty_constructor_bodies, unused_local_variable
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expandable_text/expandable_text.dart';
@@ -10,7 +10,9 @@ import 'package:universe_history_app/components/modal_comment_component.dart';
 import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
+import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/shared/models/favorite_model.dart';
+import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -30,16 +32,11 @@ class HistoryItemComponent extends StatefulWidget {
 }
 
 class _HistoryItemState extends State<HistoryItemComponent> {
-  List<FavoriteModel> allFavorite = FavoriteModel.allFavorite;
+  List<String> _allFavorite = [];
   List<DocumentSnapshot> _allHistory = [];
+  Map<String, dynamic> _favorite = {};
 
-  // void refresh() {
-  //   setState(() {
-  //     _allHistory = _allHistory
-  //         .where((i) => i.categories.contains(widget._itemSelectedMenu))
-  //         .toList();
-  //   });
-  // }
+  final ToastComponent toast = new ToastComponent();
 
   _getContent() {
     Stream<QuerySnapshot<Map<String, dynamic>>> snapshot = FirebaseFirestore
@@ -51,14 +48,23 @@ class _HistoryItemState extends State<HistoryItemComponent> {
     return snapshot;
   }
 
-  void _setFavorited(String id) {
-    const user = 'charlesSantos';
-    FavoriteModel favorite =
-        new FavoriteModel(id: '4', history: id, user: user);
+  String _setResume(item) {
+    var _date = editDateUtil(item['date'].millisecondsSinceEpoch);
+    var author = item['isAnonymous'] ? 'anônimo' : item['user']['nickName'];
+    var temp = _date + ' - ' + author;
+    return item['isEdit'] ? temp + ' - editada' : temp;
+  }
 
-    allFavorite.contains(id)
-        ? allFavorite.remove(id)
-        : allFavorite.add(favorite);
+  void _toggleFavorite(String id) {
+    setState(() {
+      _allFavorite.contains(id)
+          ? _allFavorite.remove(id)
+          : _allFavorite.add(id);
+    });
+  }
+
+  bool _getFavorited(String id) {
+    return _allFavorite.contains(id) ? true : false;
   }
 
   void _showModal(BuildContext context, String historyId, bool openKeyboard) {
@@ -69,17 +75,6 @@ class _HistoryItemState extends State<HistoryItemComponent> {
       duration: const Duration(milliseconds: 300),
       builder: (context) => ModalCommentComponent(historyId, openKeyboard),
     );
-  }
-
-  bool _getFavorited(String id) {
-    return _allHistory.contains(id) ? true : false;
-  }
-
-  String _setResume(item) {
-    var _date = editDateUtil(item['date'].millisecondsSinceEpoch);
-    var author = item['isAnonymous'] ? 'anônimo' : item['user']['nickName'];
-    var temp = _date + ' - ' + author;
-    return item['isEdit'] ? temp + ' - editada' : temp;
   }
 
   @override
@@ -158,8 +153,8 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                                     ? uiSvg.favorited
                                     : uiSvg.favorite,
                                 // TODO: criar função para adicionar aos favoritos.
-                                callback: () =>
-                                    _setFavorited(documents[index].id),
+                                callback: (value) =>
+                                    _toggleFavorite(documents[index].id),
                               ),
                               IconComponent(
                                 svg: uiSvg.open,
