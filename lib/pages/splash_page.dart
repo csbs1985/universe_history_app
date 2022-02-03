@@ -17,30 +17,18 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: uiColor.first,
-        statusBarIconBrightness: Brightness.light,
-        statusBarBrightness: Brightness.light,
-        systemNavigationBarColor: uiColor.first,
-        systemNavigationBarIconBrightness: Brightness.light,
-      ),
-    );
-
     return WillPopScope(
       onWillPop: () => exit(0),
       child: Scaffold(
-        body: Container(
-          color: uiColor.first,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: const [
-              IconComponent(
-                color: uiColor.third,
-              ),
-            ],
-          ),
+        body: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: const [
+            IconComponent(
+              svg: uiSvg.logo,
+              size: 280,
+            ),
+          ],
         ),
       ),
     );

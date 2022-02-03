@@ -9,9 +9,10 @@ class uiSvg {
   static const String favorited = 'assets/icons/favorited.svg';
   static const String google = 'assets/icons/google.svg';
   static const String lock = 'assets/icons/lock.svg';
-  static const String logo = 'assets/icons/logo.svg';
+  static const String logo = 'assets/icons/history_logo_full.svg';
   static const String maximize = 'assets/icons/maximize.svg';
   static const String minimize = 'assets/icons/minimize.svg';
+  static const String name = 'assets/icons/history_name.svg';
   static const String notification = 'assets/icons/notification.svg';
   static const String open = 'assets/icons/open.svg';
   static const String options = 'assets/icons/options.svg';

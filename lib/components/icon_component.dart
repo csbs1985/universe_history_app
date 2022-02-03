@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, unused_element
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -43,6 +43,24 @@ class _IconComponentState extends State<IconComponent> {
     });
   }
 
+  Color? _setColor() {
+    if (widget._svg == uiSvg.logo) {
+      return null;
+    } else if (widget._color != null) {
+      return widget._color;
+    }
+    return uiColor.icon;
+  }
+
+  double _setMaxHeight() {
+    if (widget._svg == uiSvg.logo) {
+      return double.infinity;
+    } else if (widget._svg == uiSvg.name) {
+      return 48;
+    }
+    return 32;
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -51,14 +69,13 @@ class _IconComponentState extends State<IconComponent> {
         padding: widget._svg == null
             ? const EdgeInsets.all(0)
             : const EdgeInsets.fromLTRB(16, 8, 16, 8),
-        height: widget._svg != null ? 32 : widget._size,
         child: SvgPicture.asset(
-          widget._svg ?? uiSvg.logo,
-          color: widget._color ?? uiColor.icon,
+          widget._svg ?? uiSvg.name,
+          color: _setColor(),
         ),
         constraints: BoxConstraints(
-          maxWidth: widget._size ?? 80,
-          maxHeight: 32,
+          maxWidth: widget._size ?? 54,
+          maxHeight: _setMaxHeight(),
         ),
       ),
       onTap: () => _onPressed(),
