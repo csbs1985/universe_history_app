@@ -7,6 +7,7 @@ import 'package:scroll_app_bar/scroll_app_bar.dart';
 import 'package:universe_history_app/components/card_component.dart';
 import 'package:universe_history_app/components/history_item_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
+import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/components/menu_category_component.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
@@ -70,7 +71,7 @@ class _HomePageState extends State<HomePage> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IconComponent(
+              LogoComponent(
                 color: uiColor.icon_2,
                 callback: (value) => _scrollToTop(),
               ),
@@ -79,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                   Stack(
                     children: [
                       IconComponent(
-                        svg: uiSvg.notification,
+                        icon: uiSvg.notification,
                         color: uiColor.icon_2,
                         route: 'notification',
                       ),
@@ -95,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                   IconComponent(
-                    svg: uiSvg.options,
+                    icon: uiSvg.options,
                     color: uiColor.icon_2,
                     route: 'settings',
                   ),

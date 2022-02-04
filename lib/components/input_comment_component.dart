@@ -84,11 +84,11 @@ class _InputCommentComponentState extends State<InputCommentComponent> {
                 Row(
                   children: [
                     IconComponent(
-                      svg: _textExpanded ? uiSvg.minimize : uiSvg.maximize,
+                      icon: _textExpanded ? uiSvg.minimize : uiSvg.maximize,
                       callback: (value) => _toggleTextExpanded(),
                     ),
                     IconComponent(
-                      svg: _textAnonimous ? uiSvg.lock : uiSvg.unlock,
+                      icon: _textAnonimous ? uiSvg.lock : uiSvg.unlock,
                       callback: (value) => _toggleAnonimous(),
                     ),
                   ],

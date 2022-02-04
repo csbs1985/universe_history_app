@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:universe_history_app/components/icon_component.dart';
+import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 
@@ -24,8 +25,8 @@ class _SplashPageState extends State<SplashPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: const [
-            IconComponent(
-              svg: uiSvg.logo,
+            LogoComponent(
+              icon: uiSvg.logo,
               size: 280,
             ),
           ],

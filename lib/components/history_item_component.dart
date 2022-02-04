@@ -129,12 +129,12 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                             children: [
                               if (documents[index]['isComment'])
                                 IconComponent(
-                                  svg: uiSvg.comment,
+                                  icon: uiSvg.comment,
                                   callback: (value) => _showModal(
                                       context, documents[index].id, true),
                                 ),
                               IconComponent(
-                                svg: _getFavorited(documents[index].id)
+                                icon: _getFavorited(documents[index].id)
                                     ? uiSvg.favorited
                                     : uiSvg.favorite,
                                 // TODO: criar função para adicionar aos favoritos.
@@ -142,12 +142,12 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                                     _toggleFavorite(documents[index].id),
                               ),
                               IconComponent(
-                                svg: uiSvg.open,
+                                icon: uiSvg.open,
                                 route: 'history',
                                 // TODO: criar função para o botão abrir história.
                               ),
                               IconComponent(
-                                svg: uiSvg.options,
+                                icon: uiSvg.options,
                                 route: 'options',
                                 // TODO: criar função para o botão opções da história.
                               ),

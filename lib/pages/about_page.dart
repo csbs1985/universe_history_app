@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:universe_history_app/components/icon_component.dart';
+import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -27,7 +27,7 @@ class AboutPage extends StatelessWidget {
               SizedBox(
                 height: 30,
               ),
-              IconComponent(),
+              LogoComponent(),
               SizedBox(
                 height: 30,
               ),
