@@ -57,8 +57,6 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void _getUser() {}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +69,8 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             const Expanded(
               child: LogoComponent(
-                size: 140,
+                icon: uiSvg.logo,
+                size: 400,
               ),
             ),
             const SizedBox(

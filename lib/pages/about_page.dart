@@ -25,11 +25,11 @@ class AboutPage extends StatelessWidget {
             children: const [
               TitleComponent(title: 'Sobre'),
               SizedBox(
-                height: 30,
+                height: 20,
               ),
               LogoComponent(),
               SizedBox(
-                height: 30,
+                height: 20,
               ),
               Text(
                 'Versão',

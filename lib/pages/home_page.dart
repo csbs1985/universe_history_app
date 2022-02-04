@@ -22,19 +22,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _scrollController = ScrollController();
 
-  bool _isLoading = true;
   bool _notification = true;
-  bool _login = true;
+  bool _login = false;
 
   String _itemSelectedMenu = 'todas';
-
-  @override
-  void initState() {
-    Future.delayed(const Duration(milliseconds: 300), () {
-      setState(() => _isLoading = false);
-    });
-    super.initState();
-  }
 
   void _scrollToTop() {
     _scrollController.animateTo(0,
@@ -73,6 +64,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               LogoComponent(
                 color: uiColor.icon_2,
+                size: 20,
                 callback: (value) => _scrollToTop(),
               ),
               Row(

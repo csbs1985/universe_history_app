@@ -27,7 +27,7 @@ class _SplashPageState extends State<SplashPage> {
           children: const [
             LogoComponent(
               icon: uiSvg.logo,
-              size: 280,
+              size: 400,
             ),
           ],
         ),

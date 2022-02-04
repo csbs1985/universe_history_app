@@ -49,30 +49,18 @@ class _LogoComponentState extends State<LogoComponent> {
     return uiColor.icon;
   }
 
-  double _setMaxHeight() {
-    if (widget._icon == uiSvg.logo) {
-      return double.infinity;
-    } else if (widget._icon == uiSvg.name) {
-      return 48;
-    }
-    return 32;
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
-        color: Colors.red,
-        padding: widget._icon == null
-            ? const EdgeInsets.all(0)
-            : const EdgeInsets.fromLTRB(16, 8, 16, 8),
+        padding: const EdgeInsets.all(0),
+        margin: const EdgeInsets.all(0),
         child: SvgPicture.asset(
           widget._icon ?? uiSvg.name,
           color: _setColor(),
         ),
         constraints: BoxConstraints(
-          maxWidth: 90,
-          maxHeight: _setMaxHeight(),
+          maxHeight: widget._size ?? 32,
         ),
       ),
       onTap: () => _onPressed(),
