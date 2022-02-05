@@ -53,18 +53,18 @@ class _SelectCategoriesComponentState extends State<SelectCategoriesComponent> {
         Wrap(
           children: [
             for (var item in widget._content)
-              if (item.isShowInput && !item.isDisabled)
+              if (item.isShowInput! && !item.isDisabled!)
                 Padding(
                   padding: const EdgeInsets.only(right: 10),
                   child: TextButton(
-                    onPressed: () => _setSelected(item.id),
+                    onPressed: () => _setSelected(item.id!),
                     child: Text(
-                      item.label,
-                      style: _getSelected(item.id)
+                      item.label!,
+                      style: _getSelected(item.id!)
                           ? uiTextStyle.btnFlexActived
                           : uiTextStyle.btnFlex,
                     ),
-                    style: _getSelected(item.id)
+                    style: _getSelected(item.id!)
                         ? uiButton.btnTagActived
                         : uiButton.btnTag,
                   ),

@@ -19,12 +19,13 @@ class CommentModel {
 
   static List<CommentModel> allComment = [
     new CommentModel(
-        id: '0',
-        text: 'Então ontem mesmo ele deve ter voltado ne?',
-        user: 'luizaCosta',
-        date: '10 de janeiro de 2022',
-        edit: false,
-        delete: false),
+      id: '0',
+      text: 'Então ontem mesmo ele deve ter voltado ne?',
+      user: 'luizaCosta',
+      date: '10 de janeiro de 2022',
+      edit: false,
+      delete: false,
+    ),
     new CommentModel(
         id: '1',
         text:

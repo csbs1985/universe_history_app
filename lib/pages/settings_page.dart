@@ -103,7 +103,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               toggleColor: uiColor.third,
                               activeColor: uiColor.first,
                               inactiveColor: uiColor.comp_3,
-                              borderRadius: 0,
+                              borderRadius: 20,
                               showOnOff: true,
                               onToggle: (value) => _toggleNotification(value),
                             ),

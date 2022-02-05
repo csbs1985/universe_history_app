@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   final _scrollController = ScrollController();
 
   bool _notification = true;
-  bool _login = false;
+  bool _login = true;
 
   String _itemSelectedMenu = 'todas';
 
@@ -57,6 +57,7 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: uiColor.first,
           controller: _scrollController,
           automaticallyImplyLeading: false,
+          toolbarHeight: 48,
           elevation: 0,
           titleSpacing: 10,
           title: Row(
@@ -108,9 +109,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   SizedBox(
                     height: 44,
-                    child: MenuCategoryComponent(
-                      callback: (value) => _selectMenu(value),
-                    ),
+                    child: MenuCategoryComponent(),
                   ),
                   SizedBox(
                     height: 10,
