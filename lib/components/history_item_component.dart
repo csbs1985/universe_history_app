@@ -10,7 +10,7 @@ import 'package:universe_history_app/components/modal_comment_component.dart';
 import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
-import 'package:universe_history_app/components/toast_component.dart';
+import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
@@ -32,45 +32,23 @@ class HistoryItemComponent extends StatefulWidget {
 }
 
 class _HistoryItemState extends State<HistoryItemComponent> {
-  final ToastComponent toast = new ToastComponent();
+  final Api api = new Api();
 
   List<String> _allFavorite = [];
   List<DocumentSnapshot> _allHistory = [];
   Map<String, dynamic> _favorite = {};
 
   _getContent() {
-    final value = menuItemSelected.value.id;
+    final value = menuItemSelected.value.id!;
 
     if (value == 'todas') {
-      Stream<QuerySnapshot<Map<String, dynamic>>> snapshot = FirebaseFirestore
-          .instance
-          .collection('historys')
-          .orderBy('date')
-          .snapshots();
-      return snapshot;
+      return api.getAllHistory;
     } else if (value == 'minhas') {
-      Stream<QuerySnapshot<Map<String, dynamic>>> snapshot = FirebaseFirestore
-          .instance
-          .collection('historys')
-          .orderBy('date')
-          .where('user.id', arrayContainsAny: ["charles.sbs"]).snapshots();
-      return snapshot;
+      return api.getAllUserHistory('charles.sbs');
     } else if (value == 'lerMaisTarde') {
-      Stream<QuerySnapshot<Map<String, dynamic>>> snapshot = FirebaseFirestore
-          .instance
-          .collection('bookmarks')
-          .orderBy('date')
-          .where('user',
-              arrayContainsAny: ['G9OfntwowPyKsTqHUADH']).snapshots();
-      return snapshot;
-    } else {
-      Stream<QuerySnapshot<Map<String, dynamic>>> snapshot = FirebaseFirestore
-          .instance
-          .collection('historys')
-          .orderBy('date')
-          .where('categories', arrayContainsAny: [value]).snapshots();
-      return snapshot;
+      return api.getAllUserBookmarks('G9OfntwowPyKsTqHUADH');
     }
+    return api.getAllHistoryFiltered(value);
   }
 
   String _setResume(item) {
