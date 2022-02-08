@@ -3,7 +3,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
@@ -12,21 +11,17 @@ import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
-import 'package:universe_history_app/notifiers/menu_notifier.dart';
-import 'package:universe_history_app/shared/models/category_model.dart';
+import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
 
-final menuProvider = StateNotifierProvider<MenuNotifier, CategoryModel>((ref) {
-  return MenuNotifier();
-});
-
 class HistoryItemComponent extends StatefulWidget {
-  const HistoryItemComponent(
-      {Function? callback, required String itemSelectedMenu})
-      : _itemSelectedMenu = itemSelectedMenu,
+  const HistoryItemComponent({
+    Function? callback,
+    required String itemSelectedMenu,
+  })  : _itemSelectedMenu = itemSelectedMenu,
         _callback = callback;
 
   final String _itemSelectedMenu;
@@ -37,20 +32,45 @@ class HistoryItemComponent extends StatefulWidget {
 }
 
 class _HistoryItemState extends State<HistoryItemComponent> {
+  final ToastComponent toast = new ToastComponent();
+
   List<String> _allFavorite = [];
   List<DocumentSnapshot> _allHistory = [];
   Map<String, dynamic> _favorite = {};
 
-  final ToastComponent toast = new ToastComponent();
-
   _getContent() {
-    Stream<QuerySnapshot<Map<String, dynamic>>> snapshot = FirebaseFirestore
-        .instance
-        .collection('historys')
-        .orderBy('date')
-        .snapshots();
+    final value = menuItemSelected.value.id;
 
-    return snapshot;
+    if (value == 'todas') {
+      Stream<QuerySnapshot<Map<String, dynamic>>> snapshot = FirebaseFirestore
+          .instance
+          .collection('historys')
+          .orderBy('date')
+          .snapshots();
+      return snapshot;
+    } else if (value == 'minhas') {
+      Stream<QuerySnapshot<Map<String, dynamic>>> snapshot = FirebaseFirestore
+          .instance
+          .collection('historys')
+          .orderBy('date')
+          .where('user.id', arrayContainsAny: ["charles.sbs"]).snapshots();
+      return snapshot;
+    } else if (value == 'lerMaisTarde') {
+      Stream<QuerySnapshot<Map<String, dynamic>>> snapshot = FirebaseFirestore
+          .instance
+          .collection('bookmarks')
+          .orderBy('date')
+          .where('user',
+              arrayContainsAny: ['G9OfntwowPyKsTqHUADH']).snapshots();
+      return snapshot;
+    } else {
+      Stream<QuerySnapshot<Map<String, dynamic>>> snapshot = FirebaseFirestore
+          .instance
+          .collection('historys')
+          .orderBy('date')
+          .where('categories', arrayContainsAny: [value]).snapshots();
+      return snapshot;
+    }
   }
 
   String _setResume(item) {
@@ -84,92 +104,95 @@ class _HistoryItemState extends State<HistoryItemComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: _getContent(),
-      builder: (BuildContext context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.none:
-          case ConnectionState.waiting:
-            return SkeletonHistoryItemComponent();
-          default:
-            List<DocumentSnapshot> documents = snapshot.data!.docs;
-            return ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              reverse: true,
-              itemCount: documents.length,
-              itemBuilder: (BuildContext context, index) {
-                return Padding(
-                  padding: const EdgeInsets.fromLTRB(12, 20, 12, 0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      TitleComponent(
-                        title: documents[index]['title'],
-                        bottom: 0,
-                      ),
-                      ResumeComponent(
-                        resume: _setResume(documents[index]),
-                      ),
-                      ExpandableText(
-                        documents[index]['text'],
-                        style: uiTextStyle.text1,
-                        expandText: 'continuar lendo',
-                        collapseText: 'fechar',
-                        maxLines: 8,
-                        linkColor: uiColor.first,
-                      ),
-                      DividerComponent(top: 10, bottom: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          documents[index]['qtyComment'] < 1
-                              ? SizedBox()
-                              : Text(
-                                  documents[index]['qtyComment'].toString() +
-                                      ' comentários',
-                                  style: uiTextStyle.text2,
-                                ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              if (documents[index]['isComment'])
+    return ValueListenableBuilder(
+      valueListenable: menuItemSelected,
+      builder: (_, value, __) => StreamBuilder<QuerySnapshot>(
+        stream: _getContent(),
+        builder: (BuildContext context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+            case ConnectionState.waiting:
+              return SkeletonHistoryItemComponent();
+            default:
+              List<DocumentSnapshot> documents = snapshot.data!.docs;
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                reverse: true,
+                itemCount: documents.length,
+                itemBuilder: (BuildContext context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(12, 20, 12, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        TitleComponent(
+                          title: documents[index]['title'],
+                          bottom: 0,
+                        ),
+                        ResumeComponent(
+                          resume: _setResume(documents[index]),
+                        ),
+                        ExpandableText(
+                          documents[index]['text'],
+                          style: uiTextStyle.text1,
+                          expandText: 'continuar lendo',
+                          collapseText: 'fechar',
+                          maxLines: 8,
+                          linkColor: uiColor.first,
+                        ),
+                        DividerComponent(top: 10, bottom: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            documents[index]['qtyComment'] < 1
+                                ? SizedBox()
+                                : Text(
+                                    documents[index]['qtyComment'].toString() +
+                                        ' comentários',
+                                    style: uiTextStyle.text2,
+                                  ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                if (documents[index]['isComment'])
+                                  IconComponent(
+                                    icon: uiSvg.comment,
+                                    callback: (value) => _showModal(
+                                        context, documents[index].id, true),
+                                  ),
                                 IconComponent(
-                                  icon: uiSvg.comment,
-                                  callback: (value) => _showModal(
-                                      context, documents[index].id, true),
+                                  icon: _getFavorited(documents[index].id)
+                                      ? uiSvg.favorited
+                                      : uiSvg.favorite,
+                                  // TODO: criar função para adicionar aos favoritos.
+                                  callback: (value) =>
+                                      _toggleFavorite(documents[index].id),
                                 ),
-                              IconComponent(
-                                icon: _getFavorited(documents[index].id)
-                                    ? uiSvg.favorited
-                                    : uiSvg.favorite,
-                                // TODO: criar função para adicionar aos favoritos.
-                                callback: (value) =>
-                                    _toggleFavorite(documents[index].id),
-                              ),
-                              IconComponent(
-                                icon: uiSvg.open,
-                                route: 'history',
-                                // TODO: criar função para o botão abrir história.
-                              ),
-                              IconComponent(
-                                icon: uiSvg.options,
-                                route: 'options',
-                                // TODO: criar função para o botão opções da história.
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                      DividerComponent(top: 10, bottom: 10),
-                    ],
-                  ),
-                );
-              },
-            );
-        }
-      },
+                                IconComponent(
+                                  icon: uiSvg.open,
+                                  route: 'history',
+                                  // TODO: criar função para o botão abrir história.
+                                ),
+                                IconComponent(
+                                  icon: uiSvg.options,
+                                  route: 'options',
+                                  // TODO: criar função para o botão opções da história.
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                        DividerComponent(top: 10, bottom: 10),
+                      ],
+                    ),
+                  );
+                },
+              );
+          }
+        },
+      ),
     );
   }
 }
