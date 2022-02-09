@@ -59,7 +59,7 @@ class _SelectCategoriesComponentState extends State<SelectCategoriesComponent> {
                   child: TextButton(
                     onPressed: () => _setSelected(item.id!),
                     child: Text(
-                      item.label!,
+                      '#' + item.label!,
                       style: _getSelected(item.id!)
                           ? uiTextStyle.btnFlexActived
                           : uiTextStyle.btnFlex,

@@ -28,4 +28,8 @@ class Api {
     snapshot = history.where('user.id', arrayContainsAny: [user]).snapshots();
     return snapshot;
   }
+
+  setHistory(form) {
+    FirebaseFirestore.instance.collection('historys').doc().set(form);
+  }
 }

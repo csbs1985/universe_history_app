@@ -18,43 +18,44 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final GoogleSignIn googleSignIn = GoogleSignIn();
-
-  void _onPressed(AccountLoginEnum account) {
-    setState(() {
-      account == AccountLoginEnum.APPLE ? _loginApple() : _loginGoogle();
-    });
-  }
+  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 
   void _loginApple() {
     print(AccountLoginEnum.APPLE);
   }
 
   Future<User?> _loginGoogle() async {
-    print(AccountLoginEnum.GOOGLE);
+    GoogleSignInAccount? currentUser = _googleSignIn.currentUser;
 
+    await _googleSignIn.signIn();
     try {
-      final GoogleSignInAccount? googleSignInAccount =
-          await googleSignIn.signIn();
-
-      final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount!.authentication;
-
-      final AuthCredential credential = await GoogleAuthProvider.credential(
-          idToken: googleSignInAuthentication.idToken,
-          accessToken: googleSignInAuthentication.accessToken);
-
-      final UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-
-      final User? user = userCredential.user;
-
-      print('SUCCESS: ' + user.toString());
-      return user;
+      print('SUCCESS: ' + currentUser.toString());
     } catch (e) {
       print('ERROR: ' + e.toString());
-      return null;
     }
+
+    // try {
+    //   final GoogleSignInAccount? googleSignInAccount =
+    //       await googleSignIn.signIn();
+
+    //   final GoogleSignInAuthentication googleSignInAuthentication =
+    //       await googleSignInAccount!.authentication;
+
+    //   final AuthCredential credential = await GoogleAuthProvider.credential(
+    //       idToken: googleSignInAuthentication.idToken,
+    //       accessToken: googleSignInAuthentication.accessToken);
+
+    //   final UserCredential userCredential =
+    //       await FirebaseAuth.instance.signInWithCredential(credential);
+
+    //   final User? user = userCredential.user;
+
+    //   print('SUCCESS: ' + user.toString());
+    //   return user;
+    // } catch (e) {
+    //   print('ERROR: ' + e.toString());
+    //   return null;
+    // }
   }
 
   @override
@@ -88,13 +89,13 @@ class _LoginPageState extends State<LoginPage> {
               label: 'Apple',
               svg: uiSvg.apple,
               account: AccountLoginEnum.APPLE,
-              callback: (value) => _onPressed(value),
+              callback: (value) => _loginApple(),
             ),
             BtnLoginComponent(
               label: 'Google',
               svg: uiSvg.google,
               account: AccountLoginEnum.GOOGLE,
-              callback: (value) => _onPressed(value),
+              callback: (value) => _loginGoogle(),
             ),
             const Text(
               'Você deve ter uma conta Apple ou Google para usar os serviços do History.',
