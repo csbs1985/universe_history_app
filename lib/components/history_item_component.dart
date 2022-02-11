@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, todo, prefer_const_constructors, unused_field, iterable_contains_unrelated_type, list_remove_unrelated_type, no_logic_in_create_state, unnecessary_new, prefer_final_fields, await_only_futures, avoid_print, empty_constructor_bodies, unused_local_variable, unused_element, prefer_is_empty
+// ignore_for_file: use_key_in_widget_constructors, todo, prefer_const_constructors, unused_field, iterable_contains_unrelated_type, list_remove_unrelated_type, no_logic_in_create_state, unnecessary_new, prefer_final_fields, await_only_futures, avoid_print, empty_constructor_bodies, unused_local_variable, unused_element, prefer_is_empty, unnecessary_null_comparison
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expandable_text/expandable_text.dart';
@@ -11,6 +11,7 @@ import 'package:universe_history_app/components/skeleton_history_item_component.
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
+import 'package:universe_history_app/shared/models/category_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -37,7 +38,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
   _getContent() {
     final value = menuItemSelected.value.id!;
 
-    if (value == 'todas') {
+    if (value == 'todas' || value.isEmpty || value == '') {
       return api.getAllHistory;
     } else if (value == 'minhas') {
       return api.getAllUserHistory('charles.sbs');
@@ -74,7 +75,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
+    return ValueListenableBuilder<CategoryModel>(
       valueListenable: menuItemSelected,
       builder: (context, value, __) => StreamBuilder<QuerySnapshot>(
         stream: _getContent(),
@@ -104,7 +105,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             reverse: true,
-            itemCount: documents!.length,
+            itemCount: documents.length,
             itemBuilder: (BuildContext context, index) {
               print('!!!!!!!!!!!DOCUMENTS!!!!!!!!!!!!!!: ' +
                   documents.toString());

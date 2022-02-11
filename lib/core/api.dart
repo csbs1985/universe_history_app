@@ -1,35 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Api {
-  late Stream<QuerySnapshot<Map<String, dynamic>>> snapshot;
-
   final bookmark = FirebaseFirestore.instance.collection('bookmarks');
   final history = FirebaseFirestore.instance.collection('historys');
 
   getAllHistory() {
-    snapshot = history.orderBy('date').snapshots();
-    return snapshot;
+    return history.orderBy('date').snapshots();
   }
 
   getAllHistoryFiltered(String filter) {
-    snapshot = history
+    return history
         .orderBy('date')
         .where('categories', arrayContainsAny: [filter]).snapshots();
-    return snapshot;
   }
 
   getAllUserBookmarks(String user) {
-    snapshot = bookmark
+    return bookmark
         .orderBy('date')
         .where('user', arrayContainsAny: [user]).snapshots();
-    return snapshot;
   }
 
   getAllUserHistory(String user) {
-    snapshot = history
+    return history
         .orderBy('date')
         .where('user.id', arrayContainsAny: [user]).snapshots();
-    return snapshot;
   }
 
   setHistory(form) {
