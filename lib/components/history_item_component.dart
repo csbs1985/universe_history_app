@@ -39,7 +39,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
     final value = menuItemSelected.value.id!;
 
     if (value == 'todas' || value.isEmpty || value == '') {
-      return api.getAllHistory;
+      return api.getAllHistory();
     } else if (value == 'minhas') {
       return api.getAllUserHistory('charles.sbs');
     } else if (value == 'lerMaisTarde') {
@@ -107,8 +107,6 @@ class _HistoryItemState extends State<HistoryItemComponent> {
             reverse: true,
             itemCount: documents.length,
             itemBuilder: (BuildContext context, index) {
-              print('!!!!!!!!!!!DOCUMENTS!!!!!!!!!!!!!!: ' +
-                  documents.toString());
               return Padding(
                 padding: const EdgeInsets.fromLTRB(12, 20, 12, 0),
                 child: Column(
