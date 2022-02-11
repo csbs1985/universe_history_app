@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   bool _showCard(String? category) {
-    return category == 'todas' ? false : true;
+    return category == 'todas' || category == 'minhas' ? false : true;
   }
 
   @override

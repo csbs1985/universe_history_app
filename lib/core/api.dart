@@ -23,7 +23,7 @@ class Api {
   getAllUserHistory(String user) {
     return history
         .orderBy('date')
-        .where('user.id', arrayContainsAny: [user]).snapshots();
+        .where('userId', arrayContainsAny: [user]).snapshots();
   }
 
   setHistory(form) {

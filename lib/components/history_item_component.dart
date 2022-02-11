@@ -41,7 +41,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
     if (value == 'todas' || value.isEmpty || value == '') {
       return api.getAllHistory();
     } else if (value == 'minhas') {
-      return api.getAllUserHistory('charles.sbs');
+      return api.getAllUserHistory("charles.sbs");
     } else if (value == 'lerMaisTarde') {
       return api.getAllUserBookmarks('charles.sbs');
     }

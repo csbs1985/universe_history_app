@@ -90,10 +90,8 @@ class _CreateHistoryState extends State<CreateHistory> {
       'isEdit': false,
       'qtyComment': 0,
       'categories': _categories,
-      'user': {
-        'id': getCurrentId(),
-        'nickName': getCurrentId(),
-      },
+      'userId': getCurrentId(),
+      'userNickName': getCurrentId(),
     };
 
     api
