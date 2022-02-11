@@ -2,30 +2,35 @@
 
 class UserModel {
   final String id;
-  final String name;
   final String nickname;
-  final String date;
+  final DateTime date;
+  final String email;
+  final String channel;
   final bool isDisabled;
 
   UserModel({
     required this.id,
-    required this.name,
     required this.nickname,
     required this.date,
     required this.isDisabled,
+    required this.email,
+    required this.channel,
   });
 
   static Set<UserModel> user = {
     new UserModel(
-      id: 'charlesSantos',
-      name: 'Charles Santos',
-      nickname: 'charles.sbs',
-      date: '2 de janeiro de 2022',
-      isDisabled: false,
-    )
+        id: '',
+        nickname: '',
+        date: DateTime.now(),
+        isDisabled: false,
+        email: '',
+        channel: '')
   };
 }
 
 String getCurrentId() {
-  return 'charles.sbs';
+  return UserModel.user.first.id;
 }
+
+
+// d31q2laUIRDwLdfK8cCA

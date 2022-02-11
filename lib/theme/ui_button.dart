@@ -48,7 +48,7 @@ class uiButton {
   );
 
   static ButtonStyle btnTag = ButtonStyle(
-    alignment: Alignment.bottomLeft,
+    alignment: Alignment.center,
     backgroundColor: MaterialStateProperty.all<Color>(uiColor.comp_3),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
@@ -58,7 +58,7 @@ class uiButton {
   );
 
   static ButtonStyle btnTagActived = ButtonStyle(
-    alignment: Alignment.bottomLeft,
+    alignment: Alignment.center,
     backgroundColor: MaterialStateProperty.all<Color>(uiColor.first),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(

@@ -50,7 +50,7 @@ class Navigation {
       case '/history':
         return PageTransition(
           child: const HistoryItemPage(),
-          type: PageTransitionType.bottomToTop,
+          type: PageTransitionType.rightToLeft,
           settings: settings,
         );
       case '/login':

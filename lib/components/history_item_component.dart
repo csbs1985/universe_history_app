@@ -128,14 +128,11 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                       maxLines: 8,
                       linkColor: uiColor.first,
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
                     Wrap(
                       children: [
                         for (var item in documents[index]['categories'])
                           Padding(
-                            padding: const EdgeInsets.only(right: 10),
+                            padding: const EdgeInsets.only(right: 4),
                             child: Text(
                               '#' + item,
                               style: uiTextStyle.text2,
