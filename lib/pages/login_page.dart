@@ -1,10 +1,13 @@
 // ignore_for_file: avoid_print, unused_local_variable, await_only_futures
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/btn_login_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
+import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/shared/enums/type_account_login_enum.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -17,20 +20,33 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final Api api = Api();
+
   void _loginApple() {
     print(AccountLoginEnum.APPLE);
   }
 
-  void _loginGoogle() async {
-    final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
-    GoogleSignInAccount? currentUser = _googleSignIn.currentUser;
+  Future<void> _loginGoogle() async {
+    // final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+    // GoogleSignInAccount? currentUser = _googleSignIn.currentUser;
 
-    await _googleSignIn.signIn();
-    try {
-      print('SUCCESS: ' + currentUser.toString());
-    } catch (e) {
-      print('ERROR: ' + e.toString());
-    }
+    // await _googleSignIn.signIn();
+    // try {
+    //   print('SUCCESS: ' + currentUser.toString());
+    // } catch (e) {
+    //   print('ERROR: ' + e.toString());
+    // }
+
+    var email = 'csbs.conta@outlook.com'; // TODO: virá da google e apple
+
+    api.getUser(email).then((QuerySnapshot snapshot) {
+      if (snapshot.docs.isEmpty) {
+        //TODO: criar conta
+      } else {
+        //TODO: entrar
+        currentUser.value = snapshot.docs.first.data();
+      }
+    });
   }
 
   @override

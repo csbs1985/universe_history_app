@@ -24,8 +24,6 @@ class _HomePageState extends State<HomePage> {
   final _scrollController = ScrollController();
 
   bool _notification = true;
-  bool _login = true;
-
   String _itemSelectedMenu = 'todas';
 
   void _scrollToTop() {
@@ -126,25 +124,30 @@ class _HomePageState extends State<HomePage> {
                         child: _showCard(menuItemSelected.value.id)
                             ? SizedBox()
                             : Container(
-                                child: _login
-                                    ? CardComponent(
-                                        title: 'Escreva sua história',
-                                        text:
-                                            'Todos nós temos uma história pra contar e a sua pode ajudar alguém.',
-                                        label: 'Escrever',
-                                        callback: (valeu) =>
-                                            Navigator.of(context)
-                                                .pushNamed("/create"),
-                                      )
-                                    : CardComponent(
-                                        title: 'Entre ou crie sua conta',
-                                        text:
-                                            'Você não se identificou ainda para escrever histórias e comentarios.',
-                                        label: 'Entrar',
-                                        callback: (valeu) =>
-                                            Navigator.of(context)
-                                                .pushNamed("/login"),
-                                      ),
+                                child: ValueListenableBuilder(
+                                  valueListenable: currentUser,
+                                  builder: (context, value, __) {
+                                    return value != null
+                                        ? CardComponent(
+                                            title: 'Escreva sua história',
+                                            text:
+                                                'Todos nós temos uma história pra contar e a sua pode ajudar alguém.',
+                                            label: 'Escrever',
+                                            callback: (valeu) =>
+                                                Navigator.of(context)
+                                                    .pushNamed("/create"),
+                                          )
+                                        : CardComponent(
+                                            title: 'Entre ou crie sua conta',
+                                            text:
+                                                'Você não se identificou ainda para escrever histórias e comentarios.',
+                                            label: 'Entrar',
+                                            callback: (valeu) =>
+                                                Navigator.of(context)
+                                                    .pushNamed("/login"),
+                                          );
+                                  },
+                                ),
                               ),
                       );
                     },

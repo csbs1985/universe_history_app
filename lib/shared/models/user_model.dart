@@ -32,5 +32,4 @@ String getCurrentId() {
   return UserModel.user.first.id;
 }
 
-
 // d31q2laUIRDwLdfK8cCA

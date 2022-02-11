@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Api {
-  final bookmark = FirebaseFirestore.instance.collection('bookmarks');
-  final history = FirebaseFirestore.instance.collection('historys');
+  CollectionReference bookmark =
+      FirebaseFirestore.instance.collection('bookmarks');
+  CollectionReference history =
+      FirebaseFirestore.instance.collection('historys');
+  CollectionReference user = FirebaseFirestore.instance.collection('users');
 
   getAllHistory() {
     return history.orderBy('date').snapshots();
@@ -28,5 +31,9 @@ class Api {
 
   setHistory(form) {
     return history.doc().set(form);
+  }
+
+  getUser(String email) {
+    return user.where('email', isEqualTo: email).get();
   }
 }
