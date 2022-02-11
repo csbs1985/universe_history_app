@@ -3,10 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Api {
   late Stream<QuerySnapshot<Map<String, dynamic>>> snapshot;
 
-  final bookmark =
-      FirebaseFirestore.instance.collection('bookmarks').orderBy('date');
-  final history =
-      FirebaseFirestore.instance.collection('historys').orderBy('date');
+  final bookmark = FirebaseFirestore.instance.collection('bookmarks');
+  final history = FirebaseFirestore.instance.collection('historys');
 
   getAllHistory() {
     snapshot = history.snapshots();
@@ -14,22 +12,27 @@ class Api {
   }
 
   getAllHistoryFiltered(String filter) {
-    snapshot =
-        history.where('categories', arrayContainsAny: [filter]).snapshots();
+    snapshot = history
+        .orderBy('date')
+        .where('categories', arrayContainsAny: [filter]).snapshots();
     return snapshot;
   }
 
   getAllUserBookmarks(String user) {
-    snapshot = bookmark.where('user', arrayContainsAny: [user]).snapshots();
+    snapshot = bookmark
+        .orderBy('date')
+        .where('user', arrayContainsAny: [user]).snapshots();
     return snapshot;
   }
 
   getAllUserHistory(String user) {
-    snapshot = history.where('user.id', arrayContainsAny: [user]).snapshots();
+    snapshot = history
+        .orderBy('date')
+        .where('user.id', arrayContainsAny: [user]).snapshots();
     return snapshot;
   }
 
   setHistory(form) {
-    FirebaseFirestore.instance.collection('historys').doc().set(form);
+    return history.doc().set(form);
   }
 }

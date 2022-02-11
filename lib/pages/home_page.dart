@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_new, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, use_key_in_widget_constructors, must_be_immutable, prefer_final_fields, unused_element
+// ignore_for_file: unnecessary_new, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, use_key_in_widget_constructors, must_be_immutable, prefer_final_fields, unused_element, curly_braces_in_flow_control_structures
 
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -9,6 +9,7 @@ import 'package:universe_history_app/components/history_item_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/components/menu_component.dart';
+import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 
@@ -23,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   final _scrollController = ScrollController();
 
   bool _notification = true;
-  bool _login = false;
+  bool _login = true;
 
   String _itemSelectedMenu = 'todas';
 
@@ -36,6 +37,10 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _itemSelectedMenu = value;
     });
+  }
+
+  bool _showCard(String? category) {
+    return category == 'todas' ? false : true;
   }
 
   @override
@@ -114,23 +119,36 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     height: 10,
                   ),
-                  _login
-                      ? CardComponent(
-                          title: 'Escreva sua história',
-                          text:
-                              'Todos nós temos uma história pra contar e a sua pode ajudar alguém.',
-                          label: 'Escrever',
-                          callback: (valeu) =>
-                              Navigator.of(context).pushNamed("/create"),
-                        )
-                      : CardComponent(
-                          title: 'Entre ou crie sua conta',
-                          text:
-                              'Você não se identificou ainda para escrever histórias e comentarios.',
-                          label: 'Entrar',
-                          callback: (valeu) =>
-                              Navigator.of(context).pushNamed("/login"),
-                        ),
+                  ValueListenableBuilder(
+                    valueListenable: menuItemSelected,
+                    builder: (BuildContext context, value, __) {
+                      return Container(
+                        child: _showCard(menuItemSelected.value.id)
+                            ? SizedBox()
+                            : Container(
+                                child: _login
+                                    ? CardComponent(
+                                        title: 'Escreva sua história',
+                                        text:
+                                            'Todos nós temos uma história pra contar e a sua pode ajudar alguém.',
+                                        label: 'Escrever',
+                                        callback: (valeu) =>
+                                            Navigator.of(context)
+                                                .pushNamed("/create"),
+                                      )
+                                    : CardComponent(
+                                        title: 'Entre ou crie sua conta',
+                                        text:
+                                            'Você não se identificou ainda para escrever histórias e comentarios.',
+                                        label: 'Entrar',
+                                        callback: (valeu) =>
+                                            Navigator.of(context)
+                                                .pushNamed("/login"),
+                                      ),
+                              ),
+                      );
+                    },
+                  ),
                   Flexible(
                     child: HistoryItemComponent(
                         itemSelectedMenu: _itemSelectedMenu),

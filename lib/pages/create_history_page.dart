@@ -10,6 +10,7 @@ import 'package:universe_history_app/components/button_disabled.component.dart';
 import 'package:universe_history_app/components/select_categories_component.dart';
 import 'package:universe_history_app/components/select_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
+import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/category_model.dart';
 import 'package:universe_history_app/shared/enums/type_toast_enum.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
@@ -38,12 +39,13 @@ class _CreateHistoryState extends State<CreateHistory> {
   TextEditingController textController = TextEditingController();
 
   final ToastComponent toast = new ToastComponent();
+  final Api api = new Api();
 
   final String buttonText = 'publicar';
   bool _isAnonymous = true;
   bool _isComment = true;
   List<String> _categories = [];
-  Map<String, dynamic> _form = {};
+  Map<String, dynamic> form = {};
 
   bool _btnPublish = false;
 
@@ -79,7 +81,7 @@ class _CreateHistoryState extends State<CreateHistory> {
   }
 
   void _publishHIstory(BuildContext context) {
-    _form = {
+    form = {
       'title': titleController.text,
       'text': textController.text,
       'date': DateTime.now(),
@@ -94,10 +96,8 @@ class _CreateHistoryState extends State<CreateHistory> {
       },
     };
 
-    FirebaseFirestore.instance
-        .collection('historys')
-        .doc()
-        .set(_form)
+    api
+        .setHistory(form)
         .then((value) => {
               Navigator.of(context).pop(),
               toast.toast(

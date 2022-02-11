@@ -274,13 +274,6 @@ class CategoryModel {
       isShowMenu: true,
       isShowInput: true,
       isDisabled: false,
-    ),
-    new CategoryModel(
-      id: 'outras',
-      label: 'outras',
-      isShowMenu: true,
-      isShowInput: true,
-      isDisabled: false,
-    ),
+    )
   ];
 }

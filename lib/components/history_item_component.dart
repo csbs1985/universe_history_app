@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/modal_comment_component.dart';
 import 'package:universe_history_app/components/resume_component.dart';
@@ -86,7 +85,11 @@ class _HistoryItemState extends State<HistoryItemComponent> {
               return SkeletonHistoryItemComponent();
             case ConnectionState.done:
             default:
-              return _list(context, snapshot);
+              try {
+                return _list(context, snapshot);
+              } catch (e) {
+                return SizedBox();
+              }
           }
         },
       ),
@@ -95,85 +98,97 @@ class _HistoryItemState extends State<HistoryItemComponent> {
 
   Widget _list(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     List<QueryDocumentSnapshot<Object?>>? documents = snapshot.data?.docs;
-    try {
-      return ListView.builder(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        reverse: true,
-        itemCount: documents!.length,
-        itemBuilder: (BuildContext context, index) {
-          return Padding(
-            padding: const EdgeInsets.fromLTRB(12, 20, 12, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                TitleComponent(
-                  title: documents[index]['title'],
-                  bottom: 0,
-                ),
-                ResumeComponent(
-                  resume: _setResume(documents[index]),
-                ),
-                ExpandableText(
-                  documents[index]['text'],
-                  style: uiTextStyle.text1,
-                  expandText: 'continuar lendo',
-                  collapseText: 'fechar',
-                  maxLines: 8,
-                  linkColor: uiColor.first,
-                ),
-                DividerComponent(top: 10, bottom: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    documents[index]['qtyComment'] < 1
-                        ? SizedBox()
-                        : Text(
-                            documents[index]['qtyComment'].toString() +
-                                ' comentários',
-                            style: uiTextStyle.text2,
-                          ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        if (documents[index]['isComment'])
-                          IconComponent(
-                            icon: uiSvg.comment,
-                            callback: (value) =>
-                                _showModal(context, documents[index].id, true),
-                          ),
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      reverse: true,
+      itemCount: documents!.length,
+      itemBuilder: (BuildContext context, index) {
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(12, 20, 12, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              TitleComponent(
+                title: documents[index]['title'],
+                bottom: 0,
+              ),
+              ResumeComponent(
+                resume: _setResume(documents[index]),
+              ),
+              ExpandableText(
+                documents[index]['text'],
+                style: uiTextStyle.text1,
+                expandText: 'continuar lendo',
+                collapseText: 'fechar',
+                maxLines: 8,
+                linkColor: uiColor.first,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Wrap(
+                children: [
+                  for (var item in documents[index]['categories'])
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Text(
+                        '#' + item,
+                        style: uiTextStyle.text2,
+                      ),
+                    ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  documents[index]['qtyComment'] < 1
+                      ? SizedBox()
+                      : Text(
+                          documents[index]['qtyComment'].toString() +
+                              ' comentários',
+                          style: uiTextStyle.text2,
+                        ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      if (documents[index]['isComment'])
                         IconComponent(
-                          icon: _getFavorited(documents[index].id)
-                              ? uiSvg.favorited
-                              : uiSvg.favorite,
-                          // TODO: criar função para adicionar aos favoritos.
+                          icon: uiSvg.comment,
                           callback: (value) =>
-                              _toggleFavorite(documents[index].id),
+                              _showModal(context, documents[index].id, true),
                         ),
-                        IconComponent(
-                          icon: uiSvg.open,
-                          route: 'history',
-                          // TODO: criar função para o botão abrir história.
-                        ),
-                        IconComponent(
-                          icon: uiSvg.options,
-                          route: 'options',
-                          // TODO: criar função para o botão opções da história.
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                DividerComponent(top: 10, bottom: 10),
-              ],
-            ),
-          );
-        },
-      );
-    } catch (e) {
-      return SizedBox();
-    }
+                      IconComponent(
+                        icon: _getFavorited(documents[index].id)
+                            ? uiSvg.favorited
+                            : uiSvg.favorite,
+                        // TODO: criar função para adicionar aos favoritos.
+                        callback: (value) =>
+                            _toggleFavorite(documents[index].id),
+                      ),
+                      IconComponent(
+                        icon: uiSvg.open,
+                        route: 'history',
+                        // TODO: criar função para o botão abrir história.
+                      ),
+                      IconComponent(
+                        icon: uiSvg.options,
+                        route: 'options',
+                        // TODO: criar função para o botão opções da história.
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   Widget _notResult() {
