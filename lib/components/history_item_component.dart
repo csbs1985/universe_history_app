@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, todo, prefer_const_constructors, unused_field, iterable_contains_unrelated_type, list_remove_unrelated_type, no_logic_in_create_state, unnecessary_new, prefer_final_fields, await_only_futures, avoid_print, empty_constructor_bodies, unused_local_variable, unused_element
+// ignore_for_file: use_key_in_widget_constructors, todo, prefer_const_constructors, unused_field, iterable_contains_unrelated_type, list_remove_unrelated_type, no_logic_in_create_state, unnecessary_new, prefer_final_fields, await_only_futures, avoid_print, empty_constructor_bodies, unused_local_variable, unused_element, prefer_is_empty
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expandable_text/expandable_text.dart';
@@ -42,7 +42,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
     } else if (value == 'minhas') {
       return api.getAllUserHistory('charles.sbs');
     } else if (value == 'lerMaisTarde') {
-      return api.getAllUserBookmarks('G9OfntwowPyKsTqHUADH');
+      return api.getAllUserBookmarks('charles.sbs');
     }
     return api.getAllHistoryFiltered(value);
   }
@@ -81,6 +81,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
+              return _notResult();
             case ConnectionState.waiting:
               return SkeletonHistoryItemComponent();
             case ConnectionState.done:
@@ -88,7 +89,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
               try {
                 return _list(context, snapshot);
               } catch (e) {
-                return SizedBox();
+                return _notResult();
               }
           }
         },
@@ -98,105 +99,121 @@ class _HistoryItemState extends State<HistoryItemComponent> {
 
   Widget _list(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     List<QueryDocumentSnapshot<Object?>>? documents = snapshot.data?.docs;
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      reverse: true,
-      itemCount: documents!.length,
-      itemBuilder: (BuildContext context, index) {
-        return Padding(
-          padding: const EdgeInsets.fromLTRB(12, 20, 12, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              TitleComponent(
-                title: documents[index]['title'],
-                bottom: 0,
-              ),
-              ResumeComponent(
-                resume: _setResume(documents[index]),
-              ),
-              ExpandableText(
-                documents[index]['text'],
-                style: uiTextStyle.text1,
-                expandText: 'continuar lendo',
-                collapseText: 'fechar',
-                maxLines: 8,
-                linkColor: uiColor.first,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Wrap(
-                children: [
-                  for (var item in documents[index]['categories'])
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: Text(
-                        '#' + item,
-                        style: uiTextStyle.text2,
-                      ),
+    return documents!.length > 0
+        ? ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            reverse: true,
+            itemCount: documents!.length,
+            itemBuilder: (BuildContext context, index) {
+              print('!!!!!!!!!!!DOCUMENTS!!!!!!!!!!!!!!: ' +
+                  documents.toString());
+              return Padding(
+                padding: const EdgeInsets.fromLTRB(12, 20, 12, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    TitleComponent(
+                      title: documents[index]['title'],
+                      bottom: 0,
                     ),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  documents[index]['qtyComment'] < 1
-                      ? SizedBox()
-                      : Text(
-                          documents[index]['qtyComment'].toString() +
-                              ' comentários',
-                          style: uiTextStyle.text2,
-                        ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      if (documents[index]['isComment'])
-                        IconComponent(
-                          icon: uiSvg.comment,
-                          callback: (value) =>
-                              _showModal(context, documents[index].id, true),
-                        ),
-                      IconComponent(
-                        icon: _getFavorited(documents[index].id)
-                            ? uiSvg.favorited
-                            : uiSvg.favorite,
-                        // TODO: criar função para adicionar aos favoritos.
-                        callback: (value) =>
-                            _toggleFavorite(documents[index].id),
-                      ),
-                      IconComponent(
-                        icon: uiSvg.open,
-                        route: 'history',
-                        // TODO: criar função para o botão abrir história.
-                      ),
-                      IconComponent(
-                        icon: uiSvg.options,
-                        route: 'options',
-                        // TODO: criar função para o botão opções da história.
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ],
-          ),
-        );
-      },
-    );
+                    ResumeComponent(
+                      resume: _setResume(documents[index]),
+                    ),
+                    ExpandableText(
+                      documents[index]['text'],
+                      style: uiTextStyle.text1,
+                      expandText: 'continuar lendo',
+                      collapseText: 'fechar',
+                      maxLines: 8,
+                      linkColor: uiColor.first,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Wrap(
+                      children: [
+                        for (var item in documents[index]['categories'])
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Text(
+                              '#' + item,
+                              style: uiTextStyle.text2,
+                            ),
+                          ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        documents[index]['qtyComment'] < 1
+                            ? SizedBox()
+                            : Text(
+                                documents[index]['qtyComment'].toString() +
+                                    ' comentários',
+                                style: uiTextStyle.text2,
+                              ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            if (documents[index]['isComment'])
+                              IconComponent(
+                                icon: uiSvg.comment,
+                                callback: (value) => _showModal(
+                                    context, documents[index].id, true),
+                              ),
+                            IconComponent(
+                              icon: _getFavorited(documents[index].id)
+                                  ? uiSvg.favorited
+                                  : uiSvg.favorite,
+                              // TODO: criar função para adicionar aos favoritos.
+                              callback: (value) =>
+                                  _toggleFavorite(documents[index].id),
+                            ),
+                            IconComponent(
+                              icon: uiSvg.open,
+                              route: 'history',
+                              // TODO: criar função para o botão abrir história.
+                            ),
+                            IconComponent(
+                              icon: uiSvg.options,
+                              route: 'options',
+                              // TODO: criar função para o botão opções da história.
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            },
+          )
+        : _notResult();
   }
 
   Widget _notResult() {
-    return Center(
-      widthFactor: double.infinity,
-      child: Text(
-        'Nada para mostrar',
-        style: uiTextStyle.text1,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 30, 10, 0),
+      child: Column(
+        children: const [
+          Text(
+            'Nada para mostrar',
+            style: uiTextStyle.text1,
+          ),
+          Text(
+            'Não encontramos histórias que atendam sua pesquisa.',
+            style: uiTextStyle.text2,
+          ),
+          Text(
+            'Mas não desista, temos muitas outras histórias para você interagir.',
+            style: uiTextStyle.text2,
+          ),
+        ],
       ),
     );
   }

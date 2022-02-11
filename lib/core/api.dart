@@ -7,7 +7,7 @@ class Api {
   final history = FirebaseFirestore.instance.collection('historys');
 
   getAllHistory() {
-    snapshot = history.snapshots();
+    snapshot = history.orderBy('date').snapshots();
     return snapshot;
   }
 
