@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_print, unused_local_variable, await_only_futures
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
@@ -18,13 +17,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
-
   void _loginApple() {
     print(AccountLoginEnum.APPLE);
   }
 
-  Future<User?> _loginGoogle() async {
+  void _loginGoogle() async {
+    final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
     GoogleSignInAccount? currentUser = _googleSignIn.currentUser;
 
     await _googleSignIn.signIn();
@@ -33,29 +31,6 @@ class _LoginPageState extends State<LoginPage> {
     } catch (e) {
       print('ERROR: ' + e.toString());
     }
-
-    // try {
-    //   final GoogleSignInAccount? googleSignInAccount =
-    //       await googleSignIn.signIn();
-
-    //   final GoogleSignInAuthentication googleSignInAuthentication =
-    //       await googleSignInAccount!.authentication;
-
-    //   final AuthCredential credential = await GoogleAuthProvider.credential(
-    //       idToken: googleSignInAuthentication.idToken,
-    //       accessToken: googleSignInAuthentication.accessToken);
-
-    //   final UserCredential userCredential =
-    //       await FirebaseAuth.instance.signInWithCredential(credential);
-
-    //   final User? user = userCredential.user;
-
-    //   print('SUCCESS: ' + user.toString());
-    //   return user;
-    // } catch (e) {
-    //   print('ERROR: ' + e.toString());
-    //   return null;
-    // }
   }
 
   @override
@@ -98,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
               callback: (value) => _loginGoogle(),
             ),
             const Text(
-              'Você deve ter uma conta Apple ou Google para usar os serviços do History.',
+              'Você deve ter uma conta Apple ou Google para utilizar os serviços do History.',
               style: uiTextStyle.text1,
               textAlign: TextAlign.center,
             ),

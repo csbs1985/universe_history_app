@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   final _scrollController = ScrollController();
 
   bool _notification = true;
-  bool _login = true;
+  bool _login = false;
 
   String _itemSelectedMenu = 'todas';
 
