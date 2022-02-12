@@ -6,6 +6,12 @@ class Api {
   CollectionReference history =
       FirebaseFirestore.instance.collection('historys');
   CollectionReference user = FirebaseFirestore.instance.collection('users');
+  CollectionReference comment =
+      FirebaseFirestore.instance.collection('comments');
+
+  getAllComment() {
+    return comment.orderBy('date').where('field').snapshots();
+  }
 
   getAllHistory() {
     return history.orderBy('date').snapshots();
@@ -29,11 +35,15 @@ class Api {
         .where('userId', arrayContainsAny: [user]).snapshots();
   }
 
+  getUser(String email) {
+    return user.where('email', isEqualTo: email).get();
+  }
+
   setHistory(form) {
     return history.doc().set(form);
   }
 
-  getUser(String email) {
-    return user.where('email', isEqualTo: email).get();
+  setComment(comment) {
+    return comment.doc().set(comment);
   }
 }

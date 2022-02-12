@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
-import 'package:universe_history_app/components/input_comment_component.dart';
 
 class HistoryItemPage extends StatelessWidget {
   const HistoryItemPage({Key? key}) : super(key: key);
@@ -11,7 +10,7 @@ class HistoryItemPage extends StatelessWidget {
       appBar: const AppbarBackComponent(),
       body: SingleChildScrollView(
         child: Stack(
-          children: [
+          children: const [
             Text('texto'),
           ],
         ),
@@ -19,17 +18,3 @@ class HistoryItemPage extends StatelessWidget {
     );
   }
 }
-
-
-// child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: const [
-//             Expanded(
-//               child: Text('alguma cois'),
-//             ),
-//             Positioned(
-//               bottom: 0,
-//               child: InputCommentComponent(false),
-//             ),
-//           ],
-//         ),

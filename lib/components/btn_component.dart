@@ -5,9 +5,11 @@ import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class BtnComponent extends StatefulWidget {
-  const BtnComponent(
-      {Function? callback, String label = "publicar", bool enabled = true})
-      : _callback = callback,
+  const BtnComponent({
+    Function? callback,
+    String label = "publicar",
+    bool enabled = true,
+  })  : _callback = callback,
         _label = label,
         _enabled = enabled;
 
@@ -27,20 +29,23 @@ class _BtnComponentState extends State<BtnComponent> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: TextButton(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(uiColor.comp_1),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            const RoundedRectangleBorder(
-              borderRadius: BorderRadius.zero,
+      child: SizedBox(
+        height: 48,
+        child: TextButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(uiColor.comp_1),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              const RoundedRectangleBorder(
+                borderRadius: BorderRadius.zero,
+              ),
             ),
           ),
+          child: Text(
+            widget._label,
+            style: widget._enabled ? uiTextStyle.btn : uiTextStyle.btnDisabled,
+          ),
+          onPressed: () => widget._enabled ? _onPressed() : null,
         ),
-        child: Text(
-          widget._label,
-          style: widget._enabled ? uiTextStyle.btn : uiTextStyle.btnDisabled,
-        ),
-        onPressed: () => widget._enabled ? _onPressed() : null,
       ),
     );
   }
