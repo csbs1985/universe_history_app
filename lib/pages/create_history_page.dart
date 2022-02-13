@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, unused_field, avoid_print, prefer_final_fields, unnecessary_new, prefer_is_empty, todo, argument_type_not_assignable_to_error_handler, invalid_return_type_for_catch_error
+// ignore_for_file: unused_import, unused_field, avoid_print, prefer_final_fields, unnecessary_new, prefer_is_empty, todo, argument_type_not_assignable_to_error_handler, invalid_return_type_for_catch_error, prefer_typing_uninitialized_variables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -41,13 +41,12 @@ class _CreateHistoryState extends State<CreateHistory> {
   final ToastComponent toast = new ToastComponent();
   final Api api = new Api();
 
-  final String buttonText = 'publicar';
   bool _isAnonymous = true;
   bool _isComment = true;
-  List<String> _categories = [];
-  Map<String, dynamic> form = {};
-
   bool _btnPublish = false;
+  List<String> _categories = [];
+
+  late Map<String, dynamic> history;
 
   void _setPrivacy(value) {
     setState(() {
@@ -80,8 +79,8 @@ class _CreateHistoryState extends State<CreateHistory> {
     });
   }
 
-  void _publishHIstory(BuildContext context) {
-    form = {
+  void _publishHIstory() {
+    history = {
       'title': titleController.text,
       'text': textController.text,
       'date': DateTime.now(),
@@ -90,12 +89,12 @@ class _CreateHistoryState extends State<CreateHistory> {
       'isEdit': false,
       'qtyComment': 0,
       'categories': _categories,
-      'userId': getCurrentId(),
-      'userNickName': getCurrentId(),
+      'userId': UserModel.user.first.id,
+      'userNickName': UserModel.user.first.nickname,
     };
 
     api
-        .setHistory(form)
+        .setHistory(history)
         .then((value) => {
               Navigator.of(context).pop(),
               toast.toast(
@@ -115,7 +114,7 @@ class _CreateHistoryState extends State<CreateHistory> {
       appBar: AppbarComponent(
         btnBack: true,
         btnPublish: _btnPublish,
-        callback: (value) => _publishHIstory(context),
+        callback: (value) => _publishHIstory(),
       ),
       body: SingleChildScrollView(
         child: Padding(

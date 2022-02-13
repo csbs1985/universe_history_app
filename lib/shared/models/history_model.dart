@@ -1,56 +1,75 @@
 // ignore_for_file: non_constant_identifier_names, unnecessary_new
 
-class HistoryModel {
-  final String id;
-  final String title;
-  final String text;
-  final String date;
-  final String userId;
-  final bool isComment;
-  final bool isAnonymous;
-  final bool isEdit;
-  final bool isDelete;
-  final int qtyComment;
-  final List<String> categories;
+import 'dart:convert';
 
+class HistoryModel {
   HistoryModel({
-    required this.id,
     required this.title,
     required this.text,
     required this.date,
     required this.isComment,
     required this.isAnonymous,
     required this.isEdit,
-    required this.isDelete,
     required this.userId,
+    required this.userNickName,
     required this.qtyComment,
     required this.categories,
   });
 
-  HistoryModel.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        title = json['title'],
-        text = json['text'],
-        date = json['date'],
-        isComment = json['isComment'],
-        isAnonymous = json['isAnonymous'],
-        isEdit = json['isEdit'],
-        isDelete = json['isDelete'],
-        userId = json['userId'],
-        qtyComment = json['qtyComment'],
-        categories = json['categories'];
+  final String title;
+  final String text;
+  final DateTime date;
+  final String userId;
+  final String userNickName;
+  final bool isComment;
+  final bool isAnonymous;
+  final bool isEdit;
+  final int qtyComment;
+  final List<String> categories;
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
+  factory HistoryModel.fromJson(String str) =>
+      HistoryModel.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory HistoryModel.fromMap(Map<String, dynamic> json) => HistoryModel(
+        title: json['title'],
+        text: json['text'],
+        date: json['date'],
+        isComment: json['isComment'],
+        isAnonymous: json['isAnonymous'],
+        isEdit: json['isEdit'],
+        userId: json['userId'],
+        userNickName: json['userNickName'],
+        qtyComment: json['qtyComment'],
+        categories: json['categories'],
+      );
+
+  Map<String, dynamic> toMap() => {
         'title': title,
         'text': text,
         'date': date,
         'isComment': isComment,
         'isAnonymous': isAnonymous,
         'isEdit': isEdit,
-        'isDelete': isDelete,
         'userId': userId,
+        'userNickName': userNickName,
         'qtyComment': qtyComment,
         'categories': categories,
       };
+
+  static Set<HistoryModel> history = {
+    new HistoryModel(
+      title: 'title',
+      text: 'text',
+      date: DateTime.now(),
+      isComment: false,
+      isAnonymous: false,
+      isEdit: false,
+      userId: 'userId',
+      userNickName: 'userNickName',
+      qtyComment: 0,
+      categories: [],
+    ),
+  };
 }

@@ -6,13 +6,13 @@ import 'package:universe_history_app/components/comment_component.dart';
 import 'package:universe_history_app/components/comment_empty_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/modal_input_comment_component.dart';
+import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class ModalCommentComponent extends StatelessWidget {
-  const ModalCommentComponent(this.historyId, this.openKeyboard);
+  const ModalCommentComponent(this.openKeyboard);
 
-  final String historyId;
   final bool openKeyboard;
   final bool _comments = true;
 
@@ -35,8 +35,9 @@ class ModalCommentComponent extends StatelessWidget {
           Container(
             padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom + 48),
-            child:
-                _comments ? CommentComponent(historyId) : const CommentEmpty(),
+            child: _comments
+                ? CommentComponent(currentHistory.value)
+                : const CommentEmpty(),
           ),
           Positioned(
             bottom: MediaQuery.of(context).viewInsets.bottom,

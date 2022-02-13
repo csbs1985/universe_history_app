@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, todo, prefer_const_constructors, unused_field, iterable_contains_unrelated_type, list_remove_unrelated_type, no_logic_in_create_state, unnecessary_new, prefer_final_fields, await_only_futures, avoid_print, empty_constructor_bodies, unused_local_variable, unused_element, prefer_is_empty, unnecessary_null_comparison
+// ignore_for_file: use_key_in_widget_constructors, todo, prefer_const_constructors, unused_field, iterable_contains_unrelated_type, list_remove_unrelated_type, no_logic_in_create_state, unnecessary_new, prefer_final_fields, await_only_futures, avoid_print, empty_constructor_bodies, unused_local_variable, unused_element, prefer_is_empty, unnecessary_null_comparison, unnecessary_cast
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expandable_text/expandable_text.dart';
@@ -12,6 +12,7 @@ import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/shared/models/category_model.dart';
+import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -50,18 +51,20 @@ class _HistoryItemState extends State<HistoryItemComponent> {
 
   String _setResume(item) {
     var _date = editDateUtil(item['date'].millisecondsSinceEpoch);
-    var author = item['isAnonymous'] ? 'anônimo' : item['user']['nickName'];
+    var author = item['isAnonymous'] ? 'anônimo' : item['userNickName'];
     var temp = _date + ' - ' + author;
     return item['isEdit'] ? temp + ' - editada' : temp;
   }
 
-  void _showModal(BuildContext context, String historyId, bool openKeyboard) {
+  void _showModal(BuildContext context, String history) {
+    currentHistory.value = history;
+
     showCupertinoModalBottomSheet(
       expand: true,
       context: context,
       barrierColor: Colors.black87,
       duration: const Duration(milliseconds: 300),
-      builder: (context) => ModalCommentComponent(historyId, openKeyboard),
+      builder: (context) => ModalCommentComponent(true),
     );
   }
 
@@ -99,8 +102,8 @@ class _HistoryItemState extends State<HistoryItemComponent> {
   }
 
   Widget _list(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-    List<QueryDocumentSnapshot<Object?>>? documents = snapshot.data?.docs;
-    return documents!.length > 0
+    List<QueryDocumentSnapshot<dynamic>> documents = snapshot.data!.docs;
+    return documents.length > 0
         ? ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
@@ -160,7 +163,9 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                               IconComponent(
                                 icon: uiSvg.comment,
                                 callback: (value) => _showModal(
-                                    context, documents[index].id, true),
+                                  context,
+                                  documents[index].id,
+                                ),
                               ),
                             IconComponent(
                               icon: _getFavorited(documents[index].id)

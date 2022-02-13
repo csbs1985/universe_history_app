@@ -19,12 +19,13 @@ class UserModel {
 
   static Set<UserModel> user = {
     new UserModel(
-        id: '',
-        nickname: '',
-        date: DateTime.now(),
-        isDisabled: false,
-        email: '',
-        channel: '')
+      id: 'd31q2laUIRDwLdfK8cCA',
+      nickname: 'charles.sbs',
+      date: DateTime.now(),
+      isDisabled: false,
+      email: 'csbs.conta@outlook.com',
+      channel: 'google',
+    )
   };
 }
 

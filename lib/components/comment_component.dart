@@ -67,7 +67,9 @@ class _CommentState extends State<CommentComponent> {
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: Text(
-                      allComment[index].date + ' - ' + allComment[index].user,
+                      allComment[index].date +
+                          ' - ' +
+                          allComment[index].userNickName,
                       style: uiTextStyle.text2,
                     ),
                   )

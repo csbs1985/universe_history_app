@@ -7,3 +7,5 @@ ValueNotifier<CategoryModel> menuItemSelected =
 
 ValueNotifier<Object?> currentUser =
     ValueNotifier<Object?>(UserModel.user.first);
+
+ValueNotifier<String> currentHistory = ValueNotifier('');
