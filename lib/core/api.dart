@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:universe_history_app/shared/models/comment_model.dart';
+import 'variables.dart';
 
 class Api {
   CollectionReference bookmark =
@@ -10,10 +10,11 @@ class Api {
   CollectionReference comment =
       FirebaseFirestore.instance.collection('comments');
 
-  getAllComment(String id) {
+  getAllComment() {
     return comment
-        .orderBy('date')
-        .where('historyId', arrayContainsAny: [id]).snapshots();
+        .orderBy('date', descending: true)
+        .where('historyId', isEqualTo: currentHistory.value)
+        .snapshots();
   }
 
   getAllHistory() {
@@ -46,7 +47,13 @@ class Api {
     return history.doc().set(form);
   }
 
-  setComment(CommentModel form) {
+  setComment(Map<String, dynamic> form) {
     return comment.doc().set(form);
+  }
+
+  upNumComment() {
+    return history
+        .doc(currentHistory.value)
+        .update({'qtyComment': currentQtyComment.value});
   }
 }

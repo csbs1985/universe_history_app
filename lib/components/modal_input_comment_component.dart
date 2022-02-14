@@ -8,7 +8,6 @@ import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/shared/enums/type_toast_enum.dart';
-import 'package:universe_history_app/shared/models/comment_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
@@ -30,15 +29,10 @@ class _ModalInputCommmentComponentState
   late String buttonText;
   bool _isInputNotEmpty = false;
   bool _textAnonimous = false;
-  late CommentModel form;
+
+  late Map<String, dynamic> comment;
 
   final Api api = Api();
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   return api.getAllComment(currentHistory.value.historyId).then((result)=> );
-  // }
 
   void keyUp(String text) {
     setState(() {
@@ -53,27 +47,40 @@ class _ModalInputCommmentComponentState
   }
 
   void _sendComment() {
-    form = {
-      'date': DateTime.now(),
-      // 'historyId': currentHistory.value.id,
-      'isAnonymous': _textAnonimous,
-      'isEdit': false,
-      'text': _commentController.text,
-      'userId': getCurrentId(),
-      'userNickName': getCurrentId(),
-    } as CommentModel;
+    setState(() {
+      comment = {
+        'date': DateTime.now(),
+        'historyId': currentHistory.value,
+        'isAnonymous': _textAnonimous,
+        'isEdit': false,
+        'text': _commentController.text,
+        'userId': UserModel.user.first.id,
+        'userNickName': UserModel.user.first.nickname,
+      };
 
-    _commentController.clear();
+      _commentController.clear();
 
-    api
-        .setComment(form)
-        .then((result) => {
-              _isInputNotEmpty = false,
-              Navigator.of(context).pop(),
-              toast.toast(
-                  context, ToastEnum.SUCCESS, 'Seu comentário foi publicado.'),
-            })
-        .catchError((error) => print('ERROR: ' + error));
+      api
+          .setComment(comment)
+          .then((result) => {_upComment()})
+          .catchError((error) => print('ERROR: ' + error));
+    });
+  }
+
+  void _upComment() {
+    setState(() {
+      currentQtyComment.value = currentQtyComment.value + 1;
+
+      api
+          .upNumComment()
+          .then((result) => {
+                _isInputNotEmpty = false,
+                Navigator.of(context).pop(),
+                toast.toast(context, ToastEnum.SUCCESS,
+                    'Seu comentário foi publicado.'),
+              })
+          .catchError((error) => print('ERROR: ' + error));
+    });
   }
 
   @override
@@ -92,7 +99,7 @@ class _ModalInputCommmentComponentState
                   child: TextField(
                     controller: _commentController,
                     onChanged: (value) => keyUp(value),
-                    autofocus: false,
+                    autofocus: true,
                     maxLines: 100,
                     style: uiTextStyle.text1,
                     decoration: const InputDecoration.collapsed(

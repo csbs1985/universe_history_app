@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/modal_comment_component.dart';
+import 'package:universe_history_app/components/modal_input_comment_component.dart';
 import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/shared/models/category_model.dart';
-import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -56,15 +56,15 @@ class _HistoryItemState extends State<HistoryItemComponent> {
     return item['isEdit'] ? temp + ' - editada' : temp;
   }
 
-  void _showModal(BuildContext context, String history) {
-    currentHistory.value = history;
-
+  void _showModal(BuildContext context, String type) {
     showCupertinoModalBottomSheet(
       expand: true,
       context: context,
       barrierColor: Colors.black87,
       duration: const Duration(milliseconds: 300),
-      builder: (context) => ModalCommentComponent(true),
+      builder: (context) => type == 'inputCommentary'
+          ? ModalInputCommmentComponent()
+          : ModalCommentComponent(),
     );
   }
 
@@ -151,22 +151,38 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                       children: [
                         documents[index]['qtyComment'] < 1
                             ? SizedBox()
-                            : Text(
-                                documents[index]['qtyComment'].toString() +
-                                    ' comentários',
-                                style: uiTextStyle.text2,
-                              ),
+                            : GestureDetector(
+                                child: Text(
+                                  documents[index]['qtyComment'] > 1
+                                      ? documents[index]['qtyComment']
+                                              .toString() +
+                                          ' comentários'
+                                      : '1 comentário',
+                                  style: uiTextStyle.text2,
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    currentHistory.value = documents[index].id;
+                                    currentQtyComment.value =
+                                        documents[index]['qtyComment'];
+                                    _showModal(context, 'listCommentary ');
+                                  });
+                                }),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             if (documents[index]['isComment'])
                               IconComponent(
-                                icon: uiSvg.comment,
-                                callback: (value) => _showModal(
-                                  context,
-                                  documents[index].id,
-                                ),
-                              ),
+                                  icon: uiSvg.comment,
+                                  callback: (value) {
+                                    setState(() {
+                                      currentHistory.value =
+                                          documents[index].id;
+                                      currentQtyComment.value =
+                                          documents[index]['qtyComment'];
+                                      _showModal(context, 'inputCommentary');
+                                    });
+                                  }),
                             IconComponent(
                               icon: _getFavorited(documents[index].id)
                                   ? uiSvg.favorited
