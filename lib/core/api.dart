@@ -34,9 +34,7 @@ class Api {
   }
 
   getAllUserHistory(String user) {
-    return history
-        .orderBy('date')
-        .where('userId', arrayContainsAny: [user]).snapshots();
+    return history.orderBy('date').where('userId', isEqualTo: user).snapshots();
   }
 
   getUser(String email) {

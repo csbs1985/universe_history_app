@@ -42,9 +42,9 @@ class _HistoryItemState extends State<HistoryItemComponent> {
     if (value == 'todas' || value.isEmpty || value == '') {
       return api.getAllHistory();
     } else if (value == 'minhas') {
-      return api.getAllUserHistory("charles.sbs");
+      return api.getAllUserHistory("d31q2laUIRDwLdfK8cCA");
     } else if (value == 'lerMaisTarde') {
-      return api.getAllUserBookmarks('charles.sbs');
+      return api.getAllUserBookmarks('d31q2laUIRDwLdfK8cCA');
     }
     return api.getAllHistoryFiltered(value);
   }
