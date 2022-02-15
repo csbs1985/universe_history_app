@@ -2,10 +2,13 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:universe_history_app/components/modal_options_component.dart';
 import 'package:universe_history_app/components/skeleton_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/shared/models/comment_model.dart';
+import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
@@ -24,6 +27,16 @@ class _CommentState extends State<CommentComponent> {
     var author = item['isAnonymous'] ? 'anônimo' : item['userNickName'];
     var temp = _date + ' - ' + author;
     return item['isEdit'] ? temp + ' - editada' : temp;
+  }
+
+  void _showModal(BuildContext context, String id) {
+    showCupertinoModalBottomSheet(
+        expand: false,
+        context: context,
+        barrierColor: Colors.black87,
+        duration: const Duration(milliseconds: 300),
+        builder: (context) =>
+            ModalOptionsComponent('comentário', UserModel.user.first));
   }
 
   @override
@@ -92,9 +105,7 @@ class _CommentState extends State<CommentComponent> {
                         ),
                       ),
                     ),
-                    onLongPress: () {
-                      print('por que esta apertando tanto?');
-                    },
+                    onLongPress: () => _showModal(context, documents[index].id),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10),

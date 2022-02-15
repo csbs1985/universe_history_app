@@ -37,7 +37,7 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                       label: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Editar ' + widget._type,
+                          '   Editar ' + widget._type,
                           style: uiTextStyle.text1,
                         ),
                       ),
@@ -51,7 +51,7 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                       label: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Excluir ' + widget._type,
+                          '   Excluir ' + widget._type,
                           style: uiTextStyle.text1,
                         ),
                       ),
@@ -65,7 +65,7 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                       label: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Bloquear ' + widget._user.nickname,
+                          '   Bloquear ' + widget._user.nickname,
                           style: uiTextStyle.text1,
                         ),
                       ),
@@ -79,7 +79,7 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                       label: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Denunciar ' + widget._user.nickname,
+                          '   Denunciar ' + widget._user.nickname,
                           style: uiTextStyle.text1,
                         ),
                       ),
