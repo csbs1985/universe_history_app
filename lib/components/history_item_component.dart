@@ -7,12 +7,14 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/modal_comment_component.dart';
 import 'package:universe_history_app/components/modal_input_comment_component.dart';
+import 'package:universe_history_app/components/modal_options_component.dart';
 import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/shared/models/category_model.dart';
+import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -66,6 +68,16 @@ class _HistoryItemState extends State<HistoryItemComponent> {
           ? ModalInputCommmentComponent()
           : ModalCommentComponent(),
     );
+  }
+
+  void _showModalOptions(BuildContext context, String id) {
+    showCupertinoModalBottomSheet(
+        expand: false,
+        context: context,
+        barrierColor: Colors.black87,
+        duration: const Duration(milliseconds: 300),
+        builder: (context) =>
+            ModalOptionsComponent('historia', UserModel.user.first));
   }
 
   bool _getFavorited(String id) {
@@ -198,8 +210,8 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                             ),
                             IconComponent(
                               icon: uiSvg.options,
-                              route: 'options',
-                              // TODO: criar função para o botão opções da história.
+                              callback: (value) => _showModalOptions(
+                                  context, documents[index].id),
                             ),
                           ],
                         )
