@@ -23,7 +23,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final GoogleSignIn googleSignIn = GoogleSignIn();
   final Api api = Api();
   final ToastComponent toast = new ToastComponent();
 
@@ -36,26 +36,27 @@ class _LoginPageState extends State<LoginPage> {
   Future<User?> _loginGoogle() async {
     try {
       final GoogleSignInAccount? googleSignInAccount =
-          await _googleSignIn.signIn();
+          await googleSignIn.signIn();
 
       final GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount!.authentication;
 
-      final AuthCredential credential = await GoogleAuthProvider.credential(
+      final AuthCredential credential = GoogleAuthProvider.credential(
         idToken: googleSignInAuthentication.idToken,
         accessToken: googleSignInAuthentication.accessToken,
       );
 
-      final UserCredential userCredential =
+      final UserCredential authResult =
           await FirebaseAuth.instance.signInWithCredential(credential);
 
-      final User? user = userCredential.user;
+      final User? user = authResult.user;
 
       _currentUser = user!;
 
       toast.toast(context, ToastEnum.SUCCESS, 'Login com sucesso.');
       return user;
     } catch (e) {
+      print('ERROR: ' + e.toString());
       toast.toast(context, ToastEnum.WARNING, 'ERROR: ' + e.toString());
       return null;
     }
