@@ -1,4 +1,4 @@
-package com.universe.universe_history_app
+package com.universe.history
 
 import io.flutter.embedding.android.FlutterActivity
 

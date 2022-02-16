@@ -7,17 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:556528793397:android:318da3e43a41c678e07e7c",
+        "mobilesdk_app_id": "1:556528793397:android:3e8ead40b80df9bfe07e7c",
         "android_client_info": {
-          "package_name": "com.universe.universe_history_app"
+          "package_name": "com.universe.history"
         }
       },
       "oauth_client": [
         {
-          "client_id": "556528793397-jhmqeskd6ciej0jon6u5hje7k5fahuk5.apps.googleusercontent.com",
+          "client_id": "556528793397-pur24ahpicmfvufq2kugj23sdmt08iim.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.universe.universe_history_app",
+            "package_name": "com.universe.history",
             "certificate_hash": "24407fbe5b9c3ba93d5017417b830bbc8b54bc21"
           }
         },
