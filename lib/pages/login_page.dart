@@ -1,14 +1,17 @@
-// ignore_for_file: avoid_print, unused_local_variable, await_only_futures
+// ignore_for_file: avoid_print, unused_local_variable, await_only_futures, unused_field
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/btn_login_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
+import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/shared/enums/type_account_login_enum.dart';
+import 'package:universe_history_app/shared/enums/type_toast_enum.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -20,34 +23,54 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   final Api api = Api();
+  final ToastComponent toast = new ToastComponent();
+
+  late User _currentUser;
 
   void _loginApple() {
     print(AccountLoginEnum.APPLE);
   }
 
-  Future<void> _loginGoogle() async {
-    // final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
-    // GoogleSignInAccount? currentUser = _googleSignIn.currentUser;
+  Future<User?> _loginGoogle() async {
+    try {
+      final GoogleSignInAccount? googleSignInAccount =
+          await _googleSignIn.signIn();
 
-    // await _googleSignIn.signIn();
-    // try {
-    //   print('SUCCESS: ' + currentUser.toString());
-    // } catch (e) {
-    //   print('ERROR: ' + e.toString());
-    // }
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount!.authentication;
 
-    var email = 'csbs.conta@outlook.com'; // TODO: virá da google e apple
+      final AuthCredential credential = await GoogleAuthProvider.credential(
+        idToken: googleSignInAuthentication.idToken,
+        accessToken: googleSignInAuthentication.accessToken,
+      );
 
-    api.getUser(email).then((QuerySnapshot snapshot) {
-      if (snapshot.docs.isEmpty) {
-        //TODO: criar conta
-      } else {
-        //TODO: entrar
-        currentUser.value = snapshot.docs.first.data();
-      }
-    });
+      final UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      final User? user = userCredential.user;
+
+      _currentUser = user!;
+
+      toast.toast(context, ToastEnum.SUCCESS, 'Login com sucesso.');
+      return user;
+    } catch (e) {
+      toast.toast(context, ToastEnum.WARNING, 'ERROR: ' + e.toString());
+      return null;
+    }
   }
+
+  //   var email = 'csbs.conta@outlook.com'; // TODO: virá da google e apple
+
+  //   api.getUser(email).then((QuerySnapshot snapshot) {
+  //     if (snapshot.docs.isEmpty) {
+  //       //TODO: criar conta
+  //     } else {
+  //       //TODO: entrar
+  //       currentUser.value = snapshot.docs.first.data();
+  //     }
+  //   });
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
               height: 20,
             ),
             const Text(
-              'Entrar ou criar conta',
+              'Entrar ou criar conta History',
               style: uiTextStyle.text1,
               textAlign: TextAlign.center,
             ),

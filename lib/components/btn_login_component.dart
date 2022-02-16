@@ -44,7 +44,7 @@ class _BtnLoginComponentState extends State<BtnLoginComponent> {
             icon: SvgPicture.asset(widget._svg),
             onPressed: () => _onPressed(widget._account),
             label: Text(
-              'Use sua conta ' + widget._label,
+              'com sua conta ' + widget._label,
               style: uiTextStyle.text1,
             ),
             style: uiButton.btnLogin,
