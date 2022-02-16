@@ -38,19 +38,10 @@ class _IconComponentState extends State<IconComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-        child: SvgPicture.asset(
-          widget._icon,
-          color: widget._color ?? uiColor.icon,
-        ),
-        constraints: const BoxConstraints(
-          maxWidth: 64,
-          minHeight: 32,
-        ),
-      ),
-      onTap: () => _onPressed(),
+    return IconButton(
+      icon: SvgPicture.asset(widget._icon),
+      color: widget._color ?? uiColor.icon,
+      onPressed: () => _onPressed(),
     );
   }
 }
