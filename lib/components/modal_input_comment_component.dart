@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_is_empty, unused_field, void_checks, avoid_print, unnecessary_new
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/components/btn_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
@@ -40,7 +41,7 @@ class _ModalInputCommmentComponentState
     });
   }
 
-  void _toggleAnonimous() {
+  dynamic _toggleAnonimous() {
     setState(() {
       _textAnonimous = !_textAnonimous;
     });
@@ -122,18 +123,29 @@ class _ModalInputCommmentComponentState
               child: Column(
                 children: [
                   const DividerComponent(bottom: 0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconComponent(
-                        icon: _textAnonimous ? uiSvg.lock : uiSvg.unlock,
-                        callback: (value) => _toggleAnonimous(),
-                      ),
-                      BtnComponent(
-                        enabled: _isInputNotEmpty,
-                        callback: (value) => _sendComment(),
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextButton.icon(
+                          icon: _textAnonimous
+                              ? SvgPicture.asset(uiSvg.lock)
+                              : SvgPicture.asset(uiSvg.unlock),
+                          label: Text(
+                            _textAnonimous
+                                ? 'anônimo'
+                                : UserModel.user.first.nickname,
+                            style: uiTextStyle.text2,
+                          ),
+                          onPressed: () => _toggleAnonimous(),
+                        ),
+                        BtnComponent(
+                          enabled: _isInputNotEmpty,
+                          callback: (value) => _sendComment(),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
