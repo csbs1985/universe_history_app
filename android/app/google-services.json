@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "556528793397",
-    "project_id": "universe-history-app-a3ed6",
-    "storage_bucket": "universe-history-app-a3ed6.appspot.com"
+    "project_number": "345854385639",
+    "project_id": "universe-history-app-d8abb",
+    "storage_bucket": "universe-history-app-d8abb.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:556528793397:android:3e8ead40b80df9bfe07e7c",
+        "mobilesdk_app_id": "1:345854385639:android:208fa6ea26d3f2f9e93142",
         "android_client_info": {
-          "package_name": "com.universe.history"
+          "package_name": "com.universe.history.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "556528793397-pur24ahpicmfvufq2kugj23sdmt08iim.apps.googleusercontent.com",
+          "client_id": "345854385639-tbi0vig3gj6c7oq2cu1957inf16sovtc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.universe.history",
+            "package_name": "com.universe.history.app",
             "certificate_hash": "24407fbe5b9c3ba93d5017417b830bbc8b54bc21"
           }
         },
         {
-          "client_id": "556528793397-kff3qh6lh9j1ppns1r048itqd81k2vob.apps.googleusercontent.com",
+          "client_id": "345854385639-ts4e08n15cnudodccbto889hr5ptjge5.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDK4rANsCZnuUF8oGHedBmFyUdsT7D_cTM"
+          "current_key": "AIzaSyBEeWY5JI_mRlqU12tZusg6rC4HYLg2628"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "556528793397-kff3qh6lh9j1ppns1r048itqd81k2vob.apps.googleusercontent.com",
+              "client_id": "345854385639-ts4e08n15cnudodccbto889hr5ptjge5.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
