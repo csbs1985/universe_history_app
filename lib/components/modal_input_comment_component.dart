@@ -53,7 +53,7 @@ class _ModalInputCommmentComponentState
         'historyId': currentHistory.value,
         'isAnonymous': _textAnonimous,
         'isEdit': false,
-        'text': _commentController.text,
+        'text': _commentController.text.trim(),
         'userId': UserModel.user.first.id,
         'userNickName': UserModel.user.first.nickname,
       };

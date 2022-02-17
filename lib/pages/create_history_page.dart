@@ -81,8 +81,8 @@ class _CreateHistoryState extends State<CreateHistory> {
 
   void _publishHIstory() {
     history = {
-      'title': titleController.text,
-      'text': textController.text,
+      'title': titleController.text.trim(),
+      'text': textController.text.trim(),
       'date': DateTime.now(),
       'isComment': _isComment,
       'isAnonymous': _isAnonymous,
