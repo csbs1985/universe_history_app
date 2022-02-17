@@ -1,5 +1,6 @@
 // ignore_for_file: no_logic_in_create_state, prefer_final_fields, use_key_in_widget_constructors, prefer_const_constructors, avoid_print, unnecessary_new, unused_local_variable
 
+import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -46,11 +47,19 @@ class _CommentState extends State<CommentComponent> {
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 10, 10, 16),
-          child: Text(
-            currentQtyComment.value > 1
-                ? currentQtyComment.value.toString() + ' comentários'
-                : '1 comentário',
-            style: uiTextStyle.text1,
+          child: Row(
+            children: [
+              if (currentQtyComment.value > 0)
+                AnimatedFlipCounter(
+                  duration: Duration(milliseconds: 500),
+                  value: currentQtyComment.value,
+                  textStyle: uiTextStyle.text1,
+                ),
+              Text(
+                currentQtyComment.value > 1 ? ' comentários' : ' comentário',
+                style: uiTextStyle.text1,
+              ),
+            ],
           ),
         ),
         Expanded(

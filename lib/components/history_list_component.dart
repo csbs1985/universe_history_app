@@ -1,5 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors, todo, prefer_const_constructors, unused_field, iterable_contains_unrelated_type, list_remove_unrelated_type, no_logic_in_create_state, unnecessary_new, prefer_final_fields, await_only_futures, avoid_print, empty_constructor_bodies, unused_local_variable, unused_element, prefer_is_empty, unnecessary_null_comparison, unnecessary_cast
 
+import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/modal_comment_component.dart';
 import 'package:universe_history_app/components/modal_input_comment_component.dart';
 import 'package:universe_history_app/components/modal_options_component.dart';
+import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
@@ -109,7 +111,7 @@ class _HistoryItemState extends State<HistoryListComponent> {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
-              return _notResult();
+              return NoHistoryComponent();
             case ConnectionState.waiting:
               return SkeletonHistoryItemComponent();
             case ConnectionState.done:
@@ -117,7 +119,7 @@ class _HistoryItemState extends State<HistoryListComponent> {
               try {
                 return _list(context, snapshot);
               } catch (e) {
-                return _notResult();
+                return NoHistoryComponent();
               }
           }
         },
@@ -176,13 +178,20 @@ class _HistoryItemState extends State<HistoryListComponent> {
                         documents[index]['qtyComment'] < 1
                             ? SizedBox()
                             : GestureDetector(
-                                child: Text(
-                                  documents[index]['qtyComment'] > 1
-                                      ? documents[index]['qtyComment']
-                                              .toString() +
-                                          ' comentários'
-                                      : '1 comentário',
-                                  style: uiTextStyle.text2,
+                                child: Row(
+                                  children: [
+                                    AnimatedFlipCounter(
+                                      duration: Duration(milliseconds: 500),
+                                      value: documents[index]['qtyComment'],
+                                      textStyle: uiTextStyle.text2,
+                                    ),
+                                    Text(
+                                      documents[index]['qtyComment'] > 1
+                                          ? ' comentários'
+                                          : ' comentário',
+                                      style: uiTextStyle.text2,
+                                    ),
+                                  ],
                                 ),
                                 onTap: () {
                                   setState(() {
@@ -239,28 +248,6 @@ class _HistoryItemState extends State<HistoryListComponent> {
               );
             },
           )
-        : _notResult();
-  }
-
-  Widget _notResult() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 30, 10, 0),
-      child: Column(
-        children: const [
-          Text(
-            'Nada para mostrar',
-            style: uiTextStyle.text1,
-          ),
-          Text(
-            'Não encontramos histórias que atendam sua pesquisa.',
-            style: uiTextStyle.text2,
-          ),
-          Text(
-            'Mas não desista, temos muitas outras histórias para você interagir.',
-            style: uiTextStyle.text2,
-          ),
-        ],
-      ),
-    );
+        : NoHistoryComponent();
   }
 }
