@@ -8,12 +8,14 @@ import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/modal_comment_component.dart';
 import 'package:universe_history_app/components/modal_input_comment_component.dart';
 import 'package:universe_history_app/components/modal_options_component.dart';
+import 'package:universe_history_app/components/not_history_component.dart';
 import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/shared/models/category_model.dart';
+import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
@@ -21,43 +23,14 @@ import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
 
 class HistoryItemComponent extends StatefulWidget {
-  const HistoryItemComponent({
-    Function? callback,
-    required String itemSelectedMenu,
-  })  : _itemSelectedMenu = itemSelectedMenu,
-        _callback = callback;
-
-  final String _itemSelectedMenu;
-  final Function? _callback;
-
   @override
   _HistoryItemState createState() => _HistoryItemState();
 }
 
 class _HistoryItemState extends State<HistoryItemComponent> {
   final Api api = new Api();
+  late final HistoryModel _history;
   String user = UserModel.user.first.id;
-
-  @override
-  initState() {
-    super.initState();
-    // api
-    //     .getAllUserBookmarks(user)
-    //     .then((result) => currentBookmarks.value = result);
-  }
-
-  _getContent() {
-    final value = menuItemSelected.value.id!;
-
-    if (value == 'todas' || value.isEmpty || value == '') {
-      return api.getAllHistory();
-    } else if (value == 'minhas') {
-      return api.getAllUserHistory("d31q2laUIRDwLdfK8cCA");
-    } else if (value == 'lerMaisTarde') {
-      return api.getAllUserBookmarks('d31q2laUIRDwLdfK8cCA');
-    }
-    return api.getAllHistoryFiltered(value);
-  }
 
   String _setResume(item) {
     var _date = editDateUtil(item['date'].millisecondsSinceEpoch);
@@ -105,19 +78,19 @@ class _HistoryItemState extends State<HistoryItemComponent> {
     return ValueListenableBuilder<CategoryModel>(
       valueListenable: menuItemSelected,
       builder: (context, value, __) => StreamBuilder<QuerySnapshot>(
-        stream: _getContent(),
+        stream: api.getHistory(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
-              return _notResult();
+              return NotHistoryComponent();
             case ConnectionState.waiting:
               return SkeletonHistoryItemComponent();
             case ConnectionState.done:
             default:
               try {
-                return _list(context, snapshot);
+                return _item(context, snapshot);
               } catch (e) {
-                return _notResult();
+                return NotHistoryComponent();
               }
           }
         },
@@ -125,7 +98,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
     );
   }
 
-  Widget _list(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+  Widget _item(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     List<QueryDocumentSnapshot<dynamic>> documents = snapshot.data!.docs;
     return documents.length > 0
         ? ListView.builder(
@@ -239,28 +212,6 @@ class _HistoryItemState extends State<HistoryItemComponent> {
               );
             },
           )
-        : _notResult();
-  }
-
-  Widget _notResult() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 30, 10, 0),
-      child: Column(
-        children: const [
-          Text(
-            'Nada para mostrar',
-            style: uiTextStyle.text1,
-          ),
-          Text(
-            'Não encontramos histórias que atendam sua pesquisa.',
-            style: uiTextStyle.text2,
-          ),
-          Text(
-            'Mas não desista, temos muitas outras histórias para você interagir.',
-            style: uiTextStyle.text2,
-          ),
-        ],
-      ),
-    );
+        : NotHistoryComponent();
   }
 }
