@@ -29,14 +29,14 @@ class _CommentState extends State<CommentComponent> {
     return item['isEdit'] ? temp + ' - editada' : temp;
   }
 
-  void _showModal(BuildContext context, String id) {
+  void _showModal(BuildContext context, dynamic history) {
     showCupertinoModalBottomSheet(
         expand: false,
         context: context,
         barrierColor: Colors.black87,
         duration: const Duration(milliseconds: 300),
-        builder: (context) =>
-            ModalOptionsComponent('comentário', UserModel.user.first));
+        builder: (context) => ModalOptionsComponent(
+            history['text'], 'comentário', UserModel.user.first));
   }
 
   @override
@@ -105,7 +105,8 @@ class _CommentState extends State<CommentComponent> {
                         ),
                       ),
                     ),
-                    onLongPress: () => _showModal(context, documents[index].id),
+                    onLongPress: () =>
+                        _showModal(context, documents[index].data()),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10),

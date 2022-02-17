@@ -11,3 +11,5 @@ ValueNotifier<Object?> currentUser =
 ValueNotifier<String> currentHistory = ValueNotifier('');
 
 ValueNotifier<num> currentQtyComment = ValueNotifier(0);
+
+ValueNotifier<List<String>> currentBookmarks = ValueNotifier(<String>[]);

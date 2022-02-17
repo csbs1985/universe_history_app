@@ -36,7 +36,15 @@ class HistoryItemComponent extends StatefulWidget {
 
 class _HistoryItemState extends State<HistoryItemComponent> {
   final Api api = new Api();
-  List<String> _allFavorite = [];
+  String user = UserModel.user.first.id;
+
+  @override
+  initState() {
+    super.initState();
+    // api
+    //     .getAllUserBookmarks(user)
+    //     .then((result) => currentBookmarks.value = result);
+  }
 
   _getContent() {
     final value = menuItemSelected.value.id!;
@@ -70,22 +78,28 @@ class _HistoryItemState extends State<HistoryItemComponent> {
     );
   }
 
-  void _showModalOptions(BuildContext context, String id) {
+  void _showModalOptions(BuildContext context, dynamic history) {
     showCupertinoModalBottomSheet(
         expand: false,
         context: context,
         barrierColor: Colors.black87,
         duration: const Duration(milliseconds: 300),
-        builder: (context) =>
-            ModalOptionsComponent('historia', UserModel.user.first));
+        builder: (context) => ModalOptionsComponent(
+            history['title'], 'historia', UserModel.user.first));
   }
 
   bool _getFavorited(String id) {
-    return _allFavorite.contains(id) ? true : false;
+    return currentBookmarks.value.contains(id) ? true : false;
   }
 
   void _toggleFavorite(String id) {
-    _allFavorite.contains(id) ? _allFavorite.remove(id) : _allFavorite.add(id);
+    setState(() {
+      currentBookmarks.value.contains(id)
+          ? currentBookmarks.value.remove(id)
+          : currentBookmarks.value.add(id);
+
+      api.upBookmarks(user);
+    });
   }
 
   @override
@@ -195,14 +209,18 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                                       _showModal(context, 'inputCommentary');
                                     });
                                   }),
-                            IconComponent(
-                              icon: _getFavorited(documents[index].id)
-                                  ? uiSvg.favorited
-                                  : uiSvg.favorite,
-                              // TODO: criar função para adicionar aos favoritos.
-                              callback: (value) =>
-                                  _toggleFavorite(documents[index].id),
-                            ),
+                            Builder(builder: (BuildContext context) {
+                              return ValueListenableBuilder<List<String>>(
+                                valueListenable: currentBookmarks,
+                                builder: (context, value, __) => IconComponent(
+                                  icon: _getFavorited(documents[index].id)
+                                      ? uiSvg.favorited
+                                      : uiSvg.favorite,
+                                  callback: (value) =>
+                                      _toggleFavorite(documents[index].id),
+                                ),
+                              );
+                            }),
                             IconComponent(
                               icon: uiSvg.open,
                               route: 'history',
@@ -211,7 +229,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                             IconComponent(
                               icon: uiSvg.options,
                               callback: (value) => _showModalOptions(
-                                  context, documents[index].id),
+                                  context, documents[index].data()),
                             ),
                           ],
                         )

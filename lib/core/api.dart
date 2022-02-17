@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'variables.dart';
 
@@ -47,6 +49,10 @@ class Api {
 
   setComment(Map<String, dynamic> form) {
     return comment.doc().set(form);
+  }
+
+  upBookmarks(String user) {
+    return bookmark.doc(user).update({'historyId': currentBookmarks.value});
   }
 
   upNumComment() {
