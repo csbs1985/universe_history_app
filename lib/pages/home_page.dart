@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
 import 'package:universe_history_app/components/card_component.dart';
-import 'package:universe_history_app/components/history_item_component.dart';
+import 'package:universe_history_app/components/history_list_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/components/menu_component.dart';
@@ -153,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                   Flexible(
-                    child: HistoryItemComponent(
+                    child: HistoryListComponent(
                         itemSelectedMenu: _itemSelectedMenu),
                   ),
                 ],

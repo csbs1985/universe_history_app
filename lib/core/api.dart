@@ -43,6 +43,10 @@ class Api {
     return user.where('email', isEqualTo: email).get();
   }
 
+  getHistory() {
+    return history.where('historyId', isEqualTo: currentHistory.value).get();
+  }
+
   setHistory(Map<String, dynamic> form) {
     return history.doc().set(form);
   }
