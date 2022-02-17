@@ -97,8 +97,6 @@ class _HistoryItemState extends State<HistoryItemComponent> {
       currentBookmarks.value.contains(id)
           ? currentBookmarks.value.remove(id)
           : currentBookmarks.value.add(id);
-
-      api.upBookmarks(user);
     });
   }
 
@@ -209,23 +207,24 @@ class _HistoryItemState extends State<HistoryItemComponent> {
                                       _showModal(context, 'inputCommentary');
                                     });
                                   }),
-                            Builder(builder: (BuildContext context) {
-                              return ValueListenableBuilder<List<String>>(
-                                valueListenable: currentBookmarks,
-                                builder: (context, value, __) => IconComponent(
+                            ValueListenableBuilder(
+                              valueListenable: currentBookmarks,
+                              builder: (_, value, __) => IconComponent(
                                   icon: _getFavorited(documents[index].id)
                                       ? uiSvg.favorited
                                       : uiSvg.favorite,
-                                  callback: (value) =>
-                                      _toggleFavorite(documents[index].id),
-                                ),
-                              );
-                            }),
-                            IconComponent(
-                              icon: uiSvg.open,
-                              route: 'history',
-                              // TODO: criar função para o botão abrir história.
+                                  callback: (value) {
+                                    _toggleFavorite(documents[index].id);
+                                    print(currentBookmarks.value);
+                                    // api.upBookmarks(user);
+                                  }),
                             ),
+                            IconComponent(
+                                icon: uiSvg.open,
+                                callback: (value) {
+                                  currentHistory.value = documents[index].id;
+                                  Navigator.of(context).pushNamed("/history");
+                                }),
                             IconComponent(
                               icon: uiSvg.options,
                               callback: (value) => _showModalOptions(
