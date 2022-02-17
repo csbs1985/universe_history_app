@@ -18,13 +18,13 @@ class uiTextStyle {
   );
 
   static const TextStyle btn = TextStyle(
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: FontWeight.w400,
     color: uiColor.first,
   );
 
   static const TextStyle btnDisabled = TextStyle(
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: FontWeight.w400,
     color: uiColor.comp_3,
   );

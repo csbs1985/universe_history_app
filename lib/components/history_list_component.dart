@@ -154,7 +154,7 @@ class _HistoryItemState extends State<HistoryListComponent> {
                       style: uiTextStyle.text1,
                       expandText: 'continuar lendo',
                       collapseText: 'fechar',
-                      maxLines: 8,
+                      maxLines: 10,
                       linkColor: uiColor.first,
                     ),
                     Wrap(
