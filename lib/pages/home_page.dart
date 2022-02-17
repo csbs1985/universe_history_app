@@ -110,10 +110,7 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(
-                    height: 44,
-                    child: MenuComponent(),
-                  ),
+                  MenuComponent(),
                   SizedBox(
                     height: 10,
                   ),

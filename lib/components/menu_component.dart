@@ -27,6 +27,7 @@ class _MenuComponentState extends State<MenuComponent> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 38,
       color: uiColor.second,
       child: ListView.builder(
         itemCount: CategoryModel.allCategories.length,
