@@ -35,6 +35,7 @@ dependencies:
   firebase_auth: ^3.3.6
   firebase_storage: ^10.2.7
   animated_flip_counter: ^0.2.2
+  flutter_share: ^2.0.0
 
 dev_dependencies:
   flutter_test:

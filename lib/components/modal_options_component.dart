@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/pill_component.dart';
@@ -19,6 +20,16 @@ class ModalOptionsComponent extends StatefulWidget {
 
   @override
   _ModalOptionsComponentState createState() => _ModalOptionsComponentState();
+}
+
+Future<void> _shared(String text) async {
+  FlutterShare.shareFile(
+    title:
+        'Olá, estou usando o app History, quero compartilhar este conteúdo com você: ',
+    text: '"' + text + '"',
+    chooserTitle: 'Escolha como pretende compartilhar',
+    filePath: '',
+  );
 }
 
 class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
@@ -82,7 +93,7 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                         ),
                       ),
                       TextButton.icon(
-                        onPressed: () {},
+                        onPressed: () => _shared(widget._label),
                         icon: SvgPicture.asset(uiSvg.share),
                         label: Align(
                           alignment: Alignment.centerLeft,
