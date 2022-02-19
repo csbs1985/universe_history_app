@@ -124,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                                 child: ValueListenableBuilder(
                                   valueListenable: currentUser,
                                   builder: (context, value, __) {
-                                    return value != null
+                                    return value == null
                                         ? CardComponent(
                                             title: 'Escreva sua história',
                                             text:

@@ -7,6 +7,7 @@ class uiSvg {
   static const String cleanAll = 'assets/icons/clean-all.svg';
   static const String comment = 'assets/icons/comment.svg';
   static const String commentEmpty = 'assets/icons/comment_empty.svg';
+  static const String copy = 'assets/icons/copy.svg';
   static const String delate = 'assets/icons/delate.svg';
   static const String delete = 'assets/icons/delete.svg';
   static const String edit = 'assets/icons/edit.svg';
@@ -20,5 +21,6 @@ class uiSvg {
   static const String open = 'assets/icons/open.svg';
   static const String options = 'assets/icons/options.svg';
   static const String send = 'assets/icons/send.svg';
+  static const String share = 'assets/icons/share.svg';
   static const String unlock = 'assets/icons/unlock.svg';
 }

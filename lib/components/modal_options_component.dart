@@ -50,6 +50,17 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                     children: [
                       TextButton.icon(
                         onPressed: () {},
+                        icon: SvgPicture.asset(uiSvg.copy),
+                        label: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            '   Copiar ' + widget._type,
+                            style: uiTextStyle.text1,
+                          ),
+                        ),
+                      ),
+                      TextButton.icon(
+                        onPressed: () {},
                         icon: SvgPicture.asset(uiSvg.edit),
                         label: Align(
                           alignment: Alignment.centerLeft,
@@ -69,6 +80,21 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                             style: uiTextStyle.text1,
                           ),
                         ),
+                      ),
+                      TextButton.icon(
+                        onPressed: () {},
+                        icon: SvgPicture.asset(uiSvg.share),
+                        label: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            '   Compartilhar ' + widget._type,
+                            style: uiTextStyle.text1,
+                          ),
+                        ),
+                      ),
+                      const DividerComponent(
+                        bottom: 10,
+                        top: 10,
                       ),
                       TextButton.icon(
                         onPressed: () {},
