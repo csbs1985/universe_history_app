@@ -38,19 +38,24 @@ class _MenuComponentState extends State<MenuComponent> {
                 ? uiColor.comp_1
                 : uiColor.second,
             child: TextButton(
-                style: TextButton.styleFrom(
-                  padding: EdgeInsets.zero,
-                  alignment: Alignment.center,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
+              style: TextButton.styleFrom(
+                padding: EdgeInsets.zero,
+                alignment: Alignment.center,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Text(widget.allCategories[index].label!,
-                      style: uiTextStyle.text1),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  widget.allCategories[index].label!,
+                  style: uiTextStyle.text1,
                 ),
-                onPressed: () => _setSelected(widget.allCategories[index])),
+              ),
+              onPressed: () => _setSelected(
+                widget.allCategories[index],
+              ),
+            ),
           );
         },
       ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/components/btn_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
+import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
@@ -83,6 +84,13 @@ class _ModalInputCommmentComponentState
     });
   }
 
+  void _cleanComment() {
+    setState(() {
+      _commentController.text = '';
+      _isInputNotEmpty = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -127,17 +135,25 @@ class _ModalInputCommmentComponentState
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        TextButton.icon(
-                          icon: _textAnonimous
-                              ? SvgPicture.asset(uiSvg.lock)
-                              : SvgPicture.asset(uiSvg.unlock),
-                          label: Text(
-                            _textAnonimous
-                                ? 'anônimo'
-                                : UserModel.user.first.nickname,
-                            style: uiTextStyle.text2,
-                          ),
-                          onPressed: () => _toggleAnonimous(),
+                        Row(
+                          children: [
+                            IconComponent(
+                              icon: uiSvg.cleanAll,
+                              callback: (value) => _cleanComment(),
+                            ),
+                            TextButton.icon(
+                              icon: _textAnonimous
+                                  ? SvgPicture.asset(uiSvg.lock)
+                                  : SvgPicture.asset(uiSvg.unlock),
+                              label: Text(
+                                _textAnonimous
+                                    ? 'anônimo'
+                                    : UserModel.user.first.nickname,
+                                style: uiTextStyle.text2,
+                              ),
+                              onPressed: () => _toggleAnonimous(),
+                            ),
+                          ],
                         ),
                         BtnComponent(
                           enabled: _isInputNotEmpty,

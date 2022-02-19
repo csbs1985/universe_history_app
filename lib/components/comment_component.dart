@@ -104,10 +104,10 @@ class _CommentState extends State<CommentComponent> {
                       color: uiColor.comp_3,
                       margin: EdgeInsets.all(0),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+                        padding: const EdgeInsets.fromLTRB(10, 6, 10, 8),
                         child: Text(
                           documents[index]['text'],
                           style: uiTextStyle.text1,

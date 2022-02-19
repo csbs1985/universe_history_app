@@ -4,6 +4,7 @@ class uiSvg {
   static const String apple = 'assets/icons/apple.svg';
   static const String block = 'assets/icons/block.svg';
   static const String closed = 'assets/icons/closed.svg';
+  static const String cleanAll = 'assets/icons/clean-all.svg';
   static const String comment = 'assets/icons/comment.svg';
   static const String commentEmpty = 'assets/icons/comment_empty.svg';
   static const String delate = 'assets/icons/delate.svg';

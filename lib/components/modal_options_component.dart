@@ -34,14 +34,11 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                 PillComponent(),
                 Padding(
                   padding: const EdgeInsets.all(20),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      widget._label,
-                      style: uiTextStyle.text1,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  child: Text(
+                    '"' + widget._label + '"',
+                    style: uiTextStyle.text1,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 const DividerComponent(
