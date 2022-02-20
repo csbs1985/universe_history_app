@@ -37,7 +37,7 @@ class _CommentState extends State<CommentComponent> {
         barrierColor: Colors.black87,
         duration: const Duration(milliseconds: 300),
         builder: (context) => ModalOptionsComponent(
-            history['text'], 'comentário', UserModel.user.first));
+            history['text'], 'comentário', currentUser.value));
   }
 
   @override

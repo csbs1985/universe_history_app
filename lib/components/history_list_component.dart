@@ -16,7 +16,6 @@ import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/shared/models/category_model.dart';
-import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -38,7 +37,6 @@ class HistoryListComponent extends StatefulWidget {
 
 class _HistoryItemState extends State<HistoryListComponent> {
   final Api api = new Api();
-  String user = UserModel.user.first.id;
 
   @override
   initState() {
@@ -87,7 +85,7 @@ class _HistoryItemState extends State<HistoryListComponent> {
         barrierColor: Colors.black87,
         duration: const Duration(milliseconds: 300),
         builder: (context) => ModalOptionsComponent(
-            history['title'], 'historia', UserModel.user.first));
+            history['title'], 'historia', currentUser.value));
   }
 
   bool _getFavorited(String id) {

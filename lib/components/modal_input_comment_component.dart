@@ -55,8 +55,8 @@ class _ModalInputCommmentComponentState
         'isAnonymous': _textAnonimous,
         'isEdit': false,
         'text': _commentController.text.trim(),
-        'userId': UserModel.user.first.id,
-        'userNickName': UserModel.user.first.nickname,
+        'userId': currentUser.value.id,
+        'userNickName': currentUser.value.nickname,
       };
 
       _commentController.clear();
@@ -148,7 +148,7 @@ class _ModalInputCommmentComponentState
                               label: Text(
                                 _textAnonimous
                                     ? 'anônimo'
-                                    : UserModel.user.first.nickname,
+                                    : currentUser.value.nickname,
                                 style: uiTextStyle.text2,
                               ),
                               onPressed: () => _toggleAnonimous(),

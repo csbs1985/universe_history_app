@@ -11,6 +11,7 @@ import 'package:universe_history_app/components/select_categories_component.dart
 import 'package:universe_history_app/components/select_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/shared/models/category_model.dart';
 import 'package:universe_history_app/shared/enums/type_toast_enum.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
@@ -89,8 +90,8 @@ class _CreateHistoryState extends State<CreateHistory> {
       'isEdit': false,
       'qtyComment': 0,
       'categories': _categories,
-      'userId': UserModel.user.first.id,
-      'userNickName': UserModel.user.first.nickname,
+      'userId': currentUser.value.id,
+      'userNickName': currentUser.value.nickname,
     };
 
     api

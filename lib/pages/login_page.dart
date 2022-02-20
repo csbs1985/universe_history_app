@@ -1,6 +1,5 @@
-// ignore_for_file: avoid_print, unused_local_variable, await_only_futures, unused_field
+// ignore_for_file: avoid_print, unused_local_variable, await_only_futures, unused_field, unnecessary_new
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -26,8 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   final GoogleSignIn googleSignIn = GoogleSignIn();
   final Api api = Api();
   final ToastComponent toast = new ToastComponent();
-
-  late User _currentUser;
+  late Map<String, dynamic> _user;
 
   void _loginApple() {
     print(AccountLoginEnum.APPLE);
@@ -51,9 +49,9 @@ class _LoginPageState extends State<LoginPage> {
 
       final User? user = authResult.user;
 
-      _currentUser = user!;
+      _verifyUser('google', user);
+      Navigator.of(context).pop();
 
-      toast.toast(context, ToastEnum.SUCCESS, 'Login com sucesso.');
       return user;
     } catch (e) {
       print('ERROR: ' + e.toString());
@@ -62,16 +60,33 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  //   var email = 'csbs.conta@outlook.com'; // TODO: virá da google e apple
-
-  //   api.getUser(email).then((QuerySnapshot snapshot) {
-  //     if (snapshot.docs.isEmpty) {
-  //       //TODO: criar conta
-  //     } else {
-  //       //TODO: entrar
-  //       currentUser.value = snapshot.docs.first.data();
-  //     }
-  //   });
+  void _verifyUser(String channel, dynamic user) {
+    api
+        .getUser(user.email)
+        .then((result) => {
+              if (result.docs[0].data()?.isNotEmpty)
+                {currentUser.value = result.docs[0].data()}
+            })
+        .catchError(
+      (error) {
+        if (error.message == "Invalid value") {
+          _user = {
+            'id': user.uid,
+            'date': DateTime.now(),
+            'nickname': user.displayName,
+            'isDisabled': false,
+            'email': user.email,
+            'channel': channel
+          };
+          api
+              .setUser(_user, user.uid!)
+              .then((result) => {currentUser.value = result.docs[0].data()});
+        } else {
+          print('ERROR:' + error.toString());
+        }
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

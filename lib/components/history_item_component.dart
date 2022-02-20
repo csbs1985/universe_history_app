@@ -30,7 +30,6 @@ class HistoryItemComponent extends StatefulWidget {
 class _HistoryItemState extends State<HistoryItemComponent> {
   final Api api = new Api();
   late final HistoryModel _history;
-  String user = UserModel.user.first.id;
 
   String _setResume(item) {
     var _date = editDateUtil(item['date'].millisecondsSinceEpoch);
@@ -58,7 +57,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
         barrierColor: Colors.black87,
         duration: const Duration(milliseconds: 300),
         builder: (context) => ModalOptionsComponent(
-            history['title'], 'historia', UserModel.user.first));
+            history['title'], 'historia', currentUser.value));
   }
 
   bool _getFavorited(String id) {
