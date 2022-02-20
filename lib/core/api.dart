@@ -23,40 +23,47 @@ class Api {
     return history.orderBy('date').snapshots();
   }
 
-  getAllHistoryFiltered(String filter) {
+  getAllHistoryFiltered(String _filter) {
     return history
         .orderBy('date')
-        .where('categories', arrayContainsAny: [filter]).snapshots();
+        .where('categories', arrayContainsAny: [_filter]).snapshots();
   }
 
-  getAllUserBookmarks(String user) {
+  getAllUserBookmarks(String _user) {
     return bookmark
         .orderBy('date')
-        .where('user', arrayContainsAny: [user]).snapshots();
+        .where('user', arrayContainsAny: [_user]).snapshots();
   }
 
-  getAllUserHistory(String user) {
-    return history.orderBy('date').where('userId', isEqualTo: user).snapshots();
+  getAllUserHistory(String _user) {
+    return history
+        .orderBy('date')
+        .where('_userId', isEqualTo: user)
+        .snapshots();
   }
 
-  getUser(String email) {
-    return user.where('email', isEqualTo: email).get();
+  getUser(String _email) {
+    return user.where('email', isEqualTo: _email).get();
   }
 
   getHistory() {
     return history.where('historyId', isEqualTo: currentHistory.value).get();
   }
 
-  setHistory(Map<String, dynamic> form) {
-    return history.doc().set(form);
+  setHistory(Map<String, dynamic> _form) {
+    return history.doc().set(_form);
   }
 
-  setComment(Map<String, dynamic> form) {
-    return comment.doc().set(form);
+  setComment(Map<String, dynamic> _form) {
+    return comment.doc().set(_form);
   }
 
-  upBookmarks(String user) {
-    return bookmark.doc(user).update({'historyId': currentBookmarks.value});
+  setUser(Map<String, dynamic> _form, String _id) {
+    return user.doc(_id).set(_form);
+  }
+
+  upBookmarks(String _user) {
+    return bookmark.doc(_user).update({'historyId': currentBookmarks.value});
   }
 
   upNumComment() {
