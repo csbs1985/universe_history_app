@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   bool _showCard(String? category) {
-    return category == 'todas' ? false : true;
+    return category == 'todas' ? true : false;
   }
 
   @override
@@ -100,41 +100,34 @@ class _HomePageState extends State<HomePage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   MenuComponent(),
-                  SizedBox(
-                    height: 10,
-                  ),
                   ValueListenableBuilder(
                     valueListenable: menuItemSelected,
                     builder: (BuildContext context, value, __) {
                       return Container(
                         child: _showCard(menuItemSelected.value.id)
-                            ? SizedBox()
-                            : Container(
-                                child: ValueListenableBuilder(
-                                  valueListenable: currentUser,
-                                  builder: (context, value, __) {
-                                    return currentUser.value.id.isNotEmpty
-                                        ? CardComponent(
-                                            title: 'Escreva sua história',
-                                            text:
-                                                'Todos nós temos uma história pra contar e a sua pode ajudar alguém.',
-                                            label: 'Escrever',
-                                            callback: (valeu) =>
-                                                Navigator.of(context)
-                                                    .pushNamed("/create"),
-                                          )
-                                        : CardComponent(
-                                            title: 'Entre ou crie sua conta',
-                                            text:
-                                                'Você não se identificou ainda para escrever histórias e comentarios.',
-                                            label: 'Entrar',
-                                            callback: (valeu) =>
-                                                Navigator.of(context)
-                                                    .pushNamed("/login"),
-                                          );
-                                  },
-                                ),
-                              ),
+                            ? Container(
+                                // child: ValueListenableBuilder(
+                                //   valueListenable: currentUser,
+                                //   builder: (context, value, __) {
+                                //     return
+                                // child: currentUser.value.id.isNotEmpty ?
+                                child: CardComponent(
+                                title: 'Escreva sua história',
+                                text:
+                                    'Todos nós temos uma história pra contar e a sua pode ajudar alguém.',
+                                callback: (valeu) =>
+                                    Navigator.of(context).pushNamed("/create"),
+                              )
+                                // : CardComponent(
+                                //     title: 'Entre ou crie sua conta',
+                                //     text: 'Você não se identificou ainda para escrever histórias e comentarios. ',
+                                //     callback: (valeu) =>
+                                //         Navigator.of(context).pushNamed("/login"),
+                                //   ),
+                                //   },
+                                // ),
+                                )
+                            : SizedBox(),
                       );
                     },
                   ),
