@@ -2,7 +2,6 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
 import 'package:universe_history_app/components/card_component.dart';
 import 'package:universe_history_app/components/history_list_component.dart';
@@ -38,29 +37,19 @@ class _HomePageState extends State<HomePage> {
   }
 
   bool _showCard(String? category) {
-    return category == 'todas' || category == 'minhas' ? false : true;
+    return category == 'todas' ? false : true;
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: uiColor.first,
-        statusBarIconBrightness: Brightness.light,
-        statusBarBrightness: Brightness.light,
-        systemNavigationBarColor: uiColor.comp_1,
-        systemNavigationBarIconBrightness: Brightness.light,
-      ),
-    );
-
     return WillPopScope(
       onWillPop: () => exit(0),
       child: Scaffold(
         appBar: ScrollAppBar(
-          backgroundColor: uiColor.first,
+          backgroundColor: uiColor.comp_1,
           controller: _scrollController,
           automaticallyImplyLeading: false,
-          toolbarHeight: 48,
+          toolbarHeight: 54,
           elevation: 0,
           titleSpacing: 10,
           title: Row(
