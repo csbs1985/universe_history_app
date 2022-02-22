@@ -29,16 +29,16 @@ class Api {
         .where('categories', arrayContainsAny: [_filter]).snapshots();
   }
 
-  getAllUserBookmarks(String _user) {
+  getAllUserBookmarks() {
     return bookmark
         .orderBy('date')
-        .where('user', arrayContainsAny: [_user]).snapshots();
+        .where('user', arrayContainsAny: [currentUser.value.id]).snapshots();
   }
 
-  getAllUserHistory(String _user) {
+  getAllUserHistory() {
     return history
         .orderBy('date')
-        .where('_userId', isEqualTo: user)
+        .where('_userId', isEqualTo: currentUser.value.id)
         .snapshots();
   }
 

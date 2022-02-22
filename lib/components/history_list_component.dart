@@ -52,9 +52,9 @@ class _HistoryItemState extends State<HistoryListComponent> {
     if (value == 'todas' || value.isEmpty || value == '') {
       return api.getAllHistory();
     } else if (value == 'minhas') {
-      return api.getAllUserHistory("d31q2laUIRDwLdfK8cCA");
-    } else if (value == 'lerMaisTarde') {
-      return api.getAllUserBookmarks('d31q2laUIRDwLdfK8cCA');
+      return api.getAllUserHistory();
+    } else if (value == 'salvos') {
+      return api.getAllUserBookmarks();
     }
     return api.getAllHistoryFiltered(value);
   }
@@ -103,26 +103,28 @@ class _HistoryItemState extends State<HistoryListComponent> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<CategoryModel>(
-      valueListenable: menuItemSelected,
-      builder: (context, value, __) => StreamBuilder<QuerySnapshot>(
-        stream: _getContent(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-              return NoHistoryComponent();
-            case ConnectionState.waiting:
-              return SkeletonHistoryItemComponent();
-            case ConnectionState.done:
-            default:
-              try {
-                return _list(context, snapshot);
-              } catch (e) {
-                return NoHistoryComponent();
+        valueListenable: menuItemSelected,
+        builder: (context, value, __) {
+          return StreamBuilder<QuerySnapshot>(
+            stream: _getContent(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                  return NoHistoryComponent();
+                case ConnectionState.waiting:
+                  return SkeletonHistoryItemComponent();
+                case ConnectionState.done:
+                default:
+                  try {
+                    return _list(context, snapshot);
+                  } catch (e) {
+                    return NoHistoryComponent();
+                  }
               }
-          }
-        },
-      ),
-    );
+            },
+          );
+        });
   }
 
   Widget _list(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

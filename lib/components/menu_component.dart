@@ -28,15 +28,13 @@ class _MenuComponentState extends State<MenuComponent> {
   Widget build(BuildContext context) {
     return Container(
       height: 38,
-      color: uiColor.second,
+      color: uiColor.comp_1,
       child: ListView.builder(
         itemCount: CategoryModel.allCategories.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, int index) {
           return Container(
-            color: _getSelected(widget.allCategories[index])
-                ? uiColor.comp_1
-                : uiColor.second,
+            color: uiColor.comp_1,
             child: TextButton(
               style: TextButton.styleFrom(
                 padding: EdgeInsets.zero,
@@ -49,7 +47,9 @@ class _MenuComponentState extends State<MenuComponent> {
                 padding: const EdgeInsets.all(10),
                 child: Text(
                   widget.allCategories[index].label!,
-                  style: uiTextStyle.text1,
+                  style: _getSelected(widget.allCategories[index])
+                      ? uiTextStyle.text5
+                      : uiTextStyle.text7,
                 ),
               ),
               onPressed: () => _setSelected(

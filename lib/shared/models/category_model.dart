@@ -31,8 +31,8 @@ class CategoryModel {
       isDisabled: false,
     ),
     new CategoryModel(
-      id: 'lerMaisTarde',
-      label: 'ler mais tarde',
+      id: 'salvos',
+      label: 'salvos',
       isShowMenu: true,
       isShowInput: false,
       isDisabled: false,
