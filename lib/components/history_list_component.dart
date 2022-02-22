@@ -137,7 +137,7 @@ class _HistoryItemState extends State<HistoryListComponent> {
             itemCount: documents.length,
             itemBuilder: (BuildContext context, index) {
               return Padding(
-                padding: const EdgeInsets.fromLTRB(12, 20, 12, 0),
+                padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,

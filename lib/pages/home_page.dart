@@ -2,7 +2,6 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:scroll_app_bar/scroll_app_bar.dart';
 import 'package:universe_history_app/components/card_component.dart';
 import 'package:universe_history_app/components/history_list_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
@@ -45,98 +44,101 @@ class _HomePageState extends State<HomePage> {
     return WillPopScope(
       onWillPop: () => exit(0),
       child: Scaffold(
-        appBar: ScrollAppBar(
-          backgroundColor: uiColor.comp_1,
-          controller: _scrollController,
+        appBar: AppBar(
+          leadingWidth: double.infinity,
           automaticallyImplyLeading: false,
-          toolbarHeight: 54,
           elevation: 0,
-          titleSpacing: 10,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              LogoComponent(
-                color: uiColor.icon_2,
-                size: 20,
-                callback: (value) => _scrollToTop(),
-              ),
-              Row(
-                children: [
-                  Stack(
-                    children: [
-                      IconComponent(
-                        icon: uiSvg.notification,
-                        color: uiColor.icon_2,
-                        route: 'notification',
-                      ),
-                      if (_notification)
-                        Positioned(
-                          top: 10,
-                          right: 12,
-                          child: CircleAvatar(
-                            radius: 4,
-                            backgroundColor: uiColor.warning,
-                          ),
-                        ),
-                    ],
-                  ),
-                  IconComponent(
-                    icon: uiSvg.options,
-                    color: uiColor.icon_2,
-                    route: 'settings',
-                  ),
-                ],
-              )
-            ],
+          toolbarHeight: 54,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                LogoComponent(
+                  color: uiColor.icon_2,
+                  size: 20,
+                  callback: (value) => _scrollToTop(),
+                ),
+              ],
+            ),
           ),
-        ),
-        body: Snap(
-          controller: _scrollController.appBar,
-          child: Container(
-            color: uiColor.comp_1,
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Stack(
                 children: [
-                  MenuComponent(),
-                  ValueListenableBuilder(
-                    valueListenable: menuItemSelected,
-                    builder: (BuildContext context, value, __) {
-                      return Container(
-                        child: _showCard(menuItemSelected.value.id)
-                            ? Container(
-                                // child: ValueListenableBuilder(
-                                //   valueListenable: currentUser,
-                                //   builder: (context, value, __) {
-                                //     return
-                                // child: currentUser.value.id.isNotEmpty ?
-                                child: CardComponent(
-                                title: 'Escreva sua história',
-                                text:
-                                    'Todos nós temos uma história pra contar e a sua pode ajudar alguém.',
-                                callback: (valeu) =>
-                                    Navigator.of(context).pushNamed("/create"),
-                              )
-                                // : CardComponent(
-                                //     title: 'Entre ou crie sua conta',
-                                //     text: 'Você não se identificou ainda para escrever histórias e comentarios. ',
-                                //     callback: (valeu) =>
-                                //         Navigator.of(context).pushNamed("/login"),
-                                //   ),
-                                //   },
-                                // ),
-                                )
-                            : SizedBox(),
-                      );
-                    },
+                  IconComponent(
+                    icon: uiSvg.notification,
+                    color: uiColor.icon_2,
+                    route: 'notification',
                   ),
-                  Flexible(
-                    child: HistoryListComponent(
-                        itemSelectedMenu: _itemSelectedMenu),
-                  ),
+                  if (_notification)
+                    Positioned(
+                      top: 10,
+                      right: 12,
+                      child: CircleAvatar(
+                        radius: 4,
+                        backgroundColor: uiColor.warning,
+                      ),
+                    ),
                 ],
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: IconComponent(
+                icon: uiSvg.options,
+                color: uiColor.icon_2,
+                route: 'settings',
+              ),
+            ),
+          ],
+        ),
+        body: Container(
+          color: uiColor.comp_1,
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                MenuComponent(),
+                ValueListenableBuilder(
+                  valueListenable: menuItemSelected,
+                  builder: (BuildContext context, value, __) {
+                    return Container(
+                      child: _showCard(menuItemSelected.value.id)
+                          ? Container(
+                              // child: ValueListenableBuilder(
+                              //   valueListenable: currentUser,
+                              //   builder: (context, value, __) {
+                              //     return
+                              // child: currentUser.value.id.isNotEmpty ?
+                              child: CardComponent(
+                              title: 'Escreva sua história',
+                              text:
+                                  'Todos nós temos uma história pra contar e a sua pode ajudar alguém.',
+                              callback: (valeu) =>
+                                  Navigator.of(context).pushNamed("/create"),
+                            )
+                              // : CardComponent(
+                              //     title: 'Entre ou crie sua conta',
+                              //     text: 'Você não se identificou ainda para escrever histórias e comentarios. ',
+                              //     callback: (valeu) =>
+                              //         Navigator.of(context).pushNamed("/login"),
+                              //   ),
+                              //   },
+                              // ),
+                              )
+                          : SizedBox(),
+                    );
+                  },
+                ),
+                Flexible(
+                  child:
+                      HistoryListComponent(itemSelectedMenu: _itemSelectedMenu),
+                ),
+              ],
             ),
           ),
         ),

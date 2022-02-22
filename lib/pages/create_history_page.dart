@@ -118,12 +118,13 @@ class _CreateHistoryState extends State<CreateHistory> {
         callback: (value) => _publishHIstory(),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextField(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              color: uiColor.create_1,
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: TextField(
                 controller: titleController,
                 keyboardType: TextInputType.multiline,
                 minLines: 1,
@@ -137,18 +138,22 @@ class _CreateHistoryState extends State<CreateHistory> {
                   hintText: 'Título com até 60 caracteres',
                   hintStyle: uiTextStyle.header1,
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: uiColor.comp_1),
+                    borderSide: BorderSide(color: uiColor.create_1),
                   ),
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: uiColor.comp_1),
+                    borderSide: BorderSide(color: uiColor.create_1),
                   ),
                 ),
               ),
-              TextField(
+            ),
+            Container(
+              color: uiColor.create_2,
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: TextField(
                 controller: textController,
                 keyboardType: TextInputType.multiline,
                 minLines: 10,
-                maxLines: 20,
+                maxLines: null,
                 style: uiTextStyle.text1,
                 onChanged: (value) => _canPublish(),
                 decoration: const InputDecoration(
@@ -162,26 +167,41 @@ class _CreateHistoryState extends State<CreateHistory> {
                   ),
                 ),
               ),
-              SelectComponent(
+            ),
+            Container(
+              width: double.infinity,
+              color: uiColor.create_3,
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+              child: SelectComponent(
                 title: 'Privacidade',
                 type: 'privacy',
                 content: allPrivacy,
                 callback: (value) => _setPrivacy(value),
               ),
-              SelectComponent(
+            ),
+            Container(
+              width: double.infinity,
+              color: uiColor.create_4,
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+              child: SelectComponent(
                 title: 'Habilitar comentários',
                 type: 'comment',
                 content: allComment,
                 callback: (value) => _setComment(value),
               ),
-              SelectCategoriesComponent(
+            ),
+            Container(
+              width: double.infinity,
+              color: uiColor.create_5,
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+              child: SelectCategoriesComponent(
                 title: 'Categorizar história',
                 resume: 'Selecione ao menos uma categoria/tema.',
                 content: allCategories,
                 callback: (value) => _setCategories(value),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
