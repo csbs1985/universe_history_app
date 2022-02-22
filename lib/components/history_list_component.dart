@@ -216,7 +216,8 @@ class _HistoryItemState extends State<HistoryListComponent> {
                                   }),
                             ValueListenableBuilder(
                               valueListenable: currentBookmarks,
-                              builder: (_, value, __) => IconComponent(
+                              builder: (BuildContext context, value, __) {
+                                return IconComponent(
                                   icon: _getFavorited(documents[index].id)
                                       ? uiSvg.favorited
                                       : uiSvg.favorite,
@@ -224,7 +225,9 @@ class _HistoryItemState extends State<HistoryListComponent> {
                                     _toggleFavorite(documents[index].id);
                                     print(currentBookmarks.value);
                                     // api.upBookmarks(user);
-                                  }),
+                                  },
+                                );
+                              },
                             ),
                             IconComponent(
                                 icon: uiSvg.open,
