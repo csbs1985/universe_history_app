@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_final_fields
+// ignore_for_file: prefer_final_fields, unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
@@ -42,9 +42,10 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Future<void> goLogout(bool value) async {
     if (value) {
+      currentUser.value = [];
       final GoogleSignInAccount? googleSignInAccount =
           await googleSignIn.signOut();
-      currentUser.value = [];
+      Navigator.of(context).pushNamed("/home");
     } else {
       Navigator.of(context).pop();
     }

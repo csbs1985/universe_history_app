@@ -69,7 +69,6 @@ class _LoginPageState extends State<LoginPage> {
                 {
                   currentUser.value
                       .add(UserModel.fromJson(result.docs.first.data())),
-                  print(currentUser.value.first),
                 }
               else
                 {
