@@ -1,23 +1,26 @@
 // ignore_for_file: no_logic_in_create_state, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'package:universe_history_app/components/btn_primary_component.dart';
+import 'package:universe_history_app/components/alertConfirmComponent.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class BtnConfirmComponent extends StatefulWidget {
   const BtnConfirmComponent({
+    required Function callback,
     required String title,
     required String text,
     required String link,
     String btnPrimaryLabel = 'Ok',
     String btnSecondaryLabel = 'Cancelar',
-  })  : _title = title,
+  })  : _callback = callback,
+        _title = title,
         _text = text,
         _btnPrimaryLabel = btnPrimaryLabel,
         _btnSecondaryLabel = btnSecondaryLabel,
         _link = link;
 
+  final Function _callback;
   final String _title;
   final String _text;
   final String _btnPrimaryLabel;
@@ -25,10 +28,10 @@ class BtnConfirmComponent extends StatefulWidget {
   final String _link;
 
   @override
-  _BtnLinkComponentState createState() => _BtnLinkComponentState();
+  _BtnConfirmComponentState createState() => _BtnConfirmComponentState();
 }
 
-class _BtnLinkComponentState extends State<BtnConfirmComponent> {
+class _BtnConfirmComponentState extends State<BtnConfirmComponent> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -47,73 +50,16 @@ class _BtnLinkComponentState extends State<BtnConfirmComponent> {
               ),
             ),
             style: TextButton.styleFrom(padding: EdgeInsets.zero),
-            onPressed: () => _showAlertConfirm(
-              context,
-              widget._title,
-              widget._text,
-              widget._link,
-              widget._btnPrimaryLabel,
-              widget._btnSecondaryLabel,
-            ),
+            onPressed: () => AlertConfirmComponent(
+                title: widget._title,
+                text: widget._text,
+                link: widget._link,
+                btnPrimaryLabel: widget._btnPrimaryLabel,
+                btnSecondaryLabel: widget._btnSecondaryLabel,
+                callback: (value) => widget._callback(value)),
           ),
         ),
       ),
     );
   }
-}
-
-Future<Future> _showAlertConfirm(
-  BuildContext context,
-  String title,
-  String text,
-  String link,
-  String _btnPrimaryLabel,
-  String _btnSecondaryLabel,
-) async {
-  return showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        backgroundColor: uiColor.comp_1,
-        title: Text(
-          title,
-          style: uiTextStyle.text5,
-        ),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: [
-              Text(
-                text,
-                style: uiTextStyle.text1,
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed("/home");
-                  },
-                  child: Text(
-                    _btnSecondaryLabel,
-                    style: uiTextStyle.text3,
-                  ),
-                ),
-                BtnPrimaryComponent(
-                  label: _btnPrimaryLabel,
-                  callback: (value) => Navigator.pop(context),
-                ),
-              ],
-            ),
-          ),
-        ],
-      );
-    },
-  );
 }

@@ -2,12 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:universe_history_app/components/btn_confirm_component.dart';
 import 'package:universe_history_app/components/btn_link_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
+import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_button.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -21,6 +23,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   final TextEditingController _nickNameController = TextEditingController();
+  final GoogleSignIn googleSignIn = GoogleSignIn();
 
   bool _notification = true;
   bool _login = true;
@@ -35,6 +38,16 @@ class _SettingsPageState extends State<SettingsPage> {
     setState(() {
       _notification = value;
     });
+  }
+
+  Future<void> goLogout(bool value) async {
+    if (value) {
+      final GoogleSignInAccount? googleSignInAccount =
+          await googleSignIn.signOut();
+      currentUser.value = [];
+    } else {
+      Navigator.of(context).pop();
+    }
   }
 
   @override
@@ -134,9 +147,9 @@ class _SettingsPageState extends State<SettingsPage> {
               if (_login)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    DividerComponent(),
-                    TitleResumeComponent('Finalizar',
+                  children: [
+                    const DividerComponent(),
+                    const TitleResumeComponent('Finalizar',
                         'Sair temporariamente ou deletar a conta History.'),
                     BtnConfirmComponent(
                       title: 'Sair',
@@ -145,8 +158,9 @@ class _SettingsPageState extends State<SettingsPage> {
                       link: '/home',
                       text:
                           'Dar uma tempo e mandar meu conteúdo no History. Sua conta volta a ficar ativa quando entrar novamente com sua conta Apple ou Google cadastrada.',
+                      callback: (value) => goLogout(value),
                     ),
-                    BtnLinkComponent('Deletar conta', '/delete-account'),
+                    const BtnLinkComponent('Deletar conta', '/delete-account'),
                   ],
                 ),
             ],

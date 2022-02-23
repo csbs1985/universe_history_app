@@ -57,7 +57,7 @@ class _HistoryItemState extends State<HistoryItemComponent> {
         barrierColor: Colors.black87,
         duration: const Duration(milliseconds: 300),
         builder: (context) => ModalOptionsComponent(
-            history['title'], 'historia', currentUser.value));
+            history['title'], 'historia', currentUser.value.single));
   }
 
   bool _getFavorited(String id) {

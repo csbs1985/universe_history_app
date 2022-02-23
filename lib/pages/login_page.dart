@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, unused_local_variable, await_only_futures, unused_field, unnecessary_new
+// ignore_for_file: avoid_print, unused_local_variable, await_only_futures, unused_field, unnecessary_new, deprecated_member_use
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +8,9 @@ import 'package:universe_history_app/components/btn_login_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
-import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/shared/enums/type_account_login_enum.dart';
 import 'package:universe_history_app/shared/enums/type_toast_enum.dart';
+import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -23,8 +23,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GoogleSignIn googleSignIn = GoogleSignIn();
-  final Api api = Api();
   final ToastComponent toast = new ToastComponent();
+  final Api api = Api();
+
   late Map<String, dynamic> _user;
 
   void _loginApple() {
@@ -47,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
       final UserCredential authResult =
           await FirebaseAuth.instance.signInWithCredential(credential);
 
-      final User? user = authResult.user;
+      final User user = authResult.user!;
 
       _verifyUser('google', user);
       Navigator.of(context).pop();
@@ -60,32 +61,31 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void _verifyUser(String channel, dynamic user) {
+  void _verifyUser(String channel, User user) {
     api
         .getUser(user.email)
         .then((result) => {
-              if (result.docs[0].data()?.isNotEmpty)
-                {currentUser.value = result.docs[0].data()}
+              if (result.docs.first.data().isNotEmpty)
+                {
+                  currentUser.value
+                      .add(UserModel.fromJson(result.docs.first.data())),
+                  print(currentUser.value.first),
+                }
+              else
+                {
+                  _user = {
+                    'id': user.uid,
+                    'date': DateTime.now(),
+                    'nickname': user.displayName,
+                    'isDisabled': false,
+                    'email': user.email,
+                    'channel': channel
+                  },
+                  api.setUser(_user, user.uid).then(
+                      (result) => {currentUser.value = result.docs[0].data()})
+                }
             })
-        .catchError(
-      (error) {
-        if (error.message == "Invalid value") {
-          _user = {
-            'id': user.uid,
-            'date': DateTime.now(),
-            'nickname': user.displayName,
-            'isDisabled': false,
-            'email': user.email,
-            'channel': channel
-          };
-          api
-              .setUser(_user, user.uid!)
-              .then((result) => {currentUser.value = result.docs[0].data()});
-        } else {
-          print('ERROR:' + error.toString());
-        }
-      },
-    );
+        .catchError((error) => print('ERROR:' + error.toString()));
   }
 
   @override

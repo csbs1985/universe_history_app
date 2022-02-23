@@ -1,9 +1,10 @@
 // ignore_for_file: unnecessary_new
 
-import 'package:universe_history_app/core/variables.dart';
+import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 
 class UserModel {
-  final String id;
+  late final String id;
   final String nickname;
   final DateTime date;
   final String email;
@@ -19,14 +20,28 @@ class UserModel {
     required this.channel,
   });
 
-  static Set<UserModel> user = {
-    UserModel(
-      id: currentUser.value.id,
-      nickname: currentUser.value.nickname,
-      date: currentUser.value.date,
-      isDisabled: currentUser.value.isDisabled,
-      email: currentUser.value.email,
-      channel: currentUser.value.channel,
-    )
-  };
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      UserModel.fromMap(json);
+
+  factory UserModel.fromMap(Map<String, dynamic> json) => UserModel(
+        id: json['id'],
+        nickname: json['nickname'],
+        date: json['date'].toDate(),
+        email: json['email'],
+        channel: json['channel'],
+        isDisabled: json['isDisabled'],
+      );
+
+  String toJson() => json.encode(toMap());
+
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'nickname': nickname,
+        'date': date,
+        'email': email,
+        'channel': channel,
+        'isDisabled': isDisabled,
+      };
 }
+
+ValueNotifier<List<UserModel>> currentUser = ValueNotifier<List<UserModel>>([]);

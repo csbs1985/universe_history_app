@@ -1,6 +1,7 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:universe_history_app/shared/models/user_model.dart';
 import 'variables.dart';
 
 class Api {
@@ -30,19 +31,18 @@ class Api {
   }
 
   getAllUserBookmarks() {
-    return bookmark
-        .orderBy('date')
-        .where('user', arrayContainsAny: [currentUser.value.id]).snapshots();
+    return bookmark.orderBy('date').where('user',
+        arrayContainsAny: [currentUser.value.first.id]).snapshots();
   }
 
   getAllUserHistory() {
     return history
         .orderBy('date')
-        .where('_userId', isEqualTo: currentUser.value.id)
+        .where('_userId', isEqualTo: currentUser.value.first.id)
         .snapshots();
   }
 
-  getUser(String _email) {
+  getUser(String? _email) {
     return user.where('email', isEqualTo: _email).get();
   }
 

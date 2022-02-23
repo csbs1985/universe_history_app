@@ -90,8 +90,8 @@ class _CreateHistoryState extends State<CreateHistory> {
       'isEdit': false,
       'qtyComment': 0,
       'categories': _categories,
-      'userId': currentUser.value.id,
-      'userNickName': currentUser.value.nickname,
+      'userId': currentUser.value.first.id,
+      'userNickName': currentUser.value.first.nickname,
     };
 
     api
@@ -160,10 +160,10 @@ class _CreateHistoryState extends State<CreateHistory> {
                   hintText: 'Sua história',
                   hintStyle: uiTextStyle.text1,
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: uiColor.comp_1),
+                    borderSide: BorderSide(color: uiColor.create_2),
                   ),
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: uiColor.comp_1),
+                    borderSide: BorderSide(color: uiColor.create_2),
                   ),
                 ),
               ),

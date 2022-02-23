@@ -8,6 +8,7 @@ import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/components/menu_component.dart';
 import 'package:universe_history_app/core/variables.dart';
+import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 
@@ -109,27 +110,29 @@ class _HomePageState extends State<HomePage> {
                     return Container(
                       child: _showCard(menuItemSelected.value.id)
                           ? Container(
-                              // child: ValueListenableBuilder(
-                              //   valueListenable: currentUser,
-                              //   builder: (context, value, __) {
-                              //     return
-                              // child: currentUser.value.id.isNotEmpty ?
-                              child: CardComponent(
-                              title: 'Escreva sua história',
-                              text:
-                                  'Todos nós temos uma história pra contar e a sua pode ajudar alguém.',
-                              callback: (valeu) =>
-                                  Navigator.of(context).pushNamed("/create"),
+                              child: ValueListenableBuilder(
+                                valueListenable: currentUser,
+                                builder: (context, value, __) {
+                                  return currentUser.value.isNotEmpty
+                                      ? CardComponent(
+                                          title: 'Escreva sua história',
+                                          text:
+                                              'Todos nós temos uma história pra contar e a sua pode ajudar alguém.',
+                                          callback: (valeu) =>
+                                              Navigator.of(context)
+                                                  .pushNamed("/create"),
+                                        )
+                                      : CardComponent(
+                                          title: 'Entre ou crie sua conta',
+                                          text:
+                                              'Você não se identificou para escrever histórias e comentarios.',
+                                          callback: (valeu) =>
+                                              Navigator.of(context)
+                                                  .pushNamed("/login"),
+                                        );
+                                },
+                              ),
                             )
-                              // : CardComponent(
-                              //     title: 'Entre ou crie sua conta',
-                              //     text: 'Você não se identificou ainda para escrever histórias e comentarios. ',
-                              //     callback: (valeu) =>
-                              //         Navigator.of(context).pushNamed("/login"),
-                              //   ),
-                              //   },
-                              // ),
-                              )
                           : SizedBox(),
                     );
                   },
