@@ -56,7 +56,7 @@ class _ModalInputCommmentComponentState
         'isEdit': false,
         'text': _commentController.text.trim(),
         'userId': currentUser.value.first.id,
-        'userNickName': currentUser.value..first.nickname,
+        'userNickName': currentUser.value.first.nickname,
       };
 
       _commentController.clear();

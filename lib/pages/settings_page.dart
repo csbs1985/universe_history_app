@@ -58,7 +58,6 @@ class _SettingsPageState extends State<SettingsPage> {
         child: ValueListenableBuilder(
             valueListenable: currentUser,
             builder: (BuildContext context, value, __) {
-              print(currentUser.value);
               return Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                 child: Column(
