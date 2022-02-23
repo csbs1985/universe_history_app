@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                 MenuComponent(),
                 ValueListenableBuilder(
                   valueListenable: menuItemSelected,
-                  builder: (BuildContext context, value, __) {
+                  builder: (context, value, __) {
                     return Container(
                       child: _showCard(menuItemSelected.value.id)
                           ? Container(

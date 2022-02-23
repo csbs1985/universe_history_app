@@ -7,6 +7,7 @@ import 'package:universe_history_app/components/comment_empty_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/modal_input_comment_component.dart';
 import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -40,35 +41,36 @@ class ModalCommentComponent extends StatelessWidget {
                 bottom: MediaQuery.of(context).viewInsets.bottom + 48),
             child: _comments ? CommentComponent() : const CommentEmpty(),
           ),
-          Positioned(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-            left: 0,
-            right: 0,
-            child: Column(
-              children: [
-                const DividerComponent(
-                  bottom: 0,
-                ),
-                GestureDetector(
-                  child: const SizedBox(
-                    width: double.infinity,
-                    height: 48,
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(12, 12, 10, 10),
-                      child: Text(
-                        "Escreva seu comentário...",
-                        style: uiTextStyle.text2,
-                        textAlign: TextAlign.left,
+          if (currentUser.value.isNotEmpty)
+            Positioned(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+              left: 0,
+              right: 0,
+              child: Column(
+                children: [
+                  const DividerComponent(
+                    bottom: 0,
+                  ),
+                  GestureDetector(
+                    child: const SizedBox(
+                      width: double.infinity,
+                      height: 48,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(12, 12, 10, 10),
+                        child: Text(
+                          "Escreva seu comentário...",
+                          style: uiTextStyle.text2,
+                          textAlign: TextAlign.left,
+                        ),
                       ),
                     ),
+                    onTap: () {
+                      _showModal(context, 'index', true);
+                    },
                   ),
-                  onTap: () {
-                    _showModal(context, 'index', true);
-                  },
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
         ],
       ),
     );

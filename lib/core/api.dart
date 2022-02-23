@@ -38,7 +38,7 @@ class Api {
   getAllUserHistory() {
     return history
         .orderBy('date')
-        .where('_userId', isEqualTo: currentUser.value.first.id)
+        .where('userId', isEqualTo: currentUser.value.first.id)
         .snapshots();
   }
 
