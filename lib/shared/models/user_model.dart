@@ -45,7 +45,11 @@ class UserModel {
 }
 
 class CurrentUser extends ValueNotifier<List<UserModel>> {
-  CurrentUser(List<UserModel> value) : super([]);
+  CurrentUser() : super([]);
+
+  List<UserModel> getUser() {
+    return value.isNotEmpty ? value : [];
+  }
 
   void clean() => value = [];
 

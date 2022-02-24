@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_new, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, use_key_in_widget_constructors, must_be_immutable, prefer_final_fields, unused_element, curly_braces_in_flow_control_structures
+// ignore_for_file: unnecessary_new, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, use_key_in_widget_constructors, must_be_immutable, prefer_final_fields, unused_element, curly_braces_in_flow_control_structures, unnecessary_null_comparison
 
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -21,7 +21,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _scrollController = ScrollController();
-  final CurrentUser currentUser = CurrentUser([]);
+  final CurrentUser currentUser = CurrentUser();
 
   bool _notification = true;
   String _itemSelectedMenu = 'todas';
@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                               child: ValueListenableBuilder(
                                 valueListenable: currentUser,
                                 builder: (context, value, __) {
-                                  return currentUser.value.isNotEmpty
+                                  return currentUser.getUser().isNotEmpty
                                       ? CardComponent(
                                           title: 'Escreva sua história',
                                           text:

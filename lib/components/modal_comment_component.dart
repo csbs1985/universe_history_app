@@ -15,7 +15,7 @@ class ModalCommentComponent extends StatelessWidget {
   final bool _comments = true;
 
   final Api api = new Api();
-  final CurrentUser currentUser = CurrentUser([]);
+  final CurrentUser currentUser = CurrentUser();
 
   _getContent() {
     return api.getAllComment();

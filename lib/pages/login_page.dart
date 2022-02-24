@@ -27,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
   final GoogleSignIn googleSignIn = GoogleSignIn();
   final ToastComponent toast = new ToastComponent();
   final Api api = Api();
-  final CurrentUser currentUser = CurrentUser([]);
+  final CurrentUser currentUser = CurrentUser();
 
   late Map<String, dynamic> _user;
 

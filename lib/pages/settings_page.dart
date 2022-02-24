@@ -25,7 +25,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   final TextEditingController _nickNameController = TextEditingController();
   final GoogleSignIn googleSignIn = GoogleSignIn();
-  final CurrentUser currentUser = CurrentUser([]);
+  final CurrentUser currentUser = CurrentUser();
 
   bool _notification = true;
 
