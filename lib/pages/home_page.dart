@@ -21,7 +21,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _scrollController = ScrollController();
-  final CurrentUser currentUser = CurrentUser();
 
   bool _notification = true;
   String _itemSelectedMenu = 'todas';
@@ -111,10 +110,10 @@ class _HomePageState extends State<HomePage> {
                     return Container(
                       child: _showCard(menuItemSelected.value.id)
                           ? Container(
-                              child: ValueListenableBuilder(
+                              child: ValueListenableBuilder<List<UserModel>>(
                                 valueListenable: currentUser,
                                 builder: (context, value, __) {
-                                  return currentUser.getUser().isNotEmpty
+                                  return value.isNotEmpty
                                       ? CardComponent(
                                           title: 'Escreva sua história',
                                           text:

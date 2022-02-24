@@ -26,10 +26,10 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final GoogleSignIn googleSignIn = GoogleSignIn();
   final ToastComponent toast = new ToastComponent();
+  final CurrentUser _user = CurrentUser();
   final Api api = Api();
-  final CurrentUser currentUser = CurrentUser();
 
-  late Map<String, dynamic> _user;
+  late Map<String, dynamic> _form;
 
   void _loginApple() {
     print(AccountLoginEnum.APPLE);
@@ -68,13 +68,13 @@ class _LoginPageState extends State<LoginPage> {
     api
         .getUser(user.email)
         .then((result) => {
-              if (result.docs.first.data().isNotEmpty)
+              if (result.docs.isNotEmpty)
                 {
-                  currentUser.add(result.docs.first.data()),
+                  _user.add(result.docs.first.data()),
                 }
               else
                 {
-                  _user = {
+                  _form = {
                     'id': user.uid,
                     'date': DateTime.now(),
                     'nickname': user.displayName,
@@ -82,12 +82,16 @@ class _LoginPageState extends State<LoginPage> {
                     'email': user.email,
                     'channel': channel
                   },
-                  api.setUser(_user, user.uid).then(
-                        (result) => currentUser.add(result.docs[0].data()),
-                      ),
+                  api.setUser(_form, user.uid).then(
+                    (result) {
+                      _user.add(result.docs.first.data());
+                    },
+                  ),
                 }
             })
-        .catchError((error) => print('ERROR:' + error.toString()));
+        .catchError((error) {
+      print('ERROR:' + error.toString());
+    });
   }
 
   @override
