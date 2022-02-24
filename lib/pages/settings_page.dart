@@ -10,6 +10,7 @@ import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
+
 import 'package:universe_history_app/theme/ui_button.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -24,6 +25,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   final TextEditingController _nickNameController = TextEditingController();
   final GoogleSignIn googleSignIn = GoogleSignIn();
+  final CurrentUser currentUser = CurrentUser([]);
 
   bool _notification = true;
 
@@ -41,7 +43,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Future<void> goLogout(bool value) async {
     if (value) {
-      currentUser.value = [];
+      currentUser.clean();
       final GoogleSignInAccount? googleSignInAccount =
           await googleSignIn.signOut();
       Navigator.of(context).pushNamed("/home");

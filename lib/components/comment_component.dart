@@ -21,6 +21,8 @@ class CommentComponent extends StatefulWidget {
 
 class _CommentState extends State<CommentComponent> {
   final Api api = new Api();
+  final CurrentUser currentUser = CurrentUser([]);
+
   List<CommentModel> documents = [];
 
   String _setResume(item) {

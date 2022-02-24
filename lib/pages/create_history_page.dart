@@ -41,6 +41,7 @@ class _CreateHistoryState extends State<CreateHistory> {
 
   final ToastComponent toast = new ToastComponent();
   final Api api = new Api();
+  final CurrentUser currentUser = CurrentUser([]);
 
   bool _isAnonymous = true;
   bool _isComment = true;

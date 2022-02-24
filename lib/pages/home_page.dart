@@ -21,6 +21,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _scrollController = ScrollController();
+  final CurrentUser currentUser = CurrentUser([]);
 
   bool _notification = true;
   String _itemSelectedMenu = 'todas';

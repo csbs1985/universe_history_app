@@ -26,14 +26,15 @@ class _ModalInputCommmentComponentState
     extends State<ModalInputCommmentComponent> {
   final TextEditingController _commentController = TextEditingController();
   final ToastComponent toast = new ToastComponent();
+  final CurrentUser currentUser = CurrentUser([]);
+  final Api api = Api();
+
   final bool _comments = true;
   late String buttonText;
-  bool _isInputNotEmpty = false;
-  bool _textAnonimous = false;
-
   late Map<String, dynamic> comment;
 
-  final Api api = Api();
+  bool _isInputNotEmpty = false;
+  bool _textAnonimous = false;
 
   void keyUp(String text) {
     setState(() {

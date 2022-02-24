@@ -44,4 +44,12 @@ class UserModel {
       };
 }
 
-ValueNotifier<List<UserModel>> currentUser = ValueNotifier<List<UserModel>>([]);
+class CurrentUser extends ValueNotifier<List<UserModel>> {
+  CurrentUser(List<UserModel> value) : super([]);
+
+  void clean() => value = [];
+
+  void add(Map<String, dynamic> user) {
+    value.add(UserModel.fromJson(user));
+  }
+}

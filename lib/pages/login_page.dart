@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print, unused_local_variable, await_only_futures, unused_field, unnecessary_new, deprecated_member_use
 
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -25,6 +27,7 @@ class _LoginPageState extends State<LoginPage> {
   final GoogleSignIn googleSignIn = GoogleSignIn();
   final ToastComponent toast = new ToastComponent();
   final Api api = Api();
+  final CurrentUser currentUser = CurrentUser([]);
 
   late Map<String, dynamic> _user;
 
@@ -67,8 +70,7 @@ class _LoginPageState extends State<LoginPage> {
         .then((result) => {
               if (result.docs.first.data().isNotEmpty)
                 {
-                  currentUser.value
-                      .add(UserModel.fromJson(result.docs.first.data())),
+                  currentUser.add(result.docs.first.data()),
                 }
               else
                 {
@@ -81,7 +83,8 @@ class _LoginPageState extends State<LoginPage> {
                     'channel': channel
                   },
                   api.setUser(_user, user.uid).then(
-                      (result) => {currentUser.value = result.docs[0].data()})
+                        (result) => currentUser.add(result.docs[0].data()),
+                      ),
                 }
             })
         .catchError((error) => print('ERROR:' + error.toString()));
