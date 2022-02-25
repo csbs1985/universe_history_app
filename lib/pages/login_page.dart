@@ -1,7 +1,5 @@
 // ignore_for_file: avoid_print, unused_local_variable, await_only_futures, unused_field, unnecessary_new, deprecated_member_use
 
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -69,11 +67,7 @@ class _LoginPageState extends State<LoginPage> {
         .getUser(user.email)
         .then((result) => {
               if (result.docs.isNotEmpty)
-                {
-                  setState(() {
-                    userClass.add(result.docs.first.data());
-                  })
-                }
+                {userClass.add(result.docs.first.data())}
               else
                 {
                   _form = {
@@ -86,9 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   api.setUser(_form, user.uid).then(
                     (result) {
-                      setState(() {
-                        userClass.add(result.docs.first.data());
-                      });
+                      userClass.add(result.docs.first.data());
                     },
                   ),
                 }

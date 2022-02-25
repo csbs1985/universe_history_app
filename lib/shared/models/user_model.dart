@@ -1,7 +1,10 @@
-// ignore_for_file: unnecessary_new
+// ignore_for_file: unnecessary_new, invalid_return_type_for_catch_error, avoid_print
 
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:universe_history_app/components/toast_component.dart';
+import 'package:universe_history_app/shared/enums/type_toast_enum.dart';
 
 ValueNotifier<List<UserModel>> currentUser = ValueNotifier<List<UserModel>>([]);
 
@@ -47,12 +50,25 @@ class UserModel {
 }
 
 class UserClass {
-  List<UserModel> getUser() {
-    return currentUser.value.isNotEmpty ? currentUser.value : [];
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+  final ToastComponent toast = new ToastComponent();
+
+  Future<void> clean(BuildContext context) async {
+    await googleSignIn
+        .signOut()
+        .then((value) => {
+              currentUser.value = [],
+              Navigator.of(context).pushNamed("/home"),
+            })
+        .catchError((error) {
+      print('ERROR: ' + error.toString());
+      toast.toast(context, ToastEnum.WARNING,
+          'ERROR: não foi possivél sair da aplicação no momento, tente novamente mais tarde.');
+    });
   }
 
-  void clean() => currentUser.value = [];
-
-  void add(Map<String, dynamic> user) =>
-      currentUser.value.add(UserModel.fromJson(user));
+  void add(Map<String, dynamic> user) {
+    currentUser.value = [];
+    currentUser.value.add(UserModel.fromJson(user));
+  }
 }

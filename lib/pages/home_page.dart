@@ -112,8 +112,8 @@ class _HomePageState extends State<HomePage> {
                           ? Container(
                               child: ValueListenableBuilder<List<UserModel>>(
                                 valueListenable: currentUser,
-                                builder: (context, value, __) {
-                                  return value.isNotEmpty
+                                builder: (context, result, __) {
+                                  return result.isNotEmpty
                                       ? CardComponent(
                                           title: 'Escreva sua história',
                                           text:
