@@ -29,7 +29,7 @@ class HistoryItemComponent extends StatefulWidget {
 
 class _HistoryItemState extends State<HistoryItemComponent> {
   final Api api = new Api();
-  final CurrentUser currentUser = CurrentUser();
+  final UserClass userClass = UserClass();
 
   late final HistoryModel _history;
 

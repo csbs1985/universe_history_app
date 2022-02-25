@@ -21,7 +21,7 @@ class CommentComponent extends StatefulWidget {
 
 class _CommentState extends State<CommentComponent> {
   final Api api = new Api();
-  final CurrentUser currentUser = CurrentUser();
+  final UserClass userClass = UserClass();
 
   List<CommentModel> documents = [];
 

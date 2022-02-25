@@ -3,6 +3,8 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 
+ValueNotifier<List<UserModel>> currentUser = ValueNotifier<List<UserModel>>([]);
+
 class UserModel {
   late final String id;
   final String nickname;
@@ -44,16 +46,12 @@ class UserModel {
       };
 }
 
-ValueNotifier<List<UserModel>> currentUser = ValueNotifier<List<UserModel>>([]);
-
-class CurrentUser extends ValueNotifier<List<UserModel>> {
-  CurrentUser() : super([]);
-
+class UserClass {
   List<UserModel> getUser() {
-    return value.isNotEmpty ? value : [];
+    return currentUser.value.isNotEmpty ? currentUser.value : [];
   }
 
-  void clean() => value = [];
+  void clean() => currentUser.value = [];
 
   void add(Map<String, dynamic> user) =>
       currentUser.value.add(UserModel.fromJson(user));

@@ -5,8 +5,6 @@ import 'package:universe_history_app/shared/models/user_model.dart';
 ValueNotifier<CategoryModel> menuItemSelected =
     ValueNotifier<CategoryModel>(CategoryModel.allCategories.first);
 
-// ValueNotifier<List<UserModel>> currentUser = ValueNotifier<List<UserModel>>([]);
-
 ValueNotifier<String> currentHistory = ValueNotifier('');
 
 ValueNotifier<num> currentQtyComment = ValueNotifier(0);

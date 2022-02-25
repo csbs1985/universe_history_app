@@ -5,7 +5,7 @@ import 'package:universe_history_app/shared/models/user_model.dart';
 import 'variables.dart';
 
 class Api {
-  final CurrentUser currentUser = CurrentUser();
+  final UserClass userClass = UserClass();
 
   CollectionReference bookmark =
       FirebaseFirestore.instance.collection('bookmarks');

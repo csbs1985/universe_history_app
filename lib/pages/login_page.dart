@@ -26,7 +26,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final GoogleSignIn googleSignIn = GoogleSignIn();
   final ToastComponent toast = new ToastComponent();
-  final CurrentUser _user = CurrentUser();
+  final UserClass userClass = UserClass();
   final Api api = Api();
 
   late Map<String, dynamic> _form;
@@ -64,13 +64,15 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void _verifyUser(String channel, User user) {
-    api
+  Future<void> _verifyUser(String channel, User user) async {
+    await api
         .getUser(user.email)
         .then((result) => {
               if (result.docs.isNotEmpty)
                 {
-                  _user.add(result.docs.first.data()),
+                  setState(() {
+                    userClass.add(result.docs.first.data());
+                  })
                 }
               else
                 {
@@ -84,7 +86,9 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   api.setUser(_form, user.uid).then(
                     (result) {
-                      _user.add(result.docs.first.data());
+                      setState(() {
+                        userClass.add(result.docs.first.data());
+                      });
                     },
                   ),
                 }

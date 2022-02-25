@@ -38,7 +38,7 @@ class HistoryListComponent extends StatefulWidget {
 
 class _HistoryItemState extends State<HistoryListComponent> {
   final Api api = new Api();
-  final CurrentUser currentUser = CurrentUser();
+  final UserClass userClass = UserClass();
 
   @override
   initState() {
