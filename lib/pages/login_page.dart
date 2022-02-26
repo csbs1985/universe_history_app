@@ -13,6 +13,7 @@ import 'package:universe_history_app/shared/enums/type_toast_enum.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
+import 'package:uuid/uuid.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -26,6 +27,7 @@ class _LoginPageState extends State<LoginPage> {
   final ToastComponent toast = new ToastComponent();
   final UserClass userClass = UserClass();
   final Api api = Api();
+  final Uuid uuid = const Uuid();
 
   late Map<String, dynamic> _form;
 
@@ -71,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
               else
                 {
                   _form = {
-                    'id': user.uid,
+                    'id': uuid.v4(),
                     'date': DateTime.now(),
                     'nickname': user.displayName,
                     'isDisabled': false,

@@ -9,10 +9,12 @@ import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/shared/enums/type_toast_enum.dart';
+import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
+import 'package:uuid/uuid.dart';
 
 class ModalInputCommmentComponent extends StatefulWidget {
   const ModalInputCommmentComponent({Key? key}) : super(key: key);
@@ -28,6 +30,7 @@ class _ModalInputCommmentComponentState
   final ToastComponent toast = new ToastComponent();
   final UserClass userClass = UserClass();
   final Api api = Api();
+  final Uuid uuid = const Uuid();
 
   final bool _comments = true;
   late String buttonText;
@@ -51,6 +54,7 @@ class _ModalInputCommmentComponentState
   void _sendComment() {
     setState(() {
       comment = {
+        'id': uuid.v4(),
         'date': DateTime.now(),
         'historyId': currentHistory.value,
         'isAnonymous': _textAnonimous,

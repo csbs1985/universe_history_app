@@ -67,8 +67,8 @@ class UserClass {
     });
   }
 
-  void add(Map<String, dynamic> user) {
+  void add(Map<String, dynamic> _user) {
     currentUser.value = [];
-    currentUser.value.add(UserModel.fromJson(user));
+    currentUser.value.add(UserModel.fromJson(_user));
   }
 }

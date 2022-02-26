@@ -1,9 +1,15 @@
 // ignore_for_file: non_constant_identifier_names, unnecessary_new
 
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+
+ValueNotifier<List<HistoryModel>> currentHistory =
+    ValueNotifier<List<HistoryModel>>([]);
 
 class HistoryModel {
   HistoryModel({
+    required this.id,
     required this.title,
     required this.text,
     required this.date,
@@ -16,6 +22,7 @@ class HistoryModel {
     required this.categories,
   });
 
+  final String id;
   final String title;
   final String text;
   final DateTime date;
@@ -27,15 +34,15 @@ class HistoryModel {
   final int qtyComment;
   final List<String> categories;
 
-  factory HistoryModel.fromJson(String str) =>
-      HistoryModel.fromMap(json.decode(str));
+  factory HistoryModel.fromJson(QueryDocumentSnapshot<dynamic> json) =>
+      HistoryModel.fromMap(json);
 
-  String toJson() => json.encode(toMap());
-
-  factory HistoryModel.fromMap(Map<String, dynamic> json) => HistoryModel(
+  factory HistoryModel.fromMap(QueryDocumentSnapshot<dynamic> json) =>
+      HistoryModel(
+        id: json['id'],
         title: json['title'],
         text: json['text'],
-        date: json['date'],
+        date: json['date'].toDate(),
         isComment: json['isComment'],
         isAnonymous: json['isAnonymous'],
         isEdit: json['isEdit'],
@@ -45,7 +52,10 @@ class HistoryModel {
         categories: json['categories'],
       );
 
+  String toJson() => json.encode(toMap());
+
   Map<String, dynamic> toMap() => {
+        'id': id,
         'title': title,
         'text': text,
         'date': date,
@@ -57,19 +67,11 @@ class HistoryModel {
         'qtyComment': qtyComment,
         'categories': categories,
       };
+}
 
-  static Set<HistoryModel> history = {
-    new HistoryModel(
-      title: 'title',
-      text: 'text',
-      date: DateTime.now(),
-      isComment: false,
-      isAnonymous: false,
-      isEdit: false,
-      userId: 'userId',
-      userNickName: 'userNickName',
-      qtyComment: 0,
-      categories: [],
-    ),
-  };
+class HistoryClass {
+  void selectHistory(QueryDocumentSnapshot<dynamic> _history) {
+    currentHistory.value = [];
+    currentHistory.value.add(HistoryModel.fromJson(_history));
+  }
 }

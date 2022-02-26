@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/history_item_component.dart';
 import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/core/variables.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({Key? key}) : super(key: key);
@@ -15,16 +16,6 @@ class HistoryPage extends StatefulWidget {
 
 class _HistoryItemPageState extends State<HistoryPage> {
   final Api api = new Api();
-  late Stream<QuerySnapshot<Object?>>? history;
-
-  // @override
-  // initState() {
-  //   super.initState();
-  //   history = api.getHistory();
-
-  //   print('!!!!!!!!!!!!!!!!!!!!!!!!');
-  //   print(history);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +24,7 @@ class _HistoryItemPageState extends State<HistoryPage> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            Text('data')
-            // HistoryItemComponent(history)
+            // HistoryItemComponent(api.getAllHistoryFiltered(currentHistory.value)),
             // CommentComponent(),
           ],
         ),

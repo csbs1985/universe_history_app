@@ -20,6 +20,7 @@ import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
+import 'package:uuid/uuid.dart';
 
 class CreateHistory extends StatefulWidget {
   const CreateHistory({Key? key}) : super(key: key);
@@ -42,6 +43,7 @@ class _CreateHistoryState extends State<CreateHistory> {
   final ToastComponent toast = new ToastComponent();
   final Api api = new Api();
   final UserClass userClass = UserClass();
+  final Uuid uuid = const Uuid();
 
   bool _isAnonymous = true;
   bool _isComment = true;
@@ -81,8 +83,9 @@ class _CreateHistoryState extends State<CreateHistory> {
     });
   }
 
-  void _publishHIstory() {
+  void _publishHIstory() async {
     history = {
+      'id': uuid.v4(),
       'title': titleController.text.trim(),
       'text': textController.text.trim(),
       'date': DateTime.now(),
@@ -95,7 +98,7 @@ class _CreateHistoryState extends State<CreateHistory> {
       'userNickName': currentUser.value.first.nickname,
     };
 
-    api
+    await api
         .setHistory(history)
         .then((value) => {
               Navigator.of(context).pop(),
