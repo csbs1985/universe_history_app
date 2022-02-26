@@ -13,6 +13,7 @@ import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/core/variables.dart';
+import 'package:universe_history_app/shared/models/comment_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
@@ -36,6 +37,7 @@ class HistoryItemComponent extends StatefulWidget {
 
 class _HistoryItemComponentState extends State<HistoryItemComponent> {
   final HistoryClass historyClass = HistoryClass();
+  final CommentClass commentClass = CommentClass();
 
   String _setResume(item) {
     var _date = editDateUtil(item['date'].millisecondsSinceEpoch);
@@ -148,9 +150,12 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                                   ],
                                 ),
                                 onTap: () {
-                                  historyClass.selectHistory(documents[index]);
-                                  currentQtyComment.value =
-                                      documents[index]['qtyComment'];
+                                  historyClass.selectHistory(
+                                    documents[index]['id'],
+                                    documents[index].id,
+                                  );
+                                  commentClass.setQtyComment(
+                                      documents[index]['qtyComment']);
                                   _showModal(context, 'listCommentary ');
                                 }),
                         Row(
@@ -161,10 +166,12 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                                   icon: uiSvg.comment,
                                   callback: (value) {
                                     setState(() {
-                                      historyClass
-                                          .selectHistory(documents[index]);
-                                      currentQtyComment.value =
-                                          documents[index]['qtyComment'];
+                                      historyClass.selectHistory(
+                                        documents[index]['id'],
+                                        documents[index].id,
+                                      );
+                                      commentClass.setQtyComment(
+                                          documents[index]['qtyComment']);
                                       _showModal(context, 'inputCommentary');
                                     });
                                   }),
@@ -172,12 +179,12 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                               valueListenable: currentBookmarks,
                               builder: (BuildContext context, value, __) {
                                 return IconComponent(
-                                  icon: _getFavorited(documents[index].id)
+                                  icon: _getFavorited(documents[index]['id'])
                                       ? uiSvg.favorited
                                       : uiSvg.favorite,
                                   callback: (value) {
                                     _toggleFavorite(
-                                      documents[index].id,
+                                      documents[index]['id'],
                                     ); // TODO: criar bookmarks
                                   },
                                 );
@@ -186,13 +193,16 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                             IconComponent(
                                 icon: uiSvg.open,
                                 callback: (value) {
-                                  historyClass.selectHistory(documents[index]);
+                                  historyClass.selectHistory(
+                                    documents[index]['id'],
+                                    documents[index].id,
+                                  );
                                   Navigator.of(context).pushNamed("/history");
                                 }),
                             IconComponent(
                               icon: uiSvg.options,
                               callback: (value) => _showModalOptions(
-                                  context, documents[index].data()),
+                                  context, documents[index]['id']),
                             ),
                           ],
                         )

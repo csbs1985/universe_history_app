@@ -1,6 +1,7 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:universe_history_app/shared/models/comment_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'variables.dart';
@@ -17,7 +18,7 @@ class Api {
   getAllComment() {
     return comment
         .orderBy('date', descending: true)
-        .where('historyId', isEqualTo: currentHistory.value.first)
+        .where('historyId', isEqualTo: currentHistory.value)
         .snapshots();
   }
 
@@ -48,9 +49,7 @@ class Api {
   }
 
   getHistory() {
-    return history
-        .where('historyId', isEqualTo: currentHistory.value.first.id)
-        .get();
+    return history.where('historyId', isEqualTo: currentHistory.value).get();
   }
 
   setHistory(Map<String, dynamic> _form) {
@@ -71,7 +70,7 @@ class Api {
 
   upNumComment() {
     return history
-        .doc(currentHistory.value.first.id)
+        .doc(currentDocHistory.value)
         .update({'qtyComment': currentQtyComment.value});
   }
 }

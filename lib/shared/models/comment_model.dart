@@ -1,5 +1,9 @@
 // ignore_for_file: unnecessary_new
 
+import 'package:flutter/cupertino.dart';
+
+ValueNotifier<num> currentQtyComment = ValueNotifier(0);
+
 class CommentModel {
   final String date;
   final String historyId;
@@ -37,16 +41,10 @@ class CommentModel {
         'userId': userId,
         'userNickName': userNickName,
       };
+}
 
-  static List<CommentModel> allComment = [
-    new CommentModel(
-      date: '',
-      historyId: '',
-      isAnonymous: false,
-      isEdit: false,
-      text: '',
-      userId: '',
-      userNickName: '',
-    ),
-  ];
+class CommentClass {
+  void setQtyComment(num qty) {
+    currentQtyComment.value = qty;
+  }
 }

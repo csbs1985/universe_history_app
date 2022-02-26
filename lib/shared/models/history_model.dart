@@ -4,8 +4,8 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
-ValueNotifier<List<HistoryModel>> currentHistory =
-    ValueNotifier<List<HistoryModel>>([]);
+ValueNotifier<String> currentHistory = ValueNotifier<String>('');
+ValueNotifier<String> currentDocHistory = ValueNotifier<String>('');
 
 class HistoryModel {
   HistoryModel({
@@ -70,8 +70,8 @@ class HistoryModel {
 }
 
 class HistoryClass {
-  void selectHistory(QueryDocumentSnapshot<dynamic> _history) {
-    currentHistory.value = [];
-    currentHistory.value.add(HistoryModel.fromJson(_history));
+  void selectHistory(String _history, String _doc) {
+    currentHistory.value = _history;
+    currentDocHistory.value = _doc;
   }
 }

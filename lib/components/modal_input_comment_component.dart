@@ -7,8 +7,8 @@ import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
-import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/shared/enums/type_toast_enum.dart';
+import 'package:universe_history_app/shared/models/comment_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
@@ -75,7 +75,7 @@ class _ModalInputCommmentComponentState
 
   void _upComment() {
     setState(() {
-      currentQtyComment.value = currentQtyComment.value + 1;
+      currentQtyComment.value = currentQtyComment.value++;
 
       api
           .upNumComment()
