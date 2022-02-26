@@ -49,7 +49,7 @@ class Api {
   }
 
   getHistory() {
-    return history.where('historyId', isEqualTo: currentHistory.value).get();
+    return history.where('id', isEqualTo: currentHistory.value).get();
   }
 
   setHistory(Map<String, dynamic> _form) {

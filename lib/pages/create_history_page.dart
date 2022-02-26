@@ -151,7 +151,7 @@ class _CreateHistoryState extends State<CreateHistory> {
               ),
             ),
             Container(
-              color: uiColor.create_2,
+              color: uiColor.comp_1,
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: TextField(
                 controller: textController,
@@ -164,17 +164,17 @@ class _CreateHistoryState extends State<CreateHistory> {
                   hintText: 'Sua história',
                   hintStyle: uiTextStyle.text1,
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: uiColor.create_2),
+                    borderSide: BorderSide(color: uiColor.comp_1),
                   ),
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: uiColor.create_2),
+                    borderSide: BorderSide(color: uiColor.comp_1),
                   ),
                 ),
               ),
             ),
             Container(
               width: double.infinity,
-              color: uiColor.create_3,
+              color: uiColor.create_1,
               padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
               child: SelectComponent(
                 title: 'Privacidade',
@@ -185,7 +185,7 @@ class _CreateHistoryState extends State<CreateHistory> {
             ),
             Container(
               width: double.infinity,
-              color: uiColor.create_4,
+              color: uiColor.comp_1,
               padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
               child: SelectComponent(
                 title: 'Habilitar comentários',
@@ -196,7 +196,7 @@ class _CreateHistoryState extends State<CreateHistory> {
             ),
             Container(
               width: double.infinity,
-              color: uiColor.create_5,
+              color: uiColor.create_1,
               padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
               child: SelectCategoriesComponent(
                 title: 'Categorizar história',

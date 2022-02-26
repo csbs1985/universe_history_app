@@ -18,11 +18,7 @@ class uiColor {
   static const Color icon = const Color(0xFFc9d1d9);
   static const Color icon_2 = const Color(0xFFFFFFFF);
 
-  static const Color create_1 = const Color(0xFF1a222e);
-  static const Color create_2 = const Color(0xFF202a3a);
-  static const Color create_3 = const Color(0xFF2c3b54);
-  static const Color create_4 = const Color(0xFF394e6f);
-  static const Color create_5 = const Color(0xFF48608b);
+  static const Color create_1 = const Color(0xFF141a22);
 }
 
 /*
