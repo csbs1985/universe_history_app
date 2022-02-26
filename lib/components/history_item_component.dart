@@ -70,14 +70,18 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
     });
   }
 
-  void _showModalOptions(BuildContext context, dynamic history) {
+  void _showModalOptions(
+    BuildContext context,
+    String historyTitle,
+  ) {
     showCupertinoModalBottomSheet(
-        expand: false,
-        context: context,
-        barrierColor: Colors.black87,
-        duration: const Duration(milliseconds: 300),
-        builder: (context) => ModalOptionsComponent(
-            history['title'], 'historia', currentUser.value.single));
+      expand: false,
+      context: context,
+      barrierColor: Colors.black87,
+      duration: const Duration(milliseconds: 300),
+      builder: (context) => ModalOptionsComponent(
+          historyTitle, 'história', currentUser.value.first),
+    );
   }
 
   @override
@@ -132,7 +136,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                       children: [
                         documents[index]['qtyComment'] < 1
                             ? const SizedBox()
-                            : GestureDetector(
+                            : TextButton(
                                 child: Row(
                                   children: [
                                     AnimatedFlipCounter(
@@ -149,7 +153,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                                     ),
                                   ],
                                 ),
-                                onTap: () {
+                                onPressed: () {
                                   historyClass.selectHistory(
                                     documents[index]['id'],
                                     documents[index].id,
@@ -202,7 +206,9 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                             IconComponent(
                               icon: uiSvg.options,
                               callback: (value) => _showModalOptions(
-                                  context, documents[index]['id']),
+                                context,
+                                documents[index]['title'],
+                              ),
                             ),
                           ],
                         )
