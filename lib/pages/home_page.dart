@@ -30,12 +30,6 @@ class _HomePageState extends State<HomePage> {
         duration: Duration(milliseconds: 300), curve: Curves.linear);
   }
 
-  void _selectMenu(value) {
-    setState(() {
-      _itemSelectedMenu = value;
-    });
-  }
-
   bool _showCard(String? category) {
     return category == 'todas' ? true : false;
   }

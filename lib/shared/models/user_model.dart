@@ -1,9 +1,7 @@
 // ignore_for_file: unnecessary_new, invalid_return_type_for_catch_error, avoid_print, unused_local_variable, avoid_returning_null_for_void
 
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:path_provider/path_provider.dart';
@@ -35,7 +33,7 @@ class UserModel {
   factory UserModel.fromMap(Map<String, dynamic> json) => UserModel(
         id: json['id'],
         nickname: json['nickname'],
-        date: DateTime.parse(json["date"]),
+        date: json["date"].toDate(),
         email: json['email'],
         channel: json['channel'],
         isDisabled: json['isDisabled'],
@@ -62,6 +60,7 @@ class UserClass {
         .signOut()
         .then((value) => {
               currentUser.value = [],
+              deleteUser(),
               Navigator.of(context).pushNamed("/home"),
             })
         .catchError((error) {
@@ -93,12 +92,16 @@ class UserClass {
     return file.readAsString();
   }
 
+  Future<FileSystemEntity> deleteUser() async {
+    final file = await getFileUser();
+    return file.delete();
+  }
+
   void setFileUser(String file) {
     try {
       var json = jsonDecode(file);
-      var user = UserModel.fromJson(json);
-      currentUser.value = [];
-      currentUser.value.add(user);
+      json['date'] = DateTime.parse(json['date']);
+      add(json);
     } catch (e) {
       print(e);
     }

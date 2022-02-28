@@ -32,7 +32,7 @@ class Navigation {
       case '/create':
         return PageTransition(
           child: const CreateHistory(),
-          type: PageTransitionType.bottomToTop,
+          type: PageTransitionType.rightToLeft,
           settings: settings,
         );
       case '/delete-account':

@@ -12,6 +12,7 @@ import 'package:universe_history_app/components/modal_options_component.dart';
 import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
+import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/shared/models/comment_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
@@ -38,6 +39,7 @@ class HistoryItemComponent extends StatefulWidget {
 class _HistoryItemComponentState extends State<HistoryItemComponent> {
   final HistoryClass historyClass = HistoryClass();
   final CommentClass commentClass = CommentClass();
+  final Api api = Api();
 
   String _setResume(item) {
     var _date = editDateUtil(item['date'].millisecondsSinceEpoch);
@@ -62,12 +64,14 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
     return currentBookmarks.value.contains(id) ? true : false;
   }
 
-  void _toggleFavorite(String id) {
+  void _toggleBookmark(String id) {
     setState(() {
       currentBookmarks.value.contains(id)
           ? currentBookmarks.value.remove(id)
           : currentBookmarks.value.add(id);
     });
+
+    api.upBookmarks();
   }
 
   void _showModalOptions(
@@ -161,57 +165,68 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                                   commentClass.setQtyComment(
                                       documents[index]['qtyComment']);
                                   _showModal(context, 'listCommentary ');
-                                }),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            if (documents[index]['isComment'])
-                              IconComponent(
-                                  icon: uiSvg.comment,
-                                  callback: (value) {
-                                    setState(() {
+                                },
+                              ),
+                        ValueListenableBuilder(
+                          valueListenable: currentUser,
+                          builder: (context, value, __) {
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                if (documents[index]['isComment'] &&
+                                    currentUser.value.isNotEmpty)
+                                  IconComponent(
+                                      icon: uiSvg.comment,
+                                      callback: (value) {
+                                        setState(() {
+                                          historyClass.selectHistory(
+                                            documents[index]['id'],
+                                            documents[index].id,
+                                          );
+                                          commentClass.setQtyComment(
+                                              documents[index]['qtyComment']);
+                                          _showModal(
+                                              context, 'inputCommentary');
+                                        });
+                                      }),
+                                if (currentUser.value.isNotEmpty)
+                                  ValueListenableBuilder(
+                                    valueListenable: currentBookmarks,
+                                    builder: (BuildContext context, value, __) {
+                                      return IconComponent(
+                                        icon: _getFavorited(
+                                                documents[index]['id'])
+                                            ? uiSvg.favorited
+                                            : uiSvg.favorite,
+                                        callback: (value) {
+                                          _toggleBookmark(
+                                            documents[index]['id'],
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                IconComponent(
+                                    icon: uiSvg.open,
+                                    callback: (value) {
                                       historyClass.selectHistory(
                                         documents[index]['id'],
                                         documents[index].id,
                                       );
-                                      commentClass.setQtyComment(
-                                          documents[index]['qtyComment']);
-                                      _showModal(context, 'inputCommentary');
-                                    });
-                                  }),
-                            ValueListenableBuilder(
-                              valueListenable: currentBookmarks,
-                              builder: (BuildContext context, value, __) {
-                                return IconComponent(
-                                  icon: _getFavorited(documents[index]['id'])
-                                      ? uiSvg.favorited
-                                      : uiSvg.favorite,
-                                  callback: (value) {
-                                    _toggleFavorite(
-                                      documents[index]['id'],
-                                    ); // TODO: criar bookmarks
-                                  },
-                                );
-                              },
-                            ),
-                            IconComponent(
-                                icon: uiSvg.open,
-                                callback: (value) {
-                                  historyClass.selectHistory(
-                                    documents[index]['id'],
-                                    documents[index].id,
-                                  );
-                                  Navigator.of(context).pushNamed("/history");
-                                }),
-                            IconComponent(
-                              icon: uiSvg.options,
-                              callback: (value) => _showModalOptions(
-                                context,
-                                documents[index]['title'],
-                              ),
-                            ),
-                          ],
-                        )
+                                      Navigator.of(context)
+                                          .pushNamed("/history");
+                                    }),
+                                IconComponent(
+                                  icon: uiSvg.options,
+                                  callback: (value) => _showModalOptions(
+                                    context,
+                                    documents[index]['title'],
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ],

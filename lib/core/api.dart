@@ -1,5 +1,7 @@
 // ignore_for_file: unused_local_variable
 
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:universe_history_app/shared/models/comment_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
@@ -64,8 +66,10 @@ class Api {
     return user.doc(_id).set(_form);
   }
 
-  upBookmarks(String _user) {
-    return bookmark.doc(_user).update({'historyId': currentBookmarks.value});
+  upBookmarks() {
+    return bookmark
+        .doc(currentUser.value.first.id)
+        .update({'historyId': currentBookmarks.value});
   }
 
   upNumComment() {
