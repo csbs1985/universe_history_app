@@ -11,12 +11,12 @@ import 'package:universe_history_app/shared/enums/type_toast_enum.dart';
 ValueNotifier<List<UserModel>> currentUser = ValueNotifier<List<UserModel>>([]);
 
 class UserModel {
-  late final String id;
-  final String nickname;
-  final DateTime date;
-  final String email;
-  final String channel;
-  final bool isDisabled;
+  late String id;
+  late String nickname;
+  late DateTime date;
+  late String email;
+  late String channel;
+  late bool isDisabled;
 
   UserModel({
     required this.id,

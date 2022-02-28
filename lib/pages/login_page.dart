@@ -1,16 +1,21 @@
-// ignore_for_file: avoid_print, unused_local_variable, await_only_futures, unused_field, unnecessary_new, deprecated_member_use
+// ignore_for_file: avoid_print, unused_local_variable, await_only_futures, unused_field, unnecessary_new, deprecated_member_use, unused_element, prefer_const_constructors
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/btn_login_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
+import 'package:universe_history_app/components/nickName_component.dart';
+import 'package:universe_history_app/components/pill_component.dart';
+import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/enums/type_account_login_enum.dart';
 import 'package:universe_history_app/shared/enums/type_toast_enum.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
+import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:uuid/uuid.dart';
@@ -54,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
       final User user = authResult.user!;
 
       _verifyUser('google', user);
-      Navigator.of(context).pop();
+      Navigator.of(context).pushNamed("/nickname");
 
       return user;
     } catch (e) {
@@ -85,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                       userClass.add(result.docs.first.data());
                     },
                   ),
-                }
+                },
             })
         .catchError((error) {
       print('ERROR:' + error.toString());
@@ -165,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

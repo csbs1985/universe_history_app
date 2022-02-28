@@ -50,6 +50,10 @@ class Api {
     return user.where('email', isEqualTo: _email).get();
   }
 
+  getNickName(String _nickname) {
+    return user.where('nickname', isEqualTo: _nickname).get();
+  }
+
   getHistory() {
     return history.where('id', isEqualTo: currentHistory.value).get();
   }
@@ -76,5 +80,11 @@ class Api {
     return history
         .doc(currentDocHistory.value)
         .update({'qtyComment': currentQtyComment.value});
+  }
+
+  upNickName() {
+    return user
+        .doc(currentUser.value.first.id)
+        .update({'nickname': currentUser.value.first.nickname});
   }
 }
