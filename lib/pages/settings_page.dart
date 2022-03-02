@@ -2,11 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/btn_confirm_component.dart';
 import 'package:universe_history_app/components/btn_link_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
-import 'package:universe_history_app/components/nickName_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
@@ -26,6 +24,12 @@ class _SettingsPageState extends State<SettingsPage> {
   final UserClass userClass = UserClass();
 
   bool _notification = true;
+
+  @override
+  void initState() {
+    userNew.value = false;
+    super.initState();
+  }
 
   void _toggleNotification(bool value) {
     setState(() {

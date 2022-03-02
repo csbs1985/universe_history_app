@@ -1,7 +1,5 @@
 // ignore_for_file: unused_local_variable
 
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:universe_history_app/shared/models/comment_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
@@ -66,8 +64,8 @@ class Api {
     return comment.doc().set(_form);
   }
 
-  setUser(Map<String, dynamic> _form, String _id) {
-    return user.doc(_id).set(_form);
+  setUser(Map<String, dynamic> _form) {
+    return user.doc(currentUser.value.first.id).set(_form);
   }
 
   upBookmarks() {

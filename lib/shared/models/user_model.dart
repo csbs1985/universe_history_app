@@ -9,11 +9,13 @@ import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/shared/enums/type_toast_enum.dart';
 
 ValueNotifier<List<UserModel>> currentUser = ValueNotifier<List<UserModel>>([]);
+ValueNotifier<String> currentNickname = ValueNotifier<String>('');
+ValueNotifier<bool> userNew = ValueNotifier<bool>(false);
 
 class UserModel {
   late String id;
   late String nickname;
-  late DateTime date;
+  late String date;
   late String email;
   late String channel;
   late bool isDisabled;
@@ -33,7 +35,7 @@ class UserModel {
   factory UserModel.fromMap(Map<String, dynamic> json) => UserModel(
         id: json['id'],
         nickname: json['nickname'],
-        date: json["date"].toDate(),
+        date: json["date"],
         email: json['email'],
         channel: json['channel'],
         isDisabled: json['isDisabled'],
@@ -44,7 +46,7 @@ class UserModel {
   static Map<String, dynamic> toMap(UserModel user) => {
         'id': user.id,
         'nickname': user.nickname,
-        'date': user.date.toString(),
+        'date': user.date,
         'email': user.email,
         'channel': user.channel,
         'isDisabled': user.isDisabled,
@@ -100,7 +102,6 @@ class UserClass {
   void setFileUser(String file) {
     try {
       var json = jsonDecode(file);
-      json['date'] = DateTime.parse(json['date']);
       add(json);
     } catch (e) {
       print(e);

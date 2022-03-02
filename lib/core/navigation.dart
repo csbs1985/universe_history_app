@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:universe_history_app/components/nickName_component.dart';
+import 'package:universe_history_app/pages/nickName_page.dart';
 import 'package:universe_history_app/pages/about_page.dart';
 import 'package:universe_history_app/pages/blocked_users_page.dart';
 import 'package:universe_history_app/pages/common_questions_page.dart';
@@ -62,7 +62,7 @@ class Navigation {
         );
       case '/nickname':
         return PageTransition(
-          child: const NickNameComponent(),
+          child: const NickNamePage(),
           type: PageTransitionType.rightToLeft,
           settings: settings,
         );
