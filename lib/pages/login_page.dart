@@ -3,19 +3,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/btn_login_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
-import 'package:universe_history_app/components/nickName_component.dart';
-import 'package:universe_history_app/components/pill_component.dart';
-import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/enums/type_account_login_enum.dart';
 import 'package:universe_history_app/shared/enums/type_toast_enum.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
-import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:uuid/uuid.dart';
@@ -59,7 +54,6 @@ class _LoginPageState extends State<LoginPage> {
       final User user = authResult.user!;
 
       _verifyUser('google', user);
-      Navigator.of(context).pushNamed("/nickname");
 
       return user;
     } catch (e) {
@@ -74,22 +68,29 @@ class _LoginPageState extends State<LoginPage> {
         .getUser(user.email)
         .then((result) => {
               if (result.docs.isNotEmpty)
-                {userClass.add(result.docs.first.data())}
+                {
+                  userClass.add({
+                    'id': result.docs.first['id'],
+                    'date': result.docs.first['date'],
+                    'nickname': result.docs.first['nickname'],
+                    'isDisabled': result.docs.first['isDisabled'],
+                    'email': result.docs.first['email'],
+                    'channel': result.docs.first['channel'],
+                  }),
+                  Navigator.of(context).pop(),
+                }
               else
                 {
-                  _form = {
-                    'id': uuid.v4(),
-                    'date': DateTime.now(),
+                  userClass.add({
+                    'id': user.uid,
+                    'date': DateTime.now().toString(),
                     'nickname': user.displayName,
                     'isDisabled': false,
                     'email': user.email,
-                    'channel': channel
-                  },
-                  api.setUser(_form, user.uid).then(
-                    (result) {
-                      userClass.add(result.docs.first.data());
-                    },
-                  ),
+                    'channel': channel,
+                  }),
+                  userNew.value = true,
+                  Navigator.of(context).pushNamed("/nickname"),
                 },
             })
         .catchError((error) {
