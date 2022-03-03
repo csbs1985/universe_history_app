@@ -42,10 +42,16 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
   final Api api = Api();
 
   String _setResume(item) {
-    var _date = editDateUtil(item['date'].millisecondsSinceEpoch);
+    var _date =
+        editDateUtil(DateTime.parse(item['date']).millisecondsSinceEpoch);
     var author = item['isAnonymous'] ? 'anônimo' : item['userNickName'];
     var temp = _date + ' - ' + author;
     return item['isEdit'] ? temp + ' - editada' : temp;
+  }
+
+  void _setHistory(Map<String, dynamic> _history, String id) {
+    currentDocHistory.value = id;
+    HistoryClass.selectHistory(_history);
   }
 
   void _showModal(BuildContext context, String type) {
@@ -158,12 +164,11 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                                   ],
                                 ),
                                 onPressed: () {
-                                  historyClass.selectHistory(
-                                    documents[index]['id'],
-                                    documents[index].id,
+                                  _setHistory(
+                                    documents[index].data(),
+                                    currentDocHistory.value =
+                                        documents[index].id,
                                   );
-                                  commentClass.setQtyComment(
-                                      documents[index]['qtyComment']);
                                   _showModal(context, 'listCommentary ');
                                 },
                               ),
@@ -179,12 +184,11 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                                       icon: uiSvg.comment,
                                       callback: (value) {
                                         setState(() {
-                                          historyClass.selectHistory(
-                                            documents[index]['id'],
-                                            documents[index].id,
+                                          _setHistory(
+                                            documents[index].data(),
+                                            currentDocHistory.value =
+                                                documents[index].id,
                                           );
-                                          commentClass.setQtyComment(
-                                              documents[index]['qtyComment']);
                                           _showModal(
                                               context, 'inputCommentary');
                                         });
@@ -209,9 +213,10 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                                 IconComponent(
                                     icon: uiSvg.open,
                                     callback: (value) {
-                                      historyClass.selectHistory(
-                                        documents[index]['id'],
-                                        documents[index].id,
+                                      _setHistory(
+                                        documents[index].data(),
+                                        currentDocHistory.value =
+                                            documents[index].id,
                                       );
                                       Navigator.of(context)
                                           .pushNamed("/history");

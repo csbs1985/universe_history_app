@@ -8,7 +8,6 @@ import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/enums/type_toast_enum.dart';
-import 'package:universe_history_app/shared/models/comment_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
@@ -55,8 +54,8 @@ class _ModalInputCommmentComponentState
     setState(() {
       comment = {
         'id': uuid.v4(),
-        'date': DateTime.now(),
-        'historyId': currentHistory.value,
+        'date': DateTime.now().toString(),
+        'historyId': currentHistory.value.first.id,
         'isAnonymous': _textAnonimous,
         'isEdit': false,
         'text': _commentController.text.trim(),
@@ -68,14 +67,16 @@ class _ModalInputCommmentComponentState
 
       api
           .setComment(comment)
-          .then((result) => {_upComment()})
+          .then((result) => {
+                _upComment(),
+              })
           .catchError((error) => print('ERROR: ' + error));
     });
   }
 
   void _upComment() {
     setState(() {
-      currentQtyComment.value = currentQtyComment.value++;
+      currentHistory.value.first.qtyComment++;
 
       api
           .upNumComment()

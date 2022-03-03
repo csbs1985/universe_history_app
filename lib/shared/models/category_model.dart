@@ -1,5 +1,7 @@
 // ignore_for_file: unnecessary_new
 
+import 'dart:convert';
+
 class CategoryModel {
   final String? id;
   final String? label;
@@ -14,6 +16,28 @@ class CategoryModel {
     this.isShowInput,
     this.isDisabled,
   });
+
+  factory CategoryModel.fromJson(Map<String, dynamic> json) =>
+      CategoryModel.fromMap(json);
+
+  factory CategoryModel.fromMap(Map<String, dynamic> json) => CategoryModel(
+        id: json['id'],
+        label: json['label'],
+        isShowMenu: json['isShowMenu'],
+        isShowInput: json['isShowInput'],
+        isDisabled: json['isDisabled'],
+      );
+
+  static String toJson(List<CategoryModel> category) =>
+      json.encode(toMap(category));
+
+  static Map<String, dynamic> toMap(List<CategoryModel> category) => {
+        'id': category.first.id,
+        'label': category.first.label,
+        'isShowMenu': category.first.isShowMenu,
+        'isShowInput': category.first.isShowInput,
+        'isDisabled': category.first.isDisabled,
+      };
 
   static List<CategoryModel> allCategories = [
     new CategoryModel(
@@ -152,6 +176,13 @@ class CategoryModel {
     new CategoryModel(
       id: 'familia',
       label: 'família',
+      isShowMenu: true,
+      isShowInput: true,
+      isDisabled: false,
+    ),
+    new CategoryModel(
+      id: 'folclore',
+      label: 'folclore',
       isShowMenu: true,
       isShowInput: true,
       isDisabled: false,

@@ -7,8 +7,8 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/modal_options_component.dart';
 import 'package:universe_history_app/components/skeleton_component.dart';
 import 'package:universe_history_app/core/api.dart';
-import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/shared/models/comment_model.dart';
+import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -26,7 +26,8 @@ class _CommentState extends State<CommentComponent> {
   List<CommentModel> documents = [];
 
   String _setResume(item) {
-    var _date = editDateUtil(item['date'].millisecondsSinceEpoch);
+    var _date =
+        editDateUtil(DateTime.parse(item['date']).millisecondsSinceEpoch);
     var author = item['isAnonymous'] ? 'anônimo' : item['userNickName'];
     var temp = _date + ' - ' + author;
     return item['isEdit'] ? temp + ' - editada' : temp;
@@ -51,14 +52,16 @@ class _CommentState extends State<CommentComponent> {
           padding: const EdgeInsets.fromLTRB(16, 10, 10, 16),
           child: Row(
             children: [
-              if (currentQtyComment.value > 0)
+              if (currentHistory.value.first.qtyComment > 0)
                 AnimatedFlipCounter(
                   duration: Duration(milliseconds: 500),
-                  value: currentQtyComment.value,
+                  value: currentHistory.value.first.qtyComment,
                   textStyle: uiTextStyle.text1,
                 ),
               Text(
-                currentQtyComment.value > 1 ? ' comentários' : ' comentário',
+                currentHistory.value.first.qtyComment > 1
+                    ? ' comentários'
+                    : ' comentário',
                 style: uiTextStyle.text1,
               ),
             ],
@@ -77,7 +80,8 @@ class _CommentState extends State<CommentComponent> {
                 case ConnectionState.done:
                 default:
                   try {
-                    currentQtyComment.value = snapshot.data!.docs.length;
+                    currentHistory.value.first.qtyComment =
+                        snapshot.data!.docs.length;
                     return _list(context, snapshot);
                   } catch (e) {
                     return _notResult();

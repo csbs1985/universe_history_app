@@ -1,11 +1,11 @@
 // ignore_for_file: non_constant_identifier_names, unnecessary_new
 
 import 'dart:convert';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
-ValueNotifier<String> currentHistory = ValueNotifier<String>('');
 ValueNotifier<String> currentDocHistory = ValueNotifier<String>('');
+ValueNotifier<List<HistoryModel>> currentHistory =
+    ValueNotifier<List<HistoryModel>>([]);
 
 class HistoryModel {
   HistoryModel({
@@ -25,31 +25,30 @@ class HistoryModel {
   final String id;
   final String title;
   final String text;
-  final DateTime date;
+  final String date;
   final String userId;
   final String userNickName;
   final bool isComment;
   final bool isAnonymous;
   final bool isEdit;
-  final int qtyComment;
+  int qtyComment;
   final List<String> categories;
 
-  factory HistoryModel.fromJson(QueryDocumentSnapshot<dynamic> json) =>
+  factory HistoryModel.fromJson(Map<String, dynamic> json) =>
       HistoryModel.fromMap(json);
 
-  factory HistoryModel.fromMap(QueryDocumentSnapshot<dynamic> json) =>
-      HistoryModel(
+  factory HistoryModel.fromMap(Map<String, dynamic> json) => HistoryModel(
         id: json['id'],
         title: json['title'],
         text: json['text'],
-        date: json['date'].toDate(),
+        date: json['date'],
         isComment: json['isComment'],
         isAnonymous: json['isAnonymous'],
         isEdit: json['isEdit'],
         userId: json['userId'],
         userNickName: json['userNickName'],
         qtyComment: json['qtyComment'],
-        categories: json['categories'],
+        categories: [],
       );
 
   String toJson() => json.encode(toMap());
@@ -70,8 +69,8 @@ class HistoryModel {
 }
 
 class HistoryClass {
-  void selectHistory(String _history, String _doc) {
-    currentHistory.value = _history;
-    currentDocHistory.value = _doc;
+  static void selectHistory(Map<String, dynamic> _history) {
+    currentHistory.value = [];
+    currentHistory.value.add(HistoryModel.fromJson(_history));
   }
 }

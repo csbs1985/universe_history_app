@@ -13,7 +13,7 @@ class SelectCategoriesComponent extends StatefulWidget {
   final String _resume;
 
   const SelectCategoriesComponent({
-    Function? callback,
+    required Function? callback,
     required List<CategoryModel> content,
     required String title,
     required String resume,

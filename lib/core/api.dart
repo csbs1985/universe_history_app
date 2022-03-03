@@ -18,7 +18,7 @@ class Api {
   getAllComment() {
     return comment
         .orderBy('date', descending: true)
-        .where('historyId', isEqualTo: currentHistory.value)
+        .where('historyId', isEqualTo: currentHistory.value.first.id)
         .snapshots();
   }
 
@@ -77,7 +77,7 @@ class Api {
   upNumComment() {
     return history
         .doc(currentDocHistory.value)
-        .update({'qtyComment': currentQtyComment.value});
+        .update({'qtyComment': currentHistory.value.first.qtyComment});
   }
 
   upNickName() {

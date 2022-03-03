@@ -1,5 +1,7 @@
 // ignore_for_file: unused_import, unused_field, avoid_print, prefer_final_fields, unnecessary_new, prefer_is_empty, todo, argument_type_not_assignable_to_error_handler, invalid_return_type_for_catch_error, prefer_typing_uninitialized_variables
 
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +68,7 @@ class _CreateHistoryState extends State<CreateHistory> {
     });
   }
 
-  void _setCategories(value) {
+  void _setCategories(List<String> value) {
     setState(() {
       _categories = value;
       _canPublish();
@@ -88,7 +90,7 @@ class _CreateHistoryState extends State<CreateHistory> {
       'id': uuid.v4(),
       'title': titleController.text.trim(),
       'text': textController.text.trim(),
-      'date': DateTime.now(),
+      'date': DateTime.now().toString(),
       'isComment': _isComment,
       'isAnonymous': _isAnonymous,
       'isEdit': false,
