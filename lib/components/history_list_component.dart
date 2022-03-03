@@ -34,7 +34,7 @@ class _HistoryItemState extends State<HistoryListComponent> {
     } else if (value == 'minhas') {
       return api.getAllUserHistory();
     } else if (value == 'salvas') {
-      return api.getAllUserBookmarks();
+      return api.getAllBookmarks();
     }
     return api.getAllHistoryFiltered(value);
   }

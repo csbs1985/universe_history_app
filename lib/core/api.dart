@@ -32,7 +32,7 @@ class Api {
         .where('categories', arrayContainsAny: [_filter]).snapshots();
   }
 
-  getAllUserBookmarks() {
+  getAllBookmarks() {
     return bookmark.orderBy('date').where('user',
         arrayContainsAny: [currentUser.value.first.id]).snapshots();
   }
