@@ -16,7 +16,9 @@ class MenuComponent extends StatefulWidget {
 
 class _MenuComponentState extends State<MenuComponent> {
   bool canShow(String? item) {
-    return item == 'minhas' && currentUser.value.isEmpty ? false : true;
+    return (item == 'minhas' || item == 'salvas') && currentUser.value.isEmpty
+        ? false
+        : true;
   }
 
   void _setSelected(CategoryModel item) {
