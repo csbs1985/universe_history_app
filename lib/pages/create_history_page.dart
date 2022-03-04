@@ -128,7 +128,6 @@ class _CreateHistoryState extends State<CreateHistory> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              color: uiColor.create_1,
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: TextField(
                 controller: titleController,
@@ -144,16 +143,15 @@ class _CreateHistoryState extends State<CreateHistory> {
                   hintText: 'Título com até 60 caracteres',
                   hintStyle: uiTextStyle.header1,
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: uiColor.create_1),
+                    borderSide: BorderSide(color: uiColor.comp_1),
                   ),
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: uiColor.create_1),
+                    borderSide: BorderSide(color: uiColor.comp_1),
                   ),
                 ),
               ),
             ),
             Container(
-              color: uiColor.comp_1,
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: TextField(
                 controller: textController,
@@ -176,7 +174,6 @@ class _CreateHistoryState extends State<CreateHistory> {
             ),
             Container(
               width: double.infinity,
-              color: uiColor.create_1,
               padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
               child: SelectComponent(
                 title: 'Privacidade',
@@ -187,7 +184,6 @@ class _CreateHistoryState extends State<CreateHistory> {
             ),
             Container(
               width: double.infinity,
-              color: uiColor.comp_1,
               padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
               child: SelectComponent(
                 title: 'Habilitar comentários',
@@ -198,7 +194,6 @@ class _CreateHistoryState extends State<CreateHistory> {
             ),
             Container(
               width: double.infinity,
-              color: uiColor.create_1,
               padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
               child: SelectCategoriesComponent(
                 title: 'Categorizar história',
