@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/skeleton_my_history_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
+import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
@@ -51,15 +52,9 @@ class _MyHistoryPageState extends State<MyHistoryPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TitleComponent(
-                  title: currentQtyHistory.value.toString() + ' histórias'),
-              const Text(
-                'Aqui estão suas histórias criadas.',
-                style: uiTextStyle.text2,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
+              TitleResumeComponent(
+                  currentQtyHistory.value.toString() + ' histórias',
+                  'Aqui estão suas histórias criadas.'),
               StreamBuilder<QuerySnapshot>(
                 stream: api.getAllUserHistory(),
                 builder: (BuildContext context,
