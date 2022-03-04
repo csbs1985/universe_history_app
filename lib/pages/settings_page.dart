@@ -8,6 +8,7 @@ import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
+import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_button.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
@@ -22,8 +23,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   final UserClass userClass = UserClass();
-
-  bool _notification = true;
+  final Api api = Api();
 
   @override
   void initState() {
@@ -33,7 +33,8 @@ class _SettingsPageState extends State<SettingsPage> {
 
   void _toggleNotification(bool value) {
     setState(() {
-      _notification = value;
+      currentUser.value.first.isNotification = !value;
+      api.upNotification();
     });
   }
 
@@ -105,7 +106,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                     style: uiTextStyle.text1,
                                   ),
                                   FlutterSwitch(
-                                    value: _notification,
+                                    value:
+                                        currentUser.value.first.isNotification,
                                     activeText: "ligada",
                                     inactiveText: "desligada",
                                     width: 80,
@@ -116,7 +118,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                     activeColor: uiColor.first,
                                     inactiveColor: uiColor.comp_3,
                                     borderRadius: 20,
-                                    showOnOff: true,
+                                    showOnOff:
+                                        currentUser.value.first.isNotification,
                                     onToggle: (value) =>
                                         _toggleNotification(value),
                                   ),
@@ -124,8 +127,8 @@ class _SettingsPageState extends State<SettingsPage> {
                               ),
                               style: TextButton.styleFrom(
                                   padding: EdgeInsets.zero),
-                              onPressed: () =>
-                                  _toggleNotification(!_notification),
+                              onPressed: () => _toggleNotification(
+                                  currentUser.value.first.isNotification),
                             ),
                           ),
                           const BtnLinkComponent('Bloqueados', '/blocked'),

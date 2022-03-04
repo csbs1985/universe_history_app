@@ -19,6 +19,7 @@ class UserModel {
   late String email;
   late String channel;
   late bool isDisabled;
+  late bool isNotification;
 
   UserModel({
     required this.id,
@@ -27,6 +28,7 @@ class UserModel {
     required this.isDisabled,
     required this.email,
     required this.channel,
+    required this.isNotification,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
@@ -39,6 +41,7 @@ class UserModel {
         email: json['email'],
         channel: json['channel'],
         isDisabled: json['isDisabled'],
+        isNotification: json['isNotification'],
       );
 
   static String toJson(UserModel user) => jsonEncode(toMap(user));
@@ -50,6 +53,7 @@ class UserModel {
         'email': user.email,
         'channel': user.channel,
         'isDisabled': user.isDisabled,
+        'isNotification': user.isNotification,
       };
 }
 

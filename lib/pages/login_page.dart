@@ -76,6 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                     'isDisabled': result.docs.first['isDisabled'],
                     'email': result.docs.first['email'],
                     'channel': result.docs.first['channel'],
+                    'isNotification': result.docs.first['isNotification'],
                   }),
                   Navigator.of(context).pop(),
                 }
@@ -88,6 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                     'isDisabled': false,
                     'email': user.email,
                     'channel': channel,
+                    'isNotification': true,
                   }),
                   userNew.value = true,
                   Navigator.of(context).pushNamed("/nickname"),
