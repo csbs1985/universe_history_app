@@ -85,4 +85,10 @@ class Api {
         .doc(currentUser.value.first.id)
         .update({'nickname': currentUser.value.first.nickname});
   }
+
+  upNotification() {
+    return user
+        .doc(currentUser.value.first.id)
+        .update({'isNotification': currentUser.value.first.isNotification});
+  }
 }
