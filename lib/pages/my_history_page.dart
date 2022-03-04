@@ -124,6 +124,7 @@ class _MyHistoryPageState extends State<MyHistoryPage> {
                       documents[index]['text'],
                       style: uiTextStyle.text1,
                       maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(
                       height: 30,
