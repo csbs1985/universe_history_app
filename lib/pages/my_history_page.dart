@@ -30,6 +30,12 @@ class _MyHistoryPageState extends State<MyHistoryPage> {
     return item['isEdit'] ? temp + ' - editada' : temp;
   }
 
+  void _setHistory(Map<String, dynamic> _history, String id) {
+    currentDocHistory.value = id;
+    HistoryClass.selectHistory(_history);
+    Navigator.of(context).pushNamed("/history");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,43 +94,51 @@ class _MyHistoryPageState extends State<MyHistoryPage> {
       reverse: true,
       itemCount: documents.length,
       itemBuilder: (BuildContext context, index) {
-        return Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Column(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TitleComponent(
-                    title: documents[index]['title'],
-                    bottom: 0,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ResumeComponent(
-                        resume: _setResume(documents[index]),
-                      ),
-                      ResumeComponent(
-                          resume: documents[index]['qtyComment'] != 1
-                              ? documents[index]['qtyComment'].toString() +
-                                  ' comentários'
-                              : documents[index]['qtyComment'].toString() +
-                                  ' comentário')
-                    ],
-                  ),
-                  Text(
-                    documents[index]['text'],
-                    style: uiTextStyle.text1,
-                    maxLines: 3,
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                ],
-              ),
-            ],
+        return GestureDetector(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Column(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TitleComponent(
+                      title: documents[index]['title'],
+                      bottom: 0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ResumeComponent(
+                          resume: _setResume(documents[index]),
+                        ),
+                        ResumeComponent(
+                            resume: documents[index]['qtyComment'] != 1
+                                ? documents[index]['qtyComment'].toString() +
+                                    ' comentários'
+                                : documents[index]['qtyComment'].toString() +
+                                    ' comentário')
+                      ],
+                    ),
+                    Text(
+                      documents[index]['text'],
+                      style: uiTextStyle.text1,
+                      maxLines: 3,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
+          onTap: () => {
+            _setHistory(
+              documents[index].data(),
+              currentDocHistory.value = documents[index].id,
+            )
+          },
         );
       },
     );
