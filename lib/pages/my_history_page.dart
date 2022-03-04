@@ -7,6 +7,7 @@ import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/skeleton_my_history_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
@@ -20,8 +21,6 @@ class MyHistoryPage extends StatefulWidget {
 
 class _MyHistoryPageState extends State<MyHistoryPage> {
   final Api api = Api();
-
-  int qtyHistory = 0;
 
   String _setResume(item) {
     var _date =
@@ -46,7 +45,8 @@ class _MyHistoryPageState extends State<MyHistoryPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TitleComponent(title: qtyHistory.toString() + ' histórias'),
+              TitleComponent(
+                  title: currentQtyHistory.value.toString() + ' histórias'),
               const Text(
                 'Aqui estão suas histórias criadas.',
                 style: uiTextStyle.text2,
@@ -65,7 +65,6 @@ class _MyHistoryPageState extends State<MyHistoryPage> {
                     case ConnectionState.done:
                     default:
                       try {
-                        qtyHistory = snapshot.data!.size;
                         return _list(context, snapshot);
                       } catch (error) {
                         return const SkeletonMyHistoryComponent();
@@ -81,6 +80,7 @@ class _MyHistoryPageState extends State<MyHistoryPage> {
   }
 
   Widget _list(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    currentQtyHistory.value = snapshot.data!.size;
     List<QueryDocumentSnapshot<dynamic>> documents = snapshot.data!.docs;
     return ListView.builder(
       shrinkWrap: true,
