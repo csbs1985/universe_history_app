@@ -22,10 +22,6 @@ class BtnComponent extends StatefulWidget {
 }
 
 class _BtnComponentState extends State<BtnComponent> {
-  void _onPressed() {
-    widget._callback!(true);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -44,7 +40,7 @@ class _BtnComponentState extends State<BtnComponent> {
             widget._label,
             style: widget._enabled ? uiTextStyle.btn : uiTextStyle.btnDisabled,
           ),
-          onPressed: () => widget._enabled ? _onPressed() : null,
+          onPressed: () => widget._enabled ? widget._callback!(true) : null,
         ),
       ),
     );
