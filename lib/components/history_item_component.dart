@@ -66,7 +66,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
     );
   }
 
-  bool _getFavorited(String id) {
+  bool _getBookmark(String id) {
     return currentBookmarks.value.contains(id) ? true : false;
   }
 
@@ -195,10 +195,10 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                                     valueListenable: currentBookmarks,
                                     builder: (BuildContext context, value, __) {
                                       return IconComponent(
-                                        icon: _getFavorited(
-                                                documents[index]['id'])
-                                            ? uiSvg.favorited
-                                            : uiSvg.favorite,
+                                        icon:
+                                            _getBookmark(documents[index]['id'])
+                                                ? uiSvg.favorited
+                                                : uiSvg.favorite,
                                         callback: (value) {
                                           _toggleBookmark(
                                             documents[index]['id'],

@@ -42,28 +42,29 @@ class _HistoryItemState extends State<HistoryListComponent> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<CategoryModel>(
-        valueListenable: menuItemSelected,
-        builder: (context, value, __) {
-          return StreamBuilder<QuerySnapshot>(
-            stream: _getContent(),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.none:
+      valueListenable: menuItemSelected,
+      builder: (context, value, __) {
+        return StreamBuilder<QuerySnapshot>(
+          stream: _getContent(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                return NoHistoryComponent();
+              case ConnectionState.waiting:
+                return SkeletonHistoryItemComponent();
+              case ConnectionState.done:
+              default:
+                try {
+                  return HistoryItemComponent(
+                      context: context, snapshot: snapshot);
+                } catch (error) {
                   return NoHistoryComponent();
-                case ConnectionState.waiting:
-                  return SkeletonHistoryItemComponent();
-                case ConnectionState.done:
-                default:
-                  try {
-                    return HistoryItemComponent(
-                        context: context, snapshot: snapshot);
-                  } catch (error) {
-                    return NoHistoryComponent();
-                  }
-              }
-            },
-          );
-        });
+                }
+            }
+          },
+        );
+      },
+    );
   }
 }

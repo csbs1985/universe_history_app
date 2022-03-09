@@ -32,8 +32,7 @@ class _ModalInputCommmentComponentState
   final Uuid uuid = const Uuid();
 
   final bool _comments = true;
-  late String buttonText;
-  late Map<String, dynamic> comment;
+  late Map<String, dynamic> _comment;
 
   bool _isInputNotEmpty = false;
   bool _textAnonimous = false;
@@ -52,7 +51,7 @@ class _ModalInputCommmentComponentState
 
   void _sendComment() {
     setState(() {
-      comment = {
+      _comment = {
         'id': uuid.v4(),
         'date': DateTime.now().toString(),
         'historyId': currentHistory.value.first.id,
@@ -66,7 +65,7 @@ class _ModalInputCommmentComponentState
       _commentController.clear();
 
       api
-          .setComment(comment)
+          .setComment(_comment)
           .then((result) => {
                 _upComment(),
               })

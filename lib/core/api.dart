@@ -44,16 +44,18 @@ class Api {
         .snapshots();
   }
 
+  getHistory() {
+    return history
+        .where('id', isEqualTo: currentHistory.value.first.id)
+        .snapshots();
+  }
+
   getUser(String? _email) {
     return user.where('email', isEqualTo: _email).get();
   }
 
   getNickName(String _nickname) {
     return user.where('nickname', isEqualTo: _nickname).get();
-  }
-
-  getHistory() {
-    return history.where('id', isEqualTo: currentHistory.value).get();
   }
 
   setHistory(Map<String, dynamic> _form) {
