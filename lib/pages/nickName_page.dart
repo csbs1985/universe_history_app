@@ -108,7 +108,7 @@ class _NickNamePageState extends State<NickNamePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const TitleResumeComponent('Nome de usuário',
-                    'Escolha o nome que aparecerá em suas publicações, ele deve ser único e de 5 à 20 caracteres, diferenciamos letras maiusculas de minusculas. Veja também os caracteres especiais aceitos: & + @ # * - _ . :'),
+                    'Escolha o nome que aparecerá em suas publicações, ele deve ser único e de 5 à 20 caracteres, diferenciamos letras maiusculas de minusculas. Veja pode usar também espaço em branco e estes caracteres especiais: & + / * - _ . :'),
                 Container(
                   color: uiColor.comp_1,
                   child: TextField(
@@ -119,7 +119,7 @@ class _NickNamePageState extends State<NickNamePage> {
                     onChanged: (value) => _keyUp(value),
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(
-                          RegExp(r'^[a-zA-Z0-9&+$@#&*-_.:]+')),
+                          RegExp('[A-Za-z0-9- & + / * - _ . :]+')),
                     ],
                     decoration: InputDecoration(
                       hintText: 'usuário',
