@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/comment_component.dart';
-import 'package:universe_history_app/components/comment_empty_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/modal_input_comment_component.dart';
 import 'package:universe_history_app/core/api.dart';
@@ -12,14 +11,8 @@ import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class ModalCommentComponent extends StatelessWidget {
-  final bool _comments = true;
-
   final Api api = new Api();
   final UserClass userClass = UserClass();
-
-  _getContent() {
-    return api.getAllComment();
-  }
 
   void _showModal(BuildContext context, String historyId, bool openKeyboard) {
     showCupertinoModalBottomSheet(
@@ -40,7 +33,7 @@ class ModalCommentComponent extends StatelessWidget {
           Container(
             padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom + 48),
-            child: _comments ? CommentComponent() : const CommentEmpty(),
+            child: CommentComponent(),
           ),
           if (currentUser.value.isNotEmpty)
             Positioned(

@@ -4,6 +4,7 @@ import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:universe_history_app/components/comment_empty_component.dart';
 import 'package:universe_history_app/components/modal_options_component.dart';
 import 'package:universe_history_app/components/skeleton_component.dart';
 import 'package:universe_history_app/core/api.dart';
@@ -74,7 +75,7 @@ class _CommentState extends State<CommentComponent> {
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
-                  return _notResult();
+                  return const CommentEmpty();
                 case ConnectionState.waiting:
                   return SkeletonComponent();
                 case ConnectionState.done:
@@ -84,7 +85,7 @@ class _CommentState extends State<CommentComponent> {
                         snapshot.data!.docs.length;
                     return _list(context, snapshot);
                   } catch (e) {
-                    return _notResult();
+                    return const CommentEmpty();
                   }
               }
             },
@@ -135,25 +136,5 @@ class _CommentState extends State<CommentComponent> {
             ),
           )
         : SkeletonComponent();
-  }
-
-  Widget _notResult() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 30, 10, 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Text(
-            'Nada para mostrar',
-            style: uiTextStyle.text1,
-          ),
-          Text(
-            'Seja o primeiro a comentar esta história',
-            style: uiTextStyle.text2,
-          ),
-        ],
-      ),
-    );
   }
 }
