@@ -13,7 +13,7 @@ import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
-import 'package:universe_history_app/utils/edit_date_util.dart';
+import 'package:universe_history_app/utils/resume_util.dart';
 
 class CommentComponent extends StatefulWidget {
   @override
@@ -25,14 +25,6 @@ class _CommentState extends State<CommentComponent> {
   final UserClass userClass = UserClass();
 
   List<CommentModel> documents = [];
-
-  String _setResume(item) {
-    var _date =
-        editDateUtil(DateTime.parse(item['date']).millisecondsSinceEpoch);
-    var author = item['isAnonymous'] ? 'anônimo' : item['userNickName'];
-    var temp = _date + ' - ' + author;
-    return item['isEdit'] ? temp + ' - editada' : temp;
-  }
 
   void _showModal(BuildContext context, dynamic history) {
     showCupertinoModalBottomSheet(
@@ -46,52 +38,54 @@ class _CommentState extends State<CommentComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 10, 10, 16),
-          child: Row(
-            children: [
-              if (currentHistory.value.first.qtyComment > 0)
-                AnimatedFlipCounter(
-                  duration: Duration(milliseconds: 500),
-                  value: currentHistory.value.first.qtyComment,
-                  textStyle: uiTextStyle.text1,
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 10, 10, 16),
+            child: Row(
+              children: [
+                if (currentHistory.value.first.qtyComment > 0)
+                  AnimatedFlipCounter(
+                    duration: Duration(milliseconds: 500),
+                    value: currentHistory.value.first.qtyComment,
+                    textStyle: uiTextStyle.text1,
+                  ),
+                Text(
+                  currentHistory.value.first.qtyComment > 1
+                      ? ' comentários'
+                      : ' comentário',
+                  style: uiTextStyle.text1,
                 ),
-              Text(
-                currentHistory.value.first.qtyComment > 1
-                    ? ' comentários'
-                    : ' comentário',
-                style: uiTextStyle.text1,
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Expanded(
-          child: StreamBuilder(
-            stream: api.getAllComment(),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.none:
-                  return const CommentEmpty();
-                case ConnectionState.waiting:
-                  return SkeletonComponent();
-                case ConnectionState.done:
-                default:
-                  try {
-                    currentHistory.value.first.qtyComment =
-                        snapshot.data!.docs.length;
-                    return _list(context, snapshot);
-                  } catch (e) {
+          Expanded(
+            child: StreamBuilder(
+              stream: api.getAllComment(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
                     return const CommentEmpty();
-                  }
-              }
-            },
+                  case ConnectionState.waiting:
+                    return SkeletonComponent();
+                  case ConnectionState.done:
+                  default:
+                    try {
+                      currentHistory.value.first.qtyComment =
+                          snapshot.data!.docs.length;
+                      return _list(context, snapshot);
+                    } catch (e) {
+                      return const CommentEmpty();
+                    }
+                }
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -127,7 +121,7 @@ class _CommentState extends State<CommentComponent> {
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: Text(
-                      _setResume(documents[index]),
+                      resumeUitl(documents[index]),
                       style: uiTextStyle.text2,
                     ),
                   )

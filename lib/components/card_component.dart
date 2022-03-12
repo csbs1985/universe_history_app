@@ -33,7 +33,7 @@ class _CardComponentState extends State<CardComponent> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+      padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
       child: GestureDetector(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
