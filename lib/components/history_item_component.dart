@@ -23,10 +23,10 @@ import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
 
 class HistoryItemComponent extends StatefulWidget {
-  HistoryItemComponent(
-      {required BuildContext context,
-      required AsyncSnapshot<QuerySnapshot> snapshot})
-      : _context = context,
+  HistoryItemComponent({
+    required BuildContext context,
+    required AsyncSnapshot<QuerySnapshot> snapshot,
+  })  : _context = context,
         _snapshot = snapshot;
 
   final AsyncSnapshot<QuerySnapshot> _snapshot;
@@ -106,7 +106,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
             itemCount: documents.length,
             itemBuilder: (BuildContext context, index) {
               return Padding(
-                padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -230,6 +230,9 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                           },
                         ),
                       ],
+                    ),
+                    const SizedBox(
+                      height: 20,
                     ),
                   ],
                 ),
