@@ -83,7 +83,7 @@ class _HistoryPageState extends State<HistoryPage> {
                       ],
                     ),
                     // CommentComponent(),
-                    SizedBox(height: 68),
+                    SizedBox(height: currentUser.value.isNotEmpty ? 68 : 10),
                   ],
                 ),
               ),
