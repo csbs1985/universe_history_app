@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/modal_comment_component.dart';
 import 'package:universe_history_app/components/modal_input_comment_component.dart';
@@ -20,7 +21,7 @@ import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
-import 'package:universe_history_app/utils/edit_date_util.dart';
+import 'package:universe_history_app/utils/resume_util.dart';
 
 class HistoryItemComponent extends StatefulWidget {
   HistoryItemComponent({
@@ -40,14 +41,6 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
   final HistoryClass historyClass = HistoryClass();
   final CommentClass commentClass = CommentClass();
   final Api api = Api();
-
-  String _setResume(item) {
-    var _date =
-        editDateUtil(DateTime.parse(item['date']).millisecondsSinceEpoch);
-    var author = item['isAnonymous'] ? 'anônimo' : item['userNickName'];
-    var temp = _date + ' - ' + author;
-    return item['isEdit'] ? temp + ' - editada' : temp;
-  }
 
   void _setHistory(Map<String, dynamic> _history, String id) {
     currentDocHistory.value = id;
@@ -116,13 +109,13 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                       bottom: 0,
                     ),
                     ResumeComponent(
-                      resume: _setResume(documents[index]),
+                      resume: resumeUitl(documents[index]),
                     ),
                     ExpandableText(
                       documents[index]['text'],
                       style: uiTextStyle.text1,
-                      expandText: 'continuar lendo',
-                      collapseText: 'fechar',
+                      expandText: 'CONTINUAR LENDO',
+                      collapseText: 'FECHAR',
                       maxLines: 10,
                       linkColor: uiColor.first,
                     ),
@@ -231,9 +224,8 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 10),
+                    const DividerComponent(),
                   ],
                 ),
               );
