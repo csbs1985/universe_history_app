@@ -143,10 +143,10 @@ class _CreateHistoryState extends State<CreateHistory> {
                   hintText: 'Título com até 60 caracteres',
                   hintStyle: uiTextStyle.header1,
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: uiColor.comp_1),
+                    borderSide: BorderSide.none,
                   ),
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: uiColor.comp_1),
+                    borderSide: BorderSide.none,
                   ),
                 ),
               ),
@@ -164,10 +164,10 @@ class _CreateHistoryState extends State<CreateHistory> {
                   hintText: 'Sua história',
                   hintStyle: uiTextStyle.text1,
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: uiColor.comp_1),
+                    borderSide: BorderSide.none,
                   ),
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: uiColor.comp_1),
+                    borderSide: BorderSide.none,
                   ),
                 ),
               ),

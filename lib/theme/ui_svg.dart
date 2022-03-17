@@ -16,11 +16,12 @@ class uiSvg {
   static const String google = 'assets/icons/google.svg';
   static const String lock = 'assets/icons/lock.svg';
   static const String logo = 'assets/icons/history_logo_full.svg';
+  static const String menu = 'assets/icons/menu.svg';
   static const String name = 'assets/icons/history_name.svg';
   static const String notification = 'assets/icons/notification.svg';
   static const String open = 'assets/icons/open.svg';
   static const String options = 'assets/icons/options.svg';
-  static const String send = 'assets/icons/send.svg';
+  static const String search = 'assets/icons/search.svg';
   static const String share = 'assets/icons/share.svg';
   static const String unlock = 'assets/icons/unlock.svg';
 }

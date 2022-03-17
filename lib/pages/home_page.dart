@@ -59,6 +59,11 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           actions: [
+            IconComponent(
+              icon: uiSvg.search,
+              color: uiColor.icon_2,
+              route: 'search',
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 4),
               child: Stack(
@@ -83,7 +88,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: IconComponent(
-                icon: uiSvg.options,
+                icon: uiSvg.menu,
                 color: uiColor.icon_2,
                 route: 'settings',
               ),

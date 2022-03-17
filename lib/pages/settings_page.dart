@@ -190,10 +190,10 @@ class _SettingsPageState extends State<SettingsPage> {
 //     hintText: _nickNameController.text,
 //     hintStyle: uiTextStyle.header3,
 //     enabledBorder: const UnderlineInputBorder(
-//       borderSide: BorderSide(color: uiColor.comp_1),
+//       borderSide: BorderSide.none,
 //     ),
 //     focusedBorder: const UnderlineInputBorder(
-//       borderSide: BorderSide(color: uiColor.comp_1),
+//       borderSide: BorderSide.none,
 //     ),
 //   ),
 // ),
