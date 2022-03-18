@@ -6,7 +6,7 @@ import 'package:universe_history_app/theme/ui_color.dart';
 class uiButton {
   static ButtonStyle buttonPrimary = ButtonStyle(
     padding: MaterialStateProperty.all<EdgeInsets>(
-        const EdgeInsets.fromLTRB(10, 10, 20, 10)),
+        const EdgeInsets.fromLTRB(8, 8, 16, 8)),
     backgroundColor: MaterialStateProperty.all<Color>(uiColor.first),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(

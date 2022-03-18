@@ -26,7 +26,7 @@ class _BtnIconComponentState extends State<BtnIconComponent> {
     return TextButton.icon(
       label: Text(
         widget._label,
-        style: uiTextStyle.text1,
+        style: uiTextStyle.header2,
       ),
       style: uiButton.buttonPrimary,
       icon: SvgPicture.asset(widget._icon),

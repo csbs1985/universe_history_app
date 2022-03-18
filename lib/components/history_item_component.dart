@@ -224,7 +224,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 8),
                     const DividerComponent(),
                   ],
                 ),

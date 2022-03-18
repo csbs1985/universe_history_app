@@ -104,13 +104,14 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 MenuComponent(),
+                SizedBox(height: 16),
                 ValueListenableBuilder(
                   valueListenable: menuItemSelected,
                   builder: (context, value, __) {
                     return Container(
                       child: _showCard(menuItemSelected.value.id)
                           ? Padding(
-                              padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                              padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
                               child: Container(
                                 child: ValueListenableBuilder<List<UserModel>>(
                                   valueListenable: currentUser,
