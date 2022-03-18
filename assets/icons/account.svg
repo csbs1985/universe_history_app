@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17">
+    <g transform="translate(-1.5 -1.5)" fill="none" stroke="#d0d7de" stroke-linecap="round" stroke-linejoin="round">
+        <circle data-name="Elipse 39" cx="8" cy="8" r="8" transform="translate(2 2)" />
+        <path data-name="Caminho 208" d="M6.8 11.6a4.32 4.32 0 0 0 3.2 1.6 4.32 4.32 0 0 0 3.2-1.6" />
+        <path data-name="Linha 29" d="M7.6 7.6h.01" />
+        <path data-name="Linha 30" d="M12.4 7.6h.01" />
+    </g>
+</svg>

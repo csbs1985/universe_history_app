@@ -58,6 +58,31 @@ class Api {
     return user.where('nickname', isEqualTo: _nickname).get();
   }
 
+  getSearchNickName(String _nickname) {
+    return user.where('nickname', arrayContainsAny: ['_nickname']).snapshots();
+  }
+
+  getHistoryNickName(String _nickname) {
+    return history
+        .orderBy('date')
+        .where('userNickName', isEqualTo: _nickname)
+        .snapshots();
+  }
+
+  getHistoryCategory(String _category) {
+    return history
+        .orderBy('date')
+        .where('categories', arrayContainsAny: ['_category']).snapshots();
+  }
+
+  getHistoryContent(String _content) {
+    return history
+        .orderBy('date')
+        .where('title', isEqualTo: _content)
+        .where('text', isEqualTo: _content)
+        .snapshots();
+  }
+
   setHistory(Map<String, dynamic> _form) {
     return history.doc().set(_form);
   }

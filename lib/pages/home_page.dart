@@ -2,7 +2,7 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:universe_history_app/components/card_component.dart';
+import 'package:universe_history_app/components/btn_create_component.dart';
 import 'package:universe_history_app/components/history_list_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
@@ -101,6 +101,7 @@ class _HomePageState extends State<HomePage> {
             controller: _scrollController,
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 MenuComponent(),
                 ValueListenableBuilder(
@@ -108,28 +109,30 @@ class _HomePageState extends State<HomePage> {
                   builder: (context, value, __) {
                     return Container(
                       child: _showCard(menuItemSelected.value.id)
-                          ? Container(
-                              child: ValueListenableBuilder<List<UserModel>>(
-                                valueListenable: currentUser,
-                                builder: (context, result, __) {
-                                  return result.isNotEmpty
-                                      ? CardComponent(
-                                          title: 'Escreva sua história',
-                                          text:
-                                              'Todos nós temos uma história pra contar e a sua pode ajudar alguém.',
-                                          callback: (valeu) =>
-                                              Navigator.of(context)
-                                                  .pushNamed("/create"),
-                                        )
-                                      : CardComponent(
-                                          title: 'Entre ou crie sua conta',
-                                          text:
-                                              'Você não se identificou para escrever histórias e comentarios.',
-                                          callback: (valeu) =>
-                                              Navigator.of(context)
-                                                  .pushNamed("/login"),
-                                        );
-                                },
+                          ? Padding(
+                              padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                              child: Container(
+                                child: ValueListenableBuilder<List<UserModel>>(
+                                  valueListenable: currentUser,
+                                  builder: (context, result, __) {
+                                    return result.isNotEmpty
+                                        ? BtnIconComponent(
+                                            label:
+                                                'Conte sua história, ${currentUser.value.first.nickname}',
+                                            icon: uiSvg.create,
+                                            callback: (value) =>
+                                                Navigator.of(context)
+                                                    .pushNamed("/create"),
+                                          )
+                                        : BtnIconComponent(
+                                            label: 'Entre ou crie sua conta',
+                                            icon: uiSvg.account,
+                                            callback: (valeu) =>
+                                                Navigator.of(context)
+                                                    .pushNamed("/login"),
+                                          );
+                                  },
+                                ),
                               ),
                             )
                           : SizedBox(),

@@ -6,11 +6,11 @@ import 'package:universe_history_app/theme/ui_color.dart';
 class uiButton {
   static ButtonStyle buttonPrimary = ButtonStyle(
     padding: MaterialStateProperty.all<EdgeInsets>(
-        const EdgeInsets.fromLTRB(20, 8, 20, 10)),
+        const EdgeInsets.fromLTRB(10, 10, 20, 10)),
     backgroundColor: MaterialStateProperty.all<Color>(uiColor.first),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(0),
+        borderRadius: BorderRadius.circular(40),
         side: const BorderSide(color: uiColor.first),
       ),
     ),

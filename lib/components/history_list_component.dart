@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, todo, prefer_const_constructors, unused_field, iterable_contains_unrelated_type, list_remove_unrelated_type, no_logic_in_create_state, unnecessary_new, prefer_final_fields, await_only_futures, avoid_print, empty_constructor_bodies, unused_local_variable, unused_element, prefer_is_empty, unnecessary_null_comparison, unnecessary_cast
+// ignore_for_file: use_key_in_widget_constructors, todo, prefer_const_constructors, unused_field, iterable_contains_unrelated_type, list_remove_unrelated_type, no_logic_in_create_state, unnecessary_new, prefer_final_fields, await_only_futures, avoid_print, empty_constructor_bodies, unused_local_variable, unused_element, prefer_is_empty, unnecessary_null_comparison, unnecessary_cast, curly_braces_in_flow_control_structures
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -29,13 +29,13 @@ class _HistoryItemState extends State<HistoryListComponent> {
   _getContent() {
     final value = menuItemSelected.value.id!;
 
-    if (value == 'todas' || value.isEmpty || value == '') {
+    if (value == 'todas' || value.isEmpty || value == '')
       return api.getAllHistory();
-    } else if (value == 'minhas') {
-      return api.getAllUserHistory();
-    } else if (value == 'salvas') {
-      return api.getAllBookmarks();
-    }
+
+    if (value == 'minhas') return api.getAllUserHistory();
+
+    if (value == 'salvas') return api.getAllBookmarks();
+
     return api.getAllHistoryFiltered(value);
   }
 
