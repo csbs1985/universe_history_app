@@ -90,9 +90,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           const BtnLinkComponent(
                               'Nome de usuário', '/nickname'),
                           const BtnLinkComponent(
-                              'Minhas histórias', '/my-history'),
-                          const BtnLinkComponent(
-                              'Meus comentário', '/myComment'),
+                              'Suas atividades', '/my-activities'),
                           SizedBox(
                             width: double.infinity,
                             height: 48,
