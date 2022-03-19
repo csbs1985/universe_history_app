@@ -58,6 +58,7 @@ class UserModel {
         'date': user.date,
         'email': user.email,
         'channel': user.channel,
+        'isNotification': user.isNotification,
         'isDisabled': user.isDisabled,
         'qtyHistory': user.qtyHistory,
         'qtyComment': user.qtyComment,
