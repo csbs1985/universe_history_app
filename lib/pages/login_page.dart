@@ -77,6 +77,8 @@ class _LoginPageState extends State<LoginPage> {
                     'email': result.docs.first['email'],
                     'channel': result.docs.first['channel'],
                     'isNotification': result.docs.first['isNotification'],
+                    'qtyHistory': result.docs.first['qtyHistory'],
+                    'qtyComment': result.docs.first['qtyComment'],
                   }),
                   Navigator.of(context).pop(),
                 }
@@ -90,6 +92,8 @@ class _LoginPageState extends State<LoginPage> {
                     'email': user.email,
                     'channel': channel,
                     'isNotification': true,
+                    'qtyHistory': 0,
+                    'qtyComment': 0,
                   }),
                   userNew.value = true,
                   Navigator.of(context).pushNamed("/nickname"),
