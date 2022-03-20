@@ -7,6 +7,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/shared/enums/type_toast_enum.dart';
+import 'package:universe_history_app/utils/activity_util.dart';
+import 'package:universe_history_app/utils/device_util.dart';
 
 ValueNotifier<List<UserModel>> currentUser = ValueNotifier<List<UserModel>>([]);
 ValueNotifier<String> currentNickname = ValueNotifier<String>('');
@@ -73,6 +75,7 @@ class UserClass {
     await googleSignIn
         .signOut()
         .then((value) => {
+              ActivityUtil(ActivitiesEnum.LOGOUT, DeviceModel()),
               currentUser.value = [],
               deleteUser(),
               Navigator.of(context).pushNamed("/home"),

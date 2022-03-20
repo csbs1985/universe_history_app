@@ -13,6 +13,7 @@ import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_button.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
+import 'package:universe_history_app/utils/activity_util.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -34,6 +35,8 @@ class _SettingsPageState extends State<SettingsPage> {
   void _toggleNotification(bool value) {
     setState(() {
       currentUser.value.first.isNotification = !value;
+      ActivityUtil(ActivitiesEnum.UP_NOTIFICATION,
+          currentUser.value.first.isNotification.toString());
       api.upNotification();
     });
   }

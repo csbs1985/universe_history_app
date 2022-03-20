@@ -22,12 +22,16 @@ ActivityUtil(ActivitiesEnum type, String content) async {
 }
 
 enum ActivitiesEnum {
+  BLOCK_USER,
+  DELETE_ACCOUNT,
+  LOGIN,
+  LOGOUT,
+  NEW_ACCOUNT,
   NEW_COMMENT,
   NEW_HISTORY,
-  NEW_ACCOUNT,
   NEW_NICKNAME,
+  TEMPORARILY_DISABLED,
   UP_NICKNAME,
   UP_NOTIFICATION,
-  LOGOUT,
-  LOGIN
+  UNBLOCK_USER,
 }

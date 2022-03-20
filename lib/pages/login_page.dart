@@ -14,6 +14,7 @@ import 'package:universe_history_app/shared/enums/type_toast_enum.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
+import 'package:universe_history_app/utils/device_util.dart';
 import 'package:uuid/uuid.dart';
 
 class LoginPage extends StatefulWidget {
@@ -31,6 +32,12 @@ class _LoginPageState extends State<LoginPage> {
   final Uuid uuid = const Uuid();
 
   late Map<String, dynamic> _form;
+
+  @override
+  void initState() {
+    DeviceUtil();
+    super.initState();
+  }
 
   void _loginApple() {
     print(AccountLoginEnum.APPLE);
@@ -55,7 +62,6 @@ class _LoginPageState extends State<LoginPage> {
       final User user = authResult.user!;
 
       _verifyUser('google', user);
-
       return user;
     } catch (e) {
       print('ERROR: ' + e.toString());
@@ -81,6 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                     'qtyHistory': result.docs.first['qtyHistory'],
                     'qtyComment': result.docs.first['qtyComment'],
                   }),
+                  ActivityUtil(ActivitiesEnum.LOGIN, DeviceModel()),
                   Navigator.of(context).pop(),
                 }
               else

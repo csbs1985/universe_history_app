@@ -38,6 +38,9 @@ dependencies:
   flutter_share: ^2.0.0
   uuid: ^3.0.6
 
+  # device
+  device_info_plus: ^3.2.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
