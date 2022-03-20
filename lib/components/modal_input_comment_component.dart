@@ -6,6 +6,7 @@ import 'package:universe_history_app/components/btn_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
+import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/enums/type_toast_enum.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
@@ -62,8 +63,6 @@ class _ModalInputCommmentComponentState
         'userNickName': currentUser.value.first.nickname,
       };
 
-      _commentController.clear();
-
       api
           .setComment(_comment)
           .then((result) => {
@@ -80,13 +79,23 @@ class _ModalInputCommmentComponentState
       api
           .upNumComment()
           .then((result) => {
+                ActivityUtil(
+                    ActivitiesEnum.NEW_COMMENT, _commentController.text),
+                _setUpQtyCommentUser(),
+                _commentController.clear(),
                 _isInputNotEmpty = false,
-                Navigator.of(context).pop(),
-                toast.toast(context, ToastEnum.SUCCESS,
-                    'Seu comentário foi publicado.'),
               })
           .catchError((error) => print('ERROR: ' + error));
     });
+  }
+
+  void _setUpQtyCommentUser() async {
+    currentUser.value.first.qtyComment++;
+    await api.setUpQtyCommentUser().then((value) => {
+          Navigator.of(context).pop(),
+          toast.toast(
+              context, ToastEnum.SUCCESS, 'Seu comentário foi publicado.'),
+        });
   }
 
   void _cleanComment() {

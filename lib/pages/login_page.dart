@@ -7,6 +7,7 @@ import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/btn_login_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
+import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/enums/type_account_login_enum.dart';
 import 'package:universe_history_app/shared/enums/type_toast_enum.dart';
@@ -95,6 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                     'qtyHistory': 0,
                     'qtyComment': 0,
                   }),
+                  ActivityUtil(ActivitiesEnum.NEW_ACCOUNT, user.displayName!),
                   userNew.value = true,
                   Navigator.of(context).pushNamed("/nickname"),
                 },

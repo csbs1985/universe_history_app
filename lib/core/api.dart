@@ -1,7 +1,6 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:universe_history_app/shared/models/comment_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'variables.dart';
@@ -14,6 +13,8 @@ class Api {
   CollectionReference user = FirebaseFirestore.instance.collection('users');
   CollectionReference comment =
       FirebaseFirestore.instance.collection('comments');
+  CollectionReference activitie =
+      FirebaseFirestore.instance.collection('activities');
 
   getAllComment() {
     return comment
@@ -87,6 +88,10 @@ class Api {
     return history.doc().set(_form);
   }
 
+  setActivities(Map<String, dynamic> _form) {
+    return activitie.doc().set(_form);
+  }
+
   setComment(Map<String, dynamic> _form) {
     return comment.doc().set(_form);
   }
@@ -117,5 +122,17 @@ class Api {
     return user
         .doc(currentUser.value.first.id)
         .update({'isNotification': currentUser.value.first.isNotification});
+  }
+
+  setUpQtyHistoryUser() {
+    return user
+        .doc(currentUser.value.first.id)
+        .update({'qtyHistory': currentUser.value.first.qtyHistory});
+  }
+
+  setUpQtyCommentUser() {
+    return user
+        .doc(currentUser.value.first.id)
+        .update({'qtyComment': currentUser.value.first.qtyComment});
   }
 }

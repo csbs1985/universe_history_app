@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:universe_history_app/components/appBar_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
+import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/enums/type_toast_enum.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
@@ -79,11 +80,13 @@ class _NickNamePageState extends State<NickNamePage> {
 
     if (userNew.value) {
       api.setUser(UserModel.toMap(currentUser.value.first));
+      ActivityUtil(ActivitiesEnum.NEW_NICKNAME, _textController.text);
       toast.toast(context, ToastEnum.SUCCESS, 'Conta criada!');
       Navigator.of(context).pushNamed('/home');
     } else {
       try {
         await api.upNickName();
+        ActivityUtil(ActivitiesEnum.UP_NICKNAME, _textController.text);
         toast.toast(context, ToastEnum.SUCCESS, 'Nome de usuário alterado!');
         Navigator.of(context).pop();
       } catch (error) {

@@ -21,6 +21,7 @@ import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
+import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:uuid/uuid.dart';
 
 class CreateHistory extends StatefulWidget {
@@ -52,6 +53,7 @@ class _CreateHistoryState extends State<CreateHistory> {
   List<String> _categories = [];
 
   late Map<String, dynamic> history;
+  late Map<String, dynamic> activity;
 
   void _setPrivacy(value) {
     setState(() {
@@ -102,15 +104,23 @@ class _CreateHistoryState extends State<CreateHistory> {
     await api
         .setHistory(history)
         .then((value) => {
-              Navigator.of(context).pop(),
-              toast.toast(
-                  context, ToastEnum.SUCCESS, 'Sua história foi publicada.'),
+              ActivityUtil(ActivitiesEnum.NEW_HISTORY, titleController.text),
+              _setUpQtyHistoryUser()
             })
         .catchError((error) => {
               print('ERROR:' + error),
               toast.toast(context, ToastEnum.WARNING,
                   'Erro ao publicar história, tente novamente mais tarde.')
             });
+  }
+
+  void _setUpQtyHistoryUser() async {
+    currentUser.value.first.qtyHistory++;
+    await api.setUpQtyHistoryUser().then((value) => {
+          Navigator.of(context).pop(),
+          toast.toast(
+              context, ToastEnum.SUCCESS, 'Sua história foi publicada.'),
+        });
   }
 
   @override
