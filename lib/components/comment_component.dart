@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/comment_empty_component.dart';
 import 'package:universe_history_app/components/modal_options_component.dart';
-import 'package:universe_history_app/components/skeleton_component.dart';
+import 'package:universe_history_app/components/skeleton_comment_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/comment_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
@@ -70,7 +70,7 @@ class _CommentState extends State<CommentComponent> {
                   case ConnectionState.none:
                     return const CommentEmpty();
                   case ConnectionState.waiting:
-                    return SkeletonComponent();
+                    return SkeletonCommentComponent();
                   case ConnectionState.done:
                   default:
                     try {
@@ -129,6 +129,6 @@ class _CommentState extends State<CommentComponent> {
               ),
             ),
           )
-        : SkeletonComponent();
+        : SkeletonCommentComponent();
   }
 }

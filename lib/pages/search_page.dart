@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_final_fields, void_checks, curly_braces_in_flow_control_structures, non_constant_identifier_names
+// ignore_for_file: prefer_final_fields, void_checks, curly_braces_in_flow_control_structures, non_constant_identifier_names, prefer_typing_uninitialized_variables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -19,21 +19,14 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final Api api = Api();
   TextEditingController _searchController = TextEditingController();
+  bool isFilter = false;
 
-  _fetchText() {
+  bool _fetchText() {
     setState(() {
-      if (_searchController.text.length > 2) {
-        var firstLetter = _searchController.text[0];
-
-        if (firstLetter == '@')
-          return api.getHistoryNickName(_searchController.text);
-
-        if (firstLetter == '#')
-          return api.getHistoryCategory(_searchController.text);
-
-        return api.getHistoryContent(_searchController.text);
-      }
+      isFilter = _searchController.text.length > 2 ? true : false;
     });
+
+    return isFilter;
   }
 
   @override
@@ -51,46 +44,43 @@ class _SearchPageState extends State<SearchPage> {
                 autofocus: true,
                 style: uiTextStyle.text1,
                 onChanged: (value) => _fetchText(),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   counterText: "",
-                  hintText: 'Pesquisar',
+                  hintText: 'Buscar por usuário',
                   filled: true,
                   fillColor: uiColor.comp_3,
                   hintStyle: uiTextStyle.text1,
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(0),
                   ),
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(0),
                   ),
                 ),
               ),
-              const SizedBox(height: 4),
-              const Text(
-                "'@' para usuário, '#' para tema/categoria ou digite um trecho do titulo ou do texto da hitsória.'",
-                style: uiTextStyle.text2,
-                textAlign: TextAlign.justify,
-              ),
               const SizedBox(height: 10),
-              StreamBuilder<QuerySnapshot>(
-                stream: _fetchText(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.none:
-                      return _noResult();
-                    case ConnectionState.waiting:
-                      return const SkeletonSearchComponent();
-                    case ConnectionState.done:
-                    default:
-                      try {
-                        return HistoryItemComponent(context, snapshot);
-                      } catch (error) {
+              if (isFilter)
+                StreamBuilder<QuerySnapshot>(
+                  stream: api.getHistoryNickName(_searchController.text),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.none:
                         return _noResult();
-                      }
-                  }
-                },
-              ),
+                      case ConnectionState.waiting:
+                        return const SkeletonSearchComponent();
+                      case ConnectionState.done:
+                      default:
+                        try {
+                          return _list(context, snapshot);
+                        } catch (error) {
+                          return _noResult();
+                        }
+                    }
+                  },
+                ),
             ],
           ),
         ),
@@ -98,14 +88,23 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Widget HistoryItemComponent(
-      BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+  Widget _list(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     List<QueryDocumentSnapshot<dynamic>> documents = snapshot.data!.docs;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TitleComponent(
           title:
-              '${documents.length} resultados para ${_searchController.text}"',
+              '${documents.length} resultados para "${_searchController.text}"',
+        ),
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          reverse: true,
+          itemCount: documents.length,
+          itemBuilder: (BuildContext context, index) {
+            return Text(documents[index]['nickname'], style: uiTextStyle.text1);
+          },
         ),
       ],
     );

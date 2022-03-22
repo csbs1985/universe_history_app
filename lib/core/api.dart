@@ -27,6 +27,13 @@ class Api {
     return history.orderBy('date').snapshots();
   }
 
+  getAllActivities() {
+    return activitie
+        .where('userId', isEqualTo: currentUser.value.first.id)
+        .orderBy('date')
+        .snapshots();
+  }
+
   getAllHistoryFiltered(String _filter) {
     return history
         .orderBy('date')
@@ -65,22 +72,8 @@ class Api {
 
   getHistoryNickName(String _nickname) {
     return history
-        .orderBy('date')
-        .where('userNickName', isEqualTo: _nickname)
-        .snapshots();
-  }
-
-  getHistoryCategory(String _category) {
-    return history
-        .orderBy('date')
-        .where('categories', arrayContainsAny: ['_category']).snapshots();
-  }
-
-  getHistoryContent(String _content) {
-    return history
-        .orderBy('date')
-        .where('title', isEqualTo: _content)
-        .where('text', isEqualTo: _content)
+        .where('nickname', arrayContains: _nickname)
+        .orderBy('nickname')
         .snapshots();
   }
 

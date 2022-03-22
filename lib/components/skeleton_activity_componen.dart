@@ -4,13 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:skeleton_animation/skeleton_animation.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 
-class SkeletonComponent extends StatelessWidget {
-  const SkeletonComponent({Key? key}) : super(key: key);
+class SkeletonActivityComponent extends StatelessWidget {
+  const SkeletonActivityComponent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,

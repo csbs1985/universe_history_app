@@ -1,8 +1,15 @@
+// ignore_for_file: unused_element, empty_statements, dead_code
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
-import 'package:universe_history_app/components/resume_component.dart';
-import 'package:universe_history_app/components/title_component.dart';
+import 'package:universe_history_app/components/skeleton_activity_componen.dart';
+import 'package:universe_history_app/components/title_resume_component.dart';
+import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
+import 'package:universe_history_app/theme/ui_text_style.dart';
+import 'package:universe_history_app/utils/activity_util.dart';
+import 'package:universe_history_app/utils/edit_date_util.dart';
 
 class MyActivitiesPage extends StatefulWidget {
   const MyActivitiesPage({Key? key}) : super(key: key);
@@ -12,6 +19,8 @@ class MyActivitiesPage extends StatefulWidget {
 }
 
 class _MyActivitiesPageState extends State<MyActivitiesPage> {
+  final Api api = Api();
+
   String _getResume() {
     var qtyHistory = currentUser.value.first.qtyHistory <= 0
         ? 'Nenhuma história'
@@ -28,17 +37,128 @@ class _MyActivitiesPageState extends State<MyActivitiesPage> {
     return Scaffold(
       appBar: const AppbarBackComponent(),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const TitleComponent(title: 'Suas atividades'),
-              ResumeComponent(resume: _getResume()),
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: TitleResumeComponent('Suas atividades', _getResume()),
+            ),
+            StreamBuilder<QuerySnapshot>(
+              stream: api.getAllActivities(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                    return _noResult();
+                  case ConnectionState.waiting:
+                    return const SkeletonActivityComponent();
+                  case ConnectionState.done:
+                  default:
+                    try {
+                      return _list(
+                        context,
+                        snapshot,
+                      );
+                    } catch (error) {
+                      return _noResult();
+                    }
+                }
+              },
+            ),
+          ],
         ),
       ),
+    );
+  }
+
+  Widget _noResult() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 30, 10, 0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: const [
+          Text(
+            'Nada para mostrar',
+            style: uiTextStyle.header1,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            'Você não tem atividades ainda.',
+            style: uiTextStyle.text7,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _list(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    List<QueryDocumentSnapshot<dynamic>> documents = snapshot.data!.docs;
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      reverse: true,
+      itemCount: documents.length,
+      itemBuilder: (BuildContext context, index) {
+        ActivitiesEnum content = ActivitiesEnum.values
+            .firstWhere((e) => e.name.toString() == documents[index]['type']);
+
+        switch (content) {
+          case ActivitiesEnum.NEW_HISTORY:
+            return _itemNewHistory(documents[index]);
+          case ActivitiesEnum.BLOCK_USER:
+          case ActivitiesEnum.DELETE_ACCOUNT:
+          case ActivitiesEnum.LOGIN:
+          case ActivitiesEnum.LOGOUT:
+          case ActivitiesEnum.NEW_ACCOUNT:
+          case ActivitiesEnum.NEW_COMMENT:
+          case ActivitiesEnum.NEW_NICKNAME:
+          case ActivitiesEnum.TEMPORARILY_DISABLED:
+          case ActivitiesEnum.UP_NICKNAME:
+          case ActivitiesEnum.UP_NOTIFICATION:
+          case ActivitiesEnum.UNBLOCK_USER:
+          default:
+            return Text(
+              documents[index]['content'],
+              style: uiTextStyle.text1,
+            );
+            break;
+        }
+      },
+    );
+  }
+
+  Widget _itemNewHistory(item) {
+    return GestureDetector(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Você criou uma nova história entitulada como ',
+                  style: uiTextStyle.text1,
+                ),
+                Text(
+                  '"${item['content']}"',
+                  style: uiTextStyle.text5,
+                ),
+              ],
+            ),
+            Text(
+              editDateUtil(DateTime.parse(item['date']).millisecondsSinceEpoch),
+              style: uiTextStyle.text1,
+            ),
+          ],
+        ),
+      ),
+      onTap: () {},
     );
   }
 }

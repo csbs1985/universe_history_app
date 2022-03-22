@@ -57,7 +57,9 @@ class _HistoryItemState extends State<HistoryListComponent> {
               default:
                 try {
                   return HistoryItemComponent(
-                      context: context, snapshot: snapshot);
+                    context: context,
+                    snapshot: snapshot,
+                  );
                 } catch (error) {
                   return NoHistoryComponent();
                 }
