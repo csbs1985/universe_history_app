@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/item_login_component.dart';
 import 'package:universe_history_app/components/item_logout_component.dart';
+import 'package:universe_history_app/components/item_new_account_component.dart';
 import 'package:universe_history_app/components/item_new_comment_component.dart';
 import 'package:universe_history_app/components/item_new_history_component.dart';
 import 'package:universe_history_app/components/item_new_nickName_component.dart';
@@ -136,11 +137,7 @@ class _MyActivitiesPageState extends State<MyActivitiesPage> {
             return ItemTemporarilyDesabledComponent(history: documents[index]);
           case ActivitiesEnum.NEW_ACCOUNT:
           default:
-            return Text(
-              documents[index]['content'],
-              style: uiTextStyle.text1,
-            );
-            break;
+            return ItemNewAccountComponent(history: documents[index]);
         }
       },
     );
