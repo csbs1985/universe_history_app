@@ -80,7 +80,7 @@ class _ModalInputCommmentComponentState
           .upNumComment()
           .then((result) => {
                 ActivityUtil(ActivitiesEnum.NEW_COMMENT,
-                    _commentController.text, result.id),
+                    _commentController.text, currentHistory.value.first.id),
                 _setUpQtyCommentUser(),
                 _commentController.clear(),
                 _isInputNotEmpty = false,

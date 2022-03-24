@@ -86,7 +86,7 @@ class Api {
   }
 
   setComment(Map<String, dynamic> _form) {
-    return comment.doc().set(_form);
+    return comment.doc(_form['id']).set(_form);
   }
 
   setUser(Map<String, dynamic> _form) {

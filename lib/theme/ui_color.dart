@@ -25,9 +25,9 @@ class uiColor {
   static const Color login = const Color(0xFF66B132);
   static const Color logout = const Color(0xFF3E01A4);
   static const Color new_account = const Color(0xFFFD5308);
-  static const Color new_comment = const Color(0xFFFB9902);
+  static const Color new_comment = const Color(0xFF0247FE);
   static const Color new_history = const Color(0xFF8602AD);
-  static const Color new_nickname = const Color(0xFF0247FE);
+  static const Color new_nickname = const Color(0xFFFB9902);
   static const Color temporary_disabled = const Color(0xFF8402B0);
   static const Color up_nickname = const Color(0xFFCFE928);
   static const Color up_notification = const Color(0xFFFFFE32);

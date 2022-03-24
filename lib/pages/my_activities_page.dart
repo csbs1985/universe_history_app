@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/item_login_component.dart';
 import 'package:universe_history_app/components/item_logout_component.dart';
+import 'package:universe_history_app/components/item_new_comment_component.dart';
 import 'package:universe_history_app/components/item_new_history_component.dart';
 import 'package:universe_history_app/components/item_new_nickName_component.dart';
 import 'package:universe_history_app/components/skeleton_activity_componen.dart';
@@ -118,11 +119,12 @@ class _MyActivitiesPageState extends State<MyActivitiesPage> {
             return ItemLogout(history: documents[index]);
           case ActivitiesEnum.UP_NICKNAME:
             return ItemNewNickName(history: documents[index]);
+          case ActivitiesEnum.NEW_COMMENT:
+            return ItemNewComment(history: documents[index]);
           case ActivitiesEnum.BLOCK_USER:
           case ActivitiesEnum.DELETE_ACCOUNT:
           case ActivitiesEnum.NEW_NICKNAME:
           case ActivitiesEnum.NEW_ACCOUNT:
-          case ActivitiesEnum.NEW_COMMENT:
           case ActivitiesEnum.TEMPORARILY_DISABLED:
           case ActivitiesEnum.UP_NOTIFICATION:
           case ActivitiesEnum.UNBLOCK_USER:
