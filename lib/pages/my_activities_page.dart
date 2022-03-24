@@ -8,6 +8,7 @@ import 'package:universe_history_app/components/item_logout_component.dart';
 import 'package:universe_history_app/components/item_new_comment_component.dart';
 import 'package:universe_history_app/components/item_new_history_component.dart';
 import 'package:universe_history_app/components/item_new_nickName_component.dart';
+import 'package:universe_history_app/components/item_up_nickName_component.dart';
 import 'package:universe_history_app/components/skeleton_activity_componen.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/core/api.dart';
@@ -118,12 +119,13 @@ class _MyActivitiesPageState extends State<MyActivitiesPage> {
           case ActivitiesEnum.LOGOUT:
             return ItemLogout(history: documents[index]);
           case ActivitiesEnum.UP_NICKNAME:
-            return ItemNewNickName(history: documents[index]);
+            return ItemUpNickName(history: documents[index]);
           case ActivitiesEnum.NEW_COMMENT:
             return ItemNewComment(history: documents[index]);
+          case ActivitiesEnum.NEW_NICKNAME:
+            return ItemNewNickName(history: documents[index]);
           case ActivitiesEnum.BLOCK_USER:
           case ActivitiesEnum.DELETE_ACCOUNT:
-          case ActivitiesEnum.NEW_NICKNAME:
           case ActivitiesEnum.NEW_ACCOUNT:
           case ActivitiesEnum.TEMPORARILY_DISABLED:
           case ActivitiesEnum.UP_NOTIFICATION:

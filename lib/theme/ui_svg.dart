@@ -21,6 +21,8 @@ class uiSvg {
   static const String logout = 'assets/icons/logout.svg';
   static const String menu = 'assets/icons/menu.svg';
   static const String name = 'assets/icons/history_name.svg';
+  static const String new_account = 'assets/icons/new_account.svg';
+  static const String new_nickname = 'assets/icons/new_nickname.svg';
   static const String create = 'assets/icons/create.svg';
   static const String notification = 'assets/icons/notification.svg';
   static const String open = 'assets/icons/open.svg';

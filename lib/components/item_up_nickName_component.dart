@@ -10,17 +10,17 @@ import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
 
-class ItemNewNickName extends StatefulWidget {
-  const ItemNewNickName({required QueryDocumentSnapshot<dynamic> history})
+class ItemUpNickName extends StatefulWidget {
+  const ItemUpNickName({required QueryDocumentSnapshot<dynamic> history})
       : _history = history;
 
   final QueryDocumentSnapshot<dynamic> _history;
 
   @override
-  State<ItemNewNickName> createState() => _ItemNewNickNameState();
+  State<ItemUpNickName> createState() => _ItemUpNickNameState();
 }
 
-class _ItemNewNickNameState extends State<ItemNewNickName> {
+class _ItemUpNickNameState extends State<ItemUpNickName> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -33,8 +33,8 @@ class _ItemNewNickNameState extends State<ItemNewNickName> {
             const Padding(
               padding: EdgeInsets.only(top: 4),
               child: IconCicleComponent(
-                icon: uiSvg.new_nickname,
-                color: uiColor.new_nickname,
+                icon: uiSvg.up_nickname,
+                color: uiColor.up_nickname,
               ),
             ),
             SizedBox(
@@ -51,7 +51,7 @@ class _ItemNewNickNameState extends State<ItemNewNickName> {
                             style: const TextStyle(fontWeight: FontWeight.bold))
                       },
                       text:
-                          'Acabou de definir seu usuário <bold>${widget._history['content']}</bold> no Histoty. Pode altera-ló sempre que necessitar clicando aqui ou no item <bold>Nome de usuário</bold> no menu de configurações.',
+                          'Alterou seu usuário de <bold>${widget._history['elementId']}</bold> para <bold>${widget._history['content']}</bold>. Espero que goste desta vez, pode ser que o <bold>${widget._history['elementId']}</bold> não esteja mais disponível. Clique e descubra.',
                     ),
                     ResumeComponent(
                       resume: editDateUtil(
