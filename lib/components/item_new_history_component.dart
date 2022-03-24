@@ -35,10 +35,14 @@ class _ItemNewHistoryState extends State<ItemNewHistory> {
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const IconCicleComponent(
-                icon: uiSvg.write,
-                color: uiColor.write,
+              const Padding(
+                padding: EdgeInsets.only(top: 4),
+                child: IconCicleComponent(
+                  icon: uiSvg.write,
+                  color: uiColor.write,
+                ),
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width - 32 - 20 - 20,
@@ -48,7 +52,7 @@ class _ItemNewHistoryState extends State<ItemNewHistory> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       StyledText(
-                        style: uiTextStyle.text1,
+                        style: uiTextStyle.text4,
                         tags: {
                           'bold': StyledTextTag(
                               style:
