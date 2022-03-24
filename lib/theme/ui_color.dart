@@ -21,7 +21,9 @@ class uiColor {
   static const Color create_1 = const Color(0xFF141a22);
 
   static const Color write = const Color(0xFF40577c);
-  static const Color login = const Color(0xFF6987c6);
+  static const Color login = const Color(0xFF26AD63);
+  static const Color logout = const Color(0xFFE74C3B);
+  static const Color account = const Color(0xFF202a3a);
 }
 
 /*

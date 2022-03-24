@@ -18,6 +18,7 @@ class uiSvg {
   static const String lock = 'assets/icons/lock.svg';
   static const String login = 'assets/icons/login.svg';
   static const String logo = 'assets/icons/history_logo_full.svg';
+  static const String logout = 'assets/icons/logout.svg';
   static const String menu = 'assets/icons/menu.svg';
   static const String name = 'assets/icons/history_name.svg';
   static const String create = 'assets/icons/create.svg';

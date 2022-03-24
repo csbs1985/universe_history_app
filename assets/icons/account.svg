@@ -1,8 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17">
-    <g transform="translate(-1.5 -1.5)" fill="none" stroke="#d0d7de" stroke-linecap="round" stroke-linejoin="round">
-        <circle data-name="Elipse 39" cx="8" cy="8" r="8" transform="translate(2 2)" />
-        <path data-name="Caminho 208" d="M6.8 11.6a4.32 4.32 0 0 0 3.2 1.6 4.32 4.32 0 0 0 3.2-1.6" />
-        <path data-name="Linha 29" d="M7.6 7.6h.01" />
-        <path data-name="Linha 30" d="M12.4 7.6h.01" />
+<svg xmlns="http://www.w3.org/2000/svg" width="16.5" height="16.5" viewBox="0 0 16.5 16.5">
+    <g id="account" transform="translate(-17.25 -17.25)">
+        <path id="Caminho_211" data-name="Caminho 211" d="M33.5,25.5a8,8,0,1,1-8-8A8,8,0,0,1,33.5,25.5Z" fill="none"
+            stroke="#d0d7de" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="0.5" />
+        <path id="Caminho_212" data-name="Caminho 212"
+            d="M34.961,36.229A1.231,1.231,0,1,1,33.73,35,1.231,1.231,0,0,1,34.961,36.229Z"
+            transform="translate(-11.307 -13.191)" fill="#d0d7de" />
+        <circle id="Elipse_40" data-name="Elipse 40" cx="1.231" cy="1.231" r="1.231"
+            transform="translate(27.346 21.807)" fill="#d0d7de" />
+        <path id="Caminho_213" data-name="Caminho 213"
+            d="M42.382,55a4,4,0,0,1-3.693,2.467,3.977,3.977,0,0,1-1.53-.3A4,4,0,0,1,35,55a4,4,0,0,0,2.164,2.163,4,4,0,0,0,3.059,0A3.991,3.991,0,0,0,42.382,55Z"
+            transform="translate(-13.189 -28.268)" fill="none" stroke="#d0d7de" stroke-linecap="round"
+            stroke-linejoin="round" stroke-miterlimit="10" stroke-width="0.5" />
     </g>
 </svg>

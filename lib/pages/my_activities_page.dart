@@ -4,7 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/item_login_component.dart';
+import 'package:universe_history_app/components/item_logout_component.dart';
 import 'package:universe_history_app/components/item_new_history_component.dart';
+import 'package:universe_history_app/components/item_new_nickName_component.dart';
 import 'package:universe_history_app/components/skeleton_activity_componen.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/core/api.dart';
@@ -112,14 +114,16 @@ class _MyActivitiesPageState extends State<MyActivitiesPage> {
             return ItemNewHistory(history: documents[index]);
           case ActivitiesEnum.LOGIN:
             return ItemLogin(history: documents[index]);
+          case ActivitiesEnum.LOGOUT:
+            return ItemLogout(history: documents[index]);
+          case ActivitiesEnum.UP_NICKNAME:
+            return ItemNewNickName(history: documents[index]);
           case ActivitiesEnum.BLOCK_USER:
           case ActivitiesEnum.DELETE_ACCOUNT:
-          case ActivitiesEnum.LOGOUT:
+          case ActivitiesEnum.NEW_NICKNAME:
           case ActivitiesEnum.NEW_ACCOUNT:
           case ActivitiesEnum.NEW_COMMENT:
-          case ActivitiesEnum.NEW_NICKNAME:
           case ActivitiesEnum.TEMPORARILY_DISABLED:
-          case ActivitiesEnum.UP_NICKNAME:
           case ActivitiesEnum.UP_NOTIFICATION:
           case ActivitiesEnum.UNBLOCK_USER:
           default:

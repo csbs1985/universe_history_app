@@ -23,10 +23,12 @@ class _NickNamePageState extends State<NickNamePage> {
   final Api api = Api();
   final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
+
   TextEditingController _textController = TextEditingController();
 
   bool _isInputNotEmpty = false;
   String _message = 'nome de usuário atual.';
+  String _oldName = '';
   int _counter = 0;
 
   @override
@@ -75,6 +77,7 @@ class _NickNamePageState extends State<NickNamePage> {
   }
 
   Future<void> _saveNickName() async {
+    _oldName = currentUser.value.first.nickname;
     currentNickname.value = _textController.text;
     currentUser.value.first.nickname = _textController.text;
 
@@ -86,7 +89,8 @@ class _NickNamePageState extends State<NickNamePage> {
     } else {
       try {
         await api.upNickName();
-        ActivityUtil(ActivitiesEnum.UP_NICKNAME, _textController.text, '');
+        ActivityUtil(
+            ActivitiesEnum.UP_NICKNAME, _textController.text, _oldName);
         toast.toast(context, ToastEnum.SUCCESS, 'Nome de usuário alterado!');
         Navigator.of(context).pop();
       } catch (error) {
