@@ -28,7 +28,8 @@ class _CardBtnComponentState extends State<CardBtnComponent> {
         width: double.infinity,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          border: Border.all(width: 1, color: uiColor.comp_3),
+          color: const Color(0xFF234B5D),
+          border: Border.all(width: 2, color: uiColor.comp_3),
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         child: Column(
