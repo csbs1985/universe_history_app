@@ -3,6 +3,7 @@
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:universe_history_app/utils/capitaliza_util.dart';
 
 ValueNotifier currentDevice = ValueNotifier(null);
 
@@ -20,7 +21,7 @@ DeviceUtil() async {
 String DeviceModel() {
   return Platform.isIOS
       ? 'Iphone ${currentDevice.value['model']}' //TODO: rever quando add ao IOS
-      : '${currentDevice.value['brand']} ${currentDevice.value['model']}';
+      : '${capitalizeUtil(currentDevice.value['brand'])} ${currentDevice.value['model']}';
 }
 
 Map<String, dynamic> _readAndroidBuildData(AndroidDeviceInfo build) {

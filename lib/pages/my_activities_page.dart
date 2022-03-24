@@ -2,22 +2,15 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:styled_text/styled_text.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
-import 'package:universe_history_app/components/icon_circle_component.dart';
-import 'package:universe_history_app/components/icon_component.dart';
+import 'package:universe_history_app/components/item_login_component.dart';
 import 'package:universe_history_app/components/item_new_history_component.dart';
-import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/skeleton_activity_componen.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
-import 'package:universe_history_app/theme/ui_color.dart';
-import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
-import 'package:universe_history_app/utils/edit_date_util.dart';
 
 class MyActivitiesPage extends StatefulWidget {
   const MyActivitiesPage({Key? key}) : super(key: key);
@@ -117,9 +110,10 @@ class _MyActivitiesPageState extends State<MyActivitiesPage> {
         switch (content) {
           case ActivitiesEnum.NEW_HISTORY:
             return ItemNewHistory(history: documents[index]);
+          case ActivitiesEnum.LOGIN:
+            return ItemLogin(history: documents[index]);
           case ActivitiesEnum.BLOCK_USER:
           case ActivitiesEnum.DELETE_ACCOUNT:
-          case ActivitiesEnum.LOGIN:
           case ActivitiesEnum.LOGOUT:
           case ActivitiesEnum.NEW_ACCOUNT:
           case ActivitiesEnum.NEW_COMMENT:

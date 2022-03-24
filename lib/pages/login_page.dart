@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                     'qtyHistory': result.docs.first['qtyHistory'],
                     'qtyComment': result.docs.first['qtyComment'],
                   }),
-                  ActivityUtil(ActivitiesEnum.LOGIN, DeviceModel(), result.id),
+                  ActivityUtil(ActivitiesEnum.LOGIN, DeviceModel(), ''),
                   Navigator.of(context).pop(),
                 }
               else
@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                     'qtyComment': 0,
                   }),
                   ActivityUtil(
-                      ActivitiesEnum.NEW_ACCOUNT, user.displayName!, result.id),
+                      ActivitiesEnum.NEW_ACCOUNT, user.displayName!, ''),
                   userNew.value = true,
                   Navigator.of(context).pushNamed("/nickname"),
                 },
