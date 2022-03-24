@@ -86,7 +86,7 @@ class _CreateHistoryState extends State<CreateHistory> {
     });
   }
 
-  void _publishHIstory() async {
+  void _publishHistory() async {
     history = {
       'id': uuid.v4(),
       'title': titleController.text.trim(),
@@ -104,7 +104,8 @@ class _CreateHistoryState extends State<CreateHistory> {
     await api
         .setHistory(history)
         .then((value) => {
-              ActivityUtil(ActivitiesEnum.NEW_HISTORY, titleController.text),
+              ActivityUtil(ActivitiesEnum.NEW_HISTORY, titleController.text,
+                  history['id']),
               _setUpQtyHistoryUser()
             })
         .catchError((error) => {
@@ -130,7 +131,7 @@ class _CreateHistoryState extends State<CreateHistory> {
       appBar: AppbarComponent(
         btnBack: true,
         btnPublish: _btnPublish,
-        callback: (value) => _publishHIstory(),
+        callback: (value) => _publishHistory(),
       ),
       body: SingleChildScrollView(
         child: Column(

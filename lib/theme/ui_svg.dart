@@ -26,4 +26,5 @@ class uiSvg {
   static const String search = 'assets/icons/search.svg';
   static const String share = 'assets/icons/share.svg';
   static const String unlock = 'assets/icons/unlock.svg';
+  static const String write = 'assets/icons/write.svg';
 }

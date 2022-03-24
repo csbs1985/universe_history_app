@@ -78,7 +78,7 @@ class Api {
   }
 
   setHistory(Map<String, dynamic> _form) {
-    return history.doc().set(_form);
+    return history.doc(_form['id']).set(_form);
   }
 
   setActivities(Map<String, dynamic> _form) {

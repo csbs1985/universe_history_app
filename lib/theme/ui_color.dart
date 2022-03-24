@@ -19,6 +19,8 @@ class uiColor {
   static const Color icon_2 = const Color(0xFFFFFFFF);
 
   static const Color create_1 = const Color(0xFF141a22);
+
+  static const Color write = const Color(0xFF40577c);
 }
 
 /*

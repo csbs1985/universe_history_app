@@ -36,7 +36,7 @@ class _SettingsPageState extends State<SettingsPage> {
     setState(() {
       currentUser.value.first.isNotification = !value;
       ActivityUtil(ActivitiesEnum.UP_NOTIFICATION,
-          currentUser.value.first.isNotification.toString());
+          currentUser.value.first.isNotification.toString(), '');
       api.upNotification();
     });
   }

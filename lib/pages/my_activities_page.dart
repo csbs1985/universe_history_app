@@ -2,11 +2,19 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:styled_text/styled_text.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
+import 'package:universe_history_app/components/icon_circle_component.dart';
+import 'package:universe_history_app/components/icon_component.dart';
+import 'package:universe_history_app/components/item_new_history_component.dart';
+import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/skeleton_activity_componen.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
+import 'package:universe_history_app/theme/ui_color.dart';
+import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
@@ -108,7 +116,7 @@ class _MyActivitiesPageState extends State<MyActivitiesPage> {
 
         switch (content) {
           case ActivitiesEnum.NEW_HISTORY:
-            return _itemNewHistory(documents[index]);
+            return ItemNewHistory(history: documents[index]);
           case ActivitiesEnum.BLOCK_USER:
           case ActivitiesEnum.DELETE_ACCOUNT:
           case ActivitiesEnum.LOGIN:
@@ -128,37 +136,6 @@ class _MyActivitiesPageState extends State<MyActivitiesPage> {
             break;
         }
       },
-    );
-  }
-
-  Widget _itemNewHistory(item) {
-    return GestureDetector(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  'Você criou uma nova história entitulada como ',
-                  style: uiTextStyle.text1,
-                ),
-                Text(
-                  '"${item['content']}"',
-                  style: uiTextStyle.text5,
-                ),
-              ],
-            ),
-            Text(
-              editDateUtil(DateTime.parse(item['date']).millisecondsSinceEpoch),
-              style: uiTextStyle.text1,
-            ),
-          ],
-        ),
-      ),
-      onTap: () {},
     );
   }
 }

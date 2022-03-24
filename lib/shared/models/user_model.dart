@@ -75,7 +75,7 @@ class UserClass {
     await googleSignIn
         .signOut()
         .then((value) => {
-              ActivityUtil(ActivitiesEnum.LOGOUT, DeviceModel()),
+              ActivityUtil(ActivitiesEnum.LOGOUT, DeviceModel(), ''),
               currentUser.value = [],
               deleteUser(),
               Navigator.of(context).pushNamed("/home"),

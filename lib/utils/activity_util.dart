@@ -4,7 +4,7 @@ import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:uuid/uuid.dart';
 
-ActivityUtil(ActivitiesEnum type, String content) async {
+ActivityUtil(ActivitiesEnum type, String content, String elementId) async {
   final Uuid uuid = const Uuid();
   final Api api = Api();
 
@@ -16,6 +16,7 @@ ActivityUtil(ActivitiesEnum type, String content) async {
     'type': type.toString().split('.').last,
     'userId': currentUser.value.first.id,
     'content': content.trim(),
+    'elementId': elementId,
   };
 
   await api.setActivities(activity);
