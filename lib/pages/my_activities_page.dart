@@ -9,6 +9,7 @@ import 'package:universe_history_app/components/item_new_comment_component.dart'
 import 'package:universe_history_app/components/item_new_history_component.dart';
 import 'package:universe_history_app/components/item_new_nickName_component.dart';
 import 'package:universe_history_app/components/item_notification_component.dart';
+import 'package:universe_history_app/components/item_temporarily_desabled_component.dart';
 import 'package:universe_history_app/components/item_up_block_component.dart';
 import 'package:universe_history_app/components/item_up_nickName_component.dart';
 import 'package:universe_history_app/components/skeleton_activity_componen.dart';
@@ -131,9 +132,9 @@ class _MyActivitiesPageState extends State<MyActivitiesPage> {
           case ActivitiesEnum.BLOCK_USER:
           case ActivitiesEnum.UNBLOCK_USER:
             return ItemUpBlockComponent(history: documents[index]);
-          case ActivitiesEnum.DELETE_ACCOUNT:
-          case ActivitiesEnum.NEW_ACCOUNT:
           case ActivitiesEnum.TEMPORARILY_DISABLED:
+            return ItemTemporarilyDesabledComponent(history: documents[index]);
+          case ActivitiesEnum.NEW_ACCOUNT:
           default:
             return Text(
               documents[index]['content'],

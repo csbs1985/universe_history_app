@@ -29,6 +29,8 @@ class uiSvg {
   static const String options = 'assets/icons/options.svg';
   static const String search = 'assets/icons/search.svg';
   static const String share = 'assets/icons/share.svg';
+  static const String temporarily_disabled =
+      'assets/icons/temporarily_disabled.svg';
   static const String unlock = 'assets/icons/unlock.svg';
   static const String up_nickname = 'assets/icons/up_nickname.svg';
   static const String write = 'assets/icons/write.svg';
