@@ -33,8 +33,8 @@ class _ItemNewNickNameState extends State<ItemNewNickName> {
             const Padding(
               padding: EdgeInsets.only(top: 4),
               child: IconCicleComponent(
-                icon: uiSvg.account,
-                color: uiColor.account,
+                icon: uiSvg.up_nickname,
+                color: uiColor.up_nickname,
               ),
             ),
             SizedBox(
@@ -51,7 +51,7 @@ class _ItemNewNickNameState extends State<ItemNewNickName> {
                             style: const TextStyle(fontWeight: FontWeight.bold))
                       },
                       text:
-                          'Alterou seu usuário de <bold>${widget._history['elementId']}</bold> para <bold>${widget._history['content']}</bold>. Espero que goste dessa vez, pode ser que o <bold>${widget._history['elementId']}</bold> não esteja mais disponível. Clique e descubra.',
+                          'Alterou seu usuário de <bold>${widget._history['elementId']}</bold> para <bold>${widget._history['content']}</bold>. Espero que goste desta vez, pode ser que o <bold>${widget._history['elementId']}</bold> não esteja mais disponível. Clique e descubra.',
                     ),
                     ResumeComponent(
                       resume: editDateUtil(

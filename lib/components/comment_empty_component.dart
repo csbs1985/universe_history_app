@@ -15,7 +15,7 @@ class CommentEmpty extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPicture.asset(uiSvg.commentEmpty),
+          SvgPicture.asset(uiSvg.comment_empty),
           const SizedBox(
             height: 10,
           ),

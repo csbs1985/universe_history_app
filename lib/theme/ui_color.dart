@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_const, camel_case_types
+// ignore_for_file: unnecessary_const, camel_case_types, constant_identifier_names
 
 import 'package:flutter/cupertino.dart';
 
@@ -20,10 +20,18 @@ class uiColor {
 
   static const Color create_1 = const Color(0xFF141a22);
 
-  static const Color write = const Color(0xFF40577c);
-  static const Color login = const Color(0xFF26AD63);
-  static const Color logout = const Color(0xFFE74C3B);
-  static const Color account = const Color(0xFF202a3a);
+  static const Color block_user = const Color(0xFF0392CE);
+  static const Color delete_account = const Color(0xFFFE2712);
+  static const Color login = const Color(0xFF66B132);
+  static const Color logout = const Color(0xFF3E01A4);
+  static const Color new_account = const Color(0xFFFD5308);
+  static const Color new_comment = const Color(0xFFFB9902);
+  static const Color new_history = const Color(0xFF8602AD);
+  static const Color new_nickname = const Color(0xFF0247FE);
+  static const Color temporary_disabled = const Color(0xFF8402B0);
+  static const Color up_nickname = const Color(0xFFCFE928);
+  static const Color up_notification = const Color(0xFFFFFE32);
+  static const Color unblock_user = const Color(0xFFA3194C);
 }
 
 /*

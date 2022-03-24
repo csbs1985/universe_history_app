@@ -1,13 +1,13 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, constant_identifier_names
 
 class uiSvg {
   static const String account = 'assets/icons/account.svg';
   static const String apple = 'assets/icons/apple.svg';
   static const String block = 'assets/icons/block.svg';
   static const String closed = 'assets/icons/closed.svg';
-  static const String cleanAll = 'assets/icons/clean-all.svg';
+  static const String clean_all = 'assets/icons/clean-all.svg';
   static const String comment = 'assets/icons/comment.svg';
-  static const String commentEmpty = 'assets/icons/comment_empty.svg';
+  static const String comment_empty = 'assets/icons/comment_empty.svg';
   static const String copy = 'assets/icons/copy.svg';
   static const String delate = 'assets/icons/delate.svg';
   static const String delete = 'assets/icons/delete.svg';
@@ -28,5 +28,6 @@ class uiSvg {
   static const String search = 'assets/icons/search.svg';
   static const String share = 'assets/icons/share.svg';
   static const String unlock = 'assets/icons/unlock.svg';
+  static const String up_nickname = 'assets/icons/up_nickname.svg';
   static const String write = 'assets/icons/write.svg';
 }

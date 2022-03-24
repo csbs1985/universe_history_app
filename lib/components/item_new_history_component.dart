@@ -41,7 +41,7 @@ class _ItemNewHistoryState extends State<ItemNewHistory> {
                 padding: EdgeInsets.only(top: 4),
                 child: IconCicleComponent(
                   icon: uiSvg.write,
-                  color: uiColor.write,
+                  color: uiColor.new_history,
                 ),
               ),
               SizedBox(

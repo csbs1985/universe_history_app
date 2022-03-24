@@ -152,7 +152,7 @@ class _ModalInputCommmentComponentState
                         Row(
                           children: [
                             IconComponent(
-                              icon: uiSvg.cleanAll,
+                              icon: uiSvg.clean_all,
                               callback: (value) => _cleanComment(),
                             ),
                             TextButton.icon(
