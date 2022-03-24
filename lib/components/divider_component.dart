@@ -29,8 +29,8 @@ class DividerComponent extends StatelessWidget {
             height: _top ?? 0,
           ),
           Divider(
-            height: 0.5,
-            thickness: 0.5,
+            height: 1,
+            thickness: 1,
             indent: _left ?? 0,
             endIndent: _right ?? 0,
             color: uiColor.comp_3,

@@ -60,8 +60,6 @@ flutter:
     - assets/images/
 
   fonts:
-      fonts:
-        - asset: assets/fonts/segoe-ui.ttf
     - family: nunito-bold
       fonts:
         - asset: assets/fonts/Nunito-Bold.ttf
