@@ -88,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                     'qtyComment': result.docs.first['qtyComment'],
                   }),
                   ActivityUtil(ActivitiesEnum.LOGIN, DeviceModel(), ''),
-                  Navigator.of(context).pop(),
+                  Navigator.of(context).pushNamed('/home'),
                 }
               else
                 {

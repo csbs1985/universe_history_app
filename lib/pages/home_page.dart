@@ -2,7 +2,7 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:universe_history_app/components/btn_icon_component.dart';
+import 'package:universe_history_app/components/card_btn_component.dart';
 import 'package:universe_history_app/components/history_list_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
@@ -117,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                                   valueListenable: currentUser,
                                   builder: (context, result, __) {
                                     return result.isNotEmpty
-                                        ? BtnIconComponent(
+                                        ? CardBtnComponent(
                                             label:
                                                 'Conte sua história, ${currentUser.value.first.nickname}',
                                             icon: uiSvg.create,
@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                                                 Navigator.of(context)
                                                     .pushNamed("/create"),
                                           )
-                                        : BtnIconComponent(
+                                        : CardBtnComponent(
                                             label: 'Entre ou crie sua conta',
                                             icon: uiSvg.account,
                                             callback: (valeu) =>
