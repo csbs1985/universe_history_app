@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/btn_comment_component.dart';
-import 'package:universe_history_app/components/comment_component.dart';
 import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
@@ -27,21 +26,22 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-        stream: api.getHistory(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-            case ConnectionState.waiting:
+      stream: api.getHistory(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+          case ConnectionState.waiting:
+            return SkeletonHistoryItemComponent();
+          case ConnectionState.done:
+          default:
+            try {
+              return _history(context, snapshot);
+            } catch (error) {
               return SkeletonHistoryItemComponent();
-            case ConnectionState.done:
-            default:
-              try {
-                return _history(context, snapshot);
-              } catch (error) {
-                return SkeletonHistoryItemComponent();
-              }
-          }
-        });
+            }
+        }
+      },
+    );
   }
 
   Widget _history(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

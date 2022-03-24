@@ -23,17 +23,17 @@ class HistoryModel {
     required this.categories,
   });
 
-  final String id;
-  final String title;
-  final String text;
-  final String date;
-  final String userId;
-  final String userNickName;
-  final bool isComment;
-  final bool isAnonymous;
-  final bool isEdit;
-  int qtyComment;
-  final List<String> categories;
+  late String id;
+  late String title;
+  late String text;
+  late String date;
+  late String userId;
+  late String userNickName;
+  late bool isComment;
+  late bool isAnonymous;
+  late bool isEdit;
+  late int qtyComment;
+  late List<String> categories;
 
   factory HistoryModel.fromJson(Map<String, dynamic> json) =>
       HistoryModel.fromMap(json);
