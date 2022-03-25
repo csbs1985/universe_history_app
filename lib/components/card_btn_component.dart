@@ -28,7 +28,7 @@ class _CardBtnComponentState extends State<CardBtnComponent> {
         width: double.infinity,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: uiColor.comp_3,
+          color: uiColor.comp_1,
           border: Border.all(width: 0.5, color: uiColor.comp_3),
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
@@ -42,7 +42,7 @@ class _CardBtnComponentState extends State<CardBtnComponent> {
             const SizedBox(height: 16),
             Text(
               widget._label,
-              style: uiTextStyle.header2,
+              style: uiTextStyle.header1,
             ),
           ],
         ),
