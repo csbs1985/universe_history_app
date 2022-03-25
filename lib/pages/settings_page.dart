@@ -32,9 +32,10 @@ class _SettingsPageState extends State<SettingsPage> {
     super.initState();
   }
 
-  void _toggleNotification(bool value) {
+  void _toggleNotification() {
     setState(() {
-      currentUser.value.first.isNotification = !value;
+      currentUser.value.first.isNotification =
+          !currentUser.value.first.isNotification;
       ActivityUtil(ActivitiesEnum.UP_NOTIFICATION,
           currentUser.value.first.isNotification.toString(), '');
       api.upNotification();
@@ -119,17 +120,14 @@ class _SettingsPageState extends State<SettingsPage> {
                                     activeColor: uiColor.first,
                                     inactiveColor: uiColor.comp_3,
                                     borderRadius: 20,
-                                    showOnOff:
-                                        currentUser.value.first.isNotification,
-                                    onToggle: (value) =>
-                                        _toggleNotification(value),
+                                    showOnOff: true,
+                                    onToggle: (value) => _toggleNotification(),
                                   ),
                                 ],
                               ),
                               style: TextButton.styleFrom(
                                   padding: EdgeInsets.zero),
-                              onPressed: () => _toggleNotification(
-                                  currentUser.value.first.isNotification),
+                              onPressed: () => _toggleNotification(),
                             ),
                           ),
                           const BtnLinkComponent('Bloqueados', '/blocked'),
