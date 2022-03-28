@@ -29,8 +29,7 @@ class _HistoryItemState extends State<HistoryListComponent> {
   _getContent() {
     final value = menuItemSelected.value.id!;
 
-    if (value == 'todas' || value.isEmpty || value == '')
-      return api.getAllHistory();
+    if (value == 'todas' || value.isEmpty) return api.getAllHistory();
 
     if (value == 'minhas') return api.getAllUserHistory();
 

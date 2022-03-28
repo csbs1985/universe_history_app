@@ -11,6 +11,7 @@ import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
+import 'package:universe_history_app/utils/device_util.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,6 +25,12 @@ class _HomePageState extends State<HomePage> {
 
   bool _notification = true;
   String _itemSelectedMenu = 'todas';
+
+  @override
+  void initState() {
+    DeviceUtil();
+    super.initState();
+  }
 
   void _scrollToTop() {
     _scrollController.animateTo(0,
@@ -104,14 +111,14 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 MenuComponent(),
-                SizedBox(height: 16),
+                SizedBox(height: 10),
                 ValueListenableBuilder(
                   valueListenable: menuItemSelected,
                   builder: (context, value, __) {
                     return Container(
                       child: _showCard(menuItemSelected.value.id)
                           ? Padding(
-                              padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
                               child: Container(
                                 child: ValueListenableBuilder<List<UserModel>>(
                                   valueListenable: currentUser,
