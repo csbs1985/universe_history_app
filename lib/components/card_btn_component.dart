@@ -33,8 +33,8 @@ class _CardBtnComponentState extends State<CardBtnComponent> {
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [
-              Color(0xFF0d1117),
               Color(0xFF1a1a1a),
+              Color(0xFF0d1117),
             ],
           ),
         ),
