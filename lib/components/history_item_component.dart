@@ -99,134 +99,145 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
             itemCount: documents.length,
             itemBuilder: (BuildContext context, index) {
               return Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    TitleComponent(
-                      title: documents[index]['title'],
-                      bottom: 0,
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+                  decoration: BoxDecoration(
+                    color: uiColor.comp_1,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      width: 1.0,
+                      color: uiColor.comp_3,
                     ),
-                    ResumeComponent(
-                      resume: resumeUitl(documents[index]),
-                    ),
-                    ExpandableText(
-                      documents[index]['text'],
-                      style: uiTextStyle.text1,
-                      expandText: 'CONTINUAR LENDO',
-                      collapseText: 'FECHAR',
-                      maxLines: 10,
-                      linkColor: uiColor.first,
-                    ),
-                    Wrap(
-                      children: [
-                        for (var item in documents[index]['categories'])
-                          Padding(
-                            padding: const EdgeInsets.only(right: 4),
-                            child: Text(
-                              '#' + item,
-                              style: uiTextStyle.text2,
-                            ),
-                          ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        documents[index]['qtyComment'] < 1
-                            ? const SizedBox()
-                            : TextButton(
-                                child: Row(
-                                  children: [
-                                    AnimatedFlipCounter(
-                                      duration:
-                                          const Duration(milliseconds: 500),
-                                      value: documents[index]['qtyComment'],
-                                      textStyle: uiTextStyle.text2,
-                                    ),
-                                    Text(
-                                      documents[index]['qtyComment'] > 1
-                                          ? ' comentários'
-                                          : ' comentário',
-                                      style: uiTextStyle.text2,
-                                    ),
-                                  ],
-                                ),
-                                onPressed: () {
-                                  _setHistory(
-                                    documents[index].data(),
-                                    currentDocHistory.value =
-                                        documents[index].id,
-                                  );
-                                  _showModal(context, 'listCommentary ');
-                                },
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      TitleComponent(
+                        title: documents[index]['title'],
+                        bottom: 0,
+                      ),
+                      ResumeComponent(
+                        resume: resumeUitl(documents[index]),
+                      ),
+                      ExpandableText(
+                        documents[index]['text'],
+                        style: uiTextStyle.text1,
+                        expandText: 'CONTINUAR LENDO',
+                        collapseText: 'FECHAR',
+                        maxLines: 10,
+                        linkColor: uiColor.first,
+                      ),
+                      Wrap(
+                        children: [
+                          for (var item in documents[index]['categories'])
+                            Padding(
+                              padding: const EdgeInsets.only(right: 4),
+                              child: Text(
+                                '#' + item,
+                                style: uiTextStyle.text2,
                               ),
-                        ValueListenableBuilder(
-                          valueListenable: currentUser,
-                          builder: (context, value, __) {
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                if (documents[index]['isComment'] &&
-                                    currentUser.value.isNotEmpty)
-                                  IconComponent(
-                                      icon: uiSvg.comment,
-                                      callback: (value) {
-                                        setState(() {
-                                          _setHistory(
-                                            documents[index].data(),
-                                            currentDocHistory.value =
-                                                documents[index].id,
-                                          );
-                                          _showModal(
-                                              context, 'inputCommentary');
-                                        });
-                                      }),
-                                if (currentUser.value.isNotEmpty)
-                                  ValueListenableBuilder(
-                                    valueListenable: currentBookmarks,
-                                    builder: (BuildContext context, value, __) {
-                                      return IconComponent(
-                                        icon:
-                                            _getBookmark(documents[index]['id'])
-                                                ? uiSvg.favorited
-                                                : uiSvg.favorite,
-                                        callback: (value) {
-                                          _toggleBookmark(
-                                            documents[index]['id'],
-                                          );
-                                        },
-                                      );
-                                    },
+                            ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          documents[index]['qtyComment'] < 1
+                              ? const SizedBox()
+                              : TextButton(
+                                  child: Row(
+                                    children: [
+                                      AnimatedFlipCounter(
+                                        duration:
+                                            const Duration(milliseconds: 500),
+                                        value: documents[index]['qtyComment'],
+                                        textStyle: uiTextStyle.text2,
+                                      ),
+                                      Text(
+                                        documents[index]['qtyComment'] > 1
+                                            ? ' comentários'
+                                            : ' comentário',
+                                        style: uiTextStyle.text2,
+                                      ),
+                                    ],
                                   ),
-                                IconComponent(
-                                    icon: uiSvg.open,
-                                    callback: (value) {
-                                      _setHistory(
-                                        documents[index].data(),
-                                        currentDocHistory.value =
-                                            documents[index].id,
-                                      );
-                                      Navigator.of(context)
-                                          .pushNamed("/history");
-                                    }),
-                                IconComponent(
-                                  icon: uiSvg.options,
-                                  callback: (value) => _showModalOptions(
-                                    context,
-                                    documents[index]['title'],
-                                  ),
+                                  onPressed: () {
+                                    _setHistory(
+                                      documents[index].data(),
+                                      currentDocHistory.value =
+                                          documents[index].id,
+                                    );
+                                    _showModal(context, 'listCommentary ');
+                                  },
                                 ),
-                              ],
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    const DividerComponent(),
-                  ],
+                          ValueListenableBuilder(
+                            valueListenable: currentUser,
+                            builder: (context, value, __) {
+                              return Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  if (documents[index]['isComment'] &&
+                                      currentUser.value.isNotEmpty)
+                                    IconComponent(
+                                        icon: uiSvg.comment,
+                                        callback: (value) {
+                                          setState(() {
+                                            _setHistory(
+                                              documents[index].data(),
+                                              currentDocHistory.value =
+                                                  documents[index].id,
+                                            );
+                                            _showModal(
+                                                context, 'inputCommentary');
+                                          });
+                                        }),
+                                  if (currentUser.value.isNotEmpty)
+                                    ValueListenableBuilder(
+                                      valueListenable: currentBookmarks,
+                                      builder:
+                                          (BuildContext context, value, __) {
+                                        return IconComponent(
+                                          icon: _getBookmark(
+                                                  documents[index]['id'])
+                                              ? uiSvg.favorited
+                                              : uiSvg.favorite,
+                                          callback: (value) {
+                                            _toggleBookmark(
+                                              documents[index]['id'],
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  IconComponent(
+                                      icon: uiSvg.open,
+                                      callback: (value) {
+                                        _setHistory(
+                                          documents[index].data(),
+                                          currentDocHistory.value =
+                                              documents[index].id,
+                                        );
+                                        Navigator.of(context)
+                                            .pushNamed("/history");
+                                      }),
+                                  IconComponent(
+                                    icon: uiSvg.options,
+                                    callback: (value) => _showModalOptions(
+                                      context,
+                                      documents[index]['title'],
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
