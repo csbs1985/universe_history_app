@@ -118,30 +118,27 @@ class _HomePageState extends State<HomePage> {
                   builder: (context, value, __) {
                     return Container(
                       child: _showCard(menuItemSelected.value.id)
-                          ? Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                              child: Container(
-                                child: ValueListenableBuilder<List<UserModel>>(
-                                  valueListenable: currentUser,
-                                  builder: (context, result, __) {
-                                    return result.isNotEmpty
-                                        ? CardBtnComponent(
-                                            label:
-                                                'Conte sua história, ${currentUser.value.first.nickname}',
-                                            icon: uiSvg.create,
-                                            callback: (value) =>
-                                                Navigator.of(context)
-                                                    .pushNamed("/create"),
-                                          )
-                                        : CardBtnComponent(
-                                            label: 'Entre ou crie sua conta',
-                                            icon: uiSvg.account,
-                                            callback: (valeu) =>
-                                                Navigator.of(context)
-                                                    .pushNamed("/login"),
-                                          );
-                                  },
-                                ),
+                          ? Container(
+                              child: ValueListenableBuilder<List<UserModel>>(
+                                valueListenable: currentUser,
+                                builder: (context, result, __) {
+                                  return result.isNotEmpty
+                                      ? CardBtnComponent(
+                                          label:
+                                              'Conte sua história, ${currentUser.value.first.nickname}',
+                                          icon: uiSvg.create,
+                                          callback: (value) =>
+                                              Navigator.of(context)
+                                                  .pushNamed("/create"),
+                                        )
+                                      : CardBtnComponent(
+                                          label: 'Entre ou crie sua conta',
+                                          icon: uiSvg.account,
+                                          callback: (valeu) =>
+                                              Navigator.of(context)
+                                                  .pushNamed("/login"),
+                                        );
+                                },
                               ),
                             )
                           : SizedBox(),

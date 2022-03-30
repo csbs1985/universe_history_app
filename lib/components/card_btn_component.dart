@@ -24,30 +24,33 @@ class _CardBtnComponentState extends State<CardBtnComponent> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: uiColor.comp_1,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            width: 1.0,
-            color: uiColor.comp_3,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: uiColor.comp_1,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              width: 1.0,
+              color: uiColor.comp_3,
+            ),
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 48,
-              child: SvgPicture.asset(widget._icon),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              widget._label,
-              style: uiTextStyle.header1,
-            ),
-          ],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 48,
+                child: SvgPicture.asset(widget._icon),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                widget._label,
+                style: uiTextStyle.header1,
+              ),
+            ],
+          ),
         ),
       ),
       onTap: () => widget._callback!(true),
