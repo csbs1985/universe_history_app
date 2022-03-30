@@ -63,10 +63,17 @@ class _BtnConfirmComponentState extends State<BtnConfirmComponent> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          insetPadding: const EdgeInsets.all(20),
+          titlePadding: const EdgeInsets.all(20),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+          actionsPadding: const EdgeInsets.fromLTRB(10, 20, 10, 16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
           backgroundColor: uiColor.comp_1,
           title: Text(
             widget._title,
-            style: uiTextStyle.text5,
+            style: uiTextStyle.header2,
           ),
           content: SingleChildScrollView(
             child: ListBody(
@@ -79,22 +86,19 @@ class _BtnConfirmComponentState extends State<BtnConfirmComponent> {
             ),
           ),
           actions: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Button3dComponent(
-                    label: 'Sair',
-                    style: ButtonEnum.SECOND,
-                    callback: (value) => widget._callback(true),
-                  ),
-                  Button3dComponent(
-                    label: 'Cancelar',
-                    callback: (value) => widget._callback(false),
-                  ),
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Button3dComponent(
+                  label: 'Sair',
+                  style: ButtonEnum.SECOND,
+                  callback: (value) => widget._callback(true),
+                ),
+                Button3dComponent(
+                  label: 'Cancelar',
+                  callback: (value) => widget._callback(false),
+                ),
+              ],
             ),
           ],
         );
