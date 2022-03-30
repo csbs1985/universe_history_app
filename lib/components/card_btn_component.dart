@@ -27,15 +27,12 @@ class _CardBtnComponentState extends State<CardBtnComponent> {
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(20),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: uiColor.comp_1,
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [
-              Color(0xFF1a1a1a),
-              Color(0xFF0d1117),
-            ],
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            width: 1.0,
+            color: uiColor.comp_3,
           ),
         ),
         child: Column(

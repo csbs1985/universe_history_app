@@ -101,7 +101,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
               return Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                 child: Container(
-                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
                   decoration: BoxDecoration(
                     color: uiColor.comp_1,
                     borderRadius: BorderRadius.circular(10),
