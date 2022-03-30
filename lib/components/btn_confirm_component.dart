@@ -1,7 +1,7 @@
-// ignore_for_file: no_logic_in_create_state, use_key_in_widget_constructors, unused_element
+// ignore_for_file: no_logic_in_create_state, use_key_in_widget_constructors, unused_element, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:universe_history_app/components/btn_primary_component.dart';
+import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -84,15 +84,13 @@ class _BtnConfirmComponentState extends State<BtnConfirmComponent> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TextButton(
-                    onPressed: () => widget._callback(true),
-                    child: Text(
-                      widget._btnSecondaryLabel!,
-                      style: uiTextStyle.text3,
-                    ),
+                  Button3dComponent(
+                    label: 'Sair',
+                    style: ButtonEnum.SECOND,
+                    callback: (value) => widget._callback(true),
                   ),
-                  BtnPrimaryComponent(
-                    label: widget._btnPrimaryLabel!,
+                  Button3dComponent(
+                    label: 'Cancelar',
                     callback: (value) => widget._callback(false),
                   ),
                 ],

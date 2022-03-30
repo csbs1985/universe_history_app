@@ -114,10 +114,16 @@ class uiTextStyle {
     color: uiColor.third,
   );
 
-  static const TextStyle button2 = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w400,
-    color: uiColor.third,
+  static const TextStyle buttonLabel = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    color: uiColor.buttonLabel,
+  );
+
+  static const TextStyle buttonSecondLabel = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    color: uiColor.buttonSecondLabel,
   );
 
   static const TextStyle chip = TextStyle(

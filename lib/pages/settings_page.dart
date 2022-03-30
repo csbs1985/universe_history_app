@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:universe_history_app/components/btn_confirm_component.dart';
 import 'package:universe_history_app/components/btn_link_component.dart';
+import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
-import 'package:universe_history_app/theme/ui_button.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
@@ -66,21 +66,16 @@ class _SettingsPageState extends State<SettingsPage> {
                         children: [
                           const TitleResumeComponent('Conta',
                               'Você deve ter uma conta Apple ou Google para usar os serviços do History.'),
+                          const SizedBox(height: 10),
                           const Text(
                             'Entrar ou criar conta',
                             style: uiTextStyle.text1,
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          TextButton(
-                            child: const Text(
-                              'entrar',
-                              style: uiTextStyle.buttonPrimary,
-                            ),
-                            onPressed: () =>
+                          const SizedBox(height: 10),
+                          Button3dComponent(
+                            label: 'Entrar',
+                            callback: (value) =>
                                 Navigator.of(context).pushNamed("/login"),
-                            style: uiButton.buttonPrimary,
                           ),
                         ],
                       ),
@@ -133,9 +128,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           const BtnLinkComponent('Bloqueados', '/blocked'),
                         ],
                       ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                     const DividerComponent(),
                     const TitleResumeComponent('Informações',
                         'Sobre o History, perguntas, políticas e termos.'),
@@ -146,9 +139,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     const BtnLinkComponent(
                         'Política de privacidade', '/privacy'),
                     const BtnLinkComponent('Sobre', '/about'),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
 
                     if (currentUser.value.isNotEmpty)
                       Column(
