@@ -7,6 +7,7 @@ String editDateUtil(int timestamp) {
   var day = DateFormat('dd');
   var month = DateFormat('M');
   var year = DateFormat('yyyy');
+  var hours = DateFormat('hh:mm');
   var time = '';
   var months = [
     'jan',
@@ -27,18 +28,14 @@ String editDateUtil(int timestamp) {
     time = 'agora';
   } else if (diff.inMinutes < 60) {
     time = 'à ' + diff.inMinutes.floor().toString() + ' min';
-  } else if (diff.inHours < 12) {
-    time = 'à ' + diff.inHours.floor().toString() + ' horas';
-  } else if (diff.inHours < 24) {
-    time = 'hoje';
-  } else if (diff.inHours < 48) {
-    time = 'ontem';
   } else {
     time = day.format(date) +
         ' de ' +
         months[int.parse(month.format(date)) - 1] +
         '. de ' +
-        year.format(date);
+        year.format(date) +
+        ' as ' +
+        hours.format(date);
   }
 
   return time;
