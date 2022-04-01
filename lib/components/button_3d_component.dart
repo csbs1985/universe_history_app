@@ -54,6 +54,7 @@ class _Button3dComponentState extends State<Button3dComponent> {
       ),
       style: Button3dStyle(
         z: 4,
+        tappedZ: 1,
         topColor: topColor,
         backColor: backColor,
         borderRadius: BorderRadius.circular(10),

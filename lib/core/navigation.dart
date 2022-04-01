@@ -77,7 +77,7 @@ class Navigation {
       case '/notification':
         return PageTransition(
           child: const NotificationPage(),
-          type: PageTransitionType.topToBottom,
+          type: PageTransitionType.rightToLeft,
           settings: settings,
         );
       case '/questions':

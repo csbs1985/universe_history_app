@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/button_3d_component.dart';
+import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class CardBtnComponent extends StatefulWidget {
@@ -26,7 +27,7 @@ class _CardBtnComponentState extends State<CardBtnComponent> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      color: const Color(0xFF0d1117),
+      color: uiColor.second,
       padding: const EdgeInsets.all(20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
