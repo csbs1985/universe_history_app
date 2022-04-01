@@ -1,20 +1,21 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:universe_history_app/theme/ui_color.dart';
+import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class CardBtnComponent extends StatefulWidget {
-  const CardBtnComponent(
-      {Function? callback, required String label, required String icon})
-      : _callback = callback,
+  const CardBtnComponent({
+    required Function callback,
+    required String label,
+    required String text,
+  })  : _callback = callback,
         _label = label,
-        _icon = icon;
+        _text = text;
 
-  final Function? _callback;
+  final Function _callback;
   final String _label;
-  final String _icon;
+  final String _text;
 
   @override
   State<CardBtnComponent> createState() => _CardBtnComponentState();
@@ -23,37 +24,21 @@ class CardBtnComponent extends StatefulWidget {
 class _CardBtnComponentState extends State<CardBtnComponent> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: uiColor.comp_1,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-              width: 1.0,
-              color: uiColor.comp_3,
-            ),
+    return Container(
+      width: double.infinity,
+      color: const Color(0xFF0d1117),
+      padding: const EdgeInsets.all(20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            widget._text,
+            style: uiTextStyle.header2,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 48,
-                child: SvgPicture.asset(widget._icon),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                widget._label,
-                style: uiTextStyle.header1,
-              ),
-            ],
-          ),
-        ),
+          Button3dComponent(
+              callback: (value) => widget._callback(true), label: widget._label)
+        ],
       ),
-      onTap: () => widget._callback!(true),
     );
   }
 }

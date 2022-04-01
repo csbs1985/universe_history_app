@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
-import 'package:universe_history_app/components/btn_login_component.dart';
+import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
@@ -134,33 +134,31 @@ class _LoginPageState extends State<LoginPage> {
               height: 20,
             ),
             const Text(
-              'Entrar ou criar conta History',
+              'Entrar ou criar conta History com sua conta',
               style: uiTextStyle.text1,
               textAlign: TextAlign.center,
             ),
             const SizedBox(
               height: 20,
             ),
-            BtnLoginComponent(
-              label: 'Apple',
-              svg: uiSvg.apple,
-              account: AccountLoginEnum.APPLE,
+            Button3dComponent(
+              label: 'apple',
+              width: double.infinity,
               callback: (value) => _loginApple(),
             ),
-            BtnLoginComponent(
+            const SizedBox(height: 20),
+            Button3dComponent(
               label: 'Google',
-              svg: uiSvg.google,
-              account: AccountLoginEnum.GOOGLE,
+              width: double.infinity,
               callback: (value) => _loginGoogle(),
             ),
+            const SizedBox(height: 20),
             const Text(
               'Você deve ter uma conta Apple ou Google para utilizar os serviços do History.',
               style: uiTextStyle.text1,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

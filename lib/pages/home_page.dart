@@ -124,16 +124,16 @@ class _HomePageState extends State<HomePage> {
                                 builder: (context, result, __) {
                                   return result.isNotEmpty
                                       ? CardBtnComponent(
-                                          label:
-                                              'Conte sua história, ${currentUser.value.first.nickname}',
-                                          icon: uiSvg.create,
+                                          text:
+                                              'Conte sua história ${currentUser.value.first.nickname}',
+                                          label: 'Criar',
                                           callback: (value) =>
                                               Navigator.of(context)
                                                   .pushNamed("/create"),
                                         )
                                       : CardBtnComponent(
-                                          label: 'Entre ou crie sua conta',
-                                          icon: uiSvg.account,
+                                          text: 'Entre ou crie sua conta',
+                                          label: 'entrar',
                                           callback: (valeu) =>
                                               Navigator.of(context)
                                                   .pushNamed("/login"),
