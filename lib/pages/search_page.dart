@@ -52,11 +52,11 @@ class _SearchPageState extends State<SearchPage> {
                   hintStyle: uiTextStyle.text1,
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(0),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(0),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
               ),

@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="12.668" height="16" viewBox="0 0 12.668 16">
+<svg xmlns="http://www.w3.org/2000/svg" width="13.668" height="17" viewBox="0 0 13.668 17">
     <path id="favorite"
         d="M12.167,15.5,6.334,11.333.5,15.5V2.167A1.667,1.667,0,0,1,2.167.5H10.5a1.667,1.667,0,0,1,1.667,1.667Z"
-        fill="none" stroke="#d0d7de" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
+        transform="translate(0.5 0.5)" fill="none" stroke="#394e6f" stroke-linecap="round" stroke-linejoin="round"
+        stroke-width="2" />
 </svg>

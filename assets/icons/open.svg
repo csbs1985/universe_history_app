@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="15.41" height="15.41"><g fill="none" stroke="#d0d7de" stroke-linecap="round" stroke-linejoin="round"><path data-name="Linha 16" d="m.7 14.7 14-14"/><path data-name="Caminho 178" d="M.7.7h14v14"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="16.828" height="16.828" viewBox="0 0 16.828 16.828">
+    <g id="open" transform="translate(-5.586 -5.586)">
+        <line id="Linha_16" data-name="Linha 16" y1="14" x2="14" transform="translate(7 7)" fill="none" stroke="#394e6f"
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+        <path id="Caminho_178" data-name="Caminho 178" d="M7,7H21V21" transform="translate(0 0)" fill="none"
+            stroke="#394e6f" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+    </g>
+</svg>

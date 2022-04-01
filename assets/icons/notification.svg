@@ -1,1 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="17" height="13.8"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path data-name="Caminho 7" d="M16.5 6.9h-4.8l-1.6 2.4H6.9L5.3 6.9H.5"/><path data-name="Caminho 8" d="M3.26 1.39.5 6.9v4.8a1.6 1.6 0 0 0 1.6 1.6h12.8a1.6 1.6 0 0 0 1.6-1.6V6.9l-2.76-5.51A1.6 1.6 0 0 0 12.31.5H4.69a1.6 1.6 0 0 0-1.43.89Z"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="14.8" viewBox="0 0 18 14.8">
+    <g id="notification" transform="translate(-1 -3)">
+        <path id="Caminho_7" data-name="Caminho 7" d="M18,12H13.2l-1.6,2.4H8.4L6.8,12H2" transform="translate(0 -1.6)"
+            fill="none" stroke="#394e6f" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+        <path id="Caminho_8" data-name="Caminho 8"
+            d="M4.76,4.888,2,10.4v4.8a1.6,1.6,0,0,0,1.6,1.6H16.4A1.6,1.6,0,0,0,18,15.2V10.4L15.24,4.888A1.6,1.6,0,0,0,13.808,4H6.192A1.6,1.6,0,0,0,4.76,4.888Z"
+            fill="none" stroke="#394e6f" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+    </g>
+</svg>

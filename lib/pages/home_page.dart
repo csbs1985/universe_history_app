@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
               route: 'search',
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 4),
+              padding: const EdgeInsets.only(top: 2),
               child: Stack(
                 children: [
                   IconComponent(
@@ -145,6 +145,7 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                 ),
+                SizedBox(height: 20),
                 Flexible(
                   child:
                       HistoryListComponent(itemSelectedMenu: _itemSelectedMenu),
