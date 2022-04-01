@@ -130,17 +130,22 @@ class _NickNamePageState extends State<NickNamePage> {
                     ],
                     decoration: InputDecoration(
                       hintText: 'usuário',
+                      filled: true,
                       hintStyle: uiTextStyle.text7,
-                      counterStyle: const TextStyle(color: uiColor.comp_1),
-                      enabledBorder: UnderlineInputBorder(
+                      fillColor: uiColor.comp_3,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
+                          width: 2,
                           color: _isInputNotEmpty
                               ? uiColor.success
                               : uiColor.warning,
                         ),
                       ),
-                      focusedBorder: UnderlineInputBorder(
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
+                          width: 2,
                           color: _isInputNotEmpty
                               ? uiColor.success
                               : uiColor.warning,
