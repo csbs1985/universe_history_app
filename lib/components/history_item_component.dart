@@ -100,6 +100,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
             itemBuilder: (BuildContext context, index) {
               return Column(
                 children: [
+                  const DividerComponent(),
                   Container(
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
                     child: Column(
@@ -231,7 +232,6 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                       ],
                     ),
                   ),
-                  const DividerComponent(),
                 ],
               );
             },

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class AllForNowComponent extends StatelessWidget {
@@ -6,14 +7,17 @@ class AllForNowComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(bottom: 10),
-      child: Center(
-        child: Text(
-          'Isso é tudo por enquanto.',
-          style: uiTextStyle.text2,
+    return Column(
+      children: const [
+        DividerComponent(),
+        Center(
+          child: Text(
+            'Isso é tudo por enquanto.',
+            style: uiTextStyle.text2,
+          ),
         ),
-      ),
+        SizedBox(height: 20)
+      ],
     );
   }
 }
