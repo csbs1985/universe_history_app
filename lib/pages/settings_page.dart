@@ -1,17 +1,16 @@
 // ignore_for_file: prefer_final_fields, unused_local_variable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:universe_history_app/components/btn_confirm_component.dart';
 import 'package:universe_history_app/components/btn_link_component.dart';
 import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
+import 'package:universe_history_app/components/select_toggle_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
-import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 
@@ -90,40 +89,13 @@ class _SettingsPageState extends State<SettingsPage> {
                               'Nome de usuário', '/nickname'),
                           const BtnLinkComponent(
                               'Suas atividades', '/my-activities'),
-                          SizedBox(
-                            width: double.infinity,
-                            height: 48,
-                            child: TextButton(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    'Notificações',
-                                    style: uiTextStyle.text1,
-                                  ),
-                                  FlutterSwitch(
-                                    value:
-                                        currentUser.value.first.isNotification,
-                                    activeText: "ligada",
-                                    inactiveText: "desligada",
-                                    width: 80,
-                                    height: 30,
-                                    valueFontSize: 12,
-                                    toggleSize: 20,
-                                    toggleColor: uiColor.third,
-                                    activeColor: uiColor.first,
-                                    inactiveColor: uiColor.comp_3,
-                                    borderRadius: 20,
-                                    showOnOff: true,
-                                    onToggle: (value) => _toggleNotification(),
-                                  ),
-                                ],
-                              ),
-                              style: TextButton.styleFrom(
-                                  padding: EdgeInsets.zero),
-                              onPressed: () => _toggleNotification(),
-                            ),
+                          SelectToggleComponent(
+                            callback: (value) => _toggleNotification(),
+                            title: 'Notificações',
+                            resume: 'Habilitar ou desabilitar as notificações',
+                            textOn: 'habilitada',
+                            textOff: 'desabilitada',
+                            value: currentUser.value.first.isNotification,
                           ),
                           const BtnLinkComponent('Bloqueados', '/blocked'),
                         ],

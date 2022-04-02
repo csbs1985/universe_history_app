@@ -1,5 +1,7 @@
 // ignore_for_file: unnecessary_new
 
+import 'package:universe_history_app/shared/models/user_model.dart';
+
 class SelectModel {
   final int id;
   final String label;
@@ -10,8 +12,10 @@ class SelectModel {
   });
 
   static List<SelectModel> allPrivacy = [
-    new SelectModel(id: 0, label: "assinar história com seu nome de usuário"),
-    new SelectModel(id: 1, label: "assinar história como anônimo"),
+    new SelectModel(id: 0, label: "assinar história como anônimo"),
+    new SelectModel(
+        id: 1,
+        label: "assinar história como ${currentUser.value.first.nickname}"),
   ];
 
   static List<SelectModel> allComment = [

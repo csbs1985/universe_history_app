@@ -1,7 +1,7 @@
 // ignore_for_file: unused_import, unused_field, avoid_print, prefer_final_fields, unnecessary_new, prefer_is_empty, todo, argument_type_not_assignable_to_error_handler, invalid_return_type_for_catch_error, prefer_typing_uninitialized_variables
 
 import 'dart:convert';
-
+import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/components/appBar_component.dart';
 import 'package:universe_history_app/components/select_categories_component.dart';
 import 'package:universe_history_app/components/select_component.dart';
+import 'package:universe_history_app/components/select_toggle_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
@@ -36,8 +37,6 @@ class _CreateHistoryState extends State<CreateHistory> {
 
   List<CategoryModel> allCategories = CategoryModel.allCategories;
   List<CategoryModel> categoriesSelected = [];
-  List<SelectModel> allPrivacy = SelectModel.allPrivacy;
-  List<SelectModel> allComment = SelectModel.allComment;
 
   TextEditingController titleController = TextEditingController();
   TextEditingController textController = TextEditingController();
@@ -47,7 +46,7 @@ class _CreateHistoryState extends State<CreateHistory> {
   final UserClass userClass = UserClass();
   final Uuid uuid = const Uuid();
 
-  bool _isAnonymous = true;
+  bool _isSigned = true;
   bool _isComment = true;
   bool _btnPublish = false;
   List<String> _categories = [];
@@ -55,16 +54,16 @@ class _CreateHistoryState extends State<CreateHistory> {
   late Map<String, dynamic> history;
   late Map<String, dynamic> activity;
 
-  void _setPrivacy(value) {
+  void _setPrivacy() {
     setState(() {
-      _isAnonymous = isAnonymous(value);
+      _isSigned = !_isSigned;
       _canPublish();
     });
   }
 
-  void _setComment(value) {
+  void _setComment() {
     setState(() {
-      _isComment = isComment(value);
+      _isComment = !_isComment;
       _canPublish();
     });
   }
@@ -93,13 +92,14 @@ class _CreateHistoryState extends State<CreateHistory> {
       'text': textController.text.trim(),
       'date': DateTime.now().toString(),
       'isComment': _isComment,
-      'isAnonymous': _isAnonymous,
+      'isAnonymous': _isSigned,
       'isEdit': false,
       'qtyComment': 0,
       'categories': _categories,
       'userId': currentUser.value.first.id,
       'userNickName': currentUser.value.first.nickname,
     };
+    debugger();
 
     await api
         .setHistory(history)
@@ -150,8 +150,8 @@ class _CreateHistoryState extends State<CreateHistory> {
                 onChanged: (value) => _canPublish(),
                 decoration: const InputDecoration(
                   counterText: "",
-                  hintText: 'Título com até 60 caracteres',
-                  hintStyle: uiTextStyle.header1,
+                  hintText: 'Título',
+                  hintStyle: uiTextStyle.header2,
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide.none,
                   ),
@@ -171,7 +171,7 @@ class _CreateHistoryState extends State<CreateHistory> {
                 style: uiTextStyle.text1,
                 onChanged: (value) => _canPublish(),
                 decoration: const InputDecoration(
-                  hintText: 'Sua história',
+                  hintText: 'História',
                   hintStyle: uiTextStyle.text1,
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide.none,
@@ -182,24 +182,26 @@ class _CreateHistoryState extends State<CreateHistory> {
                 ),
               ),
             ),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-              child: SelectComponent(
-                title: 'Privacidade',
-                type: 'privacy',
-                content: allPrivacy,
-                callback: (value) => _setPrivacy(value),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+              child: SelectToggleComponent(
+                callback: (value) => _setPrivacy(),
+                title: 'Assinatura',
+                resume: 'Assinar sua história como',
+                textOn: currentUser.value.first.nickname,
+                textOff: 'anonimo',
+                value: _isSigned,
               ),
             ),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-              child: SelectComponent(
-                title: 'Habilitar comentários',
-                type: 'comment',
-                content: allComment,
-                callback: (value) => _setComment(value),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+              child: SelectToggleComponent(
+                callback: (value) => _setComment(),
+                title: 'Comentários',
+                resume: 'Habilitar ou desabilitar os comentários na história',
+                textOn: 'habilitar',
+                textOff: 'desabilitar',
+                value: _isComment,
               ),
             ),
             Container(
