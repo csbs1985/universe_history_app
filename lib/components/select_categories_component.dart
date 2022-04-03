@@ -3,8 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/shared/models/category_model.dart';
-import 'package:universe_history_app/theme/ui_button.dart';
-import 'package:universe_history_app/theme/ui_text_style.dart';
+import 'package:universe_history_app/theme/ui_color.dart';
 
 class SelectCategoriesComponent extends StatefulWidget {
   final Function? _callback;
@@ -45,36 +44,45 @@ class _SelectCategoriesComponentState extends State<SelectCategoriesComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        TitleResumeComponent(widget._title, widget._resume),
-        Wrap(
-          children: [
-            for (var item in widget._content)
-              if (item.isShowInput! && !item.isDisabled!)
-                Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: TextButton(
-                    onPressed: () => _setSelected(item.id!),
-                    child: Text(
-                      item.label!,
-                      style: _getSelected(item.id!)
-                          ? uiTextStyle.btnFlexActived
-                          : uiTextStyle.btnFlex,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          TitleResumeComponent(widget._title, widget._resume),
+          Wrap(
+            children: [
+              for (var item in widget._content)
+                if (item.isShowInput! && !item.isDisabled!)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 10, 10),
+                    child: SizedBox(
+                      height: 38,
+                      child: TextButton(
+                        onPressed: () => _setSelected(item.id!),
+                        child: Text(
+                          item.label!.toLowerCase(),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: _getSelected(item.id!)
+                                ? uiColor.buttonLabel
+                                : uiColor.buttonSecondLabel,
+                          ),
+                        ),
+                        style: ButtonStyle(
+                          backgroundColor: _getSelected(item.id!)
+                              ? MaterialStateProperty.all(uiColor.button)
+                              : MaterialStateProperty.all(uiColor.buttonSecond),
+                        ),
+                      ),
                     ),
-                    style: _getSelected(item.id!)
-                        ? uiButton.btnTagActived
-                        : uiButton.btnTag,
                   ),
-                ),
-          ],
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

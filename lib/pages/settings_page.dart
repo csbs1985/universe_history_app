@@ -141,21 +141,3 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 }
-
-// TextField(
-//   controller: _nickNameController,
-//   minLines: 1,
-//   maxLines: 1,
-//   style: uiTextStyle.header3,
-//   decoration: InputDecoration(
-//     counterText: "",
-//     hintText: _nickNameController.text,
-//     hintStyle: uiTextStyle.header3,
-//     enabledBorder: const UnderlineInputBorder(
-//       borderSide: BorderSide.none,
-//     ),
-//     focusedBorder: const UnderlineInputBorder(
-//       borderSide: BorderSide.none,
-//     ),
-//   ),
-// ),

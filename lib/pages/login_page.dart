@@ -162,27 +162,16 @@ class _LoginPageState extends State<LoginPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  ' Leia o ',
-                  style: uiTextStyle.text2,
-                ),
+                const Text(' Leia o ', style: uiTextStyle.text2),
                 GestureDetector(
                   onTap: () => Navigator.of(context).pushNamed("/terms"),
-                  child: const Text(
-                    'Termo de uso',
-                    style: uiTextStyle.text6,
-                  ),
+                  child: const Text('Termo de uso', style: uiTextStyle.text6),
                 ),
-                const Text(
-                  ' e ',
-                  style: uiTextStyle.text2,
-                ),
+                const Text(' e ', style: uiTextStyle.text2),
                 GestureDetector(
                   onTap: () => Navigator.of(context).pushNamed("/privacy"),
-                  child: const Text(
-                    'Política de privacidade',
-                    style: uiTextStyle.text6,
-                  ),
+                  child: const Text('Política de privacidade',
+                      style: uiTextStyle.text6),
                 ),
               ],
             ),

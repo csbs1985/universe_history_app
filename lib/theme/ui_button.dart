@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 
-/////////////https://www.flutterbeads.com/add-border-to-container-flutter/
-
 class uiButton {
   static ButtonStyle buttonPrimary = ButtonStyle(
     padding: MaterialStateProperty.all<EdgeInsets>(
@@ -41,26 +39,6 @@ class uiButton {
 
   static ButtonStyle btnFlexActived = ButtonStyle(
     alignment: Alignment.bottomLeft,
-    backgroundColor: MaterialStateProperty.all<Color>(uiColor.first),
-    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-      RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(0),
-      ),
-    ),
-  );
-
-  static ButtonStyle btnTag = ButtonStyle(
-    alignment: Alignment.center,
-    backgroundColor: MaterialStateProperty.all<Color>(uiColor.comp_3),
-    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-      RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-    ),
-  );
-
-  static ButtonStyle btnTagActived = ButtonStyle(
-    alignment: Alignment.center,
     backgroundColor: MaterialStateProperty.all<Color>(uiColor.first),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
