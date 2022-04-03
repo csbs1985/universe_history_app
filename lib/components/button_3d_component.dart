@@ -9,7 +9,7 @@ import 'package:universe_history_app/utils/capitaliza_util.dart';
 class Button3dComponent extends StatefulWidget {
   const Button3dComponent({
     required Function callback,
-    required String label,
+    String? label,
     ButtonEnum? style,
     double? width,
   })  : _callback = callback,
@@ -18,7 +18,7 @@ class Button3dComponent extends StatefulWidget {
         _width = width;
 
   final Function _callback;
-  final String _label;
+  final String? _label;
   final ButtonEnum? _style;
   final double? _width;
 
@@ -42,14 +42,24 @@ class _Button3dComponentState extends State<Button3dComponent> {
     }
   }
 
+  double _getWidth() {
+    if (widget._style == ButtonEnum.PUBLISH) {
+      return 80;
+    }
+
+    return widget._width ?? 100;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Button3d(
-      height: 42,
-      width: widget._width ?? 100,
+      height: widget._style == ButtonEnum.PUBLISH ? 32 : 42,
+      width: _getWidth(),
       onPressed: () => widget._callback(true),
       child: Text(
-        capitalizeUtil(widget._label),
+        widget._style == ButtonEnum.PUBLISH
+            ? 'publicar'
+            : capitalizeUtil(widget._label!),
         style: text,
       ),
       style: Button3dStyle(
@@ -63,8 +73,4 @@ class _Button3dComponentState extends State<Button3dComponent> {
   }
 }
 
-enum ButtonEnum {
-  DISABLED,
-  SECOND,
-  PRIMARY,
-}
+enum ButtonEnum { DISABLED, SECOND, PRIMARY, PUBLISH }
