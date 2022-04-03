@@ -92,14 +92,13 @@ class _CreateHistoryState extends State<CreateHistory> {
       'text': textController.text.trim(),
       'date': DateTime.now().toString(),
       'isComment': _isComment,
-      'isAnonymous': _isSigned,
+      'isSigned': _isSigned,
       'isEdit': false,
       'qtyComment': 0,
       'categories': _categories,
       'userId': currentUser.value.first.id,
       'userNickName': currentUser.value.first.nickname,
     };
-    debugger();
 
     await api
         .setHistory(history)

@@ -10,13 +10,13 @@ class CommentModel {
   final String text;
   final String userId;
   final String userNickName;
-  final bool isAnonymous;
+  final bool isSigned;
   final bool isEdit;
 
   CommentModel({
     required this.date,
     required this.historyId,
-    required this.isAnonymous,
+    required this.isSigned,
     required this.isEdit,
     required this.text,
     required this.userId,
@@ -26,7 +26,7 @@ class CommentModel {
   CommentModel.fromJson(Map<CommentModel, dynamic> json)
       : date = json['date'],
         historyId = json['historyId'],
-        isAnonymous = json['isAnonymous'],
+        isSigned = json['isSigned'],
         isEdit = json['isEdit'],
         text = json['text'],
         userId = json['userId'],
@@ -35,7 +35,7 @@ class CommentModel {
   Map<String, dynamic> toJson() => {
         'date': date,
         'historyId': historyId,
-        'isAnonymous': isAnonymous,
+        'isSigned': isSigned,
         'isEdit': isEdit,
         'text': text,
         'userId': userId,

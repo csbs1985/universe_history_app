@@ -24,7 +24,7 @@ class SelectModel {
   ];
 }
 
-bool isAnonymous(value) {
+bool isSigned(value) {
   return value == 0 ? true : false;
 }
 

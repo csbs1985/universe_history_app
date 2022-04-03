@@ -15,7 +15,7 @@ class HistoryModel {
     required this.text,
     required this.date,
     required this.isComment,
-    required this.isAnonymous,
+    required this.isSigned,
     required this.isEdit,
     required this.userId,
     required this.userNickName,
@@ -30,7 +30,7 @@ class HistoryModel {
   late String userId;
   late String userNickName;
   late bool isComment;
-  late bool isAnonymous;
+  late bool isSigned;
   late bool isEdit;
   late int qtyComment;
   late List<String> categories;
@@ -44,7 +44,7 @@ class HistoryModel {
         text: json['text'],
         date: json['date'],
         isComment: json['isComment'],
-        isAnonymous: json['isAnonymous'],
+        isSigned: json['isSigned'],
         isEdit: json['isEdit'],
         userId: json['userId'],
         userNickName: json['userNickName'],
@@ -60,7 +60,7 @@ class HistoryModel {
         'text': text,
         'date': date,
         'isComment': isComment,
-        'isAnonymous': isAnonymous,
+        'isSigned': isSigned,
         'isEdit': isEdit,
         'userId': userId,
         'userNickName': userNickName,

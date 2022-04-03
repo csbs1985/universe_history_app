@@ -56,7 +56,7 @@ class _ModalInputCommmentComponentState
         'id': uuid.v4(),
         'date': DateTime.now().toString(),
         'historyId': currentHistory.value.first.id,
-        'isAnonymous': _textAnonimous,
+        'isSigned': _textAnonimous,
         'isEdit': false,
         'text': _commentController.text.trim(),
         'userId': currentUser.value.first.id,
