@@ -1,10 +1,9 @@
 // ignore_for_file: prefer_is_empty, unused_field, void_checks, avoid_print, unnecessary_new
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:universe_history_app/components/btn_component.dart';
+import 'package:flutter_switch/flutter_switch.dart';
+import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
-import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/core/api.dart';
@@ -12,7 +11,6 @@ import 'package:universe_history_app/shared/enums/type_toast_enum.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
-import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:uuid/uuid.dart';
 
@@ -36,7 +34,7 @@ class _ModalInputCommmentComponentState
   late Map<String, dynamic> _comment;
 
   bool _isInputNotEmpty = false;
-  bool _textAnonimous = false;
+  bool _textSigned = true;
 
   void keyUp(String text) {
     setState(() {
@@ -46,7 +44,7 @@ class _ModalInputCommmentComponentState
 
   dynamic _toggleAnonimous() {
     setState(() {
-      _textAnonimous = !_textAnonimous;
+      _textSigned = !_textSigned;
     });
   }
 
@@ -56,7 +54,7 @@ class _ModalInputCommmentComponentState
         'id': uuid.v4(),
         'date': DateTime.now().toString(),
         'historyId': currentHistory.value.first.id,
-        'isSigned': _textAnonimous,
+        'isSigned': _textSigned,
         'isEdit': false,
         'text': _commentController.text.trim(),
         'userId': currentUser.value.first.id,
@@ -98,13 +96,6 @@ class _ModalInputCommmentComponentState
         });
   }
 
-  void _cleanComment() {
-    setState(() {
-      _commentController.text = '';
-      _isInputNotEmpty = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -114,7 +105,7 @@ class _ModalInputCommmentComponentState
           SingleChildScrollView(
             child: Container(
               padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom + 48),
+                  bottom: MediaQuery.of(context).viewInsets.bottom + 54.5),
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
@@ -139,40 +130,40 @@ class _ModalInputCommmentComponentState
             left: 0,
             right: 0,
             child: Container(
-              height: 48.5,
+              height: 54.5,
               color: uiColor.comp_1,
               child: Column(
                 children: [
                   const DividerComponent(bottom: 0),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            IconComponent(
-                              icon: uiSvg.clean_all,
-                              callback: (value) => _cleanComment(),
-                            ),
-                            TextButton.icon(
-                              icon: _textAnonimous
-                                  ? SvgPicture.asset(uiSvg.lock)
-                                  : SvgPicture.asset(uiSvg.unlock),
-                              label: Text(
-                                _textAnonimous
-                                    ? 'anônimo'
-                                    : currentUser.value.first.nickname,
-                                style: uiTextStyle.text2,
-                              ),
-                              onPressed: () => _toggleAnonimous(),
-                            ),
-                          ],
+                        FlutterSwitch(
+                          value: _textSigned,
+                          activeText: currentUser.value.first.nickname,
+                          inactiveText: 'anonimo',
+                          activeColor: uiColor.button,
+                          inactiveColor: uiColor.buttonSecond,
+                          activeToggleColor: uiColor.buttonBorder,
+                          inactiveToggleColor: uiColor.buttonSecondBorder,
+                          activeTextColor: uiColor.buttonLabel,
+                          inactiveTextColor: uiColor.buttonSecondLabel,
+                          toggleColor: uiColor.third,
+                          width: 90,
+                          height: 30,
+                          valueFontSize: 12,
+                          toggleSize: 20,
+                          borderRadius: 10,
+                          showOnOff: true,
+                          onToggle: (value) => _toggleAnonimous(),
                         ),
-                        BtnComponent(
-                          enabled: _isInputNotEmpty,
-                          callback: (value) => _sendComment(),
-                        ),
+                        if (_isInputNotEmpty)
+                          Button3dComponent(
+                            callback: (value) => _sendComment(),
+                            style: ButtonEnum.PUBLISH,
+                          ),
                       ],
                     ),
                   ),
