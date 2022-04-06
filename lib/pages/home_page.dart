@@ -3,7 +3,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/all_for_now_component.dart';
-import 'package:universe_history_app/components/card_btn_component.dart';
+import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/history_list_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
@@ -67,11 +67,11 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           actions: [
-            IconComponent(
-              icon: uiSvg.search,
-              color: uiColor.icon_2,
-              route: 'search',
-            ),
+            // IconComponent(
+            //   icon: uiSvg.search,
+            //   color: uiColor.icon_2,
+            //   route: 'search',
+            // ),
             Padding(
               padding: const EdgeInsets.only(top: 2),
               child: Stack(
@@ -122,22 +122,21 @@ class _HomePageState extends State<HomePage> {
                               child: ValueListenableBuilder<List<UserModel>>(
                                 valueListenable: currentUser,
                                 builder: (context, result, __) {
-                                  return result.isNotEmpty
-                                      ? CardBtnComponent(
-                                          text:
-                                              'Conte sua história ${currentUser.value.first.nickname}',
-                                          label: 'Criar',
-                                          callback: (value) =>
-                                              Navigator.of(context)
-                                                  .pushNamed("/create"),
-                                        )
-                                      : CardBtnComponent(
-                                          text: 'Entre ou crie sua conta',
-                                          label: 'entrar',
-                                          callback: (valeu) =>
-                                              Navigator.of(context)
-                                                  .pushNamed("/login"),
-                                        );
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                                    child: Button3dComponent(
+                                      label: result.isNotEmpty
+                                          ? 'Conte sua história, ${currentUser.value.first.nickname}'
+                                          : 'Entre ou crie sua conta',
+                                      size: ButtonSizeEnum.LARGE,
+                                      style: ButtonStyleEnum.PRIMARY,
+                                      callback: (value) => Navigator.of(context)
+                                          .pushNamed(result.isNotEmpty
+                                              ? "/create"
+                                              : "/login"),
+                                    ),
+                                  );
                                 },
                               ),
                             )

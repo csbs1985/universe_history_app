@@ -1,10 +1,10 @@
 // ignore_for_file: avoid_print, unused_local_variable, await_only_futures, unused_field, unnecessary_new, deprecated_member_use, unused_element, prefer_const_constructors
 
+import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
-import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
@@ -119,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: const AppbarBackComponent(),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(40, 0, 40, 20),
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -142,14 +142,16 @@ class _LoginPageState extends State<LoginPage> {
               height: 20,
             ),
             Button3dComponent(
-              label: 'apple',
-              width: double.infinity,
+              label: 'Apple',
+              size: ButtonSizeEnum.LARGE,
+              style: ButtonStyleEnum.PRIMARY,
               callback: (value) => _loginApple(),
             ),
             const SizedBox(height: 20),
             Button3dComponent(
               label: 'Google',
-              width: double.infinity,
+              size: ButtonSizeEnum.LARGE,
+              style: ButtonStyleEnum.PRIMARY,
               callback: (value) => _loginGoogle(),
             ),
             const SizedBox(height: 20),

@@ -49,11 +49,15 @@ class _AppbarComponentState extends State<AppbarComponent> {
           : null,
       actions: [
         if (widget._btnPublish)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 13, 20, 0),
-            child: Button3dComponent(
-              callback: (value) => _onPressed(context),
-              style: ButtonEnum.PUBLISH,
+          Center(
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+              child: Button3dComponent(
+                label: 'Publicar',
+                style: ButtonStyleEnum.PRIMARY,
+                size: ButtonSizeEnum.SMALL,
+                callback: (value) => _onPressed(context),
+              ),
             ),
           ),
       ],

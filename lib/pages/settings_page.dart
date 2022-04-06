@@ -73,6 +73,8 @@ class _SettingsPageState extends State<SettingsPage> {
                           const SizedBox(height: 10),
                           Button3dComponent(
                             label: 'Entrar',
+                            size: ButtonSizeEnum.MEDIUM,
+                            style: ButtonStyleEnum.PRIMARY,
                             callback: (value) =>
                                 Navigator.of(context).pushNamed("/login"),
                           ),

@@ -63,7 +63,7 @@ class _SearchPageState extends State<SearchPage> {
               const SizedBox(height: 10),
               if (isFilter)
                 StreamBuilder<QuerySnapshot>(
-                  stream: api.getHistoryNickName(_searchController.text),
+                  stream: api.getUsersNickName(_searchController.text),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     switch (snapshot.connectionState) {

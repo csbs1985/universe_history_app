@@ -70,9 +70,9 @@ class Api {
     return user.where('nickname', arrayContainsAny: ['_nickname']).snapshots();
   }
 
-  getHistoryNickName(String _nickname) {
-    return history
-        .where('nickname', arrayContains: _nickname)
+  getUsersNickName(String _nickname) {
+    return user
+        .where('nickname', arrayContainsAny: ['_nickname'])
         .orderBy('nickname')
         .snapshots();
   }

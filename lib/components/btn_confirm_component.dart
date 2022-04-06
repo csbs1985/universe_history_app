@@ -1,7 +1,7 @@
 // ignore_for_file: no_logic_in_create_state, use_key_in_widget_constructors, unused_element, prefer_const_constructors
 
-import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/button_3d_component.dart';
+import 'package:flutter/material.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -91,11 +91,14 @@ class _BtnConfirmComponentState extends State<BtnConfirmComponent> {
               children: [
                 Button3dComponent(
                   label: 'Sair',
-                  style: ButtonEnum.SECOND,
+                  size: ButtonSizeEnum.MEDIUM,
+                  style: ButtonStyleEnum.SECOND,
                   callback: (value) => widget._callback(true),
                 ),
                 Button3dComponent(
                   label: 'Cancelar',
+                  size: ButtonSizeEnum.MEDIUM,
+                  style: ButtonStyleEnum.PRIMARY,
                   callback: (value) => widget._callback(false),
                 ),
               ],

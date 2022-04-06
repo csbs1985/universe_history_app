@@ -136,7 +136,7 @@ class _ModalInputCommmentComponentState
                 children: [
                   const DividerComponent(bottom: 0),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
+                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -161,8 +161,10 @@ class _ModalInputCommmentComponentState
                         ),
                         if (_isInputNotEmpty)
                           Button3dComponent(
+                            label: 'Publicar',
+                            style: ButtonStyleEnum.PRIMARY,
+                            size: ButtonSizeEnum.SMALL,
                             callback: (value) => _sendComment(),
-                            style: ButtonEnum.PUBLISH,
                           ),
                       ],
                     ),

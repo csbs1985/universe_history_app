@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/shared/models/blocked_model.dart';
-import 'package:universe_history_app/theme/ui_button.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -54,42 +54,43 @@ class _blockedUsersPageState extends State<blockedUsersPage> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TitleComponent(title: numBlocked),
-                const Text(
-                  'Quando você bloqueia uma pessoa, este usuário não poderá mais ler suas histórias e comentários e comentar o que você escreve.',
-                  style: uiTextStyle.text2,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                for (var item in allBlocked)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(item.user, style: uiTextStyle.text1),
-                            Text(item.date, style: uiTextStyle.text2),
-                          ],
-                        ),
-                        TextButton(
-                          child: const Text('Desbloquear',
-                              style: uiTextStyle.text4),
-                          style: uiButton.buttonPrimary,
-                          onPressed: () => _unlockUser(item.blocked),
-                        ),
-                      ],
-                    ),
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TitleComponent(title: numBlocked),
+              const Text(
+                'Quando você bloqueia uma pessoa, este usuário não poderá mais ler suas histórias e comentários e comentar o que você escreve.',
+                style: uiTextStyle.text2,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              for (var item in allBlocked)
+                Container(
+                  color: Colors.amber,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(item.user, style: uiTextStyle.text1),
+                          Text(item.date, style: uiTextStyle.text2),
+                        ],
+                      ),
+                      Button3dComponent(
+                        label: 'desbloquear',
+                        size: ButtonSizeEnum.MEDIUM,
+                        style: ButtonStyleEnum.PRIMARY,
+                        callback: (value) => _unlockUser(item.blocked),
+                      )
+                    ],
                   ),
-              ],
-            )),
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }

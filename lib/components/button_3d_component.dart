@@ -1,76 +1,133 @@
-// ignore_for_file: use_key_in_widget_constructors, import_of_legacy_library_into_null_safe, constant_identifier_names
+// ignore_for_file: use_key_in_widget_constructors, dead_code, sized_box_for_whitespace, unused_field, prefer_final_fields, curly_braces_in_flow_control_structures
 
-import 'package:button3d/button3d.dart';
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
-import 'package:universe_history_app/utils/capitaliza_util.dart';
 
 class Button3dComponent extends StatefulWidget {
   const Button3dComponent({
     required Function callback,
-    String? label,
-    ButtonEnum? style,
-    double? width,
+    required String label,
+    required ButtonStyleEnum style,
+    required ButtonSizeEnum size,
   })  : _callback = callback,
         _label = label,
         _style = style,
-        _width = width;
+        _size = size;
 
   final Function _callback;
-  final String? _label;
-  final ButtonEnum? _style;
-  final double? _width;
+  final String _label;
+  final ButtonStyleEnum _style;
+  final ButtonSizeEnum _size;
 
   @override
-  _Button3dComponentState createState() => _Button3dComponentState();
+  State<Button3dComponent> createState() => _Button3dComponentState();
 }
 
 class _Button3dComponentState extends State<Button3dComponent> {
-  Color topColor = uiColor.button;
-  Color backColor = uiColor.buttonBorder;
-  TextStyle text = uiTextStyle.buttonLabel;
+  Color _backColor = uiColor.first;
+  Color _borderColor = uiColor.second;
+  TextStyle _styleText = uiTextStyle.buttonLabel;
+  final double _borderSize = 4;
+  late double _position = _borderSize;
+  late double _width;
+  late double _height;
 
   @override
-  void initState() {
+  initState() {
+    _getStyle();
     super.initState();
+  }
 
-    if (widget._style == ButtonEnum.SECOND) {
-      topColor = uiColor.buttonSecond;
-      backColor = uiColor.buttonSecondBorder;
-      text = uiTextStyle.buttonSecondLabel;
+  _getStyle() {
+    if (widget._style == ButtonStyleEnum.PRIMARY) {
+      _backColor = uiColor.button;
+      _borderColor = uiColor.buttonBorder;
+      _styleText = uiTextStyle.buttonLabel;
+    }
+    if (widget._style == ButtonStyleEnum.SECOND) {
+      _backColor = uiColor.buttonSecond;
+      _borderColor = uiColor.buttonSecondBorder;
+      _styleText = uiTextStyle.buttonSecondLabel;
     }
   }
 
   double _getWidth() {
-    if (widget._style == ButtonEnum.PUBLISH) {
-      return 80;
-    }
+    if (widget._size == ButtonSizeEnum.SMALL) return 80;
+    if (widget._size == ButtonSizeEnum.MEDIUM) return 100;
+    if (widget._size == ButtonSizeEnum.LARGE)
+      return MediaQuery.of(context).size.width - 32;
+    return _width;
+  }
 
-    return widget._width ?? 100;
+  double _getHeight() {
+    if (widget._size == ButtonSizeEnum.SMALL) return 32 - _borderSize;
+    if (widget._size == ButtonSizeEnum.MEDIUM) return 42 - _borderSize;
+    if (widget._size == ButtonSizeEnum.LARGE) return 48 - _borderSize;
+    return _height - _borderSize;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Button3d(
-      height: widget._style == ButtonEnum.PUBLISH ? 32 : 42,
-      width: _getWidth(),
-      onPressed: () => widget._callback(true),
-      child: Text(
-        widget._style == ButtonEnum.PUBLISH
-            ? 'publicar'
-            : capitalizeUtil(widget._label!),
-        style: text,
+    return GestureDetector(
+      child: Container(
+        width: _getWidth(),
+        height: _getHeight() + _borderSize,
+        child: Stack(
+          children: [
+            Positioned(
+              bottom: 0,
+              child: Container(
+                width: _getWidth(),
+                height: _getHeight(),
+                decoration: BoxDecoration(
+                  color: _borderColor,
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                ),
+              ),
+            ),
+            AnimatedPositioned(
+              curve: Curves.easeIn,
+              bottom: _position,
+              duration: const Duration(milliseconds: 10),
+              child: Container(
+                width: _getWidth(),
+                height: _getHeight(),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                decoration: BoxDecoration(
+                  color: _backColor,
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                ),
+                child: Center(
+                  child: Text(
+                    widget._label,
+                    style: _styleText,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
-      style: Button3dStyle(
-        z: 4,
-        tappedZ: 1,
-        topColor: topColor,
-        backColor: backColor,
-        borderRadius: BorderRadius.circular(10),
-      ),
+      onTapUp: (_) {
+        setState(() {
+          _position = _borderSize;
+          widget._callback(true);
+        });
+      },
+      onTapDown: (_) {
+        setState(() {
+          _position = 0;
+        });
+      },
+      onTapCancel: () {
+        setState(() {
+          _position = _borderSize;
+        });
+      },
     );
   }
 }
 
-enum ButtonEnum { DISABLED, SECOND, PRIMARY, PUBLISH }
+enum ButtonStyleEnum { DISABLED, SECOND, PRIMARY }
+enum ButtonSizeEnum { LARGE, SMALL, MEDIUM }
