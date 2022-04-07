@@ -122,6 +122,7 @@ class _HomePageState extends State<HomePage> {
                       HistoryListComponent(itemSelectedMenu: _itemSelectedMenu),
                 ),
                 AllForNowComponent(),
+                SizedBox(height: 50),
               ],
             ),
           ),
