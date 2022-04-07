@@ -8,6 +8,7 @@ import 'package:universe_history_app/components/history_list_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/components/menu_component.dart';
+import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/utils/device_util.dart';
@@ -104,11 +105,11 @@ class _HomePageState extends State<HomePage> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: uiColor.first,
           elevation: 0,
-          child: SvgPicture.asset(uiSvg.create),
-          onPressed: () => Navigator.of(context).pushNamed("/create"),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          child: SvgPicture.asset(
+              currentUser.value.isNotEmpty ? uiSvg.create : uiSvg.create),
+          onPressed: () => Navigator.of(context)
+              .pushNamed(currentUser.value.isNotEmpty ? "/create" : "/login"),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
         body: Container(
           color: uiColor.comp_1,

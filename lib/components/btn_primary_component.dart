@@ -36,7 +36,7 @@ class _BtnPrimaryComponentState extends State<BtnPrimaryComponent> {
           : uiButton.buttonPrimaryDisabled,
       child: Text(
         widget._label,
-        style: widget._enabled ? uiTextStyle.text1 : uiTextStyle.text8,
+        style: widget._enabled ? uiTextStyle.text1 : uiTextStyle.text5,
       ),
       onPressed: () => widget._enabled ? _onPressed(true) : null,
     );

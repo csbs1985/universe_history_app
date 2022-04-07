@@ -41,19 +41,6 @@ class uiTextStyle {
     color: uiColor.third,
   );
 
-  static const TextStyle header3 = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w700,
-    color: uiColor.first,
-  );
-
-  static const TextStyle header4 = TextStyle(
-    fontSize: 24,
-    fontWeight: FontWeight.w700,
-    color: uiColor.first,
-    letterSpacing: 3,
-  );
-
   static const TextStyle text1 = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w400,
@@ -80,8 +67,8 @@ class uiTextStyle {
 
   static const TextStyle text5 = TextStyle(
     fontSize: 16,
-    fontWeight: FontWeight.w700,
-    color: uiColor.third,
+    fontWeight: FontWeight.w400,
+    color: uiColor.comp_1,
   );
 
   static const TextStyle text6 = TextStyle(
@@ -94,18 +81,6 @@ class uiTextStyle {
     fontSize: 16,
     fontWeight: FontWeight.w400,
     color: uiColor.comp_2,
-  );
-
-  static const TextStyle text8 = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w400,
-    color: uiColor.comp_1,
-  );
-
-  static const TextStyle text9 = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w400,
-    color: uiColor.second,
   );
 
   static const TextStyle buttonPrimary = TextStyle(
@@ -124,17 +99,5 @@ class uiTextStyle {
     fontSize: 18,
     fontWeight: FontWeight.w700,
     color: uiColor.buttonSecondLabel,
-  );
-
-  static const TextStyle chip = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w400,
-    color: uiColor.third,
-  );
-
-  static const TextStyle chipActive = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w400,
-    color: uiColor.first,
   );
 }
