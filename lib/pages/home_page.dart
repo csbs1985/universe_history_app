@@ -58,7 +58,6 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 LogoComponent(
-                  color: uiColor.icon_2,
                   size: 20,
                   callback: (value) => _scrollToTop(),
                 ),
@@ -68,7 +67,6 @@ class _HomePageState extends State<HomePage> {
           actions: [
             // IconComponent(
             //   icon: uiSvg.search,
-            //   color: uiColor.icon_2,
             //   route: 'search',
             // ),
             Padding(
@@ -77,7 +75,6 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   IconComponent(
                     icon: uiSvg.notification,
-                    color: uiColor.icon_2,
                     route: 'notification',
                   ),
                   if (_notification)
@@ -96,7 +93,6 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.only(right: 10),
               child: IconComponent(
                 icon: uiSvg.menu,
-                color: uiColor.icon_2,
                 route: 'settings',
               ),
             ),

@@ -24,9 +24,6 @@ class uiColor {
   static const Color buttonSecondBorder = const Color(0xFF212324);
 
   static const Color icon = const Color(0xFFc9d1d9);
-  static const Color icon_2 = const Color(0xFFFFFFFF);
-
-  static const Color create_1 = const Color(0xFF141a22);
 
   static const Color block_user = const Color(0xFF0392CE);
   static const Color login = const Color(0xFF66B132);

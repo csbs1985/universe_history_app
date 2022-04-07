@@ -11,7 +11,6 @@ class uiSvg {
   static const String edit = 'assets/icons/edit.svg';
   static const String favorite = 'assets/icons/favorite.svg';
   static const String favorited = 'assets/icons/favorited.svg';
-  static const String lock = 'assets/icons/lock.svg';
   static const String login = 'assets/icons/login.svg';
   static const String logo = 'assets/icons/history_logo_full.svg';
   static const String logout = 'assets/icons/logout.svg';
@@ -27,7 +26,6 @@ class uiSvg {
   static const String share = 'assets/icons/share.svg';
   static const String temporarily_disabled =
       'assets/icons/temporarily_disabled.svg';
-  static const String unlock = 'assets/icons/unlock.svg';
   static const String up_nickname = 'assets/icons/up_nickname.svg';
   static const String write = 'assets/icons/write.svg';
 }
