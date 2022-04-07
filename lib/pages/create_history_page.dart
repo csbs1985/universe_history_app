@@ -9,7 +9,6 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/components/appBar_component.dart';
 import 'package:universe_history_app/components/select_categories_component.dart';
-import 'package:universe_history_app/components/select_component.dart';
 import 'package:universe_history_app/components/select_toggle_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';

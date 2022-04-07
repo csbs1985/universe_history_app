@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/components/divider_component.dart';
-import 'package:universe_history_app/components/pill_component.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
@@ -44,7 +43,6 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
           SingleChildScrollView(
             child: Column(
               children: [
-                PillComponent(),
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: Text(
