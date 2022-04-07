@@ -59,7 +59,7 @@ class _MenuComponentState extends State<MenuComponent> {
                           child: Text(
                             widget.allCategories[index].label!,
                             style: _getSelected(widget.allCategories[index])
-                                ? uiTextStyle.text5
+                                ? uiTextStyle.text3
                                 : uiTextStyle.text7,
                           ),
                         ),

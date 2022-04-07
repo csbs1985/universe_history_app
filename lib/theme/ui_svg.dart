@@ -1,8 +1,6 @@
 // ignore_for_file: camel_case_types, constant_identifier_names
 
 class uiSvg {
-  static const String account = 'assets/icons/account.svg';
-  static const String apple = 'assets/icons/apple.svg';
   static const String block = 'assets/icons/block.svg';
   static const String closed = 'assets/icons/closed.svg';
   static const String comment = 'assets/icons/comment.svg';
@@ -13,7 +11,6 @@ class uiSvg {
   static const String edit = 'assets/icons/edit.svg';
   static const String favorite = 'assets/icons/favorite.svg';
   static const String favorited = 'assets/icons/favorited.svg';
-  static const String google = 'assets/icons/google.svg';
   static const String lock = 'assets/icons/lock.svg';
   static const String login = 'assets/icons/login.svg';
   static const String logo = 'assets/icons/history_logo_full.svg';

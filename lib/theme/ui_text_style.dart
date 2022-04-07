@@ -68,7 +68,7 @@ class uiTextStyle {
 
   static const TextStyle text3 = TextStyle(
     fontSize: 16,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w900,
     color: uiColor.first,
   );
 

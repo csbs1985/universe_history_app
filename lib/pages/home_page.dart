@@ -2,14 +2,12 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/components/all_for_now_component.dart';
-import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/history_list_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/components/menu_component.dart';
-import 'package:universe_history_app/core/variables.dart';
-import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/utils/device_util.dart';
@@ -103,6 +101,15 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: uiColor.first,
+          elevation: 0,
+          child: SvgPicture.asset(uiSvg.create),
+          onPressed: () => Navigator.of(context).pushNamed("/create"),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
         body: Container(
           color: uiColor.comp_1,
           child: SingleChildScrollView(
@@ -113,38 +120,6 @@ class _HomePageState extends State<HomePage> {
               children: [
                 MenuComponent(),
                 SizedBox(height: 10),
-                ValueListenableBuilder(
-                  valueListenable: menuItemSelected,
-                  builder: (context, value, __) {
-                    return Container(
-                      child: _showCard(menuItemSelected.value.id)
-                          ? Container(
-                              child: ValueListenableBuilder<List<UserModel>>(
-                                valueListenable: currentUser,
-                                builder: (context, result, __) {
-                                  return Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                                    child: Button3dComponent(
-                                      label: result.isNotEmpty
-                                          ? 'Conte sua história, ${currentUser.value.first.nickname}'
-                                          : 'Entre ou crie sua conta',
-                                      size: ButtonSizeEnum.LARGE,
-                                      style: ButtonStyleEnum.PRIMARY,
-                                      callback: (value) => Navigator.of(context)
-                                          .pushNamed(result.isNotEmpty
-                                              ? "/create"
-                                              : "/login"),
-                                    ),
-                                  );
-                                },
-                              ),
-                            )
-                          : SizedBox(),
-                    );
-                  },
-                ),
-                SizedBox(height: 20),
                 Flexible(
                   child:
                       HistoryListComponent(itemSelectedMenu: _itemSelectedMenu),

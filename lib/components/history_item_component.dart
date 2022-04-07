@@ -101,7 +101,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
               return Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+                    padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -228,10 +228,13 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                             ),
                           ],
                         ),
+                        const SizedBox(height: 10),
+                        const DividerComponent(
+                          bottom: 0,
+                        ),
                       ],
                     ),
                   ),
-                  const DividerComponent(),
                 ],
               );
             },
