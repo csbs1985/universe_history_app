@@ -11,8 +11,8 @@ class uiColor {
   static const Color comp_2 = const Color(0xFFb0b3b8);
   static const Color comp_3 = const Color(0xFF3A3B3C);
 
-  static const Color warning = const Color(0xFFE74C3B);
-  static const Color success = const Color(0xFF26AD63);
+  static const Color warning = const Color(0xFFE95750);
+  static const Color success = const Color(0xFFA1D151);
   static const Color info = const Color(0xFF7291d5);
 
   static const Color button = uiColor.first;

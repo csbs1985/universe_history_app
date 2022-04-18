@@ -24,7 +24,7 @@ class ModalInputCommmentComponent extends StatefulWidget {
 class _ModalInputCommmentComponentState
     extends State<ModalInputCommmentComponent> {
   final TextEditingController _commentController = TextEditingController();
-  final ToastComponent toast = new ToastComponent();
+  final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
   final Api api = Api();
   final Uuid uuid = const Uuid();

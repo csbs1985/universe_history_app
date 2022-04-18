@@ -26,12 +26,12 @@ class ToastComponent {
     showToast(
       text,
       context: context,
-      position: StyledToastPosition.top,
-      textStyle: uiTextStyle.text1,
+      position: StyledToastPosition.center,
+      textStyle: uiTextStyle.buttonLabel,
       backgroundColor: _style,
       animation: StyledToastAnimation.slideToBottomFade,
       reverseAnimation: StyledToastAnimation.slideFromBottomFade,
-      borderRadius: BorderRadius.circular(0),
+      borderRadius: BorderRadius.circular(10),
     );
   }
 }
