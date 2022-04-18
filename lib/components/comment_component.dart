@@ -119,7 +119,7 @@ class _CommentState extends State<CommentComponent> {
                         _showModal(context, documents[index].data()),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 10),
+                    padding: const EdgeInsets.fromLTRB(2, 4, 0, 0),
                     child: Text(
                       resumeUitl(documents[index]),
                       style: uiTextStyle.text2,

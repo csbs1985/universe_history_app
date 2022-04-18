@@ -34,7 +34,7 @@ String editDateUtil(int timestamp) {
         months[int.parse(month.format(date)) - 1] +
         '. de ' +
         year.format(date) +
-        ' as ' +
+        ' às ' +
         hours.format(date);
   }
 
