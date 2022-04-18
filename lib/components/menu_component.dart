@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/shared/models/category_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
-import 'package:universe_history_app/theme/ui_color.dart';
+import 'package:universe_history_app/theme/ui_button.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class MenuComponent extends StatefulWidget {
@@ -45,28 +45,18 @@ class _MenuComponentState extends State<MenuComponent> {
               scrollDirection: Axis.horizontal,
               itemBuilder: (BuildContext context, int index) {
                 return canShow(widget.allCategories[index].label)
-                    ? Container(
-                        color: _getSelected(widget.allCategories[index])
-                            ? uiColor.button
-                            : uiColor.comp_1,
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              widget.allCategories[index].label!,
-                              style: _getSelected(widget.allCategories[index])
-                                  ? uiTextStyle.buttonPrimary
-                                  : uiTextStyle.text7,
-                            ),
-                          ),
-                          onPressed: () => _setSelected(
-                            widget.allCategories[index],
-                          ),
+                    ? TextButton(
+                        style: _getSelected(widget.allCategories[index])
+                            ? uiButton.buttonMenuActive
+                            : uiButton.buttonMenu,
+                        child: Text(
+                          widget.allCategories[index].label!,
+                          style: _getSelected(widget.allCategories[index])
+                              ? uiTextStyle.buttonPrimary
+                              : uiTextStyle.text7,
+                        ),
+                        onPressed: () => _setSelected(
+                          widget.allCategories[index],
                         ),
                       )
                     : const SizedBox();

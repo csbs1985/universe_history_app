@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
+import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class uiButton {
   static ButtonStyle buttonPrimary = ButtonStyle(
@@ -64,6 +65,24 @@ class uiButton {
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0),
       ),
+    ),
+  );
+
+  static ButtonStyle buttonMenu = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(uiColor.comp_1),
+    padding: MaterialStateProperty.all<EdgeInsets>(
+        const EdgeInsets.symmetric(horizontal: 10)),
+    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+      RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+    ),
+  );
+
+  static ButtonStyle buttonMenuActive = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(uiColor.first),
+    padding: MaterialStateProperty.all<EdgeInsets>(
+        const EdgeInsets.symmetric(horizontal: 10)),
+    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+      RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
     ),
   );
 }
