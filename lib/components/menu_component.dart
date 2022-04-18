@@ -36,40 +36,42 @@ class _MenuComponentState extends State<MenuComponent> {
     return ValueListenableBuilder(
       valueListenable: currentUser,
       builder: (context, value, __) {
-        return Container(
-          height: 38,
-          color: uiColor.comp_1,
-          child: ListView.builder(
-            itemCount: CategoryModel.allCategories.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (BuildContext context, int index) {
-              return canShow(widget.allCategories[index].label)
-                  ? Container(
-                      color: uiColor.comp_1,
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                          alignment: Alignment.center,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: SizedBox(
+            height: 38,
+            child: ListView.builder(
+              itemCount: CategoryModel.allCategories.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (BuildContext context, int index) {
+                return canShow(widget.allCategories[index].label)
+                    ? Container(
+                        color: _getSelected(widget.allCategories[index])
+                            ? uiColor.button
+                            : uiColor.comp_1,
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Text(
+                              widget.allCategories[index].label!,
+                              style: _getSelected(widget.allCategories[index])
+                                  ? uiTextStyle.buttonPrimary
+                                  : uiTextStyle.text7,
+                            ),
+                          ),
+                          onPressed: () => _setSelected(
+                            widget.allCategories[index],
                           ),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Text(
-                            widget.allCategories[index].label!,
-                            style: _getSelected(widget.allCategories[index])
-                                ? uiTextStyle.text3
-                                : uiTextStyle.text7,
-                          ),
-                        ),
-                        onPressed: () => _setSelected(
-                          widget.allCategories[index],
-                        ),
-                      ),
-                    )
-                  : const SizedBox();
-            },
+                      )
+                    : const SizedBox();
+              },
+            ),
           ),
         );
       },
