@@ -74,8 +74,6 @@ class _CommentState extends State<CommentComponent> {
                   case ConnectionState.done:
                   default:
                     try {
-                      currentHistory.value.first.qtyComment =
-                          snapshot.data!.docs.length;
                       return _list(context, snapshot);
                     } catch (e) {
                       return const CommentEmpty();
