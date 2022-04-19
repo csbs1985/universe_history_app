@@ -88,3 +88,5 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
     );
   }
 }
+
+enum ModalOption { COMMENT, HISTORY }

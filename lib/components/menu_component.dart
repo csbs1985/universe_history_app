@@ -36,32 +36,30 @@ class _MenuComponentState extends State<MenuComponent> {
     return ValueListenableBuilder(
       valueListenable: currentUser,
       builder: (context, value, __) {
-        return Padding(
+        return Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: SizedBox(
-            height: 38,
-            child: ListView.builder(
-              itemCount: CategoryModel.allCategories.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (BuildContext context, int index) {
-                return canShow(widget.allCategories[index].label)
-                    ? TextButton(
+          height: 38,
+          child: ListView.builder(
+            itemCount: CategoryModel.allCategories.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (BuildContext context, int index) {
+              return canShow(widget.allCategories[index].label)
+                  ? TextButton(
+                      style: _getSelected(widget.allCategories[index])
+                          ? uiButton.buttonMenuActive
+                          : uiButton.buttonMenu,
+                      child: Text(
+                        widget.allCategories[index].label!,
                         style: _getSelected(widget.allCategories[index])
-                            ? uiButton.buttonMenuActive
-                            : uiButton.buttonMenu,
-                        child: Text(
-                          widget.allCategories[index].label!,
-                          style: _getSelected(widget.allCategories[index])
-                              ? uiTextStyle.buttonPrimary
-                              : uiTextStyle.text7,
-                        ),
-                        onPressed: () => _setSelected(
-                          widget.allCategories[index],
-                        ),
-                      )
-                    : const SizedBox();
-              },
-            ),
+                            ? uiTextStyle.buttonPrimary
+                            : uiTextStyle.text7,
+                      ),
+                      onPressed: () => _setSelected(
+                        widget.allCategories[index],
+                      ),
+                    )
+                  : const SizedBox();
+            },
           ),
         );
       },
