@@ -19,11 +19,12 @@ ActivityUtil(ActivitiesEnum type, String content, String elementId) async {
     'elementId': elementId,
   };
 
-  await api.setActivities(activity);
+  // await api.setActivities(activity);
 }
 
 enum ActivitiesEnum {
   BLOCK_USER,
+  DELETE_COMMENT,
   LOGIN,
   LOGOUT,
   NEW_ACCOUNT,
@@ -31,6 +32,7 @@ enum ActivitiesEnum {
   NEW_HISTORY,
   NEW_NICKNAME,
   TEMPORARILY_DISABLED,
+  UP_COMMENT,
   UP_NICKNAME,
   UP_NOTIFICATION,
   UNBLOCK_USER,

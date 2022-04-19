@@ -27,6 +27,8 @@ class _CommentState extends State<CommentComponent> {
   List<CommentModel> documents = [];
 
   void _showModal(BuildContext context, dynamic _content) {
+    CommentClass.selectComment(_content);
+
     showCupertinoModalBottomSheet(
       expand: false,
       context: context,
@@ -38,6 +40,7 @@ class _CommentState extends State<CommentComponent> {
         _content['userId'],
         _content['userNickName'],
         _content['text'],
+        _content['isDelete'],
       ),
     );
   }
@@ -58,11 +61,16 @@ class _CommentState extends State<CommentComponent> {
                     value: currentHistory.value.first.qtyComment,
                     textStyle: uiTextStyle.text1,
                   ),
-                Text(
-                  currentHistory.value.first.qtyComment > 1
-                      ? ' comentários'
-                      : ' comentário',
-                  style: uiTextStyle.text1,
+                ValueListenableBuilder(
+                  valueListenable: currentHistory,
+                  builder: (BuildContext context, value, __) {
+                    return Text(
+                      currentHistory.value.first.qtyComment > 1
+                          ? ' comentários'
+                          : ' comentário',
+                      style: uiTextStyle.text1,
+                    );
+                  },
                 ),
               ],
             ),
@@ -113,10 +121,15 @@ class _CommentState extends State<CommentComponent> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(10, 6, 10, 8),
-                        child: Text(
-                          documents[index]['text'],
-                          style: uiTextStyle.text1,
-                        ),
+                        child: documents[index]['isDelete']
+                            ? Text(
+                                'Comentário deletado!'.toUpperCase(),
+                                style: uiTextStyle.text8,
+                              )
+                            : Text(
+                                documents[index]['text'],
+                                style: uiTextStyle.text1,
+                              ),
                       ),
                     ),
                     onLongPress: () => _showModal(

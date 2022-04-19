@@ -76,6 +76,7 @@ class _ModalInputCommmentComponentState
             _commentEdit?['historyId'] ?? currentHistory.value.first.id,
         'isSigned': _textSigned,
         'isEdit': _commentEdit?['edit'] ?? false,
+        'isDelete': false,
         'text': _commentController.text.trim(),
         'userId': _commentEdit?['userId'] ?? currentUser.value.first.id,
         'userNickName':
@@ -90,33 +91,46 @@ class _ModalInputCommmentComponentState
   }
 
   void _upComment() {
-    setState(() {
-      currentHistory.value.first.qtyComment++;
+    setState(
+      () async {
+        if (!_commentEdit?['edit']) {
+          currentHistory.value.first.qtyComment++;
+        }
 
-      api
-          .upNumComment()
-          .then((result) => {
-                ActivityUtil(ActivitiesEnum.NEW_COMMENT,
-                    _commentController.text, currentHistory.value.first.id),
-                _setUpQtyCommentUser(),
-                _commentController.clear(),
-                _isInputNotEmpty = false,
-              })
-          .catchError((error) => print('ERROR: ' + error));
-    });
+        await api
+            .upNumComment()
+            .then((result) => {
+                  ActivityUtil(ActivitiesEnum.NEW_COMMENT,
+                      _commentController.text, currentHistory.value.first.id),
+                  _setUpQtyCommentUser(),
+                  _commentController.clear(),
+                  _isInputNotEmpty = false,
+                })
+            .catchError((error) => print('ERROR: ' + error));
+      },
+    );
   }
 
-  void _setUpQtyCommentUser() async {
-    currentUser.value.first.qtyComment++;
-    await api.setUpQtyCommentUser().then((value) => {
-          Navigator.of(context).pop(),
-          toast.toast(
+  void _setUpQtyCommentUser() {
+    if (!_commentEdit?['edit']) {
+      currentUser.value.first.qtyComment++;
+    }
+
+    api
+        .setUpQtyCommentUser()
+        .then(
+          (value) => {
+            toast.toast(
               context,
               ToastEnum.SUCCESS,
               _commentEdit?['edit']
                   ? 'Seu comentário foi alterado.'
-                  : 'Seu comentário foi publicado.'),
-        });
+                  : 'Seu comentário foi publicado.',
+            ),
+            Navigator.of(context).pop(),
+          },
+        )
+        .catchError((error) => print('ERROR: ' + error));
   }
 
   @override

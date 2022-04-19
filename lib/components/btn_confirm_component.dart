@@ -1,5 +1,6 @@
 // ignore_for_file: no_logic_in_create_state, use_key_in_widget_constructors, unused_element, prefer_const_constructors
 
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
@@ -10,22 +11,25 @@ class BtnConfirmComponent extends StatefulWidget {
     required Function callback,
     required String title,
     required String text,
-    required String link,
+    String? link,
     String? btnPrimaryLabel,
     String? btnSecondaryLabel,
+    String? icon,
   })  : _callback = callback,
         _title = title,
         _text = text,
+        _link = link,
         _btnPrimaryLabel = btnPrimaryLabel,
         _btnSecondaryLabel = btnSecondaryLabel,
-        _link = link;
+        _icon = icon;
 
   final Function _callback;
   final String _title;
   final String _text;
+  final String? _link;
   final String? _btnPrimaryLabel;
   final String? _btnSecondaryLabel;
-  final String _link;
+  final String? _icon;
 
   @override
   _BtnConfirmComponentState createState() => _BtnConfirmComponentState();
@@ -41,11 +45,12 @@ class _BtnConfirmComponentState extends State<BtnConfirmComponent> {
         child: SizedBox(
           width: double.infinity,
           height: 48,
-          child: TextButton(
-            child: Container(
+          child: TextButton.icon(
+            icon: SvgPicture.asset(widget._icon!),
+            label: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                widget._title,
+                ' ' + widget._title,
                 style: uiTextStyle.text1,
               ),
             ),
@@ -90,13 +95,13 @@ class _BtnConfirmComponentState extends State<BtnConfirmComponent> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Button3dComponent(
-                  label: 'Sair',
+                  label: widget._btnSecondaryLabel!,
                   size: ButtonSizeEnum.MEDIUM,
                   style: ButtonStyleEnum.SECOND,
                   callback: (value) => widget._callback(true),
                 ),
                 Button3dComponent(
-                  label: 'Cancelar',
+                  label: widget._btnPrimaryLabel!,
                   size: ButtonSizeEnum.MEDIUM,
                   style: ButtonStyleEnum.PRIMARY,
                   callback: (value) => widget._callback(false),

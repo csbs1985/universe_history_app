@@ -1,6 +1,7 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:universe_history_app/shared/models/comment_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'variables.dart';
@@ -107,6 +108,12 @@ class Api {
     return history
         .doc(currentDocHistory.value)
         .update({'qtyComment': currentHistory.value.first.qtyComment});
+  }
+
+  deleteComment() {
+    return comment
+        .doc(currentComment.value.first.id)
+        .update({'isDelete': true});
   }
 
   upNickName() {
