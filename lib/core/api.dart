@@ -58,6 +58,10 @@ class Api {
         .snapshots();
   }
 
+  getComment(String _id) {
+    return comment.where('id', isEqualTo: _id).get();
+  }
+
   getUser(String? _email) {
     return user.where('email', isEqualTo: _email).get();
   }

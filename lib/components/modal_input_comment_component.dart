@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_is_empty, unused_field, void_checks, avoid_print, unnecessary_new
+// ignore_for_file: prefer_is_empty, unused_field, void_checks, avoid_print, unnecessary_new, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
@@ -14,7 +14,9 @@ import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:uuid/uuid.dart';
 
 class ModalInputCommmentComponent extends StatefulWidget {
-  const ModalInputCommmentComponent({Key? key}) : super(key: key);
+  const ModalInputCommmentComponent({String? id}) : _id = id;
+
+  final String? _id;
 
   @override
   _ModalInputCommmentComponentState createState() =>
@@ -29,11 +31,29 @@ class _ModalInputCommmentComponentState
   final Api api = Api();
   final Uuid uuid = const Uuid();
 
-  final bool _comments = true;
   late Map<String, dynamic> _comment;
+  Map<String, dynamic>? _commentEdit;
 
   bool _isInputNotEmpty = false;
   bool _textSigned = true;
+
+  @override
+  void initState() {
+    if (widget._id != null) {
+      api
+          .getComment(widget._id!)
+          .then((result) => {
+                _commentController.text = result.docs[0].data()['text'],
+                _isInputNotEmpty = true,
+                _textSigned = result.docs[0].data()['isSigned'],
+                _commentEdit = result.docs[0].data(),
+                _commentEdit?['edit'] = true,
+              })
+          .catchError((error) => print('ERROR:' + error.toString()));
+    }
+
+    super.initState();
+  }
 
   void keyUp(String text) {
     setState(() {
@@ -50,21 +70,21 @@ class _ModalInputCommmentComponentState
   void _sendComment() {
     setState(() {
       _comment = {
-        'id': uuid.v4(),
-        'date': DateTime.now().toString(),
-        'historyId': currentHistory.value.first.id,
+        'id': _commentEdit?['id'] ?? uuid.v4(),
+        'date': _commentEdit?['date'] ?? DateTime.now().toString(),
+        'historyId':
+            _commentEdit?['historyId'] ?? currentHistory.value.first.id,
         'isSigned': _textSigned,
-        'isEdit': false,
+        'isEdit': _commentEdit?['edit'] ?? false,
         'text': _commentController.text.trim(),
-        'userId': currentUser.value.first.id,
-        'userNickName': currentUser.value.first.nickname,
+        'userId': _commentEdit?['userId'] ?? currentUser.value.first.id,
+        'userNickName':
+            _commentEdit?['userNickName'] ?? currentUser.value.first.nickname,
       };
 
       api
           .setComment(_comment)
-          .then((result) => {
-                _upComment(),
-              })
+          .then((result) => _upComment())
           .catchError((error) => print('ERROR: ' + error));
     });
   }
@@ -91,7 +111,11 @@ class _ModalInputCommmentComponentState
     await api.setUpQtyCommentUser().then((value) => {
           Navigator.of(context).pop(),
           toast.toast(
-              context, ToastEnum.SUCCESS, 'Seu comentário foi publicado.'),
+              context,
+              ToastEnum.SUCCESS,
+              _commentEdit?['edit']
+                  ? 'Seu comentário foi alterado.'
+                  : 'Seu comentário foi publicado.'),
         });
   }
 

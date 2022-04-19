@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/button_option_component.dart';
+import 'package:universe_history_app/components/modal_input_comment_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
@@ -38,6 +40,19 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
     return currentUser.value.first.id == widget._idUser ? true : false;
   }
 
+  _edit(BuildContext context) {
+    if (widget._type == 'comentário') _showModal(context);
+  }
+
+  void _showModal(BuildContext context) {
+    showCupertinoModalBottomSheet(
+        expand: true,
+        context: context,
+        barrierColor: Colors.black87,
+        duration: const Duration(milliseconds: 300),
+        builder: (context) => ModalInputCommmentComponent(id: widget._id));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -60,9 +75,9 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                   ),
                   if (_canEdit())
                     ButtonOptionComponent(
-                      callback: () {},
                       label: 'Editar ' + widget._type,
                       icon: uiSvg.edit,
+                      callback: (value) => _edit(context),
                     ),
                   ButtonOptionComponent(
                     callback: () {},
