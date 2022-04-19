@@ -26,14 +26,20 @@ class _CommentState extends State<CommentComponent> {
 
   List<CommentModel> documents = [];
 
-  void _showModal(BuildContext context, dynamic history) {
+  void _showModal(BuildContext context, dynamic _content) {
     showCupertinoModalBottomSheet(
-        expand: false,
-        context: context,
-        barrierColor: Colors.black87,
-        duration: const Duration(milliseconds: 300),
-        builder: (context) => ModalOptionsComponent(
-            history['text'], 'comentário', currentUser.value.first));
+      expand: false,
+      context: context,
+      barrierColor: Colors.black87,
+      duration: const Duration(milliseconds: 300),
+      builder: (context) => ModalOptionsComponent(
+        _content['id'],
+        'comentário',
+        _content['userId'],
+        _content['userNickName'],
+        _content['text'],
+      ),
+    );
   }
 
   @override
@@ -113,8 +119,10 @@ class _CommentState extends State<CommentComponent> {
                         ),
                       ),
                     ),
-                    onLongPress: () =>
-                        _showModal(context, documents[index].data()),
+                    onLongPress: () => _showModal(
+                      context,
+                      documents[index].data(),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(2, 4, 0, 0),

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 ValueNotifier<num> currentQtyComment = ValueNotifier(0);
 
 class CommentModel {
+  final String id;
   final String date;
   final String historyId;
   final String text;
@@ -14,6 +15,7 @@ class CommentModel {
   final bool isEdit;
 
   CommentModel({
+    required this.id,
     required this.date,
     required this.historyId,
     required this.isSigned,
@@ -24,7 +26,8 @@ class CommentModel {
   });
 
   CommentModel.fromJson(Map<CommentModel, dynamic> json)
-      : date = json['date'],
+      : id = json['id'],
+        date = json['date'],
         historyId = json['historyId'],
         isSigned = json['isSigned'],
         isEdit = json['isEdit'],
@@ -33,6 +36,7 @@ class CommentModel {
         userNickName = json['userNickName'];
 
   Map<String, dynamic> toJson() => {
+        'id': id,
         'date': date,
         'historyId': historyId,
         'isSigned': isSigned,

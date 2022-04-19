@@ -73,19 +73,21 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
     api.upBookmarks();
   }
 
-  void _showModalOptions(
-    BuildContext context,
-    String historyTitle,
-  ) {
-    showCupertinoModalBottomSheet(
-      expand: false,
-      context: context,
-      barrierColor: Colors.black87,
-      duration: const Duration(milliseconds: 300),
-      builder: (context) => ModalOptionsComponent(
-          historyTitle, 'história', currentUser.value.first),
-    );
-  }
+  // void _showModalOptions(
+  //   BuildContext context,
+  //   dynamic historyTitle,
+  // ) {
+  //   showCupertinoModalBottomSheet(
+  //     expand: false,
+  //     context: context,
+  //     barrierColor: Colors.black87,
+  //     duration: const Duration(milliseconds: 300),
+  //     builder: (context) => ModalOptionsComponent(
+  //       type: 'história',
+  //       comment: historyTitle,
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -217,10 +219,10 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                                         }),
                                     IconComponent(
                                       icon: uiSvg.options,
-                                      callback: (value) => _showModalOptions(
-                                        context,
-                                        documents[index]['title'],
-                                      ),
+                                      // callback: (value) => _showModalOptions(
+                                      //   context,
+                                      //   documents[index],
+                                      // ),
                                     ),
                                   ],
                                 );
