@@ -47,6 +47,7 @@ class _CreateHistoryState extends State<CreateHistory> {
   bool _isSigned = true;
   bool _isComment = true;
   bool _btnPublish = false;
+
   List<String> _categories = [];
 
   late Map<String, dynamic> history;

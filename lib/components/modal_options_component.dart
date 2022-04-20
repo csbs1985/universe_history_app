@@ -12,6 +12,7 @@ import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
+import 'package:uuid/uuid.dart';
 
 class ModalOptionsComponent extends StatefulWidget {
   const ModalOptionsComponent(
@@ -42,6 +43,9 @@ class ModalOptionsComponent extends StatefulWidget {
 class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
   final ToastComponent toast = ToastComponent();
   final Api api = Api();
+  final Uuid uuid = const Uuid();
+
+  late Map<String, dynamic> _form;
 
   bool _canCopy() {
     return !widget._isDelete ? true : false;
@@ -53,10 +57,6 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
         : false;
   }
 
-  _edit(BuildContext context) {
-    if (widget._type == 'comentário') _showModal(context);
-  }
-
   bool _canDelete() {
     if (widget._isDelete) return false;
     if (currentUser.value.first.id == widget._idUser) return true;
@@ -64,7 +64,15 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
     return false;
   }
 
-  _deleteComment(bool value) async {
+  bool _canBlock() {
+    return currentUser.value.first.id == widget._idUser ? false : true;
+  }
+
+  void _edit(BuildContext context) {
+    if (widget._type == 'comentário') _showModal(context);
+  }
+
+  void _deleteComment(bool value) async {
     if (value) {
       api
           .deleteComment()
@@ -80,6 +88,27 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
           .catchError((error) => print('ERROR:' + error.toString()));
     }
 
+    Navigator.of(context).pop();
+  }
+
+  void _setBlock(bool value) {
+    if (value) {
+      _form = {
+        'id': uuid.v4(),
+        'blockerId': currentUser.value.first.id,
+        'blockedId': widget._idUser,
+        'blockedNickName': widget._userNickName,
+        'date': DateTime.now().toString(),
+      };
+
+      api
+          .setBlock(_form)
+          .then((result) => {
+                toast.toast(context, ToastEnum.SUCCESS, 'Usuário bloqueado!'),
+                Navigator.of(context).pop(),
+              })
+          .catchError((error) => print('ERROR:' + error.toString()));
+    }
     Navigator.of(context).pop();
   }
 
@@ -133,16 +162,25 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                         callback: (value) => _deleteComment(value),
                       ),
                     ),
-                  ButtonOptionComponent(
-                    callback: () {},
-                    label: 'Bloquear ' + widget._userNickName,
-                    icon: uiSvg.block,
-                  ),
-                  ButtonOptionComponent(
-                    callback: () {},
-                    label: 'Denunciar ' + widget._userNickName,
-                    icon: uiSvg.delate,
-                  ),
+                  if (_canBlock())
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: BtnConfirmComponent(
+                        title: 'Bloquear ' + widget._userNickName,
+                        icon: uiSvg.block,
+                        btnPrimaryLabel: 'Cancelar',
+                        btnSecondaryLabel: 'Bloquear',
+                        text:
+                            'Tem certeza de que deseja bloquear este usuário?',
+                        callback: (value) => _setBlock(value),
+                      ),
+                    ),
+                  if (_canBlock())
+                    ButtonOptionComponent(
+                      callback: () {},
+                      label: 'Denunciar ' + widget._userNickName,
+                      icon: uiSvg.delate,
+                    ),
                 ],
               ),
             ),

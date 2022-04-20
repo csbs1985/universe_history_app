@@ -37,7 +37,6 @@ class _MyActivitiesPageState extends State<MyActivitiesPage> {
     var qtyComment = currentUser.value.first.qtyComment <= 0
         ? 'Nenhum comentário'
         : '${currentUser.value.first.qtyComment} comentários';
-
     return qtyHistory + ' · ' + qtyComment;
   }
 

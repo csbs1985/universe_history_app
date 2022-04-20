@@ -7,6 +7,7 @@ import 'package:universe_history_app/shared/models/user_model.dart';
 import 'variables.dart';
 
 class Api {
+  CollectionReference block = FirebaseFirestore.instance.collection('blocks');
   CollectionReference bookmark =
       FirebaseFirestore.instance.collection('bookmarks');
   CollectionReference history =
@@ -16,6 +17,17 @@ class Api {
       FirebaseFirestore.instance.collection('comments');
   CollectionReference activitie =
       FirebaseFirestore.instance.collection('activities');
+
+  setBlock(Map<String, dynamic> _form) {
+    return block.doc(_form['id']).set(_form);
+  }
+
+  getAllBlock() {
+    return block
+        .orderBy('date')
+        .where('blockedId', isEqualTo: currentUser.value.first.id)
+        .snapshots();
+  }
 
   getAllComment() {
     return comment
