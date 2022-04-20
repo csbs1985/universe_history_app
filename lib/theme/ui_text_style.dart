@@ -85,15 +85,13 @@ class uiTextStyle {
 
   static const TextStyle text8 = TextStyle(
     fontSize: 16,
-    fontWeight: FontWeight.w900,
+    fontWeight: FontWeight.w400,
     color: uiColor.comp_2,
+    fontStyle: FontStyle.italic,
   );
 
   static const TextStyle buttonPrimary = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w400,
-    color: uiColor.third,
-  );
+      fontSize: 16, fontWeight: FontWeight.w400, color: uiColor.third);
 
   static const TextStyle buttonLabel = TextStyle(
     fontSize: 18,

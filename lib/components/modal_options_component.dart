@@ -8,10 +8,12 @@ import 'package:universe_history_app/components/button_option_component.dart';
 import 'package:universe_history_app/components/modal_input_comment_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/shared/models/owner_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
+import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:uuid/uuid.dart';
 
@@ -61,12 +63,19 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
   bool _canDelete() {
     if (widget._isDelete) return false;
     if (currentUser.value.first.id == widget._idUser) return true;
-    if (currentUser.value.first.id == currentOwner.value.first.id) return true;
+    if (currentUser.value.first.id == currentHistory.value.first.userId)
+      return true;
     return false;
   }
 
   bool _canBlock() {
     return currentUser.value.first.id == widget._idUser ? false : true;
+  }
+
+  void _copy(String _text) {
+    Clipboard.setData(ClipboardData(text: _text));
+    toast.toast(context, ToastEnum.SUCCESS, 'Texto copiado!');
+    Navigator.of(context).pop();
   }
 
   void _edit(BuildContext context) {
@@ -141,12 +150,7 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                     ButtonOptionComponent(
                       label: 'Copiar ' + widget._type,
                       icon: uiSvg.copy,
-                      callback: (value) {
-                        Clipboard.setData(ClipboardData(text: widget._text));
-                        toast.toast(
-                            context, ToastEnum.SUCCESS, 'Texto copiado!');
-                        Navigator.of(context).pop();
-                      },
+                      callback: (value) => _copy(widget._text),
                     ),
                   if (_canEdit())
                     ButtonOptionComponent(
@@ -182,9 +186,9 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                     ),
                   if (_canBlock())
                     ButtonOptionComponent(
-                      callback: (value) => _setDenounce(value),
                       label: 'Denunciar ' + widget._userNickName,
                       icon: uiSvg.delate,
+                      callback: (value) => _setDenounce(value),
                     ),
                 ],
               ),

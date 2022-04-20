@@ -105,6 +105,16 @@ class _CommentState extends State<CommentComponent> {
     );
   }
 
+  bool _canShowOption(dynamic _content) {
+    if (currentUser.value.first.id == _content['userId']) {
+      if (!_content['isDelete']) return true;
+    } else {
+      if (!_content['isDelete']) return true;
+    }
+
+    return false;
+  }
+
   Widget _list(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     List<QueryDocumentSnapshot<dynamic>> documents = snapshot.data!.docs;
     return documents.isNotEmpty
@@ -136,10 +146,9 @@ class _CommentState extends State<CommentComponent> {
                               ),
                       ),
                     ),
-                    onLongPress: () => _showModal(
-                      context,
-                      documents[index].data(),
-                    ),
+                    onLongPress: _canShowOption(documents[index].data())
+                        ? () => _showModal(context, documents[index].data())
+                        : null,
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(2, 4, 0, 0),
