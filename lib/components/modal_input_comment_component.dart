@@ -33,6 +33,7 @@ class _ModalInputCommmentComponentState
 
   late Map<String, dynamic> _comment;
   Map<String, dynamic>? _commentEdit;
+  bool isEdit = false;
 
   bool _isInputNotEmpty = false;
   bool _textSigned = true;
@@ -40,6 +41,7 @@ class _ModalInputCommmentComponentState
   @override
   void initState() {
     if (widget._id != null) {
+      isEdit = true;
       api
           .getComment(widget._id!)
           .then((result) => {
@@ -93,7 +95,7 @@ class _ModalInputCommmentComponentState
   void _upComment() {
     setState(
       () async {
-        if (!_commentEdit?['edit']) {
+        if (!isEdit) {
           currentHistory.value.first.qtyComment++;
         }
 
@@ -112,7 +114,7 @@ class _ModalInputCommmentComponentState
   }
 
   void _setUpQtyCommentUser() {
-    if (!_commentEdit?['edit']) {
+    if (!isEdit) {
       currentUser.value.first.qtyComment++;
     }
 
@@ -123,7 +125,7 @@ class _ModalInputCommmentComponentState
             toast.toast(
               context,
               ToastEnum.SUCCESS,
-              _commentEdit?['edit']
+              isEdit
                   ? 'Seu comentário foi alterado.'
                   : 'Seu comentário foi publicado.',
             ),
