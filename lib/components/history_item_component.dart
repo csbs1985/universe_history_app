@@ -41,11 +41,13 @@ class HistoryItemComponent extends StatefulWidget {
 class _HistoryItemComponentState extends State<HistoryItemComponent> {
   final HistoryClass historyClass = HistoryClass();
   final CommentClass commentClass = CommentClass();
+  final OwnerClass ownerClass = OwnerClass();
+
   final Api api = Api();
 
-  void _setHistory(Map<String, dynamic> _history) {
-    // currentOwner.value.first.id = currentDocHistory.value = id;
-    currentDocHistory.value = _history.id;
+  void _selectHistory(Map<String, dynamic> _history) {
+    ownerClass.selectOwner(_history['userId'], _history['userNickName']);
+    currentDocHistory.value = _history['id'];
     HistoryClass.selectHistory(_history);
   }
 
@@ -160,7 +162,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                                       ],
                                     ),
                                     onPressed: () {
-                                      _setHistory(documents[index].data());
+                                      _selectHistory(documents[index].data());
                                       _showModal(context, 'listCommentary ');
                                     },
                                   ),
@@ -177,7 +179,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                                           icon: uiSvg.comment,
                                           callback: (value) {
                                             setState(() {
-                                              _setHistory(
+                                              _selectHistory(
                                                   documents[index].data());
                                               _showModal(
                                                   context, 'inputCommentary');
@@ -204,7 +206,8 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                                     IconComponent(
                                         icon: uiSvg.open,
                                         callback: (value) {
-                                          _setHistory(documents[index].data());
+                                          _selectHistory(
+                                              documents[index].data());
                                           Navigator.of(context)
                                               .pushNamed("/history");
                                         }),

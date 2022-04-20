@@ -10,6 +10,7 @@ import 'package:universe_history_app/components/skeleton_comment_component.dart'
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/comment_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
+import 'package:universe_history_app/shared/models/owner_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -22,11 +23,14 @@ class CommentComponent extends StatefulWidget {
 
 class _CommentState extends State<CommentComponent> {
   final Api api = new Api();
+
   final UserClass userClass = UserClass();
+  final OwnerClass ownerClass = OwnerClass();
 
   List<CommentModel> documents = [];
 
   void _showModal(BuildContext context, dynamic _content) {
+    ownerClass.selectOwner(_content['userId'], _content['userNickName']);
     CommentClass.selectComment(_content);
 
     showCupertinoModalBottomSheet(

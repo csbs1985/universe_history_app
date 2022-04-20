@@ -19,12 +19,13 @@ ActivityUtil(ActivitiesEnum type, String content, String elementId) async {
     'elementId': elementId,
   };
 
-  // await api.setActivities(activity);
+  await api.setActivities(activity);
 }
 
 enum ActivitiesEnum {
   BLOCK_USER,
   DELETE_COMMENT,
+  DENOUNCE,
   LOGIN,
   LOGOUT,
   NEW_ACCOUNT,

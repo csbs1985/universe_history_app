@@ -1,4 +1,4 @@
-// ignore_for_file: unused_field, prefer_typing_uninitialized_variables, void_checks, unused_element
+// ignore_for_file: unused_field, prefer_typing_uninitialized_variables, void_checks, unused_element, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
@@ -9,6 +9,8 @@ import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/denounceJustify_model.dart';
 import 'package:universe_history_app/shared/models/owner_model.dart';
+import 'package:universe_history_app/shared/models/user_model.dart';
+import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:uuid/uuid.dart';
 
 class DenouncePage extends StatefulWidget {
@@ -42,19 +44,28 @@ class _DenouncePageState extends State<DenouncePage> {
     void _setDenounce(bool value) {
       _form = {
         'id': uuid.v4(),
-        'idDenounce': currentOwner.value.first.id,
+        'idUser': currentUser.value.first.id,
+        'idDenounced': currentOwner.value.first.id,
         'nickDenounced': currentOwner.value.first.nickname,
-        'denounce': justifySelected
+        'code': justifySelected.id,
+        'justify': justifySelected.title,
+        'date': DateTime.now().toString(),
       };
 
       setState(() {
-        //   api
-        //       .setDenounce(_form)
-        //       .then((result) => {
-        //             // toast
-        //             // Navigator.of(context).pushNamed("/home");
-        //           })
-        //       .catchError((error) {});
+        api
+            .setDenounce(_form)
+            .then((result) => {
+                  ActivityUtil(
+                    ActivitiesEnum.DENOUNCE,
+                    currentOwner.value.first.nickname,
+                    _form['date'],
+                  ),
+                  toast.toast(
+                      context, ToastEnum.SUCCESS, 'Usuário denunciado!'),
+                  Navigator.of(context).pop(),
+                })
+            .catchError((error) {});
       });
     }
 
