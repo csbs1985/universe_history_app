@@ -10,7 +10,6 @@ import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/utils/device_util.dart';
 
 ValueNotifier<List<UserModel>> currentUser = ValueNotifier<List<UserModel>>([]);
-ValueNotifier<String> currentOwner = ValueNotifier<String>('');
 ValueNotifier<String> currentNickname = ValueNotifier<String>('');
 ValueNotifier<bool> userNew = ValueNotifier<bool>(false);
 

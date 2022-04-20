@@ -52,9 +52,7 @@ class _JustifyPageState extends State<JustifyPage> {
                 content: allJustify,
                 callback: (value) => _onPressed(value),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               BtnPrimaryComponent(
                 label: 'Justificar e deletar',
                 enabled: _btnDelete,

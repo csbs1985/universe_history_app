@@ -17,6 +17,7 @@ import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/shared/models/comment_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
+import 'package:universe_history_app/shared/models/owner_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
@@ -42,8 +43,9 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
   final CommentClass commentClass = CommentClass();
   final Api api = Api();
 
-  void _setHistory(Map<String, dynamic> _history, String id) {
-    currentDocHistory.value = id;
+  void _setHistory(Map<String, dynamic> _history) {
+    // currentOwner.value.first.id = currentDocHistory.value = id;
+    currentDocHistory.value = _history.id;
     HistoryClass.selectHistory(_history);
   }
 
@@ -158,11 +160,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                                       ],
                                     ),
                                     onPressed: () {
-                                      _setHistory(
-                                        documents[index].data(),
-                                        currentDocHistory.value =
-                                            documents[index].id,
-                                      );
+                                      _setHistory(documents[index].data());
                                       _showModal(context, 'listCommentary ');
                                     },
                                   ),
@@ -180,10 +178,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                                           callback: (value) {
                                             setState(() {
                                               _setHistory(
-                                                documents[index].data(),
-                                                currentDocHistory.value =
-                                                    documents[index].id,
-                                              );
+                                                  documents[index].data());
                                               _showModal(
                                                   context, 'inputCommentary');
                                             });
@@ -209,11 +204,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                                     IconComponent(
                                         icon: uiSvg.open,
                                         callback: (value) {
-                                          _setHistory(
-                                            documents[index].data(),
-                                            currentDocHistory.value =
-                                                documents[index].id,
-                                          );
+                                          _setHistory(documents[index].data());
                                           Navigator.of(context)
                                               .pushNamed("/history");
                                         }),

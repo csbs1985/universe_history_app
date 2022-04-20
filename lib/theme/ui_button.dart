@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
-import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class uiButton {
   static ButtonStyle buttonPrimary = ButtonStyle(
@@ -23,7 +22,7 @@ class uiButton {
     backgroundColor: MaterialStateProperty.all<Color>(uiColor.comp_3),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(0),
+        borderRadius: BorderRadius.circular(8),
       ),
     ),
   );
@@ -48,23 +47,19 @@ class uiButton {
     ),
   );
 
-  static ButtonStyle btnCard = ButtonStyle(
+  static ButtonStyle buttonCard = ButtonStyle(
     alignment: Alignment.bottomLeft,
     backgroundColor: MaterialStateProperty.all<Color>(uiColor.comp_3),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-      RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(0),
-      ),
+      RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
     ),
   );
 
-  static ButtonStyle btnCardActive = ButtonStyle(
+  static ButtonStyle buttonCardActive = ButtonStyle(
     alignment: Alignment.bottomLeft,
-    backgroundColor: MaterialStateProperty.all<Color>(uiColor.second),
+    backgroundColor: MaterialStateProperty.all<Color>(uiColor.first),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-      RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(0),
-      ),
+      RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
     ),
   );
 

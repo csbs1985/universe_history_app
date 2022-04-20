@@ -60,6 +60,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/mock/
 
   fonts:
     - family: nunito-bold

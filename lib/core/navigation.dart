@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:universe_history_app/pages/denounce_page.dart';
 import 'package:universe_history_app/pages/my_activities_page.dart';
 import 'package:universe_history_app/pages/nickName_page.dart';
 import 'package:universe_history_app/pages/about_page.dart';
@@ -35,6 +36,12 @@ class Navigation {
       case '/create':
         return PageTransition(
           child: const CreateHistory(),
+          type: PageTransitionType.rightToLeft,
+          settings: settings,
+        );
+      case '/denounce':
+        return PageTransition(
+          child: const DenouncePage(),
           type: PageTransitionType.rightToLeft,
           settings: settings,
         );

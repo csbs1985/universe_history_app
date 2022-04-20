@@ -8,6 +8,7 @@ import 'package:universe_history_app/components/button_option_component.dart';
 import 'package:universe_history_app/components/modal_input_comment_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/shared/models/owner_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
@@ -60,7 +61,7 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
   bool _canDelete() {
     if (widget._isDelete) return false;
     if (currentUser.value.first.id == widget._idUser) return true;
-    if (currentUser.value.first.id == currentOwner.value) return true;
+    if (currentUser.value.first.id == currentOwner.value.first.id) return true;
     return false;
   }
 
@@ -110,6 +111,10 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
           .catchError((error) => print('ERROR:' + error.toString()));
     }
     Navigator.of(context).pop();
+  }
+
+  void _setDenounce(bool value) {
+    value ? Navigator.of(context).pushNamed('/denounce') : null;
   }
 
   void _showModal(BuildContext context) {
@@ -177,7 +182,7 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                     ),
                   if (_canBlock())
                     ButtonOptionComponent(
-                      callback: () {},
+                      callback: (value) => _setDenounce(value),
                       label: 'Denunciar ' + widget._userNickName,
                       icon: uiSvg.delate,
                     ),
