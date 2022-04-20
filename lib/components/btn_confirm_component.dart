@@ -39,7 +39,7 @@ class _BtnConfirmComponentState extends State<BtnConfirmComponent> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 0, 8, 10),
+      padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
       child: Material(
         color: uiColor.comp_1,
         child: SizedBox(
