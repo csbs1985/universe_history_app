@@ -115,11 +115,14 @@ class _CreateHistoryState extends State<CreateHistory> {
 
   void _setUpQtyHistoryUser() async {
     currentUser.value.first.qtyHistory++;
-    await api.setUpQtyHistoryUser().then((value) => {
-          Navigator.of(context).pop(),
-          toast.toast(
-              context, ToastEnum.SUCCESS, 'Sua história foi publicada.'),
-        });
+    await api
+        .setUpQtyHistoryUser()
+        .then((value) => {
+              Navigator.of(context).pop(),
+              toast.toast(
+                  context, ToastEnum.SUCCESS, 'Sua história foi publicada.'),
+            })
+        .catchError((error) => {print('ERROR:' + error)});
   }
 
   @override

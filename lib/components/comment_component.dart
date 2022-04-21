@@ -137,7 +137,7 @@ class _CommentState extends State<CommentComponent> {
                         padding: const EdgeInsets.fromLTRB(10, 6, 10, 8),
                         child: documents[index]['isDelete']
                             ? Text(
-                                'Comentário deletado!'.toUpperCase(),
+                                'Comentário apagado!'.toUpperCase(),
                                 style: uiTextStyle.text8,
                               )
                             : Text(
