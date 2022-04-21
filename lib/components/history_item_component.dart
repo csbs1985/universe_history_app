@@ -211,7 +211,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                                           Navigator.of(context)
                                               .pushNamed("/history");
                                         }),
-                                    IconComponent(
+                                    const IconComponent(
                                       icon: uiSvg.options,
                                       // callback: (value) => _showModalOptions(
                                       //   context,
