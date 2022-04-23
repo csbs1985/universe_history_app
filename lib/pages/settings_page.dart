@@ -96,8 +96,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             callback: (value) => _toggleNotification(),
                             title: 'Notificações',
                             resume: 'Habilitar ou desabilitar as notificações',
-                            textOn: 'habilitada',
-                            textOff: 'desabilitada',
                             value: currentUser.value.first.isNotification,
                           ),
                           const BtnLinkComponent('Bloqueados', '/blocked'),

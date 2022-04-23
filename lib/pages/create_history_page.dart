@@ -120,7 +120,7 @@ class _CreateHistoryState extends State<CreateHistory> {
         .then((value) => {
               Navigator.of(context).pop(),
               toast.toast(
-                  context, ToastEnum.SUCCESS, 'Sua história foi publicada.'),
+                  context, ToastEnum.SUCCESS, 'Sua história foi publicada.')
             })
         .catchError((error) => {print('ERROR:' + error)});
   }
@@ -183,27 +183,19 @@ class _CreateHistoryState extends State<CreateHistory> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-              child: SelectToggleComponent(
-                callback: (value) => _setPrivacy(),
-                title: 'Assinatura',
-                resume: 'Assinar sua história como',
-                textOn: currentUser.value.first.nickname,
-                textOff: 'anonimo',
-                value: _isSigned,
-              ),
+            SelectToggleComponent(
+              callback: (value) => _setPrivacy(),
+              title: 'Assinatura',
+              resume:
+                  'Ligado para assinar como ${currentUser.value.first.nickname} ou desligado para anônimo.',
+              value: _isSigned,
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-              child: SelectToggleComponent(
-                callback: (value) => _setComment(),
-                title: 'Comentários',
-                resume: 'Habilitar ou desabilitar os comentários na história',
-                textOn: 'habilitado',
-                textOff: 'desabilitado',
-                value: _isComment,
-              ),
+            SelectToggleComponent(
+              callback: (value) => _setComment(),
+              title: 'Comentários',
+              resume:
+                  'Ligado para habilitar ou desligado para desabilitar os comentários na história. ',
+              value: _isComment,
             ),
             SelectCategoriesComponent(
               title: 'Assunto',

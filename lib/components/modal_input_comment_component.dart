@@ -179,24 +179,29 @@ class _ModalInputCommmentComponentState
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        FlutterSwitch(
-                          value: _textSigned,
-                          activeText: currentUser.value.first.nickname,
-                          inactiveText: 'anonimo',
-                          activeColor: uiColor.button,
-                          inactiveColor: uiColor.buttonSecond,
-                          activeToggleColor: uiColor.buttonBorder,
-                          inactiveToggleColor: uiColor.buttonSecondBorder,
-                          activeTextColor: uiColor.buttonLabel,
-                          inactiveTextColor: uiColor.buttonSecondLabel,
-                          toggleColor: uiColor.third,
-                          width: 90,
-                          height: 30,
-                          valueFontSize: 12,
-                          toggleSize: 20,
-                          borderRadius: 10,
-                          showOnOff: true,
-                          onToggle: (value) => _toggleAnonimous(),
+                        Row(
+                          children: [
+                            FlutterSwitch(
+                              width: 48,
+                              height: 32,
+                              value: _textSigned,
+                              activeColor: uiColor.button,
+                              inactiveColor: uiColor.buttonSecond,
+                              activeToggleColor: uiColor.buttonBorder,
+                              inactiveToggleColor: uiColor.buttonSecondBorder,
+                              activeTextColor: uiColor.buttonLabel,
+                              inactiveTextColor: uiColor.buttonSecondLabel,
+                              toggleSize: 20,
+                              onToggle: (value) => _toggleAnonimous(),
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              _textSigned
+                                  ? currentUser.value.first.nickname
+                                  : 'anônimo',
+                              style: uiTextStyle.text2,
+                            ),
+                          ],
                         ),
                         if (_isInputNotEmpty)
                           Button3dComponent(

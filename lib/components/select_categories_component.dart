@@ -1,7 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors, iterable_contains_unrelated_type
 
 import 'package:flutter/material.dart';
-import 'package:universe_history_app/components/title_resume_component.dart';
+import 'package:universe_history_app/components/subtitle_resume_component.dart';
 import 'package:universe_history_app/shared/models/category_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 
@@ -32,9 +32,7 @@ class _SelectCategoriesComponentState extends State<SelectCategoriesComponent> {
   void _setSelected(String id) {
     setState(() {
       listSelect.contains(id) ? listSelect.remove(id) : listSelect.add(id);
-      if (widget._callback != null) {
-        widget._callback!(listSelect);
-      }
+      if (widget._callback != null) widget._callback!(listSelect);
     });
   }
 
@@ -50,7 +48,8 @@ class _SelectCategoriesComponentState extends State<SelectCategoriesComponent> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          TitleResumeComponent(widget._title, widget._resume),
+          SubtitleResumeComponent(title: widget._title, resume: widget._resume),
+          const SizedBox(height: 10),
           Wrap(
             children: [
               for (var item in widget._content)
@@ -64,7 +63,7 @@ class _SelectCategoriesComponentState extends State<SelectCategoriesComponent> {
                         child: Text(
                           item.label!.toLowerCase(),
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 12,
                             fontWeight: FontWeight.w700,
                             color: _getSelected(item.id!)
                                 ? uiColor.buttonLabel

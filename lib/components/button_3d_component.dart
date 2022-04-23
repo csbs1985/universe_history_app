@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, dead_code, sized_box_for_whitespace, unused_field, prefer_final_fields, curly_braces_in_flow_control_structures
+// ignore_for_file: use_key_in_widget_constructors, dead_code, sized_box_for_whitespace, unused_field, prefer_final_fields, curly_braces_in_flow_control_structures, constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
@@ -28,7 +28,9 @@ class _Button3dComponentState extends State<Button3dComponent> {
   Color _backColor = uiColor.first;
   Color _borderColor = uiColor.second;
   TextStyle _styleText = uiTextStyle.buttonLabel;
+
   final double _borderSize = 4;
+
   late double _position = _borderSize;
   late double _width;
   late double _height;
@@ -53,7 +55,7 @@ class _Button3dComponentState extends State<Button3dComponent> {
   }
 
   double _getWidth() {
-    if (widget._size == ButtonSizeEnum.SMALL) return 80;
+    if (widget._size == ButtonSizeEnum.SMALL) return 90;
     if (widget._size == ButtonSizeEnum.MEDIUM) return 100;
     if (widget._size == ButtonSizeEnum.LARGE)
       return MediaQuery.of(context).size.width - 32;

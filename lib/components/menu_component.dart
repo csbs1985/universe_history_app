@@ -38,7 +38,7 @@ class _MenuComponentState extends State<MenuComponent> {
       builder: (context, value, __) {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          height: 38,
+          height: 36,
           child: ListView.builder(
             itemCount: CategoryModel.allCategories.length,
             scrollDirection: Axis.horizontal,
@@ -49,10 +49,10 @@ class _MenuComponentState extends State<MenuComponent> {
                           ? uiButton.buttonMenuActive
                           : uiButton.buttonMenu,
                       child: Text(
-                        widget.allCategories[index].label!,
+                        widget.allCategories[index].label!.toLowerCase(),
                         style: _getSelected(widget.allCategories[index])
-                            ? uiTextStyle.buttonPrimary
-                            : uiTextStyle.text7,
+                            ? uiTextStyle.menuActive
+                            : uiTextStyle.menu,
                       ),
                       onPressed: () => _setSelected(
                         widget.allCategories[index],

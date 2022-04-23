@@ -122,8 +122,8 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                         ExpandableText(
                           documents[index]['text'],
                           style: uiTextStyle.text1,
-                          expandText: 'CONTINUAR LENDO',
-                          collapseText: 'FECHAR',
+                          expandText: 'continuar lendo',
+                          collapseText: 'fechar',
                           maxLines: 10,
                           linkColor: uiColor.first,
                         ),

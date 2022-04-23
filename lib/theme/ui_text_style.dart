@@ -90,8 +90,23 @@ class uiTextStyle {
     fontStyle: FontStyle.italic,
   );
 
+  static const TextStyle menu = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: uiColor.comp_2,
+  );
+
+  static const TextStyle menuActive = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w900,
+    color: uiColor.comp_1,
+  );
+
   static const TextStyle buttonPrimary = TextStyle(
-      fontSize: 16, fontWeight: FontWeight.w400, color: uiColor.third);
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: uiColor.third,
+  );
 
   static const TextStyle buttonLabel = TextStyle(
     fontSize: 18,
