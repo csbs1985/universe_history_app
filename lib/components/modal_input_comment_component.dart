@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_is_empty, unused_field, void_checks, avoid_print, unnecessary_new, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
+import 'package:universe_history_app/components/toggle_component.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
@@ -181,18 +181,9 @@ class _ModalInputCommmentComponentState
                       children: [
                         Row(
                           children: [
-                            FlutterSwitch(
-                              width: 48,
-                              height: 32,
+                            ToggleComponent(
                               value: _textSigned,
-                              activeColor: uiColor.button,
-                              inactiveColor: uiColor.buttonSecond,
-                              activeToggleColor: uiColor.buttonBorder,
-                              inactiveToggleColor: uiColor.buttonSecondBorder,
-                              activeTextColor: uiColor.buttonLabel,
-                              inactiveTextColor: uiColor.buttonSecondLabel,
-                              toggleSize: 20,
-                              onToggle: (value) => _toggleAnonimous(),
+                              callback: (value) => _toggleAnonimous(),
                             ),
                             const SizedBox(width: 10),
                             Text(

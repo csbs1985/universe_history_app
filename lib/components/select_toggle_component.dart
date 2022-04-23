@@ -1,9 +1,8 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:universe_history_app/components/subtitle_resume_component.dart';
-import 'package:universe_history_app/theme/ui_color.dart';
+import 'package:universe_history_app/components/toggle_component.dart';
 
 class SelectToggleComponent extends StatefulWidget {
   const SelectToggleComponent({
@@ -41,18 +40,9 @@ class _SelectToggleComponentState extends State<SelectToggleComponent> {
             resume: widget._resume,
             width: width,
           ),
-          FlutterSwitch(
-            width: 48,
-            height: 32,
+          ToggleComponent(
             value: widget._value,
-            activeColor: uiColor.button,
-            inactiveColor: uiColor.buttonSecond,
-            activeToggleColor: uiColor.buttonBorder,
-            inactiveToggleColor: uiColor.buttonSecondBorder,
-            activeTextColor: uiColor.buttonLabel,
-            inactiveTextColor: uiColor.buttonSecondLabel,
-            toggleSize: 20,
-            onToggle: (value) => widget._callback(value),
+            callback: (value) => widget._callback(value),
           ),
         ],
       ),
