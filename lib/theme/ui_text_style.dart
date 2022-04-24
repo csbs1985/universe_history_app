@@ -114,6 +114,12 @@ class uiTextStyle {
     color: uiColor.buttonLabel,
   );
 
+  static const TextStyle buttonPublish = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w700,
+    color: uiColor.buttonLabel,
+  );
+
   static const TextStyle buttonSecondLabel = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w700,

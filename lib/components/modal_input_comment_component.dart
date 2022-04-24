@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_is_empty, unused_field, void_checks, avoid_print, unnecessary_new, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'package:universe_history_app/components/button_3d_component.dart';
+import 'package:universe_history_app/components/button_publish_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/components/toggle_component.dart';
@@ -198,10 +198,7 @@ class _ModalInputCommmentComponentState
                           ],
                         ),
                         if (_isInputNotEmpty)
-                          Button3dComponent(
-                            label: 'Publicar',
-                            style: ButtonStyleEnum.PRIMARY,
-                            size: ButtonSizeEnum.SMALL,
+                          ButtonPublishComponent(
                             callback: (value) => _publishComment(),
                           ),
                       ],
