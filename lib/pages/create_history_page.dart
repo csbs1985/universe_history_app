@@ -102,21 +102,37 @@ class _CreateHistoryState extends State<CreateHistory> {
 
   void _publishHistory() {
     setState(() {
-      history = {
-        'id': currentHistory.value.first.id ?? uuid.v4(),
-        'title': titleController.text.trim(),
-        'text': textController.text.trim(),
-        'date': currentHistory.value.first.date ?? DateTime.now().toString(),
-        'isComment': _isComment,
-        'isSigned': _isSigned,
-        'isEdit': currentHistory.value.isNotEmpty ? true : false,
-        'isDelete': false,
-        'qtyComment': currentHistory.value.first.qtyComment ?? 0,
-        'categories': _categories,
-        'userId': currentUser.value.first.id,
-        'userNickName': currentUser.value.first.nickname,
-      };
-
+      if (currentHistory.value.isNotEmpty) {
+        history = {
+          'id': currentHistory.value.first.id,
+          'title': titleController.text.trim(),
+          'text': textController.text.trim(),
+          'date': currentHistory.value.first.date,
+          'isComment': _isComment,
+          'isSigned': _isSigned,
+          'isEdit': true,
+          'isDelete': false,
+          'qtyComment': currentHistory.value.first.qtyComment,
+          'categories': _categories,
+          'userId': currentUser.value.first.id,
+          'userNickName': currentUser.value.first.nickname,
+        };
+      } else {
+        history = {
+          'id': uuid.v4(),
+          'title': titleController.text.trim(),
+          'text': textController.text.trim(),
+          'date': DateTime.now().toString(),
+          'isComment': _isComment,
+          'isSigned': _isSigned,
+          'isEdit': false,
+          'isDelete': false,
+          'qtyComment': 0,
+          'categories': _categories,
+          'userId': currentUser.value.first.id,
+          'userNickName': currentUser.value.first.nickname,
+        };
+      }
       api
           .setHistory(history)
           .then((value) => {
@@ -145,7 +161,7 @@ class _CreateHistoryState extends State<CreateHistory> {
     await api
         .setUpQtyHistoryUser()
         .then((value) => {
-              Navigator.of(context).pop(),
+              if (currentHistory.value.isNotEmpty) Navigator.of(context).pop(),
               toast.toast(
                   context,
                   ToastEnum.SUCCESS,
@@ -233,7 +249,9 @@ class _CreateHistoryState extends State<CreateHistory> {
               title: 'Assunto',
               resume: 'Selecione ao menos uma categoria/tema.',
               content: allCategories,
-              selected: currentHistory.value.first.categories,
+              selected: currentHistory.value.isNotEmpty
+                  ? currentHistory.value.first.categories
+                  : [],
               callback: (value) => _setCategories(value),
             ),
           ],

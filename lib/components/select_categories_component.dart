@@ -35,7 +35,9 @@ class _SelectCategoriesComponentState extends State<SelectCategoriesComponent> {
   @override
   void initState() {
     if (widget._selected.isNotEmpty) {
-      for (var item in widget._selected) listSelect.add(item);
+      for (var item in widget._selected) {
+        listSelect.add(item);
+      }
     }
     super.initState();
   }
