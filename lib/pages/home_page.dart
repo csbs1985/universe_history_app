@@ -102,8 +102,7 @@ class _HomePageState extends State<HomePage> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: uiColor.first,
           elevation: 0,
-          child: SvgPicture.asset(
-              currentUser.value.isNotEmpty ? uiSvg.create : uiSvg.create),
+          child: SvgPicture.asset(uiSvg.create),
           onPressed: () => {
             currentHistory.value = [],
             Navigator.of(context)
