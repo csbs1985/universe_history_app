@@ -215,7 +215,7 @@ class _CreateHistoryState extends State<CreateHistory> {
               child: TextField(
                 controller: textController,
                 keyboardType: TextInputType.multiline,
-                minLines: 10,
+                minLines: 3,
                 maxLines: null,
                 style: uiTextStyle.text1,
                 onChanged: (value) => _canPublish(),

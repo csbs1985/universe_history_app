@@ -30,13 +30,13 @@ class uiTextStyle {
   );
 
   static const TextStyle header1 = TextStyle(
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: FontWeight.w700,
     color: uiColor.third,
   );
 
   static const TextStyle header2 = TextStyle(
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: FontWeight.w700,
     color: uiColor.third,
   );
