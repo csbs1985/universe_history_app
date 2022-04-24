@@ -17,6 +17,7 @@ class HistoryModel {
     required this.isComment,
     required this.isSigned,
     required this.isEdit,
+    required this.isDelete,
     required this.userId,
     required this.userNickName,
     required this.qtyComment,
@@ -32,6 +33,7 @@ class HistoryModel {
   late bool isComment;
   late bool isSigned;
   late bool isEdit;
+  late bool isDelete;
   late int qtyComment;
   late List<String> categories;
 
@@ -46,10 +48,11 @@ class HistoryModel {
         isComment: json['isComment'],
         isSigned: json['isSigned'],
         isEdit: json['isEdit'],
+        isDelete: json['isDelete'],
         userId: json['userId'],
         userNickName: json['userNickName'],
         qtyComment: json['qtyComment'],
-        categories: [],
+        categories: json['categories'].cast<String>(),
       );
 
   String toJson() => json.encode(toMap());
@@ -62,6 +65,7 @@ class HistoryModel {
         'isComment': isComment,
         'isSigned': isSigned,
         'isEdit': isEdit,
+        'isDelete': isDelete,
         'userId': userId,
         'userNickName': userNickName,
         'qtyComment': qtyComment,

@@ -77,21 +77,25 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
     api.upBookmarks();
   }
 
-  // void _showModalOptions(
-  //   BuildContext context,
-  //   dynamic historyTitle,
-  // ) {
-  //   showCupertinoModalBottomSheet(
-  //     expand: false,
-  //     context: context,
-  //     barrierColor: Colors.black87,
-  //     duration: const Duration(milliseconds: 300),
-  //     builder: (context) => ModalOptionsComponent(
-  //       type: 'história',
-  //       comment: historyTitle,
-  //     ),
-  //   );
-  // }
+  void _showModalOptions(BuildContext context, dynamic _content) {
+    ownerClass.selectOwner(_content['userId'], _content['userNickName']);
+    CommentClass.selectComment(_content);
+
+    showCupertinoModalBottomSheet(
+      expand: false,
+      context: context,
+      barrierColor: Colors.black87,
+      duration: const Duration(milliseconds: 300),
+      builder: (context) => ModalOptionsComponent(
+        _content['id'],
+        'história',
+        _content['userId'],
+        _content['userNickName'],
+        _content['text'],
+        _content['isDelete'],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -211,12 +215,13 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                                           Navigator.of(context)
                                               .pushNamed("/history");
                                         }),
-                                    const IconComponent(
+                                    IconComponent(
                                       icon: uiSvg.options,
-                                      // callback: (value) => _showModalOptions(
-                                      //   context,
-                                      //   documents[index],
-                                      // ),
+                                      callback: (value) => {
+                                        _selectHistory(documents[index].data()),
+                                        _showModalOptions(
+                                            context, documents[index].data()),
+                                      },
                                     ),
                                   ],
                                 );

@@ -63,8 +63,9 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
   bool _canDelete() {
     if (widget._isDelete) return false;
     if (currentUser.value.first.id == widget._idUser) return true;
-    if (currentUser.value.first.id == currentHistory.value.first.userId)
+    if (currentUser.value.first.id == currentHistory.value.first.userId) {
       return true;
+    }
     return false;
   }
 
@@ -79,7 +80,9 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
   }
 
   void _edit(BuildContext context) {
-    if (widget._type == 'comentário') _showModal(context);
+    widget._type == 'comentário'
+        ? _showModal(context)
+        : Navigator.of(context).pushNamed('/create');
   }
 
   void _deleteComment(bool value) async {

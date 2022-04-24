@@ -69,8 +69,8 @@ class _ModalInputCommmentComponentState
     });
   }
 
-  void _sendComment() {
-    setState(() {
+  void _publishComment() {
+    setState(() async {
       _comment = {
         'id': _commentEdit?['id'] ?? uuid.v4(),
         'date': _commentEdit?['date'] ?? DateTime.now().toString(),
@@ -85,7 +85,7 @@ class _ModalInputCommmentComponentState
             _commentEdit?['userNickName'] ?? currentUser.value.first.nickname,
       };
 
-      api
+      await api
           .setComment(_comment)
           .then((result) => _upComment())
           .catchError((error) => print('ERROR: ' + error));
@@ -102,8 +102,11 @@ class _ModalInputCommmentComponentState
         await api
             .upNumComment()
             .then((result) => {
-                  ActivityUtil(ActivitiesEnum.NEW_COMMENT,
-                      _commentController.text, currentHistory.value.first.id),
+                  ActivityUtil(
+                    ActivitiesEnum.NEW_COMMENT,
+                    _commentController.text,
+                    currentHistory.value.first.id,
+                  ),
                   _setUpQtyCommentUser(),
                   _commentController.clear(),
                   _isInputNotEmpty = false,
@@ -199,7 +202,7 @@ class _ModalInputCommmentComponentState
                             label: 'Publicar',
                             style: ButtonStyleEnum.PRIMARY,
                             size: ButtonSizeEnum.SMALL,
-                            callback: (value) => _sendComment(),
+                            callback: (value) => _publishComment(),
                           ),
                       ],
                     ),

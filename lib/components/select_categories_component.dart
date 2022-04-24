@@ -10,16 +10,19 @@ class SelectCategoriesComponent extends StatefulWidget {
   final List<CategoryModel> _content;
   final String _title;
   final String _resume;
+  final List<String> _selected;
 
   const SelectCategoriesComponent({
     required Function? callback,
     required List<CategoryModel> content,
     required String title,
     required String resume,
+    required List<String> selected,
   })  : _callback = callback,
         _content = content,
         _resume = resume,
-        _title = title;
+        _title = title,
+        _selected = selected;
 
   @override
   _SelectCategoriesComponentState createState() =>
@@ -28,6 +31,14 @@ class SelectCategoriesComponent extends StatefulWidget {
 
 class _SelectCategoriesComponentState extends State<SelectCategoriesComponent> {
   List<String> listSelect = [];
+
+  @override
+  void initState() {
+    if (widget._selected.isNotEmpty) {
+      for (var item in widget._selected) listSelect.add(item);
+    }
+    super.initState();
+  }
 
   void _setSelected(String id) {
     setState(() {
@@ -71,9 +82,10 @@ class _SelectCategoriesComponentState extends State<SelectCategoriesComponent> {
                           ),
                         ),
                         style: ButtonStyle(
-                          backgroundColor: _getSelected(item.id!)
-                              ? MaterialStateProperty.all(uiColor.button)
-                              : MaterialStateProperty.all(uiColor.buttonSecond),
+                          backgroundColor: MaterialStateProperty.all(
+                              _getSelected(item.id!)
+                                  ? uiColor.button
+                                  : uiColor.buttonSecond),
                         ),
                       ),
                     ),

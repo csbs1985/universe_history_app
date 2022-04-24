@@ -106,9 +106,10 @@ class _CommentState extends State<CommentComponent> {
   }
 
   bool _canShowOption(dynamic _content) {
-    if (currentUser.value.first.id == _content['userId']) {
-      if (!_content['isDelete']) return true;
-    } else {
+    if (currentUser.value.first.id ==
+        _content['userId']) if (!_content['isDelete'])
+      return true;
+    else {
       if (!_content['isDelete']) return true;
     }
 
