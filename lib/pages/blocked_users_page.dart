@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, prefer_is_empty, unnecessary_brace_in_string_interps, avoid_print
+// ignore_for_file: camel_case_types, prefer_is_empty, unnecessary_brace_in_string_interps, avoid_print, curly_braces_in_flow_control_structures
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +9,7 @@ import 'package:universe_history_app/components/skeleton_blocked_componen.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/shared/models/blocked_model.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
 
@@ -23,22 +24,19 @@ class _blockedUsersPageState extends State<blockedUsersPage> {
   final Api api = Api();
   final ToastComponent toast = ToastComponent();
 
-  int qtyBlocked = 0;
-  String labelBlocked = 'Desbloquear usuário';
-
-  void _numBlocked(int snapshot) {
-    setState(() {
-      qtyBlocked = snapshot;
-      if (qtyBlocked == 1) labelBlocked = '1 usuário bloqueado';
-      if (qtyBlocked > 1) labelBlocked = '${qtyBlocked} usuários bloqueados';
-    });
+  String _numBlocked() {
+    if (currentBlockedQty.value == 1) return '1 usuário bloqueado';
+    if (currentBlockedQty.value > 1) {
+      return '${currentBlockedQty.value} usuários bloqueados';
+    }
+    return 'Desbloquear usuário';
   }
 
   void _unlockUser(QueryDocumentSnapshot<dynamic> blocked) {
     api
         .deleteBlock(blocked['id'])
         .then((result) => {
-              _numBlocked(qtyBlocked--),
+              currentBlockedQty.value--,
               toast.toast(context, ToastEnum.SUCCESS,
                   '${blocked['blockedNickName']} desbloqueado!'),
             })
@@ -55,15 +53,23 @@ class _blockedUsersPageState extends State<blockedUsersPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TitleResumeComponent(
-                labelBlocked,
-                'Quando você bloqueia uma pessoa, este usuário não poderá mais ler suas histórias e comentários e comentar o que você escreve.',
-              ),
+              ValueListenableBuilder(
+                  valueListenable: currentBlockedQty,
+                  builder: (context, value, __) {
+                    return TitleResumeComponent(
+                      _numBlocked(),
+                      'Quando você bloqueia uma pessoa, este usuário não poderá mais ler suas histórias e comentários e comentar o que você escreve.',
+                    );
+                  }),
               StreamBuilder<QuerySnapshot>(
                 stream: api.getAllBlock(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.data != null) _numBlocked(snapshot.data!.size);
+                  if (snapshot.data != null) {
+                    WidgetsBinding.instance!.addPostFrameCallback((_) {
+                      currentBlockedQty.value = snapshot.data!.size;
+                    });
+                  }
                   switch (snapshot.connectionState) {
                     case ConnectionState.none:
                       return _noResult();
