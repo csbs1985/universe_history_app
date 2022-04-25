@@ -25,6 +25,7 @@ ActivityUtil(ActivitiesEnum type, String content, String elementId) async {
 enum ActivitiesEnum {
   BLOCK_USER,
   DELETE_COMMENT,
+  DELETE_HISTORY,
   DENOUNCE,
   LOGIN,
   LOGOUT,

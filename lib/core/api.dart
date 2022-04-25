@@ -134,6 +134,10 @@ class Api {
         .update({'isDelete': true});
   }
 
+  deleteHIstory() {
+    return history.doc(currentHistory.value.first.id).delete();
+  }
+
   upNickName() {
     return user
         .doc(currentUser.value.first.id)

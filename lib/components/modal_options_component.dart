@@ -9,11 +9,9 @@ import 'package:universe_history_app/components/modal_input_comment_component.da
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
-import 'package:universe_history_app/shared/models/owner_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
-import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:uuid/uuid.dart';
 
@@ -85,6 +83,12 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
         : Navigator.of(context).pushNamed('/create');
   }
 
+  void _delete(bool value) {
+    widget._type == 'comentário'
+        ? _deleteComment(value)
+        : _deleteHistory(value);
+  }
+
   void _deleteComment(bool value) async {
     if (value) {
       api
@@ -95,7 +99,26 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                   widget._text,
                   widget._userNickName,
                 ),
-                toast.toast(context, ToastEnum.SUCCESS, 'Texto excluido!'),
+                toast.toast(context, ToastEnum.SUCCESS, 'Comentário deletado!'),
+                Navigator.of(context).pop(),
+              })
+          .catchError((error) => print('ERROR:' + error.toString()));
+    }
+
+    Navigator.of(context).pop();
+  }
+
+  void _deleteHistory(bool value) async {
+    if (value) {
+      api
+          .deleteHIstory()
+          .then((result) => {
+                ActivityUtil(
+                  ActivitiesEnum.DELETE_HISTORY,
+                  widget._text,
+                  widget._userNickName,
+                ),
+                toast.toast(context, ToastEnum.SUCCESS, 'História deletada!'),
                 Navigator.of(context).pop(),
               })
           .catchError((error) => print('ERROR:' + error.toString()));
@@ -171,7 +194,7 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                         btnSecondaryLabel: 'Excluir',
                         text:
                             'Tem certeza de que deseja excluir esse comentário definitivamente?',
-                        callback: (value) => _deleteComment(value),
+                        callback: (value) => _delete(value),
                       ),
                     ),
                   if (_canBlock())
