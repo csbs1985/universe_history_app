@@ -31,7 +31,7 @@ class Api {
   getAllBlock() {
     return block
         .orderBy('date')
-        .where('blockedId', isEqualTo: currentUser.value.first.id)
+        .where('blockerId', isEqualTo: currentUser.value.first.id)
         .snapshots();
   }
 
@@ -134,8 +134,12 @@ class Api {
         .update({'isDelete': true});
   }
 
-  deleteHIstory() {
+  deleteHistory() {
     return history.doc(currentHistory.value.first.id).delete();
+  }
+
+  deleteBlock(String blocked) {
+    return block.doc(blocked).delete();
   }
 
   upNickName() {

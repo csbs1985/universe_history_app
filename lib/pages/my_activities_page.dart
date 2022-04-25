@@ -13,11 +13,11 @@ import 'package:universe_history_app/components/item_notification_component.dart
 import 'package:universe_history_app/components/item_temporarily_desabled_component.dart';
 import 'package:universe_history_app/components/item_up_block_component.dart';
 import 'package:universe_history_app/components/item_up_nickName_component.dart';
+import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/skeleton_activity_componen.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
-import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 
 class MyActivitiesPage extends StatefulWidget {
@@ -64,10 +64,7 @@ class _MyActivitiesPageState extends State<MyActivitiesPage> {
                   case ConnectionState.done:
                   default:
                     try {
-                      return _list(
-                        context,
-                        snapshot,
-                      );
+                      return _list(context, snapshot);
                     } catch (error) {
                       return _noResult();
                     }
@@ -81,26 +78,7 @@ class _MyActivitiesPageState extends State<MyActivitiesPage> {
   }
 
   Widget _noResult() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 30, 10, 0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: const [
-          Text(
-            'Nada para mostrar',
-            style: uiTextStyle.header1,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            'Você não tem atividades ainda.',
-            style: uiTextStyle.text7,
-          ),
-        ],
-      ),
-    );
+    return const NoResultComponent(text: 'Você não tem usuário bloqueados.');
   }
 
   Widget _list(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

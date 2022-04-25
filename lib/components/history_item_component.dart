@@ -240,6 +240,8 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
               );
             },
           )
-        : const NoHistoryComponent();
+        : const NoResultComponent(
+            text:
+                'Não encontramos histórias que atendam sua pesquisa. Mas não desista, temos muitas outras histórias para você interagir.');
   }
 }

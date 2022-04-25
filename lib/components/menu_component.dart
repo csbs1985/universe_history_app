@@ -36,8 +36,7 @@ class _MenuComponentState extends State<MenuComponent> {
     return ValueListenableBuilder(
       valueListenable: currentUser,
       builder: (context, value, __) {
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+        return SizedBox(
           height: 36,
           child: ListView.builder(
             itemCount: CategoryModel.allCategories.length,
@@ -54,9 +53,8 @@ class _MenuComponentState extends State<MenuComponent> {
                             ? uiTextStyle.menuActive
                             : uiTextStyle.menu,
                       ),
-                      onPressed: () => _setSelected(
-                        widget.allCategories[index],
-                      ),
+                      onPressed: () =>
+                          _setSelected(widget.allCategories[index]),
                     )
                   : const SizedBox();
             },

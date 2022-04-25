@@ -45,7 +45,7 @@ class _HistoryItemState extends State<HistoryListComponent> {
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
-                return NoHistoryComponent();
+                return _noResult();
               case ConnectionState.waiting:
                 return SkeletonHistoryItemComponent();
               case ConnectionState.done:
@@ -56,12 +56,18 @@ class _HistoryItemState extends State<HistoryListComponent> {
                     snapshot: snapshot,
                   );
                 } catch (error) {
-                  return NoHistoryComponent();
+                  return _noResult();
                 }
             }
           },
         );
       },
     );
+  }
+
+  Widget _noResult() {
+    return NoResultComponent(
+        text:
+            'Não encontramos histórias que atendam sua pesquisa. Mas não desista, temos muitas outras histórias para você interagir.');
   }
 }
