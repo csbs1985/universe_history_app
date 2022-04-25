@@ -27,7 +27,7 @@ class ToastComponent {
       text,
       context: context,
       position: StyledToastPosition.center,
-      textStyle: uiTextStyle.buttonLabel,
+      textStyle: uiTextStyle.toast,
       backgroundColor: _style,
       animation: StyledToastAnimation.slideToBottomFade,
       reverseAnimation: StyledToastAnimation.slideFromBottomFade,

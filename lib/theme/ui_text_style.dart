@@ -125,4 +125,10 @@ class uiTextStyle {
     fontWeight: FontWeight.w700,
     color: uiColor.buttonSecondLabel,
   );
+
+  static const TextStyle toast = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w700,
+    color: uiColor.buttonLabel,
+  );
 }

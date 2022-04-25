@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/button_publish_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
+import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/components/toggle_component.dart';
+import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
@@ -95,9 +97,7 @@ class _ModalInputCommmentComponentState
   void _upComment() {
     setState(
       () async {
-        if (!isEdit) {
-          currentHistory.value.first.qtyComment++;
-        }
+        if (!isEdit) currentHistory.value.first.qtyComment++;
 
         await api
             .upNumComment()
@@ -125,17 +125,28 @@ class _ModalInputCommmentComponentState
         .setUpQtyCommentUser()
         .then(
           (value) => {
+            if (isEdit) Navigator.of(context).pop(),
             toast.toast(
-              context,
-              ToastEnum.SUCCESS,
-              isEdit
-                  ? 'Seu comentário foi alterado.'
-                  : 'Seu comentário foi publicado.',
-            ),
+                context,
+                ToastEnum.SUCCESS,
+                isEdit
+                    ? 'Seu comentário foi alterado.'
+                    : 'Seu comentário foi publicado.'),
             Navigator.of(context).pop(),
           },
         )
         .catchError((error) => print('ERROR: ' + error));
+  }
+
+  void _clean() {
+    if (_commentController.text.isEmpty) {
+      Navigator.of(context).pop();
+    } else {
+      setState(() {
+        _commentController.text = '';
+        _isInputNotEmpty = false;
+      });
+    }
   }
 
   @override
@@ -147,7 +158,7 @@ class _ModalInputCommmentComponentState
           SingleChildScrollView(
             child: Container(
               padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom + 54.5),
+                  bottom: MediaQuery.of(context).viewInsets.bottom + 70),
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
@@ -155,11 +166,11 @@ class _ModalInputCommmentComponentState
                     controller: _commentController,
                     onChanged: (value) => keyUp(value),
                     autofocus: true,
-                    maxLines: 100,
+                    maxLines: null,
                     style: uiTextStyle.text1,
                     decoration: const InputDecoration.collapsed(
                       hintText:
-                          "Escreva aqui seu comentário, ele pode ajudar alguém em um momento difícil, escolha com cuidado sua palavras.",
+                          "Escreva aqui seu comentário, ele pode ajudar alguém em um momento difícil, escolha com cuidado suas palavras.",
                       hintStyle: uiTextStyle.text7,
                     ),
                   ),
@@ -172,18 +183,22 @@ class _ModalInputCommmentComponentState
             left: 0,
             right: 0,
             child: Container(
-              height: 54.5,
               color: uiColor.comp_1,
               child: Column(
                 children: [
                   const DividerComponent(bottom: 0),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                    padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Row(
                           children: [
+                            IconComponent(
+                                icon: uiSvg.clean,
+                                callback: (value) => _clean()),
+                            const SizedBox(width: 10),
                             ToggleComponent(
                               value: _textSigned,
                               callback: (value) => _toggleAnonimous(),
@@ -199,8 +214,7 @@ class _ModalInputCommmentComponentState
                         ),
                         if (_isInputNotEmpty)
                           ButtonPublishComponent(
-                            callback: (value) => _publishComment(),
-                          ),
+                              callback: (value) => _publishComment()),
                       ],
                     ),
                   ),
