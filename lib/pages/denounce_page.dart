@@ -64,6 +64,7 @@ class _DenouncePageState extends State<DenouncePage> {
                   toast.toast(
                       context, ToastEnum.SUCCESS, 'Usuário denunciado!'),
                   Navigator.of(context).pop(),
+                  Navigator.of(context).pop(),
                 })
             .catchError((error) {});
       });

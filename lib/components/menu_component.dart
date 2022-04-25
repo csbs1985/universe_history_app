@@ -43,18 +43,26 @@ class _MenuComponentState extends State<MenuComponent> {
             scrollDirection: Axis.horizontal,
             itemBuilder: (BuildContext context, int index) {
               return canShow(widget.allCategories[index].label)
-                  ? TextButton(
-                      style: _getSelected(widget.allCategories[index])
-                          ? uiButton.buttonMenuActive
-                          : uiButton.buttonMenu,
-                      child: Text(
-                        widget.allCategories[index].label!.toLowerCase(),
-                        style: _getSelected(widget.allCategories[index])
-                            ? uiTextStyle.menuActive
-                            : uiTextStyle.menu,
-                      ),
-                      onPressed: () =>
-                          _setSelected(widget.allCategories[index]),
+                  ? Row(
+                      children: [
+                        if (widget.allCategories[index].id == 'todas')
+                          const SizedBox(width: 16),
+                        TextButton(
+                          style: _getSelected(widget.allCategories[index])
+                              ? uiButton.buttonMenuActive
+                              : uiButton.buttonMenu,
+                          child: Text(
+                            widget.allCategories[index].label!.toLowerCase(),
+                            style: _getSelected(widget.allCategories[index])
+                                ? uiTextStyle.menuActive
+                                : uiTextStyle.menu,
+                          ),
+                          onPressed: () =>
+                              _setSelected(widget.allCategories[index]),
+                        ),
+                        if (widget.allCategories[index].id == 'violencia')
+                          const SizedBox(width: 16),
+                      ],
                     )
                   : const SizedBox();
             },
