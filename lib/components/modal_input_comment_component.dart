@@ -72,7 +72,7 @@ class _ModalInputCommmentComponentState
   }
 
   void _publishComment() {
-    setState(() async {
+    setState(() {
       _comment = {
         'id': _commentEdit?['id'] ?? uuid.v4(),
         'date': _commentEdit?['date'] ?? DateTime.now().toString(),
@@ -86,12 +86,12 @@ class _ModalInputCommmentComponentState
         'userNickName':
             _commentEdit?['userNickName'] ?? currentUser.value.first.nickname,
       };
-
-      await api
-          .setComment(_comment)
-          .then((result) => _upComment())
-          .catchError((error) => print('ERROR: ' + error));
     });
+
+    api
+        .setComment(_comment)
+        .then((result) => _upComment())
+        .catchError((error) => print('ERROR: ' + error));
   }
 
   void _upComment() {
