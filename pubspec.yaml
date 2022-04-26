@@ -40,6 +40,10 @@ dependencies:
   flutter_share: ^2.0.0
   uuid: ^3.0.6
 
+  # notification
+  firebase_messaging: ^11.2.14
+  flutter_local_notifications: ^9.4.1
+
   # device
   device_info_plus: ^3.2.2
 

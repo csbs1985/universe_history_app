@@ -1,11 +1,14 @@
-// ignore_for_file: prefer_is_empty, unused_field, void_checks, avoid_print, unnecessary_new, use_key_in_widget_constructors, curly_braces_in_flow_control_structures
+// ignore_for_file: prefer_is_empty, unused_field, void_checks, avoid_print, unnecessary_new, use_key_in_widget_constructors, curly_braces_in_flow_control_structures, import_of_legacy_library_into_null_safe
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:universe_history_app/components/button_publish_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/components/toggle_component.dart';
+import 'package:universe_history_app/main.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/core/api.dart';
@@ -57,6 +60,48 @@ class _ModalInputCommmentComponentState
     }
 
     super.initState();
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                channel.id,
+                channel.name,
+                // channel.description,
+                color: Colors.blue,
+                playSound: true,
+                icon: '@mipmap/ic_launcher',
+              ),
+            ));
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published!');
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {
+        showDialog(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                title: Text(notification.title!),
+                content: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [Text(notification.body!)],
+                  ),
+                ),
+              );
+            });
+      }
+    });
   }
 
   void keyUp(String text) {
@@ -119,6 +164,7 @@ class _ModalInputCommmentComponentState
     api
         .setUpQtyCommentUser()
         .then((value) => {
+              showNotification(),
               if (isEdit) Navigator.of(context).pop(),
               toast.toast(
                   context,
@@ -139,6 +185,24 @@ class _ModalInputCommmentComponentState
         _commentController.text = '';
         _isInputNotEmpty = false;
       });
+  }
+
+  void showNotification() {
+    flutterLocalNotificationsPlugin.show(
+        0,
+        "Testing",
+        "How you doin ?",
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            channel.id,
+            channel.name,
+            // channel.description,
+            importance: Importance.high,
+            color: Colors.blue,
+            playSound: true,
+            icon: '@mipmap/ic_launcher',
+          ),
+        ));
   }
 
   @override
