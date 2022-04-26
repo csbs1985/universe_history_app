@@ -134,12 +134,11 @@ class _ModalInputCommmentComponentState
   void _clean() {
     if (_commentController.text.isEmpty)
       Navigator.of(context).pop();
-    else {
+    else
       setState(() {
         _commentController.text = '';
         _isInputNotEmpty = false;
       });
-    }
   }
 
   @override
