@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_is_empty, unused_field, void_checks, avoid_print, unnecessary_new, use_key_in_widget_constructors
+// ignore_for_file: prefer_is_empty, unused_field, void_checks, avoid_print, unnecessary_new, use_key_in_widget_constructors, curly_braces_in_flow_control_structures
 
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/button_publish_component.dart';
@@ -60,15 +60,12 @@ class _ModalInputCommmentComponentState
   }
 
   void keyUp(String text) {
-    setState(() {
-      _isInputNotEmpty = _commentController.text.length > 0 ? true : false;
-    });
+    setState(() =>
+        _isInputNotEmpty = _commentController.text.length > 0 ? true : false);
   }
 
   dynamic _toggleAnonimous() {
-    setState(() {
-      _textSigned = !_textSigned;
-    });
+    setState(() => _textSigned = !_textSigned);
   }
 
   void _publishComment() {
@@ -117,31 +114,27 @@ class _ModalInputCommmentComponentState
   }
 
   void _setUpQtyCommentUser() {
-    if (!isEdit) {
-      currentUser.value.first.qtyComment++;
-    }
+    if (!isEdit) currentUser.value.first.qtyComment++;
 
     api
         .setUpQtyCommentUser()
-        .then(
-          (value) => {
-            if (isEdit) Navigator.of(context).pop(),
-            toast.toast(
-                context,
-                ToastEnum.SUCCESS,
-                isEdit
-                    ? 'Seu comentário foi alterado.'
-                    : 'Seu comentário foi publicado.'),
-            Navigator.of(context).pop(),
-          },
-        )
+        .then((value) => {
+              if (isEdit) Navigator.of(context).pop(),
+              toast.toast(
+                  context,
+                  ToastEnum.SUCCESS,
+                  isEdit
+                      ? 'Seu comentário foi alterado.'
+                      : 'Seu comentário foi publicado.'),
+              Navigator.of(context).pop(),
+            })
         .catchError((error) => print('ERROR: ' + error));
   }
 
   void _clean() {
-    if (_commentController.text.isEmpty) {
+    if (_commentController.text.isEmpty)
       Navigator.of(context).pop();
-    } else {
+    else {
       setState(() {
         _commentController.text = '';
         _isInputNotEmpty = false;
@@ -169,10 +162,9 @@ class _ModalInputCommmentComponentState
                     maxLines: null,
                     style: uiTextStyle.text1,
                     decoration: const InputDecoration.collapsed(
-                      hintText:
-                          "Escreva aqui seu comentário, ele pode ajudar alguém em um momento difícil, escolha com cuidado suas palavras.",
-                      hintStyle: uiTextStyle.text7,
-                    ),
+                        hintText:
+                            "Escreva aqui seu comentário, ele pode ajudar alguém em um momento difícil, escolha com cuidado suas palavras.",
+                        hintStyle: uiTextStyle.text7),
                   ),
                 ),
               ),
