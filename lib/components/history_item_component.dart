@@ -46,7 +46,11 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
   final Api api = Api();
 
   void _selectHistory(Map<String, dynamic> _history) {
-    ownerClass.selectOwner(_history['userId'], _history['userNickName']);
+    ownerClass.selectOwner(
+      _history['userId'],
+      _history['userNickName'],
+      _history['token'],
+    );
     currentDocHistory.value = _history['id'];
     HistoryClass.selectHistory(_history);
   }
@@ -78,7 +82,11 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
   }
 
   void _showModalOptions(BuildContext context, dynamic _content) {
-    ownerClass.selectOwner(_content['userId'], _content['userNickName']);
+    ownerClass.selectOwner(
+      _content['userId'],
+      _content['userNickName'],
+      _content['token'],
+    );
     CommentClass.selectComment(_content);
 
     showCupertinoModalBottomSheet(

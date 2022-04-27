@@ -1,13 +1,13 @@
 // ignore_for_file: prefer_is_empty, unused_field, void_checks, avoid_print, unnecessary_new, use_key_in_widget_constructors, curly_braces_in_flow_control_structures, import_of_legacy_library_into_null_safe
 
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:universe_history_app/components/button_publish_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/components/toggle_component.dart';
 import 'package:universe_history_app/core/push_notification.dart';
+import 'package:universe_history_app/shared/models/owner_model.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/core/api.dart';
@@ -34,6 +34,7 @@ class _ModalInputCommmentComponentState
   final UserClass userClass = UserClass();
   final Api api = Api();
   final Uuid uuid = const Uuid();
+  final PushNotification _notification = PushNotification();
 
   late Map<String, dynamic> _comment;
 
@@ -98,7 +99,6 @@ class _ModalInputCommmentComponentState
     setState(
       () async {
         if (!isEdit) currentHistory.value.first.qtyComment++;
-
         await api
             .upNumComment()
             .then((result) => {
@@ -148,31 +148,22 @@ class _ModalInputCommmentComponentState
   void _showNotification() {
     var history = currentHistory.value.first;
     var title = _textSigned
-        ? (history.userNickName +
+        ? (currentUser.value.first.nickname +
             ' fez um comentário na história "' +
             history.title +
             '"')
         : ('Sua história "' +
             history.title +
             '" recebeu um comentário anônimo.');
-    var text = _textSigned
-        ? history.userNickName + ': "' + _commentController.text.trim() + '"'
+    var body = _textSigned
+        ? currentUser.value.first.nickname +
+            ': "' +
+            _commentController.text.trim() +
+            '"'
         : '"' + _commentController.text.trim() + '"';
 
-    flutterLocalNotificationsPlugin.show(
-      0,
-      title,
-      text,
-      NotificationDetails(
-        android: AndroidNotificationDetails(
-          channel.id,
-          channel.name,
-          importance: Importance.high,
-          playSound: true,
-          icon: '@mipmap/ic_launcher',
-        ),
-      ),
-    );
+    if (currentUser.value.first.id != currentOwner.value.first.id)
+      _notification.sendNotificationComment(title, body);
   }
 
   @override

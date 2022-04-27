@@ -1,4 +1,4 @@
-// ignore_for_file: no_logic_in_create_state, prefer_final_fields, use_key_in_widget_constructors, prefer_const_constructors, avoid_print, unnecessary_new, unused_local_variable
+// ignore_for_file: no_logic_in_create_state, prefer_final_fields, use_key_in_widget_constructors, prefer_const_constructors, avoid_print, unnecessary_new, unused_local_variable, curly_braces_in_flow_control_structures
 
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -31,7 +31,11 @@ class _CommentState extends State<CommentComponent> {
   List<CommentModel> documents = [];
 
   void _showModal(BuildContext context, dynamic _content) {
-    ownerClass.selectOwner(_content['userId'], _content['userNickName']);
+    ownerClass.selectOwner(
+      _content['userId'],
+      _content['userNickName'],
+      _content['token'],
+    );
     CommentClass.selectComment(_content);
 
     showCupertinoModalBottomSheet(
@@ -107,10 +111,11 @@ class _CommentState extends State<CommentComponent> {
   }
 
   bool _canShowOption(dynamic _content) {
-    if (currentUser.value.first.id ==
-        _content['userId']) if (!_content['isDelete'])
-      return true;
-    else {
+    if (currentUser.value.first.id == _content['userId']) {
+      if (!_content['isDelete']) {
+        return true;
+      }
+    } else {
       if (!_content['isDelete']) return true;
     }
 

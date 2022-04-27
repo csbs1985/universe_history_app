@@ -8,10 +8,12 @@ ValueNotifier<List<OwnerModel>> currentOwner =
 class OwnerModel {
   late String id;
   late String nickname;
+  late String token;
 
   OwnerModel({
     required this.id,
     required this.nickname,
+    required this.token,
   });
 
   factory OwnerModel.fromJson(Map<String, dynamic> json) =>
@@ -20,12 +22,13 @@ class OwnerModel {
   factory OwnerModel.fromMap(Map<String, dynamic> json) => OwnerModel(
         id: json['id'],
         nickname: json['nickname'],
+        token: json['token'],
       );
 }
 
 class OwnerClass {
-  void selectOwner(String _id, String _userNickName) {
-    var owner = {'id': _id, 'nickname': _userNickName};
+  void selectOwner(String _id, String _userNickName, String _token) {
+    var owner = {'id': _id, 'nickname': _userNickName, 'token': _token};
     currentOwner.value = [];
     currentOwner.value.add(OwnerModel.fromJson(owner));
   }
