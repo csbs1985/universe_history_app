@@ -1,6 +1,7 @@
 // ignore_for_file: curly_braces_in_flow_control_structures, avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:universe_history_app/core/api.dart';
@@ -12,6 +13,10 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
   playSound: true,
   enableVibration: true,
 );
+
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+}
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();

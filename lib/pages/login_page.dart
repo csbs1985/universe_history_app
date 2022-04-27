@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, unused_local_variable, await_only_futures, unused_field, unnecessary_new, deprecated_member_use, unused_element, prefer_const_constructors
+// ignore_for_file: avoid_print, unused_local_variable, await_only_futures, unused_field, unnecessary_new, deprecated_member_use, unused_element, prefer_const_constructors, constant_identifier_names
 
 import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,10 +24,10 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GoogleSignIn googleSignIn = GoogleSignIn();
-  final ToastComponent toast = new ToastComponent();
+  final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
   final Api api = Api();
-  final Uuid uuid = const Uuid();
+  final Uuid uuid = Uuid();
 
   late Map<String, dynamic> _form;
 
@@ -107,9 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                   Navigator.of(context).pushNamed("/nickname"),
                 },
             })
-        .catchError((error) {
-      print('ERROR:' + error.toString());
-    });
+        .catchError((error) => print('ERROR:' + error.toString()));
   }
 
   @override
@@ -123,22 +121,17 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Expanded(
-              child: LogoComponent(
-                icon: uiSvg.logo,
-                size: 400,
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
+                child: LogoComponent(
+              icon: uiSvg.logo,
+              size: 400,
+            )),
+            const SizedBox(height: 20),
             const Text(
               'Entrar ou criar conta History com sua conta',
               style: uiTextStyle.text1,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Button3dComponent(
               label: 'Apple',
               size: ButtonSizeEnum.LARGE,
