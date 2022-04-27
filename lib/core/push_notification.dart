@@ -87,7 +87,7 @@ class PushNotification {
                 channel.name,
                 playSound: true,
                 importance: Importance.high,
-                icon: 'launch_background',
+                icon: '@mipmap/ic_launcher',
               ),
             ));
       }
@@ -105,10 +105,7 @@ class PushNotification {
   void sendNotificationComment(String title, String body) async {
     await api
         .getTokenOwner()
-        .then((result) => {
-              _tokenOwner = result.docs.first['token'],
-              print(_tokenOwner),
-            })
+        .then((result) => _tokenOwner = result.docs.first['token'])
         .catchError((error) => print('ERROR:' + error.toString()));
 
     try {
@@ -124,7 +121,7 @@ class PushNotification {
             'notification': <String, dynamic>{'body': body, 'title': title},
             'priority': 'high',
             'data': <String, dynamic>{
-              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'click_action': 'FLUTTER_NOTIFICATION_COMMENT',
               'id': '1',
               'status': 'done'
             },
