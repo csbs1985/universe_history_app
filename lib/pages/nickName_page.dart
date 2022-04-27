@@ -29,9 +29,11 @@ class _NickNamePageState extends State<NickNamePage> {
   TextEditingController _textController = TextEditingController();
 
   bool _isInputNotEmpty = false;
-  String _message = 'nome de usuário atual.';
+  String _textDefault = 'nome de usuário atual';
   String _oldName = '';
   int _counter = 0;
+
+  late String _message = _textDefault;
 
   @override
   void initState() {
@@ -50,13 +52,13 @@ class _NickNamePageState extends State<NickNamePage> {
       if (currentUser.value.isNotEmpty &&
           currentNickname.value == _textController.text) {
         _isInputNotEmpty = false;
-        _message = 'nome de usuário atual.';
+        _message = _textDefault;
         return;
       }
 
       if (_textController.text.length < 5 || _textController.text.length > 20) {
         _isInputNotEmpty = false;
-        _message = 'nome de usuário não atende aos critérios.';
+        _message = 'nome de usuário não atende aos critérios';
         return;
       }
 
@@ -66,12 +68,12 @@ class _NickNamePageState extends State<NickNamePage> {
                 if (result.size > 0)
                   {
                     _isInputNotEmpty = false,
-                    _message = 'nome de usuário não disponível.'
+                    _message = 'nome de usuário não disponível'
                   }
                 else
                   {
                     _isInputNotEmpty = true,
-                    _message = 'nome de usuário disponível.'
+                    _message = 'nome de usuário disponível'
                   }
               })
           .catchError((error) => print('ERROR: ' + error));
@@ -146,10 +148,11 @@ class _NickNamePageState extends State<NickNamePage> {
                       filled: true,
                       hintStyle: uiTextStyle.text7,
                       fillColor: uiColor.comp_3,
+                      counterStyle: const TextStyle(fontSize: 0),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(uiBorder.rounded),
                         borderSide: BorderSide(
-                          width: 2,
+                          width: 1,
                           color: _isInputNotEmpty
                               ? uiColor.success
                               : uiColor.warning,
@@ -158,7 +161,7 @@ class _NickNamePageState extends State<NickNamePage> {
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(uiBorder.rounded),
                         borderSide: BorderSide(
-                          width: 2,
+                          width: 1,
                           color: _isInputNotEmpty
                               ? uiColor.success
                               : uiColor.warning,
@@ -171,7 +174,7 @@ class _NickNamePageState extends State<NickNamePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(_message, style: uiTextStyle.text2),
-                    Text(_counter.toString() + '/20', style: uiTextStyle.text2),
+                    Text(_counter.toString() + '/20', style: uiTextStyle.text2)
                   ],
                 ),
               ],

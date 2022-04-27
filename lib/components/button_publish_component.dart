@@ -20,7 +20,7 @@ class _ButtonPublishComponentState extends State<ButtonPublishComponent> {
 
   late double _position = _borderSize;
 
-  double _width = 60;
+  double _width = 70;
   double _height = 28;
 
   @override
