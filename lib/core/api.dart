@@ -26,6 +26,10 @@ class Api {
     return token;
   }
 
+  setToken(String _token) {
+    return user.doc(currentUser.value.first.id).update({'token': _token});
+  }
+
   setBlock(Map<String, dynamic> _form) {
     return block.doc(_form['id']).set(_form);
   }

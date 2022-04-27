@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:universe_history_app/components/appBar_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
+import 'package:universe_history_app/core/push_notification.dart';
+import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
@@ -22,6 +24,7 @@ class _NickNamePageState extends State<NickNamePage> {
   final Api api = Api();
   final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
+  final PushNotification _notification = PushNotification();
 
   TextEditingController _textController = TextEditingController();
 
@@ -63,7 +66,7 @@ class _NickNamePageState extends State<NickNamePage> {
                 if (result.size > 0)
                   {
                     _isInputNotEmpty = false,
-                    _message = 'nome de usuário não disponível.',
+                    _message = 'nome de usuário não disponível.'
                   }
                 else
                   {
@@ -81,17 +84,28 @@ class _NickNamePageState extends State<NickNamePage> {
     currentUser.value.first.nickname = _textController.text;
 
     if (userNew.value) {
-      api.setUser(UserModel.toMap(currentUser.value.first));
-      ActivityUtil(ActivitiesEnum.NEW_NICKNAME, _textController.text, '');
-      toast.toast(context, ToastEnum.SUCCESS, 'Conta criada!');
-      Navigator.of(context).pushNamed('/home');
+      api
+          .setUser(UserModel.toMap(currentUser.value.first))
+          .then((result) => {
+                _notification.getToken(),
+                ActivityUtil(
+                    ActivitiesEnum.NEW_NICKNAME, _textController.text, ''),
+                toast.toast(context, ToastEnum.SUCCESS, 'Conta criada!'),
+                Navigator.of(context).pushNamed('/home'),
+              })
+          .catchError((error) => print('ERROR:' + error.toString()));
     } else {
       try {
-        await api.upNickName();
-        ActivityUtil(
-            ActivitiesEnum.UP_NICKNAME, _textController.text, _oldName);
-        toast.toast(context, ToastEnum.SUCCESS, 'Nome de usuário alterado!');
-        Navigator.of(context).pop();
+        await api
+            .upNickName()
+            .then((result) => {
+                  ActivityUtil(ActivitiesEnum.UP_NICKNAME, _textController.text,
+                      _oldName),
+                  toast.toast(
+                      context, ToastEnum.SUCCESS, 'Nome de usuário alterado!'),
+                  Navigator.of(context).pop(),
+                })
+            .catchError((error) => print('ERROR:' + error.toString()));
       } catch (error) {
         print('ERROR: ' + error.toString());
       }
@@ -114,7 +128,7 @@ class _NickNamePageState extends State<NickNamePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const TitleResumeComponent('Nome de usuário',
-                    'Escolha o nome que aparecerá em suas publicações, ele deve ser único e de 5 à 20 caracteres, diferenciamos letras maiusculas de minusculas. Veja pode usar também espaço em branco e estes caracteres especiais: & + / * - _ . :'),
+                    'Escolha o nome que aparecerá em suas publicações, ele deve ser único e de 5 à 20 caracteres, diferenciamos letras maiusculas de minusculas. Veja pode usar estes caracteres especiais: & + / * - _ . :'),
                 Container(
                   color: uiColor.comp_1,
                   child: TextField(
@@ -125,7 +139,7 @@ class _NickNamePageState extends State<NickNamePage> {
                     onChanged: (value) => _keyUp(value),
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(
-                          RegExp('[A-Za-z0-9- & + / * - _ . :]+')),
+                          RegExp('[A-Za-z0-9-&+/*-_.:]+')),
                     ],
                     decoration: InputDecoration(
                       hintText: 'usuário',
@@ -133,7 +147,7 @@ class _NickNamePageState extends State<NickNamePage> {
                       hintStyle: uiTextStyle.text7,
                       fillColor: uiColor.comp_3,
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(uiBorder.rounded),
                         borderSide: BorderSide(
                           width: 2,
                           color: _isInputNotEmpty
@@ -142,7 +156,7 @@ class _NickNamePageState extends State<NickNamePage> {
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(uiBorder.rounded),
                         borderSide: BorderSide(
                           width: 2,
                           color: _isInputNotEmpty
@@ -156,14 +170,8 @@ class _NickNamePageState extends State<NickNamePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      _message,
-                      style: uiTextStyle.text2,
-                    ),
-                    Text(
-                      _counter.toString() + '/20',
-                      style: uiTextStyle.text2,
-                    ),
+                    Text(_message, style: uiTextStyle.text2),
+                    Text(_counter.toString() + '/20', style: uiTextStyle.text2),
                   ],
                 ),
               ],

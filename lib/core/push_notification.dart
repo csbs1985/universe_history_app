@@ -1,6 +1,5 @@
 // ignore_for_file: curly_braces_in_flow_control_structures, avoid_print
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -29,7 +28,6 @@ class PushNotification {
     _requestPermission();
     _loadFCM();
     _onMessage();
-    getToken();
   }
 
   void _requestPermission() async {
@@ -88,20 +86,9 @@ class PushNotification {
     });
   }
 
-  String? mtoken = '';
-
   void getToken() async {
-    await api.getToken().then((token) {
-      mtoken = token;
-      print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-      print(mtoken);
-      saveToken(token!);
-    });
-  }
-
-  void saveToken(String token) async {
-    await FirebaseFirestore.instance.collection("UserTokens").doc("User1").set({
-      'token': token,
-    });
+    await api.getToken().then((_token) {
+      api.setToken(_token);
+    }).catchError((error) => print('ERROR:' + error.toString()));
   }
 }
