@@ -37,6 +37,7 @@ class _ModalInputCommmentComponentState
   final PushNotification _notification = PushNotification();
 
   late Map<String, dynamic> _comment;
+  late Map<String, dynamic> _form;
 
   Map<String, dynamic>? _commentEdit;
 
@@ -123,6 +124,7 @@ class _ModalInputCommmentComponentState
     api
         .setUpQtyCommentUser()
         .then((value) => {
+              _setNotification(),
               if (isEdit) Navigator.of(context).pop(),
               toast.toast(
                   context,
@@ -132,6 +134,22 @@ class _ModalInputCommmentComponentState
                       : 'Seu comentário foi publicado.'),
               Navigator.of(context).pop(),
             })
+        .catchError((error) => print('ERROR: ' + error));
+  }
+
+  void _setNotification() {
+    _form = {
+      'id': uuid.v4(),
+      'idUser': currentHistory.value.first.userId,
+      'nickName': _textSigned ? currentUser.value.first.nickname : 'anônimo',
+      'view': false,
+      'idContent': currentHistory.value.first.id,
+      'content': currentHistory.value.first.title,
+      'date': DateTime.now().toString(),
+    };
+    api
+        .setNotification(_form)
+        .then((result) => {})
         .catchError((error) => print('ERROR: ' + error));
   }
 

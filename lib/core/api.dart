@@ -20,6 +20,8 @@ class Api {
       FirebaseFirestore.instance.collection('denounces');
   CollectionReference history =
       FirebaseFirestore.instance.collection('historys');
+  CollectionReference notification =
+      FirebaseFirestore.instance.collection('notifications');
   CollectionReference user = FirebaseFirestore.instance.collection('users');
   Future<String?> token = FirebaseMessaging.instance.getToken();
 
@@ -115,6 +117,10 @@ class Api {
 
   setHistory(Map<String, dynamic> _form) {
     return history.doc(_form['id']).set(_form);
+  }
+
+  setNotification(Map<String, dynamic> _form) {
+    return notification.doc(_form['id']).set(_form);
   }
 
   setActivities(Map<String, dynamic> _form) {

@@ -123,7 +123,6 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
               })
           .catchError((error) => print('ERROR:' + error.toString()));
     }
-
     Navigator.of(context).pop();
   }
 
