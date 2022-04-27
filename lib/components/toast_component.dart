@@ -1,8 +1,9 @@
-// ignore_for_file: unused_element, unused_local_variable, unused_label
+// ignore_for_file: unused_element, unused_local_variable, unused_label, constant_identifier_names
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -31,7 +32,7 @@ class ToastComponent {
       backgroundColor: _style,
       animation: StyledToastAnimation.slideToBottomFade,
       reverseAnimation: StyledToastAnimation.slideFromBottomFade,
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(uiBorder.rounded),
     );
   }
 }

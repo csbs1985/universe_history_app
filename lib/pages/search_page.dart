@@ -6,6 +6,7 @@ import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/skeleton_search_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -52,11 +53,11 @@ class _SearchPageState extends State<SearchPage> {
                   hintStyle: uiTextStyle.text1,
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(uiBorder.rounded),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(uiBorder.rounded),
                   ),
                 ),
               ),

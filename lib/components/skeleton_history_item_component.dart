@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:skeleton_animation/skeleton_animation.dart';
+import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 
 class SkeletonHistoryItemComponent extends StatelessWidget {
@@ -19,42 +20,34 @@ class SkeletonHistoryItemComponent extends StatelessWidget {
             width: double.infinity,
             height: 28,
             textColor: uiColor.comp_3,
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(uiBorder.rounded),
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           Row(
             children: [
               Skeleton(
                 width: 100,
                 height: 16,
                 textColor: uiColor.comp_3,
-                borderRadius: BorderRadius.circular(5),
+                borderRadius: BorderRadius.circular(uiBorder.rounded),
               ),
-              const SizedBox(
-                width: 10,
-              ),
+              const SizedBox(width: 10),
               Skeleton(
                 width: 100,
                 height: 16,
                 textColor: uiColor.comp_3,
-                borderRadius: BorderRadius.circular(5),
+                borderRadius: BorderRadius.circular(uiBorder.rounded),
               ),
             ],
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           Skeleton(
             width: double.infinity,
             height: 100,
             textColor: uiColor.comp_3,
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(uiBorder.rounded),
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -62,7 +55,7 @@ class SkeletonHistoryItemComponent extends StatelessWidget {
                 width: 120,
                 height: 20,
                 textColor: uiColor.comp_3,
-                borderRadius: BorderRadius.circular(5),
+                borderRadius: BorderRadius.circular(uiBorder.rounded),
               ),
               Container(
                 child: Row(
@@ -72,25 +65,21 @@ class SkeletonHistoryItemComponent extends StatelessWidget {
                       width: 40,
                       height: 20,
                       textColor: uiColor.comp_3,
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(uiBorder.rounded),
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
+                    const SizedBox(width: 10),
                     Skeleton(
                       width: 40,
                       height: 20,
                       textColor: uiColor.comp_3,
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(uiBorder.rounded),
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
+                    const SizedBox(width: 10),
                     Skeleton(
                       width: 40,
                       height: 20,
                       textColor: uiColor.comp_3,
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(uiBorder.rounded),
                     ),
                   ],
                 ),

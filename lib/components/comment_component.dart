@@ -12,6 +12,7 @@ import 'package:universe_history_app/shared/models/comment_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/shared/models/owner_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
+import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/resume_util.dart';
@@ -132,7 +133,7 @@ class _CommentState extends State<CommentComponent> {
                       color: uiColor.comp_3,
                       margin: EdgeInsets.all(0),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(uiBorder.rounded),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(10, 6, 10, 8),

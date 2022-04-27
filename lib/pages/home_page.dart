@@ -10,6 +10,7 @@ import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/components/menu_component.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
+import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/utils/device_util.dart';
@@ -108,7 +109,8 @@ class _HomePageState extends State<HomePage> {
             Navigator.of(context)
                 .pushNamed(currentUser.value.isNotEmpty ? "/create" : "/login")
           },
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(uiBorder.rounded)),
         ),
         body: Container(
           color: uiColor.comp_1,

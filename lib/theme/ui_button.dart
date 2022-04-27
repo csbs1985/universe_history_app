@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, camel_case_types
 
 import 'package:flutter/material.dart';
+import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 
 class uiButton {
@@ -10,7 +11,7 @@ class uiButton {
     backgroundColor: MaterialStateProperty.all<Color>(uiColor.first),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(uiBorder.rounded),
         side: const BorderSide(color: uiColor.first),
       ),
     ),
@@ -22,7 +23,7 @@ class uiButton {
     backgroundColor: MaterialStateProperty.all<Color>(uiColor.comp_3),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(uiBorder.rounded),
       ),
     ),
   );
@@ -32,7 +33,7 @@ class uiButton {
     backgroundColor: MaterialStateProperty.all<Color>(uiColor.comp_3),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(0),
+        borderRadius: BorderRadius.circular(uiBorder.none),
       ),
     ),
   );
@@ -42,7 +43,7 @@ class uiButton {
     backgroundColor: MaterialStateProperty.all<Color>(uiColor.first),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(0),
+        borderRadius: BorderRadius.circular(uiBorder.none),
       ),
     ),
   );
@@ -51,7 +52,8 @@ class uiButton {
     alignment: Alignment.bottomLeft,
     backgroundColor: MaterialStateProperty.all<Color>(uiColor.comp_3),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-      RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(uiBorder.rounded)),
     ),
   );
 
@@ -59,7 +61,8 @@ class uiButton {
     alignment: Alignment.bottomLeft,
     backgroundColor: MaterialStateProperty.all<Color>(uiColor.first),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-      RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(uiBorder.rounded)),
     ),
   );
 
@@ -68,7 +71,8 @@ class uiButton {
     padding: MaterialStateProperty.all<EdgeInsets>(
         const EdgeInsets.symmetric(horizontal: 10)),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-      RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(uiBorder.rounded)),
     ),
   );
 
@@ -77,7 +81,8 @@ class uiButton {
     padding: MaterialStateProperty.all<EdgeInsets>(
         const EdgeInsets.symmetric(horizontal: 10)),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-      RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(uiBorder.rounded)),
     ),
   );
 }
