@@ -19,6 +19,7 @@ class UserModel {
   late String date;
   late String email;
   late String channel;
+  late String token;
   late bool isDisabled;
   late bool isNotification;
   late num qtyHistory;
@@ -31,6 +32,7 @@ class UserModel {
     required this.isDisabled,
     required this.email,
     required this.channel,
+    required this.token,
     required this.isNotification,
     required this.qtyHistory,
     required this.qtyComment,
@@ -45,6 +47,7 @@ class UserModel {
         date: json["date"],
         email: json['email'],
         channel: json['channel'],
+        token: json['token'],
         isDisabled: json['isDisabled'],
         isNotification: json['isNotification'],
         qtyHistory: json['qtyHistory'],
@@ -59,6 +62,7 @@ class UserModel {
         'date': user.date,
         'email': user.email,
         'channel': user.channel,
+        'token': user.token,
         'isNotification': user.isNotification,
         'isDisabled': user.isDisabled,
         'qtyHistory': user.qtyHistory,

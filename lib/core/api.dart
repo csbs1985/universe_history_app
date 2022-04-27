@@ -1,6 +1,7 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:universe_history_app/shared/models/comment_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
@@ -19,6 +20,11 @@ class Api {
   CollectionReference history =
       FirebaseFirestore.instance.collection('historys');
   CollectionReference user = FirebaseFirestore.instance.collection('users');
+  Future<String?> token = FirebaseMessaging.instance.getToken();
+
+  getToken() {
+    return token;
+  }
 
   setBlock(Map<String, dynamic> _form) {
     return block.doc(_form['id']).set(_form);

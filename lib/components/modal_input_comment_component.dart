@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_is_empty, unused_field, void_checks, avoid_print, unnecessary_new, use_key_in_widget_constructors, curly_braces_in_flow_control_structures, import_of_legacy_library_into_null_safe
 
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:universe_history_app/components/button_publish_component.dart';
@@ -8,7 +7,7 @@ import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/components/toggle_component.dart';
-import 'package:universe_history_app/main.dart';
+import 'package:universe_history_app/core/push_notification.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/core/api.dart';
@@ -37,9 +36,10 @@ class _ModalInputCommmentComponentState
   final Uuid uuid = const Uuid();
 
   late Map<String, dynamic> _comment;
-  Map<String, dynamic>? _commentEdit;
-  bool isEdit = false;
 
+  Map<String, dynamic>? _commentEdit;
+
+  bool isEdit = false;
   bool _isInputNotEmpty = false;
   bool _textSigned = true;
 
@@ -60,48 +60,6 @@ class _ModalInputCommmentComponentState
     }
 
     super.initState();
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android;
-      if (notification != null && android != null) {
-        flutterLocalNotificationsPlugin.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            NotificationDetails(
-              android: AndroidNotificationDetails(
-                channel.id,
-                channel.name,
-                // channel.description,
-                color: Colors.blue,
-                playSound: true,
-                icon: '@mipmap/ic_launcher',
-              ),
-            ));
-      }
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('A new onMessageOpenedApp event was published!');
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android;
-      if (notification != null && android != null) {
-        showDialog(
-            context: context,
-            builder: (_) {
-              return AlertDialog(
-                title: Text(notification.title!),
-                content: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [Text(notification.body!)],
-                  ),
-                ),
-              );
-            });
-      }
-    });
   }
 
   void keyUp(String text) {
@@ -150,6 +108,7 @@ class _ModalInputCommmentComponentState
                     currentHistory.value.first.id,
                   ),
                   _setUpQtyCommentUser(),
+                  _showNotification(),
                   _commentController.clear(),
                   _isInputNotEmpty = false,
                 })
@@ -164,7 +123,6 @@ class _ModalInputCommmentComponentState
     api
         .setUpQtyCommentUser()
         .then((value) => {
-              showNotification(),
               if (isEdit) Navigator.of(context).pop(),
               toast.toast(
                   context,
@@ -182,27 +140,39 @@ class _ModalInputCommmentComponentState
       Navigator.of(context).pop();
     else
       setState(() {
-        _commentController.text = '';
+        _commentController.clear();
         _isInputNotEmpty = false;
       });
   }
 
-  void showNotification() {
+  void _showNotification() {
+    var history = currentHistory.value.first;
+    var title = _textSigned
+        ? (history.userNickName +
+            ' fez um comentário na história "' +
+            history.title +
+            '"')
+        : ('Sua história "' +
+            history.title +
+            '" recebeu um comentário anônimo.');
+    var text = _textSigned
+        ? history.userNickName + ': "' + _commentController.text.trim() + '"'
+        : '"' + _commentController.text.trim() + '"';
+
     flutterLocalNotificationsPlugin.show(
-        0,
-        "Testing",
-        "How you doin ?",
-        NotificationDetails(
-          android: AndroidNotificationDetails(
-            channel.id,
-            channel.name,
-            // channel.description,
-            importance: Importance.high,
-            color: Colors.blue,
-            playSound: true,
-            icon: '@mipmap/ic_launcher',
-          ),
-        ));
+      0,
+      title,
+      text,
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          channel.id,
+          channel.name,
+          importance: Importance.high,
+          playSound: true,
+          icon: '@mipmap/ic_launcher',
+        ),
+      ),
+    );
   }
 
   @override
@@ -237,44 +207,39 @@ class _ModalInputCommmentComponentState
             bottom: MediaQuery.of(context).viewInsets.bottom,
             left: 0,
             right: 0,
-            child: Container(
-              color: uiColor.comp_1,
-              child: Column(
-                children: [
-                  const DividerComponent(bottom: 0),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          children: [
-                            IconComponent(
-                                icon: uiSvg.clean,
-                                callback: (value) => _clean()),
-                            const SizedBox(width: 10),
-                            ToggleComponent(
-                              value: _textSigned,
-                              callback: (value) => _toggleAnonimous(),
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
+            child: Column(
+              children: [
+                const DividerComponent(bottom: 0),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 4, 16, 4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          IconComponent(
+                              icon: uiSvg.clean, callback: (value) => _clean()),
+                          const SizedBox(width: 10),
+                          ToggleComponent(
+                            value: _textSigned,
+                            callback: (value) => _toggleAnonimous(),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
                               _textSigned
                                   ? currentUser.value.first.nickname
                                   : 'anônimo',
-                              style: uiTextStyle.text2,
-                            ),
-                          ],
-                        ),
-                        if (_isInputNotEmpty)
-                          ButtonPublishComponent(
-                              callback: (value) => _publishComment()),
-                      ],
-                    ),
+                              style: uiTextStyle.text2),
+                        ],
+                      ),
+                      if (_isInputNotEmpty)
+                        ButtonPublishComponent(
+                            callback: (value) => _publishComment()),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],

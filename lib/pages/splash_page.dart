@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, avoid_print, invalid_return_type_for_catch_error
+// ignore_for_file: unused_import, avoid_print, invalid_return_type_for_catch_error, curly_braces_in_flow_control_structures
 
 import 'dart:developer';
 import 'dart:io';
@@ -46,13 +46,9 @@ class _SplashPageState extends State<SplashPage> {
 
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user != null) {
-        userClass.readUser().then(
-          (file) {
-            if (file.isNotEmpty) {
-              userClass.setFileUser(file);
-            }
-          },
-        ).catchError((error) => print(error));
+        userClass.readUser().then((file) {
+          if (file.isNotEmpty) userClass.setFileUser(file);
+        }).catchError((error) => print(error));
       }
       Navigator.of(context).pushNamed("/home");
     });
