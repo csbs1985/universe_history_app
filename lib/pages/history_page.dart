@@ -25,8 +25,10 @@ class _HistoryPageState extends State<HistoryPage> {
 
   @override
   Widget build(BuildContext context) {
+    final _idHistory = ModalRoute.of(context)!.settings.arguments.toString();
+
     return StreamBuilder<QuerySnapshot>(
-      stream: api.getHistory(),
+      stream: api.getHistory(_idHistory),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
@@ -59,26 +61,15 @@ class _HistoryPageState extends State<HistoryPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TitleComponent(
-                      title: documents['title'],
-                      bottom: 0,
-                    ),
-                    ResumeComponent(
-                      resume: resumeUitl(documents),
-                    ),
-                    Text(
-                      documents['text'],
-                      style: uiTextStyle.text1,
-                    ),
+                    TitleComponent(title: documents['title'], bottom: 0),
+                    ResumeComponent(resume: resumeUitl(documents)),
+                    Text(documents['text'], style: uiTextStyle.text1),
                     Wrap(
                       children: [
                         for (var item in documents['categories'])
                           Padding(
                             padding: const EdgeInsets.only(right: 4),
-                            child: Text(
-                              '#' + item,
-                              style: uiTextStyle.text2,
-                            ),
+                            child: Text('#' + item, style: uiTextStyle.text2),
                           ),
                       ],
                     ),

@@ -86,10 +86,8 @@ class Api {
         .snapshots();
   }
 
-  getHistory() {
-    return history
-        .where('id', isEqualTo: currentHistory.value.first.id)
-        .snapshots();
+  getHistory(String _idHistory) {
+    return history.where('id', isEqualTo: _idHistory).snapshots();
   }
 
   getComment(String _id) {

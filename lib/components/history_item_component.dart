@@ -220,8 +220,10 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                                         callback: (value) {
                                           _selectHistory(
                                               documents[index].data());
-                                          Navigator.of(context)
-                                              .pushNamed("/history");
+                                          Navigator.pushNamed(
+                                              context, '/history',
+                                              arguments: documents[index]
+                                                  .data()['id']);
                                         }),
                                     IconComponent(
                                       icon: uiSvg.options,
@@ -238,9 +240,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                           ],
                         ),
                         const SizedBox(height: 10),
-                        const DividerComponent(
-                          bottom: 0,
-                        ),
+                        const DividerComponent(bottom: 0),
                       ],
                     ),
                   ),

@@ -1,9 +1,9 @@
 // ignore_for_file: curly_braces_in_flow_control_structures, avoid_print
 
 import 'dart:convert';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
@@ -31,13 +31,25 @@ class PushNotification {
 
   late String _tokenOwner = currentOwner.value.first.token;
 
-  init() {
-    _requestPermission();
+  init(BuildContext context) {
+    _requestPermission(context);
     _loadFCM();
     _onMessage();
   }
 
-  void _requestPermission() async {
+  void _requestPermission(BuildContext context) async {
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage? message) {
+      if (message == null) return;
+
+      var _status = message.data['status'];
+      var _idHistory = message.data['id'];
+
+      if (_status == 'comment')
+        Navigator.pushNamed(context, '/history', arguments: _idHistory);
+    });
+
     FirebaseMessaging messaging = FirebaseMessaging.instance;
 
     NotificationSettings settings = await messaging.requestPermission(
@@ -55,7 +67,7 @@ class PushNotification {
     else if (settings.authorizationStatus == AuthorizationStatus.provisional)
       print('Usuário concedeu permissão provisória.');
     else
-      print('Usuário não deu permissão ou ignorou a solicitação.');
+      print('Usuário não concedeu permissão ou ignorou a solicitação.');
   }
 
   void _loadFCM() async {
@@ -102,7 +114,8 @@ class PushNotification {
     }).catchError((error) => print('ERROR:' + error.toString()));
   }
 
-  void sendNotificationComment(String title, String body) async {
+  void sendNotificationComment(
+      String title, String body, String idHistory) async {
     await api
         .getTokenOwner()
         .then((result) => _tokenOwner = result.docs.first['token'])
@@ -122,8 +135,8 @@ class PushNotification {
             'priority': 'high',
             'data': <String, dynamic>{
               'click_action': 'FLUTTER_NOTIFICATION_COMMENT',
-              'id': '1',
-              'status': 'done'
+              'id': idHistory,
+              'status': 'comment'
             },
             "to": _tokenOwner,
           },

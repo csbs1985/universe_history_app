@@ -163,7 +163,11 @@ class _ModalInputCommmentComponentState
         : '"' + _commentController.text.trim() + '"';
 
     if (currentUser.value.first.id != currentOwner.value.first.id)
-      _notification.sendNotificationComment(title, body);
+      _notification.sendNotificationComment(
+        title,
+        body,
+        currentHistory.value.first.id,
+      );
   }
 
   @override

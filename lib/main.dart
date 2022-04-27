@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       ),
     );
 
-    _notification.init();
+    _notification.init(context);
 
     if (currentToken.value != null) {
       _notification.getToken();
