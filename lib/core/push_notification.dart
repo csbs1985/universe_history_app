@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/core/variables.dart';
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
   'high_importance_channel',
@@ -87,8 +88,10 @@ class PushNotification {
   }
 
   void getToken() async {
-    await api.getToken().then((_token) {
-      api.setToken(_token);
+    await api.getToken().then((_token) async {
+      await api
+          .setToken(_token)
+          .then((_result) => currentToken.value = _result);
     }).catchError((error) => print('ERROR:' + error.toString()));
   }
 }

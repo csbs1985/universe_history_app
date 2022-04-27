@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                     'isDisabled': result.docs.first['isDisabled'],
                     'email': result.docs.first['email'],
                     'channel': result.docs.first['channel'],
-                    'token': result.docs.first['token'],
+                    'token': '',
                     'isNotification': result.docs.first['isNotification'],
                     'qtyHistory': result.docs.first['qtyHistory'],
                     'qtyComment': result.docs.first['qtyComment'],
@@ -103,9 +103,9 @@ class _LoginPageState extends State<LoginPage> {
                     'qtyHistory': 0,
                     'qtyComment': 0,
                   }),
+                  userNew.value = true,
                   ActivityUtil(
                       ActivitiesEnum.NEW_ACCOUNT, user.displayName!, ''),
-                  userNew.value = true,
                   Navigator.of(context).pushNamed("/nickname"),
                 },
             })

@@ -89,7 +89,6 @@ class _NickNamePageState extends State<NickNamePage> {
       api
           .setUser(UserModel.toMap(currentUser.value.first))
           .then((result) => {
-                _notification.getToken(),
                 ActivityUtil(
                     ActivitiesEnum.NEW_NICKNAME, _textController.text, ''),
                 toast.toast(context, ToastEnum.SUCCESS, 'Conta criada!'),
@@ -101,8 +100,11 @@ class _NickNamePageState extends State<NickNamePage> {
         await api
             .upNickName()
             .then((result) => {
-                  ActivityUtil(ActivitiesEnum.UP_NICKNAME, _textController.text,
-                      _oldName),
+                  ActivityUtil(
+                    ActivitiesEnum.UP_NICKNAME,
+                    _textController.text,
+                    _oldName,
+                  ),
                   toast.toast(
                       context, ToastEnum.SUCCESS, 'Nome de usuário alterado!'),
                   Navigator.of(context).pop(),
@@ -112,6 +114,7 @@ class _NickNamePageState extends State<NickNamePage> {
         print('ERROR: ' + error.toString());
       }
     }
+    _notification.getToken();
   }
 
   @override

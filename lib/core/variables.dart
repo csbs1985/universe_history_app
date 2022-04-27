@@ -5,3 +5,5 @@ ValueNotifier<CategoryModel> menuItemSelected =
     ValueNotifier<CategoryModel>(CategoryModel.allCategories.first);
 
 ValueNotifier<List<String>> currentBookmarks = ValueNotifier(<String>[]);
+
+ValueNotifier<String> currentToken = ValueNotifier<String>('');

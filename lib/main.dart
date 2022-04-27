@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:universe_history_app/core/navigation.dart';
 import 'package:universe_history_app/core/push_notification.dart';
+import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/pages/splash_page.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_theme.dart';
@@ -39,6 +40,10 @@ class MyApp extends StatelessWidget {
     );
 
     _notification.init();
+
+    if (currentToken.value != null) {
+      _notification.getToken();
+    }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
