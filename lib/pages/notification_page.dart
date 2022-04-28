@@ -8,7 +8,6 @@ import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/skeleton_notification_componen.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/core/api.dart';
-import 'package:universe_history_app/shared/models/notification_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
@@ -21,16 +20,16 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
-  final List<NotificationModel> allNotification =
-      NotificationModel.allNotification;
-
   final Api api = Api();
 
-  void _readNotification(String historyId) {
-    setState(() {
-      allNotification.contains(historyId);
-      print("apertado: " + historyId);
-    });
+  void _readNotification(history) {
+    api
+        .upNotification(history['id'])
+        .then((result) => {
+              Navigator.pushNamed(context, '/history',
+                  arguments: history['idContent']),
+            })
+        .catchError((error) => print('ERROR: ' + error));
   }
 
   @override
@@ -85,8 +84,8 @@ class _NotificationPageState extends State<NotificationPage> {
                     child: Container(
                       width: double.infinity,
                       color: documents[index]['view']
-                          ? uiColor.second
-                          : uiColor.comp_1,
+                          ? uiColor.comp_1
+                          : uiColor.comp_3,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
                         child: Column(
@@ -104,7 +103,7 @@ class _NotificationPageState extends State<NotificationPage> {
                         ),
                       ),
                     ),
-                    onTap: () => _readNotification(documents[index]['id']),
+                    onTap: () => _readNotification(documents[index]),
                   ),
                 ],
               ),
@@ -114,32 +113,21 @@ class _NotificationPageState extends State<NotificationPage> {
   }
 
   Widget _NotificationAnonymous(index) {
-    return RichText(
-      text: TextSpan(
-        text: 'Sua história "',
-        style: uiTextStyle.text1,
-        children: [
-          TextSpan(text: index['content'], style: uiTextStyle.text9),
-          const TextSpan(text: '" recebeu um comentário '),
-          const TextSpan(text: 'anônimo.', style: uiTextStyle.text9),
-        ],
-      ),
-    );
+    return Wrap(children: [
+      const Text('Sua história "', style: uiTextStyle.text1),
+      Text(index['content'], style: uiTextStyle.text9),
+      const Text('" recebeu um comentário ', style: uiTextStyle.text1),
+      const Text('anônimo.', style: uiTextStyle.text9),
+    ]);
   }
 
   Widget _NotificationName(index) {
-    return RichText(
-      text: TextSpan(
-        text: index['nickName'],
-        style: uiTextStyle.text9,
-        children: [
-          const TextSpan(
-              text: ' comentou a sua história "', style: uiTextStyle.text1),
-          TextSpan(text: index['content'], style: uiTextStyle.text9),
-          const TextSpan(text: '".'),
-        ],
-      ),
-    );
+    return Wrap(children: [
+      Text(index['nickName'], style: uiTextStyle.text9),
+      const Text(' fez um comentou na história "', style: uiTextStyle.text1),
+      Text(index['content'], style: uiTextStyle.text9),
+      const Text('".', style: uiTextStyle.text1),
+    ]);
   }
 
   Widget _noResult() {

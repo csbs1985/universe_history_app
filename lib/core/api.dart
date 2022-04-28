@@ -154,6 +154,10 @@ class Api {
         .update({'qtyComment': currentHistory.value.first.qtyComment});
   }
 
+  upNotification(String _idNotification) {
+    return notification.doc(_idNotification).update({'view': true});
+  }
+
   deleteComment() {
     return comment
         .doc(currentComment.value.first.id)
@@ -174,7 +178,7 @@ class Api {
         .update({'nickname': currentUser.value.first.nickname});
   }
 
-  upNotification() {
+  toggleNotification() {
     return user
         .doc(currentUser.value.first.id)
         .update({'isNotification': currentUser.value.first.isNotification});
