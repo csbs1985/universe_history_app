@@ -8,6 +8,7 @@ import 'package:universe_history_app/components/history_list_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/components/menu_component.dart';
+import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
@@ -25,7 +26,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _scrollController = ScrollController();
 
-  bool _notification = true;
   String _itemSelectedMenu = 'todas';
 
   @override
@@ -59,10 +59,7 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                LogoComponent(
-                  size: 20,
-                  callback: (value) => _scrollToTop(),
-                ),
+                LogoComponent(size: 20, callback: (value) => _scrollToTop())
               ],
             ),
           ),
@@ -72,32 +69,27 @@ class _HomePageState extends State<HomePage> {
             //   route: 'search',
             // ),
             Padding(
-              padding: const EdgeInsets.only(top: 2),
-              child: Stack(
-                children: [
-                  IconComponent(
-                    icon: uiSvg.notification,
-                    route: 'notification',
-                  ),
-                  if (_notification)
-                    Positioned(
-                      top: 10,
-                      right: 12,
-                      child: CircleAvatar(
-                        radius: 4,
-                        backgroundColor: uiColor.warning,
-                      ),
-                    ),
-                ],
+              padding: const EdgeInsets.only(top: 3),
+              child: ValueListenableBuilder(
+                valueListenable: currentNotification,
+                builder: (BuildContext context, value, __) {
+                  return Stack(
+                    children: [
+                      IconComponent(
+                          icon: uiSvg.notification, route: 'notification'),
+                      if (currentNotification.value)
+                        Positioned(
+                            top: 10,
+                            right: 12,
+                            child: CircleAvatar(
+                                radius: 4, backgroundColor: uiColor.first))
+                    ],
+                  );
+                },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: IconComponent(
-                icon: uiSvg.menu,
-                route: 'settings',
-              ),
-            ),
+            IconComponent(icon: uiSvg.menu, route: 'settings'),
+            SizedBox(width: 10),
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -123,9 +115,8 @@ class _HomePageState extends State<HomePage> {
                 MenuComponent(),
                 SizedBox(height: 10),
                 Flexible(
-                  child:
-                      HistoryListComponent(itemSelectedMenu: _itemSelectedMenu),
-                ),
+                    child: HistoryListComponent(
+                        itemSelectedMenu: _itemSelectedMenu)),
                 AllForNowComponent(),
                 SizedBox(height: 50),
               ],

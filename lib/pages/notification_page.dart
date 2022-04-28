@@ -8,6 +8,7 @@ import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/skeleton_notification_componen.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
@@ -26,6 +27,7 @@ class _NotificationPageState extends State<NotificationPage> {
     api
         .upNotification(history['id'])
         .then((result) => {
+              setState(() => currentNotification.value = false),
               Navigator.pushNamed(context, '/history',
                   arguments: history['idContent']),
             })
