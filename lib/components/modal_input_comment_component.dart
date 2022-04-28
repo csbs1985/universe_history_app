@@ -109,7 +109,8 @@ class _ModalInputCommmentComponentState
                     currentHistory.value.first.id,
                   ),
                   _setUpQtyCommentUser(),
-                  _showNotification(),
+                  if (currentUser.value.first.id != currentOwner.value.first.id)
+                    {_setPushNotification(), _setNotification()},
                   _commentController.clear(),
                   _isInputNotEmpty = false,
                 })
@@ -124,7 +125,6 @@ class _ModalInputCommmentComponentState
     api
         .setUpQtyCommentUser()
         .then((value) => {
-              _setNotification(),
               if (isEdit) Navigator.of(context).pop(),
               toast.toast(
                   context,
@@ -163,7 +163,7 @@ class _ModalInputCommmentComponentState
       });
   }
 
-  void _showNotification() {
+  void _setPushNotification() {
     var history = currentHistory.value.first;
     var title = _textSigned
         ? (currentUser.value.first.nickname +
@@ -180,12 +180,8 @@ class _ModalInputCommmentComponentState
             '"'
         : '"' + _commentController.text.trim() + '"';
 
-    if (currentUser.value.first.id != currentOwner.value.first.id)
-      _notification.sendNotificationComment(
-        title,
-        body,
-        currentHistory.value.first.id,
-      );
+    _notification.sendNotificationComment(
+        title, body, currentHistory.value.first.id);
   }
 
   @override

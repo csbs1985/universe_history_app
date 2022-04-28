@@ -24,7 +24,6 @@ class CommentComponent extends StatefulWidget {
 
 class _CommentState extends State<CommentComponent> {
   final Api api = new Api();
-
   final UserClass userClass = UserClass();
   final OwnerClass ownerClass = OwnerClass();
 
@@ -112,13 +111,10 @@ class _CommentState extends State<CommentComponent> {
 
   bool _canShowOption(dynamic _content) {
     if (currentUser.value.first.id == _content['userId']) {
-      if (!_content['isDelete']) {
-        return true;
-      }
+      if (!_content['isDelete']) return true;
     } else {
       if (!_content['isDelete']) return true;
     }
-
     return false;
   }
 

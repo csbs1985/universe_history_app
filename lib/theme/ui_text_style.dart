@@ -90,6 +90,12 @@ class uiTextStyle {
     fontStyle: FontStyle.italic,
   );
 
+  static const TextStyle text9 = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+    color: uiColor.third,
+  );
+
   static const TextStyle menu = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w400,
