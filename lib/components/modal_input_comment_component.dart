@@ -1,14 +1,17 @@
 // ignore_for_file: prefer_is_empty, unused_field, void_checks, avoid_print, unnecessary_new, use_key_in_widget_constructors, curly_braces_in_flow_control_structures, import_of_legacy_library_into_null_safe
 
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/button_publish_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
+import 'package:universe_history_app/components/modal_mentioned_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/components/toggle_component.dart';
 import 'package:universe_history_app/core/push_notification.dart';
 import 'package:universe_history_app/pages/notification_page.dart';
 import 'package:universe_history_app/shared/models/owner_model.dart';
+import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/core/api.dart';
@@ -66,12 +69,23 @@ class _ModalInputCommmentComponentState
   }
 
   void keyUp(String text) {
+    if (text.contains(' @') && !text.contains(' @ ')) _showMentioned(context);
+
     setState(() =>
         _isInputNotEmpty = _commentController.text.length > 0 ? true : false);
   }
 
-  dynamic _toggleAnonimous() {
+  void _toggleAnonimous() {
     setState(() => _textSigned = !_textSigned);
+  }
+
+  void _showMentioned(BuildContext context) {
+    showCupertinoModalBottomSheet(
+        expand: true,
+        context: context,
+        barrierColor: Colors.black87,
+        duration: const Duration(milliseconds: 300),
+        builder: (context) => ModalMentionedComponent(callback: (value) {}));
   }
 
   void _publishComment() {
@@ -223,8 +237,9 @@ class _ModalInputCommmentComponentState
             child: Column(
               children: [
                 const DividerComponent(bottom: 0),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 4, 16, 4),
+                Container(
+                  height: uiSize.input,
+                  padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -233,6 +248,9 @@ class _ModalInputCommmentComponentState
                         children: [
                           IconComponent(
                               icon: uiSvg.clean, callback: (value) => _clean()),
+                          IconComponent(
+                              icon: uiSvg.mentioned,
+                              callback: (value) => _showMentioned(context)),
                           const SizedBox(width: 10),
                           ToggleComponent(
                             value: _textSigned,

@@ -121,7 +121,7 @@ class uiTextStyle {
   );
 
   static const TextStyle buttonPublish = TextStyle(
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: FontWeight.w700,
     color: uiColor.buttonLabel,
   );

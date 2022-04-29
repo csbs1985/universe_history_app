@@ -25,6 +25,14 @@ class Api {
   CollectionReference user = FirebaseFirestore.instance.collection('users');
   Future<String?> token = FirebaseMessaging.instance.getToken();
 
+  fecthUser(String _query) {
+    return user.orderBy('nickname').where('nickname', isEqualTo: _query).get();
+  }
+
+  getSearchNickName(String _nickname) {
+    return user.where('nickname', arrayContainsAny: ['_nickname']).snapshots();
+  }
+
   getToken() {
     return token;
   }
@@ -109,10 +117,6 @@ class Api {
 
   getNickName(String _nickname) {
     return user.where('nickname', isEqualTo: _nickname).get();
-  }
-
-  getSearchNickName(String _nickname) {
-    return user.where('nickname', arrayContainsAny: ['_nickname']).snapshots();
   }
 
   getUsersNickName(String _nickname) {

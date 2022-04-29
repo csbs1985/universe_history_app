@@ -3,6 +3,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/modal_input_comment_component.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
+import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class BtnCommentComponent extends StatefulWidget {
@@ -39,7 +40,7 @@ class _BtnCommentComponentState extends State<BtnCommentComponent> {
             GestureDetector(
               child: const SizedBox(
                 width: double.infinity,
-                height: 48,
+                height: uiSize.input,
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(16, 12, 10, 10),
                   child: Text(
