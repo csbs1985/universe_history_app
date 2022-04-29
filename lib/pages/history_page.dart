@@ -55,6 +55,7 @@ class _HistoryPageState extends State<HistoryPage> {
         child: Stack(
           children: [
             Container(
+              width: double.infinity,
               height: MediaQuery.of(context).size.height,
               padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
               child: SingleChildScrollView(

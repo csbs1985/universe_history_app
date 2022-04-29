@@ -7,6 +7,7 @@ import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/components/toggle_component.dart';
 import 'package:universe_history_app/core/push_notification.dart';
+import 'package:universe_history_app/pages/notification_page.dart';
 import 'package:universe_history_app/shared/models/owner_model.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
@@ -146,6 +147,9 @@ class _ModalInputCommmentComponentState
       'idContent': currentHistory.value.first.id,
       'content': currentHistory.value.first.title,
       'date': DateTime.now().toString(),
+      'status': _textSigned
+          ? NotificationEnum.COMMENT_SIGNED.toString()
+          : NotificationEnum.COMMENT_ANONYMOUS.toString()
     };
     api
         .setNotification(_form)

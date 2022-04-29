@@ -1,4 +1,4 @@
-// ignore_for_file: iterable_contains_unrelated_type, avoid_print, non_constant_identifier_names
+// ignore_for_file: iterable_contains_unrelated_type, avoid_print, non_constant_identifier_names, constant_identifier_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -93,9 +93,15 @@ class _NotificationPageState extends State<NotificationPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            documents[index]['nickName'] == 'anônimo'
-                                ? _NotificationAnonymous(documents[index])
-                                : _NotificationName(documents[index]),
+                            if (documents[index]['status'] ==
+                                NotificationEnum.COMMENT_ANONYMOUS.toString())
+                              _commentAnonymous(documents[index]),
+                            if (documents[index]['status'] ==
+                                NotificationEnum.COMMENT_SIGNED.toString())
+                              _commentSigned(documents[index]),
+                            if (documents[index]['status'] ==
+                                NotificationEnum.COMMENT_MENTIONED.toString())
+                              _commentMentioned(documents[index]),
                             ResumeComponent(
                               resume: editDateUtil(
                                   DateTime.parse(documents[index]['date'])
@@ -114,7 +120,7 @@ class _NotificationPageState extends State<NotificationPage> {
         : _noResult();
   }
 
-  Widget _NotificationAnonymous(index) {
+  Widget _commentAnonymous(index) {
     return Wrap(children: [
       const Text('Sua história "', style: uiTextStyle.text1),
       Text(index['content'], style: uiTextStyle.text9),
@@ -123,10 +129,20 @@ class _NotificationPageState extends State<NotificationPage> {
     ]);
   }
 
-  Widget _NotificationName(index) {
+  Widget _commentSigned(index) {
     return Wrap(children: [
       Text(index['nickName'], style: uiTextStyle.text9),
       const Text(' fez um comentou na história "', style: uiTextStyle.text1),
+      Text(index['content'], style: uiTextStyle.text9),
+      const Text('".', style: uiTextStyle.text1),
+    ]);
+  }
+
+  Widget _commentMentioned(index) {
+    return Wrap(children: [
+      Text(index['nickName'], style: uiTextStyle.text9),
+      const Text(' mencionou você em um comentário da história "',
+          style: uiTextStyle.text1),
       Text(index['content'], style: uiTextStyle.text9),
       const Text('".', style: uiTextStyle.text1),
     ]);
@@ -137,3 +153,5 @@ class _NotificationPageState extends State<NotificationPage> {
         text: 'Não encontramos notificações no momento.');
   }
 }
+
+enum NotificationEnum { COMMENT_SIGNED, COMMENT_ANONYMOUS, COMMENT_MENTIONED }
