@@ -22,12 +22,16 @@ class NotificationPage extends StatefulWidget {
 
 class _NotificationPageState extends State<NotificationPage> {
   final Api api = Api();
+  @override
+  void initState() {
+    setState(() => currentNotification.value = false);
+    super.initState();
+  }
 
   void _readNotification(history) {
     api
         .upNotification(history['id'])
         .then((result) => {
-              setState(() => currentNotification.value = false),
               Navigator.pushNamed(context, '/history',
                   arguments: history['idContent']),
             })

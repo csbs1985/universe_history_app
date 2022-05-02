@@ -49,6 +49,8 @@ class _ModalInputCommmentComponentState
   bool _isInputNotEmpty = false;
   bool _textSigned = true;
 
+  String? idMencioned;
+
   @override
   void initState() {
     if (widget._id != null) {
@@ -69,7 +71,7 @@ class _ModalInputCommmentComponentState
   }
 
   void keyUp(String text) {
-    if (text.contains(' @') && !text.contains(' @ ')) _showMentioned(context);
+    if (text.contains(' @') || text.contains('@')) _showMentioned(context);
 
     setState(() =>
         _isInputNotEmpty = _commentController.text.length > 0 ? true : false);
@@ -85,7 +87,26 @@ class _ModalInputCommmentComponentState
         context: context,
         barrierColor: Colors.black87,
         duration: const Duration(milliseconds: 300),
-        builder: (context) => ModalMentionedComponent(callback: (value) {}));
+        builder: (context) =>
+            ModalMentionedComponent(callback: (value) => _setText(value)));
+  }
+
+  void _setText(_user) {
+    setState(() {
+      _isInputNotEmpty = true;
+      idMencioned = _user['id'];
+      if (_commentController.text
+              .substring(_commentController.text.length - 1) ==
+          '@') {
+        _commentController.text = _commentController.text = _commentController
+            .text
+            .substring(0, _commentController.text.length - 1);
+      }
+
+      _commentController.text = _commentController.text.length == 0
+          ? '@' + _user['nickname'] + ' '
+          : _commentController.text + ' ' + '@' + _user['nickname'] + ' ';
+    });
   }
 
   void _publishComment() {
@@ -125,7 +146,8 @@ class _ModalInputCommmentComponentState
                   ),
                   _setUpQtyCommentUser(),
                   if (currentUser.value.first.id != currentOwner.value.first.id)
-                    {_setPushNotification(), _setNotification()},
+                    _setNotificationOwner(),
+                  _setNotificationMencioned(),
                   _commentController.clear(),
                   _isInputNotEmpty = false,
                 })
@@ -152,7 +174,8 @@ class _ModalInputCommmentComponentState
         .catchError((error) => print('ERROR: ' + error));
   }
 
-  void _setNotification() {
+  void _setNotificationOwner() {
+    _setPushNotification();
     _form = {
       'id': uuid.v4(),
       'idUser': currentHistory.value.first.userId,
@@ -171,6 +194,25 @@ class _ModalInputCommmentComponentState
         .catchError((error) => print('ERROR: ' + error));
   }
 
+  void _setNotificationMencioned() {
+    if (currentUser.value.first.id != idMencioned) {
+      _form = {
+        'id': uuid.v4(),
+        'idUser': idMencioned!,
+        'nickName': _textSigned ? currentUser.value.first.nickname : 'anônimo',
+        'view': false,
+        'idContent': currentHistory.value.first.id,
+        'content': currentHistory.value.first.title,
+        'date': DateTime.now().toString(),
+        'status': NotificationEnum.COMMENT_MENTIONED.toString()
+      };
+      api
+          .setNotification(_form)
+          .then((result) => {})
+          .catchError((error) => print('ERROR: ' + error));
+    }
+  }
+
   void _clean() {
     if (_commentController.text.isEmpty)
       Navigator.of(context).pop();
@@ -183,14 +225,24 @@ class _ModalInputCommmentComponentState
 
   void _setPushNotification() {
     var history = currentHistory.value.first;
-    var title = _textSigned
-        ? (currentUser.value.first.nickname +
-            ' fez um comentário na história "' +
-            history.title +
-            '"')
-        : ('Sua história "' +
-            history.title +
-            '" recebeu um comentário anônimo.');
+    var title = '';
+
+    if (idMencioned!.isNotEmpty) {
+      var title = currentUser.value.first.nickname +
+          ' mencionou você em um comentário da história "' +
+          history.title +
+          '".';
+    } else {
+      var title = _textSigned
+          ? (currentUser.value.first.nickname +
+              ' fez um comentário na história "' +
+              history.title +
+              '"')
+          : ('Sua história "' +
+              history.title +
+              '" recebeu um comentário anônimo.');
+    }
+
     var body = _textSigned
         ? currentUser.value.first.nickname +
             ': "' +
