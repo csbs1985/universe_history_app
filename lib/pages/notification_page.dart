@@ -1,7 +1,8 @@
-// ignore_for_file: iterable_contains_unrelated_type, avoid_print, non_constant_identifier_names, constant_identifier_names
+// ignore_for_file: iterable_contains_unrelated_type, avoid_print, non_constant_identifier_names, constant_identifier_names, unnecessary_brace_in_string_interps, curly_braces_in_flow_control_structures
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:styled_text/styled_text.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/resume_component.dart';
@@ -22,6 +23,7 @@ class NotificationPage extends StatefulWidget {
 
 class _NotificationPageState extends State<NotificationPage> {
   final Api api = Api();
+
   @override
   void initState() {
     setState(() => currentNotification.value = false);
@@ -78,78 +80,63 @@ class _NotificationPageState extends State<NotificationPage> {
     List<QueryDocumentSnapshot<dynamic>> documents = snapshot.data!.docs;
     return documents.isNotEmpty
         ? ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             reverse: true,
             itemCount: documents.length,
-            itemBuilder: (BuildContext context, int index) => Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GestureDetector(
-                    child: Container(
-                      width: double.infinity,
-                      color: documents[index]['view']
-                          ? uiColor.comp_1
-                          : uiColor.comp_3,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (documents[index]['status'] ==
-                                NotificationEnum.COMMENT_ANONYMOUS.toString())
-                              _commentAnonymous(documents[index]),
-                            if (documents[index]['status'] ==
-                                NotificationEnum.COMMENT_SIGNED.toString())
-                              _commentSigned(documents[index]),
-                            if (documents[index]['status'] ==
-                                NotificationEnum.COMMENT_MENTIONED.toString())
-                              _commentMentioned(documents[index]),
-                            ResumeComponent(
-                              resume: editDateUtil(
-                                  DateTime.parse(documents[index]['date'])
-                                      .millisecondsSinceEpoch),
-                            )
-                          ],
-                        ),
+            itemBuilder: (BuildContext context, int index) => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  child: Container(
+                    width: double.infinity,
+                    color: documents[index]['view']
+                        ? uiColor.comp_1
+                        : uiColor.second,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 4, 20, 4),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _comment(documents[index]),
+                          ResumeComponent(
+                            resume: editDateUtil(
+                                DateTime.parse(documents[index]['date'])
+                                    .millisecondsSinceEpoch),
+                          )
+                        ],
                       ),
                     ),
-                    onTap: () => _readNotification(documents[index]),
                   ),
-                ],
-              ),
+                  onTap: () => _readNotification(documents[index]),
+                ),
+              ],
             ),
           )
         : _noResult();
   }
 
-  Widget _commentAnonymous(index) {
-    return Wrap(children: [
-      const Text('Sua história "', style: uiTextStyle.text1),
-      Text(index['content'], style: uiTextStyle.text9),
-      const Text('" recebeu um comentário ', style: uiTextStyle.text1),
-      const Text('anônimo.', style: uiTextStyle.text9),
-    ]);
-  }
+  Widget _comment(index) {
+    var _status = index['status'];
+    var _text = '';
 
-  Widget _commentSigned(index) {
-    return Wrap(children: [
-      Text(index['nickName'], style: uiTextStyle.text9),
-      const Text(' fez um comentou na história "', style: uiTextStyle.text1),
-      Text(index['content'], style: uiTextStyle.text9),
-      const Text('".', style: uiTextStyle.text1),
-    ]);
-  }
+    if (_status == NotificationEnum.COMMENT_ANONYMOUS.toString())
+      _text =
+          'Sua história <em>${index['content']}</em> recebeu um comentário "<em>anônimo</em>".';
 
-  Widget _commentMentioned(index) {
-    return Wrap(children: [
-      Text(index['nickName'], style: uiTextStyle.text9),
-      const Text(' mencionou você em um comentário da história "',
-          style: uiTextStyle.text1),
-      Text(index['content'], style: uiTextStyle.text9),
-      const Text('".', style: uiTextStyle.text1),
-    ]);
+    if (_status == NotificationEnum.COMMENT_SIGNED.toString())
+      _text =
+          '<em>${index['nickName']}</em> fez um comentou na história "<em>${index['content']}</em>".';
+
+    if (_status == NotificationEnum.COMMENT_MENTIONED.toString())
+      _text =
+          '<em>${index['nickName']}</em> mencionou você em um comentário da história "<em>${index['content']}</em>".';
+
+    return StyledText(
+      style: uiTextStyle.text1,
+      tags: {'em': StyledTextTag(style: uiTextStyle.text10)},
+      text: _text,
+    );
   }
 
   Widget _noResult() {

@@ -96,6 +96,12 @@ class uiTextStyle {
     color: uiColor.third,
   );
 
+  static const TextStyle text10 = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w700,
+    color: uiColor.third,
+  );
+
   static const TextStyle menu = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w400,

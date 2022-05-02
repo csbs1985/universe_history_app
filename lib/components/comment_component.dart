@@ -167,3 +167,11 @@ class _CommentState extends State<CommentComponent> {
         : SkeletonCommentComponent();
   }
 }
+
+/*
+   return StyledText(
+      style: uiTextStyle.text1,
+      tags: {'em': StyledTextTag(style: uiTextStyle.text9)},
+      text: _text,
+    );
+ */
