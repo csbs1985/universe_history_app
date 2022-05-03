@@ -40,7 +40,6 @@ class _ModalInputCommmentComponentState
   final Uuid uuid = const Uuid();
   final PushNotification _notification = PushNotification();
 
-  late Map<String, dynamic> _comment;
   late Map<String, dynamic> _form;
 
   Map<String, dynamic>? _commentEdit;
@@ -118,7 +117,7 @@ class _ModalInputCommmentComponentState
 
   void _publishComment() {
     setState(() {
-      _comment = {
+      _form = {
         'id': _commentEdit?['id'] ?? uuid.v4(),
         'date': _commentEdit?['date'] ?? DateTime.now().toString(),
         'historyId':
@@ -134,7 +133,7 @@ class _ModalInputCommmentComponentState
     });
 
     api
-        .setComment(_comment)
+        .setComment(_form)
         .then((result) => _upComment())
         .catchError((error) => print('ERROR: ' + error));
   }
@@ -192,7 +191,8 @@ class _ModalInputCommmentComponentState
     };
     await api
         .setNotification(_form)
-        .then((result) => _setPushNotification(currentOwner.value.first.id))
+        .then(
+            (result) => _setPushNotificationOnwer(currentOwner.value.first.id))
         .catchError((error) => print('ERROR: ' + error));
   }
 
@@ -212,39 +212,53 @@ class _ModalInputCommmentComponentState
         };
         await api
             .setNotification(_form)
-            .then((result) => _setPushNotification(item))
+            .then((result) => _setPushNotificationMentioned(item))
             .catchError((error) => print('ERROR: ' + error));
       }
     }
   }
 
-  void _setPushNotification(String _user) {
+  void _setPushNotificationOnwer(String _user) {
     var history = currentHistory.value.first;
     var title = '';
     var body = '';
 
-    if (idMencioned.isNotEmpty) {
-      title = currentUser.value.first.nickname +
-          ' mencionou você em um comentário da história "' +
-          history.title +
-          '".';
-    } else {
-      title = _textSigned
-          ? (currentUser.value.first.nickname +
-              ' fez um comentário na história "' +
-              history.title +
-              '"')
-          : ('Sua história "' +
-              history.title +
-              '" recebeu um comentário anônimo.');
+    title = _textSigned
+        ? (currentUser.value.first.nickname +
+            ' fez um comentário na história "' +
+            history.title +
+            '"')
+        : ('Sua história "' +
+            history.title +
+            '" recebeu um comentário anônimo.');
 
-      body = _textSigned
-          ? currentUser.value.first.nickname +
-              ': "' +
-              _commentController.text.trim() +
-              '"'
-          : '"' + _commentController.text.trim() + '"';
-    }
+    body = _textSigned
+        ? currentUser.value.first.nickname +
+            ': "' +
+            _commentController.text.trim() +
+            '"'
+        : '"' + _commentController.text.trim() + '"';
+
+    _notification.sendNotificationComment(
+        title, body, currentHistory.value.first.id, _user);
+  }
+
+  void _setPushNotificationMentioned(String _user) {
+    var history = currentHistory.value.first;
+    var title = '';
+    var body = '';
+
+    title = currentUser.value.first.nickname +
+        ' mencionou você em um comentário da história "' +
+        history.title +
+        '".';
+
+    body = _textSigned
+        ? currentUser.value.first.nickname +
+            ': "' +
+            _commentController.text.trim() +
+            '"'
+        : '"' + _commentController.text.trim() + '"';
 
     _notification.sendNotificationComment(
         title, body, currentHistory.value.first.id, _user);
