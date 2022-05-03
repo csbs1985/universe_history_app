@@ -70,8 +70,14 @@ class _ModalInputCommmentComponentState
     super.initState();
   }
 
-  void keyUp(String text) {
-    if (text.contains(' @') || text.contains('@')) _showMentioned(context);
+  void keyUp(String _text) {
+    if (_text.length > 0) {
+      var lastString = _text.substring(_text.length - 1, _text.length);
+
+      if ((_text.length <= 1 && _text.contains('@')) ||
+          (_text.length > 1 && lastString == '@'))
+        _showMentioned(context, MentionedCallEnum.KEYBOARD);
+    }
 
     setState(() =>
         _isInputNotEmpty = _commentController.text.length > 0 ? true : false);
@@ -81,31 +87,31 @@ class _ModalInputCommmentComponentState
     setState(() => _textSigned = !_textSigned);
   }
 
-  void _showMentioned(BuildContext context) {
+  void _showMentioned(BuildContext context, MentionedCallEnum type) {
     showCupertinoModalBottomSheet(
         expand: true,
         context: context,
         barrierColor: Colors.black87,
         duration: const Duration(milliseconds: 300),
-        builder: (context) =>
-            ModalMentionedComponent(callback: (value) => _setText(value)));
+        builder: (context) => ModalMentionedComponent(
+            type: type, callback: (value) => _setText(value, type)));
   }
 
-  void _setText(_user) {
+  void _setText(_user, MentionedCallEnum type) {
     setState(() {
       _isInputNotEmpty = true;
       idMencioned = _user['id'];
-      if (_commentController.text
-              .substring(_commentController.text.length - 1) ==
-          '@') {
-        _commentController.text = _commentController.text = _commentController
-            .text
-            .substring(0, _commentController.text.length - 1);
+
+      if (type == MentionedCallEnum.ICON) {
+        _commentController.text = '@' + _user['nickname'] + ' ';
       }
 
-      _commentController.text = _commentController.text.length == 0
-          ? '@' + _user['nickname'] + ' '
-          : _commentController.text + ' ' + '@' + _user['nickname'] + ' ';
+      if (type == MentionedCallEnum.KEYBOARD) {
+        var value = _commentController.text
+            .substring(0, _commentController.text.length - 1);
+
+        _commentController.text = value + '@' + _user['nickname'] + ' ';
+      }
     });
   }
 
@@ -228,12 +234,12 @@ class _ModalInputCommmentComponentState
     var title = '';
 
     if (idMencioned!.isNotEmpty) {
-      var title = currentUser.value.first.nickname +
+      title = currentUser.value.first.nickname +
           ' mencionou você em um comentário da história "' +
           history.title +
           '".';
     } else {
-      var title = _textSigned
+      title = _textSigned
           ? (currentUser.value.first.nickname +
               ' fez um comentário na história "' +
               history.title +
@@ -302,7 +308,8 @@ class _ModalInputCommmentComponentState
                               icon: uiSvg.clean, callback: (value) => _clean()),
                           IconComponent(
                               icon: uiSvg.mentioned,
-                              callback: (value) => _showMentioned(context)),
+                              callback: (value) => _showMentioned(
+                                  context, MentionedCallEnum.ICON)),
                           const SizedBox(width: 10),
                           ToggleComponent(
                             value: _textSigned,

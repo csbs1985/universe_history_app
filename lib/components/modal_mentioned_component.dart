@@ -1,21 +1,22 @@
-// ignore_for_file: prefer_is_empty, unused_field, void_checks, avoid_print, unnecessary_new, use_key_in_widget_constructors, curly_braces_in_flow_control_structures, import_of_legacy_library_into_null_safe, unused_element, unnecessary_null_comparison
+// ignore_for_file: prefer_is_empty, unused_field, void_checks, avoid_print, unnecessary_new, use_key_in_widget_constructors, curly_braces_in_flow_control_structures, import_of_legacy_library_into_null_safe, unused_element, unnecessary_null_comparison, constant_identifier_names
 
 import 'package:algolia/algolia.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/core/algolia.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
-import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class ModalMentionedComponent extends StatefulWidget {
-  const ModalMentionedComponent({required Function callback})
-      : _callback = callback;
+  const ModalMentionedComponent(
+      {required Function callback, required MentionedCallEnum type})
+      : _callback = callback,
+        _type = type;
 
   final Function _callback;
+  final MentionedCallEnum _type;
 
   @override
   _ModalMentionedComponentState createState() =>
@@ -36,15 +37,15 @@ class _ModalMentionedComponentState extends State<ModalMentionedComponent> {
   }
 
   Future<void> keyUp() async {
+    if (_commentController.text == " ") Navigator.of(context).pop();
+
     AlgoliaQuery _query =
         algolia!.instance.index('history_users').query(_commentController.text);
 
     AlgoliaQuerySnapshot _snap = await _query.getObjects();
     setState(() => _snapshot = _snap.hits);
 
-    if (_commentController.text.isEmpty) {
-      _snapshot = null;
-    }
+    if (_commentController.text.isEmpty) _snapshot = null;
   }
 
   void _setUser(_user) {
@@ -141,3 +142,5 @@ class _ModalMentionedComponentState extends State<ModalMentionedComponent> {
             'Nenhum usuário encontrado ou você digitou o email ou usuário errado.');
   }
 }
+
+enum MentionedCallEnum { KEYBOARD, ICON }
