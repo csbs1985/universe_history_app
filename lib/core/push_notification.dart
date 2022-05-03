@@ -117,9 +117,9 @@ class PushNotification {
   }
 
   void sendNotificationComment(
-      String title, String body, String idHistory) async {
+      String title, String body, String idHistory, String _mencioned) async {
     await api
-        .getTokenOwner()
+        .getTokenOwner(_mencioned)
         .then((result) => _tokenOwner = result.docs.first['token'])
         .catchError((error) => print('ERROR:' + error.toString()));
 

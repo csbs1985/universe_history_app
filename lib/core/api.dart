@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:universe_history_app/shared/models/comment_model.dart';
 import 'package:universe_history_app/shared/models/history_model.dart';
-import 'package:universe_history_app/shared/models/owner_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'variables.dart';
 
@@ -29,8 +28,8 @@ class Api {
     return token;
   }
 
-  getTokenOwner() {
-    return user.where('id', isEqualTo: currentOwner.value.first.id).get();
+  getTokenOwner(String _user) {
+    return user.where('id', isEqualTo: _user).get();
   }
 
   setToken(String _token) {

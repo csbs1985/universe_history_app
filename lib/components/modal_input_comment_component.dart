@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_is_empty, unused_field, void_checks, avoid_print, unnecessary_new, use_key_in_widget_constructors, curly_braces_in_flow_control_structures, import_of_legacy_library_into_null_safe
+// ignore_for_file: prefer_is_empty, unused_field, void_checks, avoid_print, unnecessary_new, use_key_in_widget_constructors, curly_braces_in_flow_control_structures, import_of_legacy_library_into_null_safe, avoid_function_literals_in_foreach_calls
 
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -49,7 +49,7 @@ class _ModalInputCommmentComponentState
   bool _isInputNotEmpty = false;
   bool _textSigned = true;
 
-  String? idMencioned;
+  List<String> idMencioned = [];
 
   @override
   void initState() {
@@ -100,7 +100,7 @@ class _ModalInputCommmentComponentState
   void _setText(_user, MentionedCallEnum type) {
     setState(() {
       _isInputNotEmpty = true;
-      idMencioned = _user['id'];
+      idMencioned.add(_user['id'].toString());
 
       if (type == MentionedCallEnum.ICON) {
         _commentController.text = '@' + _user['nickname'] + ' ';
@@ -139,35 +139,32 @@ class _ModalInputCommmentComponentState
   }
 
   void _upComment() {
-    setState(
-      () async {
-        if (!isEdit) currentHistory.value.first.qtyComment++;
-        await api
-            .upNumComment()
-            .then((result) => {
-                  ActivityUtil(
-                    ActivitiesEnum.NEW_COMMENT,
-                    _commentController.text,
-                    currentHistory.value.first.id,
-                  ),
-                  _setUpQtyCommentUser(),
-                  if (currentUser.value.first.id != currentOwner.value.first.id)
-                    _setNotificationOwner(),
-                  _setNotificationMencioned(),
-                  _commentController.clear(),
-                  _isInputNotEmpty = false,
-                })
-            .catchError((error) => print('ERROR: ' + error));
-      },
-    );
+    setState(() {
+      if (!isEdit) currentHistory.value.first.qtyComment++;
+      api
+          .upNumComment()
+          .then((result) => {
+                ActivityUtil(
+                  ActivitiesEnum.NEW_COMMENT,
+                  _commentController.text,
+                  currentHistory.value.first.id,
+                ),
+                _setUpQtyCommentUser(),
+              })
+          .catchError((error) => print('ERROR: ' + error));
+    });
   }
 
-  void _setUpQtyCommentUser() {
+  Future<void> _setUpQtyCommentUser() async {
     if (!isEdit) currentUser.value.first.qtyComment++;
 
-    api
+    await api
         .setUpQtyCommentUser()
         .then((value) => {
+              if (currentUser.value.first.id != currentOwner.value.first.id)
+                _setNotificationOwner(),
+              _commentController.text,
+              // _setNotificationMencioned(),
               if (isEdit) Navigator.of(context).pop(),
               toast.toast(
                   context,
@@ -181,7 +178,6 @@ class _ModalInputCommmentComponentState
   }
 
   void _setNotificationOwner() {
-    _setPushNotification();
     _form = {
       'id': uuid.v4(),
       'idUser': currentHistory.value.first.userId,
@@ -196,44 +192,38 @@ class _ModalInputCommmentComponentState
     };
     api
         .setNotification(_form)
-        .then((result) => {})
+        .then((result) => _setPushNotification(currentOwner.value.first.id))
         .catchError((error) => print('ERROR: ' + error));
   }
 
   void _setNotificationMencioned() {
-    if (currentUser.value.first.id != idMencioned) {
-      _form = {
-        'id': uuid.v4(),
-        'idUser': idMencioned!,
-        'nickName': _textSigned ? currentUser.value.first.nickname : 'anônimo',
-        'view': false,
-        'idContent': currentHistory.value.first.id,
-        'content': currentHistory.value.first.title,
-        'date': DateTime.now().toString(),
-        'status': NotificationEnum.COMMENT_MENTIONED.toString()
-      };
-      api
-          .setNotification(_form)
-          .then((result) => {})
-          .catchError((error) => print('ERROR: ' + error));
-    }
+    idMencioned.forEach((item) {
+      if (currentUser.value.first.id != item) {
+        _form = {
+          'id': uuid.v4(),
+          'idUser': idMencioned,
+          'nickName':
+              _textSigned ? currentUser.value.first.nickname : 'anônimo',
+          'view': false,
+          'idContent': currentHistory.value.first.id,
+          'content': currentHistory.value.first.title,
+          'date': DateTime.now().toString(),
+          'status': NotificationEnum.COMMENT_MENTIONED.toString()
+        };
+        api
+            .setNotification(_form)
+            .then((result) => _setPushNotification(item))
+            .catchError((error) => print('ERROR: ' + error));
+      }
+    });
   }
 
-  void _clean() {
-    if (_commentController.text.isEmpty)
-      Navigator.of(context).pop();
-    else
-      setState(() {
-        _commentController.clear();
-        _isInputNotEmpty = false;
-      });
-  }
-
-  void _setPushNotification() {
+  void _setPushNotification(String _user) {
     var history = currentHistory.value.first;
     var title = '';
+    var body = '';
 
-    if (idMencioned!.isNotEmpty) {
+    if (idMencioned.isNotEmpty) {
       title = currentUser.value.first.nickname +
           ' mencionou você em um comentário da história "' +
           history.title +
@@ -247,17 +237,27 @@ class _ModalInputCommmentComponentState
           : ('Sua história "' +
               history.title +
               '" recebeu um comentário anônimo.');
+
+      body = _textSigned
+          ? currentUser.value.first.nickname +
+              ': "' +
+              _commentController.text.trim() +
+              '"'
+          : '"' + _commentController.text.trim() + '"';
     }
 
-    var body = _textSigned
-        ? currentUser.value.first.nickname +
-            ': "' +
-            _commentController.text.trim() +
-            '"'
-        : '"' + _commentController.text.trim() + '"';
-
     _notification.sendNotificationComment(
-        title, body, currentHistory.value.first.id);
+        title, body, currentHistory.value.first.id, _user);
+  }
+
+  void _clean() {
+    if (_commentController.text.isEmpty)
+      Navigator.of(context).pop();
+    else
+      setState(() {
+        _commentController.clear();
+        _isInputNotEmpty = false;
+      });
   }
 
   @override
