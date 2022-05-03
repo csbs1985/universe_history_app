@@ -116,36 +116,33 @@ class PushNotification {
     }).catchError((error) => print('ERROR:' + error.toString()));
   }
 
-  void sendNotificationComment(
+  Future<void> sendNotificationComment(
       String title, String body, String idHistory, String _mencioned) async {
-    await api
-        .getTokenOwner(_mencioned)
-        .then((result) => _tokenOwner = result.docs.first['token'])
-        .catchError((error) => print('ERROR:' + error.toString()));
-
-    try {
-      await http.post(
-        Uri.parse('https://fcm.googleapis.com/fcm/send'),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'Authorization':
-              'key=AAAAUIaHHec:APA91bGzC9qta9DjF9Z-p16uFv49mfM8uXFo7g7V9EN3rr7wjyvYl9-JSG1m2myxavNpuOjNzbII8lkZjCVYQ9YiaeIctT9Kr0tekihzXeDVWtVtxmy4Y1pqAGIMSEuH7rKOLPAtiZku',
-        },
-        body: jsonEncode(
-          <String, dynamic>{
-            'notification': <String, dynamic>{'body': body, 'title': title},
-            'priority': 'high',
-            'data': <String, dynamic>{
-              'click_action': 'FLUTTER_NOTIFICATION_COMMENT',
-              'id': idHistory,
-              'status': 'comment'
-            },
-            "to": _tokenOwner,
+    await api.getTokenOwner(_mencioned).then((result) async {
+      try {
+        await http.post(
+          Uri.parse('https://fcm.googleapis.com/fcm/send'),
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+            'Authorization':
+                'key=AAAAUIaHHec:APA91bGzC9qta9DjF9Z-p16uFv49mfM8uXFo7g7V9EN3rr7wjyvYl9-JSG1m2myxavNpuOjNzbII8lkZjCVYQ9YiaeIctT9Kr0tekihzXeDVWtVtxmy4Y1pqAGIMSEuH7rKOLPAtiZku',
           },
-        ),
-      );
-    } catch (error) {
-      print("ERROR:" + error.toString());
-    }
+          body: jsonEncode(
+            <String, dynamic>{
+              'notification': <String, dynamic>{'body': body, 'title': title},
+              'priority': 'high',
+              'data': <String, dynamic>{
+                'click_action': 'FLUTTER_NOTIFICATION_COMMENT',
+                'id': idHistory,
+                'status': 'comment'
+              },
+              "to": result.docs.first['token'],
+            },
+          ),
+        );
+      } catch (error) {
+        print("ERROR:" + error.toString());
+      }
+    }).catchError((error) => print('ERROR:' + error.toString()));
   }
 }

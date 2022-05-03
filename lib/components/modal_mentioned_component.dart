@@ -43,7 +43,8 @@ class _ModalMentionedComponentState extends State<ModalMentionedComponent> {
         algolia!.instance.index('history_users').query(_commentController.text);
 
     AlgoliaQuerySnapshot _snap = await _query.getObjects();
-    setState(() => _snapshot = _snap.hits);
+
+    if (_snap.hits.isNotEmpty) setState(() => _snapshot = _snap.hits);
 
     if (_commentController.text.isEmpty) _snapshot = null;
   }

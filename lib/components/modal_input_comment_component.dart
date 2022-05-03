@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_is_empty, unused_field, void_checks, avoid_print, unnecessary_new, use_key_in_widget_constructors, curly_braces_in_flow_control_structures, import_of_legacy_library_into_null_safe, avoid_function_literals_in_foreach_calls
+// ignore_for_file: prefer_is_empty, unused_field, void_checks, avoid_print, unnecessary_new, use_key_in_widget_constructors, curly_braces_in_flow_control_structures, import_of_legacy_library_into_null_safe
 
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -100,11 +100,12 @@ class _ModalInputCommmentComponentState
   void _setText(_user, MentionedCallEnum type) {
     setState(() {
       _isInputNotEmpty = true;
-      idMencioned.add(_user['id'].toString());
+      var _id = _user['id'].toString();
 
-      if (type == MentionedCallEnum.ICON) {
+      idMencioned.contains(_id) ? null : idMencioned.add(_id);
+
+      if (type == MentionedCallEnum.ICON)
         _commentController.text = '@' + _user['nickname'] + ' ';
-      }
 
       if (type == MentionedCallEnum.KEYBOARD) {
         var value = _commentController.text
@@ -163,8 +164,7 @@ class _ModalInputCommmentComponentState
         .then((value) => {
               if (currentUser.value.first.id != currentOwner.value.first.id)
                 _setNotificationOwner(),
-              _commentController.text,
-              // _setNotificationMencioned(),
+              if (idMencioned.isNotEmpty) _setNotificationMencioned(),
               if (isEdit) Navigator.of(context).pop(),
               toast.toast(
                   context,
@@ -177,7 +177,7 @@ class _ModalInputCommmentComponentState
         .catchError((error) => print('ERROR: ' + error));
   }
 
-  void _setNotificationOwner() {
+  Future<void> _setNotificationOwner() async {
     _form = {
       'id': uuid.v4(),
       'idUser': currentHistory.value.first.userId,
@@ -190,18 +190,18 @@ class _ModalInputCommmentComponentState
           ? NotificationEnum.COMMENT_SIGNED.toString()
           : NotificationEnum.COMMENT_ANONYMOUS.toString()
     };
-    api
+    await api
         .setNotification(_form)
         .then((result) => _setPushNotification(currentOwner.value.first.id))
         .catchError((error) => print('ERROR: ' + error));
   }
 
-  void _setNotificationMencioned() {
-    idMencioned.forEach((item) {
+  Future<void> _setNotificationMencioned() async {
+    for (var item in idMencioned) {
       if (currentUser.value.first.id != item) {
         _form = {
           'id': uuid.v4(),
-          'idUser': idMencioned,
+          'idUser': item,
           'nickName':
               _textSigned ? currentUser.value.first.nickname : 'anônimo',
           'view': false,
@@ -210,12 +210,12 @@ class _ModalInputCommmentComponentState
           'date': DateTime.now().toString(),
           'status': NotificationEnum.COMMENT_MENTIONED.toString()
         };
-        api
+        await api
             .setNotification(_form)
             .then((result) => _setPushNotification(item))
             .catchError((error) => print('ERROR: ' + error));
       }
-    });
+    }
   }
 
   void _setPushNotification(String _user) {

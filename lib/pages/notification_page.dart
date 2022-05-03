@@ -26,7 +26,8 @@ class _NotificationPageState extends State<NotificationPage> {
 
   @override
   void initState() {
-    setState(() => currentNotification.value = false);
+    WidgetsBinding.instance!
+        .addPostFrameCallback((_) => currentNotification.value = false);
     super.initState();
   }
 
