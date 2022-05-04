@@ -39,15 +39,15 @@ class MyApp extends StatelessWidget {
       ),
     );
 
-    _notification.init(context);
-
     if (currentToken.value != null) _notification.getToken();
+
+    _notification.init(context);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const SplashPage(),
       theme: uiTheme.theme1,
       onGenerateRoute: Navigation.generateRoute,
+      home: const SplashPage(),
     );
   }
 }

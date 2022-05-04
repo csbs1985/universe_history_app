@@ -22,6 +22,20 @@ class _SplashPageState extends State<SplashPage> {
   final UserClass userClass = UserClass();
 
   @override
+  void initState() {
+    super.initState();
+
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user != null) {
+        userClass.readUser().then((file) {
+          if (file.isNotEmpty) userClass.setFileUser(file);
+        }).catchError((error) => print(error));
+      }
+      Navigator.of(context).pushNamed("/home");
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () => exit(0),
@@ -38,19 +52,5 @@ class _SplashPageState extends State<SplashPage> {
         ),
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user != null) {
-        userClass.readUser().then((file) {
-          if (file.isNotEmpty) userClass.setFileUser(file);
-        }).catchError((error) => print(error));
-      }
-      Navigator.of(context).pushNamed("/home");
-    });
   }
 }

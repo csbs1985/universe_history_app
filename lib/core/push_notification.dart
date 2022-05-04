@@ -27,29 +27,16 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 class PushNotification {
   final Api api = Api();
-  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
-  late String _tokenOwner = currentOwner.value.first.token;
+  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
   init(BuildContext context) {
     _requestPermission(context);
     _loadFCM();
-    _onMessage();
+    _onMessage(context);
   }
 
   void _requestPermission(BuildContext context) async {
-    FirebaseMessaging.instance
-        .getInitialMessage()
-        .then((RemoteMessage? message) {
-      if (message == null) return;
-
-      var _status = message.data['status'];
-      var _idHistory = message.data['id'];
-
-      if (_status == 'comment')
-        Navigator.pushNamed(context, '/history', arguments: _idHistory);
-    });
-
     FirebaseMessaging messaging = FirebaseMessaging.instance;
 
     NotificationSettings settings = await messaging.requestPermission(
@@ -83,7 +70,7 @@ class PushNotification {
             alert: true, badge: true, sound: true);
   }
 
-  void _onMessage() async {
+  void _onMessage(BuildContext context) async {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
@@ -105,6 +92,10 @@ class PushNotification {
               ),
             ));
       }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      Navigator.pushNamed(context, '/history', arguments: message.data['id']);
     });
   }
 
