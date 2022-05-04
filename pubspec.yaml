@@ -17,6 +17,7 @@ dependencies:
   flutter_keyboard_visibility: ^5.1.1
   path_provider: ^2.0.9
   loadmore: ^2.0.1
+  no_context_navigation: ^2.1.2
 
   # layout
   page_transition: ^2.0.4

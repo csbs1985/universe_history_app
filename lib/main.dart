@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:universe_history_app/core/navigation.dart';
 import 'package:universe_history_app/core/push_notification.dart';
 import 'package:universe_history_app/core/variables.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
     _notification.init(context);
 
     return MaterialApp(
+      navigatorKey: NavigationService.navigationKey,
       debugShowCheckedModeBanner: false,
       theme: uiTheme.theme1,
       onGenerateRoute: Navigation.generateRoute,

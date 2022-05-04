@@ -5,10 +5,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:http/http.dart' as http;
-import 'package:universe_history_app/shared/models/owner_model.dart';
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
   'high_importance_channel',
@@ -95,7 +95,7 @@ class PushNotification {
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      Navigator.pushNamed(context, '/history', arguments: message.data['id']);
+      navService.pushNamed('/history', args: message.data['id']);
     });
   }
 
