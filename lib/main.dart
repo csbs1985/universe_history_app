@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
 
     if (currentToken.value != null) _notification.getToken();
 
-    _notification.init(context);
+    _notification.init();
 
     return MaterialApp(
       navigatorKey: NavigationService.navigationKey,

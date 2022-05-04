@@ -173,6 +173,12 @@ class Api {
         .update({'nickname': currentUser.value.first.nickname});
   }
 
+  upDateNickname(String _date) {
+    return user
+        .doc(currentUser.value.first.id)
+        .update({'upDateNickname': _date});
+  }
+
   toggleNotification() {
     return user
         .doc(currentUser.value.first.id)

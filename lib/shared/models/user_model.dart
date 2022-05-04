@@ -16,6 +16,7 @@ ValueNotifier<bool> userNew = ValueNotifier<bool>(false);
 class UserModel {
   late String id;
   late String nickname;
+  late String upDateNickname;
   late String date;
   late String email;
   late String channel;
@@ -28,6 +29,7 @@ class UserModel {
   UserModel({
     required this.id,
     required this.nickname,
+    required this.upDateNickname,
     required this.date,
     required this.isDisabled,
     required this.email,
@@ -44,6 +46,7 @@ class UserModel {
   factory UserModel.fromMap(Map<String, dynamic> json) => UserModel(
         id: json['id'],
         nickname: json['nickname'],
+        upDateNickname: json['upDateNickname'],
         date: json["date"],
         email: json['email'],
         channel: json['channel'],
@@ -59,6 +62,7 @@ class UserModel {
   static Map<String, dynamic> toMap(UserModel user) => {
         'id': user.id,
         'nickname': user.nickname,
+        'upDateNickname': user.upDateNickname,
         'date': user.date,
         'email': user.email,
         'channel': user.channel,

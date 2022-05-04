@@ -30,13 +30,13 @@ class PushNotification {
 
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
-  init(BuildContext context) {
-    _requestPermission(context);
+  init() {
+    _requestPermission();
     _loadFCM();
-    _onMessage(context);
+    _onMessage();
   }
 
-  void _requestPermission(BuildContext context) async {
+  void _requestPermission() async {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
 
     NotificationSettings settings = await messaging.requestPermission(
@@ -70,7 +70,7 @@ class PushNotification {
             alert: true, badge: true, sound: true);
   }
 
-  void _onMessage(BuildContext context) async {
+  void _onMessage() async {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;

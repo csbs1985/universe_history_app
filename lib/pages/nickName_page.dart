@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, prefer_final_fields, unused_field, prefer_is_empty, unrelated_type_equality_checks
+// ignore_for_file: avoid_print, prefer_final_fields, unused_field, prefer_is_empty, unrelated_type_equality_checks, unnecessary_brace_in_string_interps
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +12,7 @@ import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
+import 'package:universe_history_app/utils/qty_days_util.dart';
 
 class NickNamePage extends StatefulWidget {
   const NickNamePage({Key? key}) : super(key: key);
@@ -29,61 +30,81 @@ class _NickNamePageState extends State<NickNamePage> {
   TextEditingController _textController = TextEditingController();
 
   bool _isInputNotEmpty = false;
+  bool _hasInput = true;
+  int _counter = 0;
+  int _rulesDays = 30;
   String _textDefault = 'nome de usuário atual';
   String _oldName = '';
-  int _counter = 0;
+  String _regx = '[A-Za-z0-9-_.]';
 
   late String _message = _textDefault;
 
   @override
   void initState() {
     if (currentUser.value.isNotEmpty) {
+      _oldName = currentUser.value.first.nickname;
       currentNickname.value = currentUser.value.first.nickname;
       _textController.text = currentUser.value.first.nickname;
       _counter = currentUser.value.first.nickname.length;
     }
+
+    _keyUp(_oldName);
+    _validateUpdateNickname();
     super.initState();
   }
 
-  _keyUp(String text) {
+  _validateUpdateNickname() {
     setState(() {
-      _counter = _textController.text.length;
+      var upDate = currentUser.value.first.upDateNickname;
+      var _days = qtyDays(upDate);
 
-      if (currentUser.value.isNotEmpty &&
-          currentNickname.value == _textController.text) {
+      if (upDate != "" && _days < _rulesDays) {
+        _hasInput = false;
         _isInputNotEmpty = false;
-        _message = _textDefault;
+        _message =
+            'espera mais ${_rulesDays - _days} dia(s) para alterar o usuário';
         return;
       }
-
-      if (_textController.text.length < 5 || _textController.text.length > 20) {
-        _isInputNotEmpty = false;
-        _message = 'nome de usuário não atende aos critérios';
-        return;
-      }
-
-      api
-          .getNickName(_textController.text)
-          .then((result) => {
-                if (result.size > 0)
-                  {
-                    _isInputNotEmpty = false,
-                    _message = 'nome de usuário não disponível'
-                  }
-                else
-                  {
-                    _isInputNotEmpty = true,
-                    _message = 'nome de usuário disponível'
-                  }
-              })
-          .catchError((error) => print('ERROR: ' + error));
     });
   }
 
+  _keyUp(String text) {
+    if (currentUser.value.isNotEmpty && _oldName == _textController.text) {
+      setState(() {
+        _isInputNotEmpty = false;
+        _message = _textDefault;
+      });
+      return;
+    }
+
+    _counter = _textController.text.length;
+    if (_counter < 6 || _counter > 20) {
+      setState(() {
+        _isInputNotEmpty = false;
+        _message = 'nome de usuário não atende aos critérios';
+      });
+      return;
+    }
+
+    api
+        .getNickName(_textController.text)
+        .then((result) => {
+              setState(() {
+                if (result.size > 0) {
+                  _isInputNotEmpty = false;
+                  _message = 'nome de usuário indisponível';
+                } else {
+                  _isInputNotEmpty = true;
+                  _message = 'nome de usuário disponível';
+                }
+              }),
+            })
+        .catchError((error) => print('ERROR: ' + error));
+  }
+
   Future<void> _saveNickName() async {
-    _oldName = currentUser.value.first.nickname;
-    currentNickname.value = _textController.text;
-    currentUser.value.first.nickname = _textController.text;
+    currentUser.value.first.nickname =
+        currentNickname.value = _textController.text;
 
     if (userNew.value) {
       api
@@ -92,29 +113,33 @@ class _NickNamePageState extends State<NickNamePage> {
                 ActivityUtil(
                     ActivitiesEnum.NEW_NICKNAME, _textController.text, ''),
                 toast.toast(context, ToastEnum.SUCCESS, 'Conta criada!'),
-                Navigator.of(context).pushNamed('/home'),
+                Navigator.of(context).pushNamed('/home')
               })
           .catchError((error) => print('ERROR:' + error.toString()));
     } else {
-      try {
-        await api
-            .upNickName()
-            .then((result) => {
-                  ActivityUtil(
-                    ActivitiesEnum.UP_NICKNAME,
-                    _textController.text,
-                    _oldName,
-                  ),
-                  toast.toast(
-                      context, ToastEnum.SUCCESS, 'Nome de usuário alterado!'),
-                  Navigator.of(context).pop(),
-                })
-            .catchError((error) => print('ERROR:' + error.toString()));
-      } catch (error) {
-        print('ERROR: ' + error.toString());
-      }
+      await api
+          .upNickName()
+          .then((result) => {
+                _upDateNickname(),
+              })
+          .catchError((error) => print('ERROR:' + error.toString()));
     }
     _notification.getToken();
+  }
+
+  Future<void> _upDateNickname() async {
+    var _now = DateTime.now().toString();
+    await api
+        .upDateNickname(_now)
+        .then((result) => {
+              currentUser.value.first.upDateNickname = _now,
+              ActivityUtil(
+                  ActivitiesEnum.UP_NICKNAME, _textController.text, _oldName),
+              toast.toast(
+                  context, ToastEnum.SUCCESS, 'Nome de usuário alterado!'),
+              Navigator.of(context).pop()
+            })
+        .catchError((error) => print('ERROR:' + error.toString()));
   }
 
   @override
@@ -133,7 +158,8 @@ class _NickNamePageState extends State<NickNamePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const TitleResumeComponent('Nome de usuário',
-                    'Escolha o nome que aparecerá em suas publicações, ele deve ser único e de 5 à 20 caracteres, diferenciamos letras maiusculas de minusculas. Veja pode usar estes caracteres especiais: & + / * - _ . :'),
+                    'Os nomes de usuário só podem usar letras, números, sublinhados e pontos. Ele deve ser único e de 6 à 20 caracteres. Você só poderá altera a cada 30 dias.'),
+                const SizedBox(height: 10),
                 Container(
                   color: uiColor.comp_1,
                   child: TextField(
@@ -143,15 +169,20 @@ class _NickNamePageState extends State<NickNamePage> {
                     style: uiTextStyle.text1,
                     onChanged: (value) => _keyUp(value),
                     inputFormatters: [
-                      FilteringTextInputFormatter.allow(
-                          RegExp('[A-Za-z0-9-&+/*-_.:]+')),
+                      FilteringTextInputFormatter.allow(RegExp(_regx))
                     ],
                     decoration: InputDecoration(
-                      hintText: 'usuário',
+                      enabled: _hasInput,
+                      hintText: 'Nome de usuário',
+                      fillColor: _hasInput ? uiColor.comp_1 : uiColor.comp_3,
                       filled: true,
                       hintStyle: uiTextStyle.text7,
-                      fillColor: uiColor.comp_3,
                       counterStyle: const TextStyle(fontSize: 0),
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(uiBorder.rounded),
+                        borderSide:
+                            const BorderSide(width: 1, color: uiColor.warning),
+                      ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(uiBorder.rounded),
                         borderSide: BorderSide(
