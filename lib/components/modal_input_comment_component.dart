@@ -104,7 +104,8 @@ class _ModalInputCommmentComponentState
       idMencioned.contains(_id) ? null : idMencioned.add(_id);
 
       if (type == MentionedCallEnum.ICON)
-        _commentController.text = '@' + _user['nickname'] + ' ';
+        _commentController.text =
+            _commentController.text + '@' + _user['nickname'] + ' ';
 
       if (type == MentionedCallEnum.KEYBOARD) {
         var value = _commentController.text

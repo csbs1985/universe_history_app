@@ -41,9 +41,7 @@ class MyApp extends StatelessWidget {
 
     _notification.init(context);
 
-    if (currentToken.value != null) {
-      _notification.getToken();
-    }
+    if (currentToken.value != null) _notification.getToken();
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,

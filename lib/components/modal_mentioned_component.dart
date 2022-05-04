@@ -45,7 +45,6 @@ class _ModalMentionedComponentState extends State<ModalMentionedComponent> {
     AlgoliaQuerySnapshot _snap = await _query.getObjects();
 
     if (_snap.hits.isNotEmpty) setState(() => _snapshot = _snap.hits);
-
     if (_commentController.text.isEmpty) _snapshot = null;
   }
 
