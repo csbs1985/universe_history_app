@@ -231,19 +231,25 @@ class _CreateHistoryState extends State<CreateHistory> {
                 ),
               ),
             ),
-            SelectToggleComponent(
-              callback: (value) => _setPrivacy(),
-              title: 'Assinatura',
-              resume:
-                  'Ligado para assinar como ${currentUser.value.first.nickname} ou desligado para anônimo.',
-              value: _isSigned,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: SelectToggleComponent(
+                callback: (value) => _setPrivacy(),
+                title: 'Assinatura',
+                resume:
+                    'Ligado para assinar como ${currentUser.value.first.nickname} ou desligado para anônimo.',
+                value: _isSigned,
+              ),
             ),
-            SelectToggleComponent(
-              callback: (value) => _setComment(),
-              title: 'Comentários',
-              resume:
-                  'Ligado para habilitar ou desligado para desabilitar os comentários na história. ',
-              value: _isComment,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: SelectToggleComponent(
+                callback: (value) => _setComment(),
+                title: 'Comentários',
+                resume:
+                    'Ligado para habilitar ou desligado para desabilitar os comentários na história. ',
+                value: _isComment,
+              ),
             ),
             SelectCategoriesComponent(
               title: 'Assunto',

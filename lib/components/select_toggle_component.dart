@@ -30,7 +30,7 @@ class _SelectToggleComponentState extends State<SelectToggleComponent> {
     double width = MediaQuery.of(context).size.width - 108;
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
