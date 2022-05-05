@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:universe_history_app/shared/models/category_model.dart';
 
 ValueNotifier<CategoryModel> menuItemSelected =
@@ -9,3 +9,5 @@ ValueNotifier<List<String>> currentBookmarks = ValueNotifier(<String>[]);
 ValueNotifier<String> currentToken = ValueNotifier<String>('');
 
 ValueNotifier<bool> currentNotification = ValueNotifier<bool>(false);
+
+GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();

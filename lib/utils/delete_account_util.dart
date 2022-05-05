@@ -13,18 +13,18 @@ class DeleteAccountUtil {
 
   late Map<String, dynamic> _form;
 
-  Future<void> deleteAccount(BuildContext context, _justifySelected) async {
-    Navigator.of(context).pop();
+  Future<void> deleteAccount(BuildContext _context, _justifySelected) async {
+    Navigator.of(_context).pop();
 
     showDialog(
-        context: context,
+        context: _context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return const LoaderComponent();
         });
 
     if (_justifySelected == null) {
-      _deletetAllHistory();
+      _deletetAllHistory(_context);
     } else {
       _form = {
         'id': uuid.v4(),
@@ -37,31 +37,31 @@ class DeleteAccountUtil {
 
       await api
           .setJustify(_form)
-          .then((result) => _deletetAllHistory())
+          .then((result) => _deletetAllHistory(_context))
           .catchError((error) => print('ERROR:' + error));
     }
   }
 
-  Future<void> _deletetAllHistory() async {
+  Future<void> _deletetAllHistory(BuildContext _context) async {
     await api
         .getAllUserHistory()
         .then((result) async => {
               if (result.size > 0)
                 for (var item in result.docs)
                   await api.deleteHistory(item['id']),
-              _upAllComment()
+              _upAllComment(_context)
             })
         .catchError((error) => print('ERROR:' + error));
   }
 
-  Future<void> _upAllComment() async {
+  Future<void> _upAllComment(BuildContext _context) async {
     await api
         .getAllUserComment()
         .then((result) async => {
               if (result.size > 0)
                 for (var item in result.docs)
                   await api.upStatusUserComment(item['id']),
-              userClass.delete()
+              userClass.delete(_context)
             })
         .catchError((error) => print('ERROR:' + error));
   }

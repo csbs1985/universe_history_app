@@ -30,7 +30,7 @@ class _JustifyPageState extends State<JustifyPage> {
     });
   }
 
-  void _showDialog() {
+  void _showDialog(BuildContext context) {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -71,7 +71,7 @@ class _JustifyPageState extends State<JustifyPage> {
                     label: 'Justificar e deletar',
                     style: ButtonStyleEnum.PRIMARY,
                     size: ButtonSizeEnum.LARGE,
-                    callback: (value) => _showDialog())
+                    callback: (value) => _showDialog(context))
             ],
           ),
         ),

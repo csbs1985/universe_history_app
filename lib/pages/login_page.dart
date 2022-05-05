@@ -1,10 +1,12 @@
 // ignore_for_file: avoid_print, unused_local_variable, await_only_futures, unused_field, unnecessary_new, deprecated_member_use, unused_element, prefer_const_constructors, constant_identifier_names
 
+import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
+import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
@@ -40,6 +42,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<User?> _loginGoogle() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const LoaderComponent();
+        });
+
     try {
       final GoogleSignInAccount? googleSignInAccount =
           await googleSignIn.signIn();
@@ -69,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _verifyUser(String channel, User user) async {
     await api
         .getUser(user.email)
-        .then((result) => {
+        .then((result) async => {
               if (result.docs.isNotEmpty)
                 {
                   userClass.add({
@@ -85,16 +94,15 @@ class _LoginPageState extends State<LoginPage> {
                     'qtyHistory': result.docs.first['qtyHistory'],
                     'qtyComment': result.docs.first['qtyComment'],
                   }),
-                  api
+                  await api
                       .upStatusUser(
                           UserStatus.ACTIVE.toString().split('.').last)
                       .then((result) => {
                             ActivityUtil(
                                 ActivitiesEnum.LOGIN, DeviceModel(), ''),
-                            Navigator.of(context).pushNamed('/home'),
+                            Navigator.of(context).pushNamed('/home')
                           })
-                      .catchError(
-                          (error) => print('ERROR:' + error.toString())),
+                      .catchError((error) => print('ERROR:' + error.toString()))
                 }
               else
                 {
@@ -112,9 +120,9 @@ class _LoginPageState extends State<LoginPage> {
                     'qtyComment': 0,
                   }),
                   userNew.value = true,
-                  Navigator.of(context).pushNamed("/nickname"),
-                  ActivityUtil(
+                  await ActivityUtil(
                       ActivitiesEnum.NEW_ACCOUNT, user.displayName!, ''),
+                  navService.pushNamed('/nickname'),
                 },
             })
         .catchError((error) => print('ERROR:' + error.toString()));

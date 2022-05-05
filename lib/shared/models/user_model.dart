@@ -101,13 +101,16 @@ class UserClass {
     });
   }
 
-  Future<void> delete() async {
+  Future<void> delete(
+    BuildContext context,
+  ) async {
     api
         .deleteUser(currentUser.value.first.id)
         .then((result) async => {
               _user = await FirebaseAuth.instance.currentUser,
               _user!.delete(),
               currentUser.value = [],
+              toast.toast(context, ToastEnum.SUCCESS, 'Conta deletada!'),
               navService.pushNamed('/home'),
             })
         .catchError((error) => print('ERROR:' + error.toString()));

@@ -41,20 +41,17 @@ class _AppbarComponentState extends State<AppbarComponent> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: widget._btnBack
-          ? IconButton(
-              icon: SvgPicture.asset(uiSvg.closed),
-              onPressed: () => _back(context),
-            )
-          : null,
+      leading: IconButton(
+        icon: SvgPicture.asset(widget._btnBack ? uiSvg.closed : uiSvg.closed),
+        onPressed: () => widget._btnBack ? _back(context) : null,
+      ),
       actions: [
         if (widget._btnPublish)
           Center(
             child: Container(
               padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
               child: ButtonPublishComponent(
-                callback: (value) => _onPressed(context),
-              ),
+                  callback: (value) => _onPressed(context)),
             ),
           ),
       ],
