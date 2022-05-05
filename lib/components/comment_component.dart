@@ -36,6 +36,7 @@ class _CommentState extends State<CommentComponent> {
       _content['userStatus'],
       _content['token'],
     );
+
     CommentClass.selectComment(_content);
 
     showCupertinoModalBottomSheet(

@@ -56,14 +56,17 @@ class _NickNamePageState extends State<NickNamePage> {
   _validateUpdateNickname() {
     setState(() {
       var upDate = currentUser.value.first.upDateNickname;
-      var _days = qtyDays(upDate);
 
-      if (upDate != "" && _days < _rulesDays) {
-        _hasInput = false;
-        _isInputNotEmpty = false;
-        _message =
-            'espera mais ${_rulesDays - _days} dia(s) para alterar o usuário';
-        return;
+      if (upDate != "") {
+        var _days = qtyDays(upDate);
+
+        if (_days < _rulesDays) {
+          _hasInput = false;
+          _isInputNotEmpty = false;
+          _message =
+              'espera mais ${_rulesDays - _days} dia(s) para alterar o usuário';
+          return;
+        }
       }
     });
   }
@@ -166,6 +169,10 @@ class _NickNamePageState extends State<NickNamePage> {
                             _textController.text, _oldName),
                         toast.toast(context, ToastEnum.SUCCESS,
                             'Nome de usuário alterado!'),
+                        setState(() {
+                          currentUser.value.first.nickname =
+                              _textController.text;
+                        }),
                         Navigator.of(context).pop()
                       })
             })

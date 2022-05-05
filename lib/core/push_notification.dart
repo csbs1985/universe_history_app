@@ -99,10 +99,8 @@ class PushNotification {
   }
 
   void getToken() async {
-    await api.getToken().then((_token) async {
-      await api
-          .setToken(_token)
-          .then((_result) => currentToken.value = _result);
+    await api.getToken().then((_token) {
+      api.setToken(_token).then((_result) => currentToken.value = _result);
     }).catchError((error) => print('ERROR:' + error.toString()));
   }
 

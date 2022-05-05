@@ -112,9 +112,9 @@ class _LoginPageState extends State<LoginPage> {
                     'qtyComment': 0,
                   }),
                   userNew.value = true,
+                  Navigator.of(context).pushNamed("/nickname"),
                   ActivityUtil(
                       ActivitiesEnum.NEW_ACCOUNT, user.displayName!, ''),
-                  Navigator.of(context).pushNamed("/nickname"),
                 },
             })
         .catchError((error) => print('ERROR:' + error.toString()));

@@ -1,12 +1,14 @@
-// ignore_for_file: todo, avoid_print
+// ignore_for_file: todo, avoid_print, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/alert_confirm_component.dart';
 import 'package:universe_history_app/components/btn_card_component.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
+import 'package:universe_history_app/pages/justify_page.dart';
 import 'package:universe_history_app/shared/models/delete_account_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
+import 'package:universe_history_app/utils/delete_account_util.dart';
 
 class DeleteAccountPage extends StatefulWidget {
   const DeleteAccountPage({Key? key}) : super(key: key);
@@ -17,6 +19,9 @@ class DeleteAccountPage extends StatefulWidget {
 
 class _DeleteAccountPageState extends State<DeleteAccountPage> {
   final UserClass userClass = UserClass();
+  final JustifyPage justifyPage = JustifyPage();
+  final DeleteAccountUtil deleteAccountUtil = DeleteAccountUtil();
+
   final List<DeleteAccountModel> _allDeleteAccount =
       DeleteAccountModel.allDeleteAccount;
 
@@ -32,7 +37,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
         Navigator.of(context).pushNamed("/justify");
         break;
       case '3':
-        _deleteAccount();
+        _showDialog();
         break;
       default:
     }
@@ -59,7 +64,22 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
         });
   }
 
-  void _deleteAccount() {}
+  void _showDialog() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertConfirmComponent(
+              title: 'Justificar e deletar',
+              text:
+                  'Antes me diga o motivo do porque esta deletando sua conta History.',
+              btnPrimaryLabel: 'Cancelar',
+              btnSecondaryLabel: 'Deletar',
+              callback: (value) => !value
+                  ? Navigator.of(context).pop()
+                  : deleteAccountUtil.deleteAccount(context, null));
+        });
+  }
 
   @override
   Widget build(BuildContext context) {

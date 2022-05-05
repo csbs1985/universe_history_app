@@ -5,12 +5,9 @@ import 'package:universe_history_app/components/alert_confirm_component.dart';
 import 'package:universe_history_app/components/btn_card_component.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/button_3d_component.dart';
-import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
-import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/justtify_model.dart';
-import 'package:universe_history_app/shared/models/user_model.dart';
-import 'package:uuid/uuid.dart';
+import 'package:universe_history_app/utils/delete_account_util.dart';
 
 class JustifyPage extends StatefulWidget {
   const JustifyPage({Key? key}) : super(key: key);
@@ -20,24 +17,20 @@ class JustifyPage extends StatefulWidget {
 }
 
 class _JustifyPageState extends State<JustifyPage> {
-  final Api api = Api();
-  final UserClass userClass = UserClass();
-  final Uuid uuid = const Uuid();
+  final DeleteAccountUtil deleteAccountUtil = DeleteAccountUtil();
   final List<JustifyModel> _allJustify = JustifyModel.allJustify;
 
   bool _hasButton = false;
-  JustifyModel? _justifySelected;
-
-  late Map<String, dynamic> _form;
+  JustifyModel? justifySelected;
 
   void _selected(JustifyModel item) {
     setState(() {
-      _justifySelected = item;
+      justifySelected = item;
       _hasButton = true;
     });
   }
 
-  void _onPressed() {
+  void _showDialog() {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -48,61 +41,10 @@ class _JustifyPageState extends State<JustifyPage> {
                   'Antes me diga o motivo do porque esta deletando sua conta History.',
               btnPrimaryLabel: 'Cancelar',
               btnSecondaryLabel: 'Deletar',
-              callback: (value) => _return(value));
+              callback: (value) => !value
+                  ? Navigator.of(context).pop()
+                  : deleteAccountUtil.deleteAccount(context, justifySelected));
         });
-  }
-
-  void _return(bool _status) {
-    return !_status ? Navigator.of(context).pop() : _justify(_status);
-  }
-
-  Future<void> _justify(bool _status) async {
-    Navigator.of(context).pop();
-
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return const LoaderComponent();
-        });
-
-    _form = {
-      'id': uuid.v4(),
-      'date': DateTime.now().toString(),
-      'idUser': currentUser.value.first.id,
-      'nicknameUser': currentUser.value.first.nickname,
-      'idJustify': _justifySelected!.id,
-      'titleJustify': _justifySelected!.title
-    };
-
-    await api
-        .setJustify(_form)
-        .then((result) => _deletetAllHistory(_status))
-        .catchError((error) => {print('ERROR:' + error)});
-  }
-
-  Future<void> _deletetAllHistory(bool _status) async {
-    await api
-        .getAllUserHistory()
-        .then((result) async => {
-              if (result.size > 0)
-                for (var item in result.docs)
-                  await api.deleteHistory(item['id']),
-              _upAllComment()
-            })
-        .catchError((error) => print('ERROR:' + error.toString()));
-  }
-
-  Future<void> _upAllComment() async {
-    await api
-        .getAllUserComment()
-        .then((result) async => {
-              if (result.size > 0)
-                for (var item in result.docs)
-                  await api.upStatusUserComment(item['id']),
-              userClass.delete()
-            })
-        .catchError((error) => print('ERROR:' + error.toString()));
   }
 
   @override
@@ -126,11 +68,10 @@ class _JustifyPageState extends State<JustifyPage> {
               const SizedBox(height: 20),
               if (_hasButton)
                 Button3dComponent(
-                  label: 'Justificar e deletar',
-                  style: ButtonStyleEnum.PRIMARY,
-                  size: ButtonSizeEnum.LARGE,
-                  callback: (value) => _onPressed(),
-                ),
+                    label: 'Justificar e deletar',
+                    style: ButtonStyleEnum.PRIMARY,
+                    size: ButtonSizeEnum.LARGE,
+                    callback: (value) => _showDialog())
             ],
           ),
         ),

@@ -107,6 +107,7 @@ class UserClass {
         .then((result) async => {
               _user = await FirebaseAuth.instance.currentUser,
               _user!.delete(),
+              currentUser.value = [],
               navService.pushNamed('/home'),
             })
         .catchError((error) => print('ERROR:' + error.toString()));

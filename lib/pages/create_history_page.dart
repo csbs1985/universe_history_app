@@ -146,17 +146,15 @@ class _CreateHistoryState extends State<CreateHistory> {
                 _setUpQtyHistoryUser()
               })
           .catchError((error) => {
-                print('ERROR:' + error),
+                print('ERROR:' + error.toString()),
                 toast.toast(context, ToastEnum.WARNING,
                     'Erro ao publicar história, tente novamente mais tarde.')
               });
     });
   }
 
-  void _setUpQtyHistoryUser() async {
-    if (!isEdit) {
-      currentUser.value.first.qtyHistory++;
-    }
+  Future<void> _setUpQtyHistoryUser() async {
+    if (!isEdit) currentUser.value.first.qtyHistory++;
 
     await api
         .setUpQtyHistoryUser()
@@ -170,7 +168,7 @@ class _CreateHistoryState extends State<CreateHistory> {
                       : 'Sua história foi publicada.'),
               Navigator.of(context).pop(),
             })
-        .catchError((error) => {print('ERROR:' + error)});
+        .catchError((error) => print('ERROR:' + error.toString()));
   }
 
   @override
