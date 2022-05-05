@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print, prefer_final_fields, unused_field, prefer_is_empty, unrelated_type_equality_checks, unnecessary_brace_in_string_interps
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:universe_history_app/components/appBar_component.dart';
@@ -24,11 +26,10 @@ class NickNamePage extends StatefulWidget {
 
 class _NickNamePageState extends State<NickNamePage> {
   final Api api = Api();
+  final PushNotification _notification = PushNotification();
+  final TextEditingController _textController = TextEditingController();
   final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
-  final PushNotification _notification = PushNotification();
-
-  TextEditingController _textController = TextEditingController();
 
   bool _isInputNotEmpty = false;
   bool _hasInput = true;
@@ -175,76 +176,80 @@ class _NickNamePageState extends State<NickNamePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppbarComponent(
-          btnBack: true,
-          btnPublish: _isInputNotEmpty,
-          callback: (value) => _saveNickName()),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const TitleResumeComponent('Nome de usuário',
-                    'Os nomes de usuário só podem usar letras, números, sublinhados e pontos. Ele deve ser único e de 6 à 20 caracteres. Você só poderá altera a cada 30 dias.'),
-                const SizedBox(height: 10),
-                Container(
-                  color: uiColor.comp_1,
-                  child: TextField(
-                    controller: _textController,
-                    maxLines: 1,
-                    maxLength: 20,
-                    style: uiTextStyle.text1,
-                    onChanged: (value) => _keyUp(value),
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(_regx))
-                    ],
-                    decoration: InputDecoration(
-                      enabled: _hasInput,
-                      hintText: 'Nome de usuário',
-                      fillColor: _hasInput ? uiColor.comp_1 : uiColor.comp_3,
-                      filled: true,
-                      hintStyle: uiTextStyle.text7,
-                      counterStyle: const TextStyle(fontSize: 0),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(uiBorder.rounded),
-                        borderSide:
-                            const BorderSide(width: 1, color: uiColor.warning),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(uiBorder.rounded),
-                        borderSide: BorderSide(
-                          width: 1,
-                          color: _isInputNotEmpty
-                              ? uiColor.success
-                              : uiColor.warning,
+    return WillPopScope(
+      onWillPop: () async => userNew.value ? true : false,
+      child: Scaffold(
+        appBar: AppbarComponent(
+            btnBack: userNew.value ? true : false,
+            btnPublish: _isInputNotEmpty,
+            callback: (value) => _saveNickName()),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const TitleResumeComponent('Nome de usuário',
+                      'Os nomes de usuário só podem usar letras, números, sublinhados e pontos. Ele deve ser único e de 6 à 20 caracteres. Você só poderá altera a cada 30 dias.'),
+                  const SizedBox(height: 10),
+                  Container(
+                    color: uiColor.comp_1,
+                    child: TextField(
+                      controller: _textController,
+                      maxLines: 1,
+                      maxLength: 20,
+                      style: uiTextStyle.text1,
+                      onChanged: (value) => _keyUp(value),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(_regx))
+                      ],
+                      decoration: InputDecoration(
+                        enabled: _hasInput,
+                        hintText: 'Nome de usuário',
+                        fillColor: _hasInput ? uiColor.comp_1 : uiColor.comp_3,
+                        filled: true,
+                        hintStyle: uiTextStyle.text7,
+                        counterStyle: const TextStyle(fontSize: 0),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(uiBorder.rounded),
+                          borderSide: const BorderSide(
+                              width: 1, color: uiColor.warning),
                         ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(uiBorder.rounded),
-                        borderSide: BorderSide(
-                          width: 1,
-                          color: _isInputNotEmpty
-                              ? uiColor.success
-                              : uiColor.warning,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(uiBorder.rounded),
+                          borderSide: BorderSide(
+                            width: 1,
+                            color: _isInputNotEmpty
+                                ? uiColor.success
+                                : uiColor.warning,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(uiBorder.rounded),
+                          borderSide: BorderSide(
+                            width: 1,
+                            color: _isInputNotEmpty
+                                ? uiColor.success
+                                : uiColor.warning,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(_message, style: uiTextStyle.text2),
-                    Text(_counter.toString() + '/20', style: uiTextStyle.text2)
-                  ],
-                ),
-              ],
-            ),
-          )
-        ],
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(_message, style: uiTextStyle.text2),
+                      Text(_counter.toString() + '/20',
+                          style: uiTextStyle.text2)
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
