@@ -29,8 +29,6 @@ class _LoginPageState extends State<LoginPage> {
   final Api api = Api();
   final Uuid uuid = Uuid();
 
-  late Map<String, dynamic> _form;
-
   @override
   void initState() {
     DeviceUtil();

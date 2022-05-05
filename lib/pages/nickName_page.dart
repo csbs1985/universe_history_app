@@ -1,7 +1,5 @@
 // ignore_for_file: avoid_print, prefer_final_fields, unused_field, prefer_is_empty, unrelated_type_equality_checks, unnecessary_brace_in_string_interps
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:universe_history_app/components/appBar_component.dart';

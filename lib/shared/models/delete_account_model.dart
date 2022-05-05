@@ -26,7 +26,8 @@ class DeleteAccountModel {
     new DeleteAccountModel(
       id: '2',
       title: 'Justificar e deletar',
-      text: 'Antes me diga o motivo do porque esta deletando sua conta.',
+      text:
+          'Antes me diga o motivo do porque esta deletando sua conta History.',
     ),
     new DeleteAccountModel(
       id: '3',

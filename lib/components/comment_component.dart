@@ -33,6 +33,7 @@ class _CommentState extends State<CommentComponent> {
     ownerClass.selectOwner(
       _content['userId'],
       _content['userNickName'],
+      _content['userStatus'],
       _content['token'],
     );
     CommentClass.selectComment(_content);
@@ -139,14 +140,10 @@ class _CommentState extends State<CommentComponent> {
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(10, 6, 10, 8),
                         child: documents[index]['isDelete']
-                            ? Text(
-                                'Comentário apagado!'.toUpperCase(),
-                                style: uiTextStyle.text8,
-                              )
-                            : Text(
-                                documents[index]['text'],
-                                style: uiTextStyle.text1,
-                              ),
+                            ? Text('Comentário apagado!'.toUpperCase(),
+                                style: uiTextStyle.text8)
+                            : Text(documents[index]['text'],
+                                style: uiTextStyle.text1),
                       ),
                     ),
                     onLongPress: _canShowOption(documents[index].data())
@@ -155,10 +152,8 @@ class _CommentState extends State<CommentComponent> {
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(2, 4, 0, 0),
-                    child: Text(
-                      resumeUitl(documents[index]),
-                      style: uiTextStyle.text2,
-                    ),
+                    child: Text(resumeUitl(documents[index]),
+                        style: uiTextStyle.text2),
                   )
                 ],
               ),

@@ -10,6 +10,8 @@ import 'variables.dart';
 class Api {
   CollectionReference activitie =
       FirebaseFirestore.instance.collection('activities');
+  CollectionReference justification =
+      FirebaseFirestore.instance.collection('justifications');
   CollectionReference block = FirebaseFirestore.instance.collection('blocks');
   CollectionReference bookmark =
       FirebaseFirestore.instance.collection('bookmarks');
@@ -42,6 +44,10 @@ class Api {
 
   setDenounce(Map<String, dynamic> _form) {
     return denounce.doc(_form['id']).set(_form);
+  }
+
+  setJustify(Map<String, dynamic> _form) {
+    return justification.doc(_form['id']).set(_form);
   }
 
   getAllBlock() {
@@ -172,6 +178,12 @@ class Api {
         .update({'userNickName': currentUser.value.first.nickname});
   }
 
+  upStatusUserComment(String _id) {
+    return comment
+        .doc(_id)
+        .update({'userStatus': UserStatus.DELETED.toString().split('.').last});
+  }
+
   upNotification(String _idNotification) {
     return notification.doc(_idNotification).update({'view': true});
   }
@@ -182,8 +194,12 @@ class Api {
         .update({'isDelete': true});
   }
 
-  deleteHistory() {
-    return history.doc(currentHistory.value.first.id).delete();
+  deleteHistory(String _idHistory) {
+    return history.doc(_idHistory).delete();
+  }
+
+  deleteUser(String _idUser) {
+    return user.doc(_idUser).delete();
   }
 
   deleteBlock(String blocked) {

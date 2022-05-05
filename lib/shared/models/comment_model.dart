@@ -18,6 +18,7 @@ class CommentModel {
     required this.text,
     required this.userId,
     required this.userNickName,
+    required this.userStatus,
   });
 
   late String id;
@@ -26,6 +27,7 @@ class CommentModel {
   late String text;
   late String userId;
   late String userNickName;
+  late String userStatus;
   late bool isSigned;
   late bool isEdit;
   late bool isDelete;
@@ -43,6 +45,7 @@ class CommentModel {
         text: json['text'],
         userId: json['userId'],
         userNickName: json['userNickName'],
+        userStatus: json['userStatus'],
       );
 
   String toJson() => json.encode(toMap());
@@ -57,6 +60,7 @@ class CommentModel {
         'text': text,
         'userId': userId,
         'userNickName': userNickName,
+        'userStatus': userStatus
       };
 }
 

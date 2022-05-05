@@ -111,7 +111,7 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
   void _deleteHistory(bool value) async {
     if (value) {
       api
-          .deleteHistory()
+          .deleteHistory(currentHistory.value.first.id)
           .then((result) => {
                 ActivityUtil(
                   ActivitiesEnum.DELETE_HISTORY,

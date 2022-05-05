@@ -1,9 +1,11 @@
-// ignore_for_file: unnecessary_new, invalid_return_type_for_catch_error, avoid_print, unused_local_variable, avoid_returning_null_for_void, constant_identifier_names, unused_element
+// ignore_for_file: unnecessary_new, invalid_return_type_for_catch_error, avoid_print, unused_local_variable, avoid_returning_null_for_void, constant_identifier_names, unused_element, await_only_futures
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
@@ -79,26 +81,35 @@ class UserClass {
   final Api api = Api();
   final GoogleSignIn googleSignIn = GoogleSignIn();
   final ToastComponent toast = new ToastComponent();
+  User? _user;
 
   Future<void> clean(BuildContext context, String _status) async {
     await googleSignIn
         .signOut()
         .then((value) => {
-              api
-                  .upStatusUser(_status)
-                  .then((result) => {
-                        ActivityUtil(ActivitiesEnum.LOGOUT, DeviceModel(), ''),
-                        currentUser.value = [],
-                        deleteUser(),
-                        Navigator.of(context).pushNamed("/home"),
-                      })
-                  .catchError((error) => print('ERROR:' + error.toString())),
+              api.upStatusUser(_status).then((result) => {
+                    ActivityUtil(ActivitiesEnum.LOGOUT, DeviceModel(), ''),
+                    currentUser.value = [],
+                    deleteUser(),
+                    Navigator.of(context).pushNamed("/home"),
+                  })
             })
         .catchError((error) {
       print('ERROR: ' + error.toString());
       toast.toast(context, ToastEnum.WARNING,
           'ERROR: não foi possivél sair da aplicação no momento, tente novamente mais tarde.');
     });
+  }
+
+  Future<void> delete() async {
+    api
+        .deleteUser(currentUser.value.first.id)
+        .then((result) async => {
+              _user = await FirebaseAuth.instance.currentUser,
+              _user!.delete(),
+              navService.pushNamed('/home'),
+            })
+        .catchError((error) => print('ERROR:' + error.toString()));
   }
 
   void add(Map<String, dynamic> _user) {

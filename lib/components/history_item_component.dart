@@ -50,6 +50,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
       _history['userId'],
       _history['userNickName'],
       _history['token'],
+      _history['statusUser'],
     );
     currentDocHistory.value = _history['id'];
     HistoryClass.selectHistory(_history);
@@ -86,6 +87,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
       _content['userId'],
       _content['userNickName'],
       _content['token'],
+      _content['statusUser'],
     );
     CommentClass.selectComment(_content);
 
