@@ -14,11 +14,10 @@ class BtnConfirmComponent extends StatefulWidget {
     String? link,
     String? btnPrimaryLabel,
     String? btnSecondaryLabel,
-    required String icon,
+    String? icon,
   })  : _callback = callback,
         _title = title,
         _text = text,
-        _link = link,
         _btnPrimaryLabel = btnPrimaryLabel,
         _btnSecondaryLabel = btnSecondaryLabel,
         _icon = icon;
@@ -26,10 +25,9 @@ class BtnConfirmComponent extends StatefulWidget {
   final Function _callback;
   final String _title;
   final String _text;
-  final String? _link;
   final String? _btnPrimaryLabel;
   final String? _btnSecondaryLabel;
-  final String _icon;
+  final String? _icon;
 
   @override
   _BtnConfirmComponentState createState() => _BtnConfirmComponentState();
@@ -46,7 +44,7 @@ class _BtnConfirmComponentState extends State<BtnConfirmComponent> {
           width: double.infinity,
           height: 48,
           child: TextButton.icon(
-            icon: SvgPicture.asset(widget._icon),
+            icon: SvgPicture.asset(widget._icon!),
             label: Align(
               alignment: Alignment.centerLeft,
               child: Text(

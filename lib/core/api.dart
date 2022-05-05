@@ -91,7 +91,14 @@ class Api {
     return history
         .orderBy('date')
         .where('userId', isEqualTo: currentUser.value.first.id)
-        .snapshots();
+        .get();
+  }
+
+  getAllUserComment() {
+    return comment
+        .orderBy('date')
+        .where('userId', isEqualTo: currentUser.value.first.id)
+        .get();
   }
 
   getHistory(String _idHistory) {
@@ -149,6 +156,18 @@ class Api {
         .update({'qtyComment': currentHistory.value.first.qtyComment});
   }
 
+  upNicknameHistory(String _id) {
+    return history
+        .doc(_id)
+        .update({'userNickName': currentUser.value.first.nickname});
+  }
+
+  upNicknameComment(String _id) {
+    return comment
+        .doc(_id)
+        .update({'userNickName': currentUser.value.first.nickname});
+  }
+
   upNotification(String _idNotification) {
     return notification.doc(_idNotification).update({'view': true});
   }
@@ -167,16 +186,11 @@ class Api {
     return block.doc(blocked).delete();
   }
 
-  upNickName() {
-    return user
-        .doc(currentUser.value.first.id)
-        .update({'nickname': currentUser.value.first.nickname});
-  }
-
-  upDateNickname(String _date) {
-    return user
-        .doc(currentUser.value.first.id)
-        .update({'upDateNickname': _date});
+  upNickName(String _date) {
+    return user.doc(currentUser.value.first.id).update({
+      'nickname': currentUser.value.first.nickname,
+      'upDateNickname': _date
+    });
   }
 
   toggleNotification() {

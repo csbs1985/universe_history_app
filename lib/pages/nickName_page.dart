@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:universe_history_app/components/appBar_component.dart';
+import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/push_notification.dart';
@@ -106,38 +107,68 @@ class _NickNamePageState extends State<NickNamePage> {
     currentUser.value.first.nickname =
         currentNickname.value = _textController.text;
 
-    if (userNew.value) {
-      api
-          .setUser(UserModel.toMap(currentUser.value.first))
-          .then((result) => {
-                ActivityUtil(
-                    ActivitiesEnum.NEW_NICKNAME, _textController.text, ''),
-                toast.toast(context, ToastEnum.SUCCESS, 'Conta criada!'),
-                Navigator.of(context).pushNamed('/home')
-              })
-          .catchError((error) => print('ERROR:' + error.toString()));
-    } else {
-      await api
-          .upNickName()
-          .then((result) => {
-                _upDateNickname(),
-              })
-          .catchError((error) => print('ERROR:' + error.toString()));
-    }
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const LoaderComponent();
+        });
+
+    userNew.value ? _newNickname() : _upNickname();
+
     _notification.getToken();
   }
 
-  Future<void> _upDateNickname() async {
-    var _now = DateTime.now().toString();
+  Future<void> _newNickname() async {
     await api
-        .upDateNickname(_now)
+        .setUser(UserModel.toMap(currentUser.value.first))
+        .then((result) => {
+              ActivityUtil(
+                  ActivitiesEnum.NEW_NICKNAME, _textController.text, ''),
+              toast.toast(context, ToastEnum.SUCCESS, 'Conta criada!'),
+              Navigator.of(context).pushNamed('/home')
+            })
+        .catchError((error) => print('ERROR:' + error.toString()));
+  }
+
+  Future<void> _upNickname() async {
+    var _now = DateTime.now().toString();
+
+    await api
+        .upNickName(_now)
         .then((result) => {
               currentUser.value.first.upDateNickname = _now,
-              ActivityUtil(
-                  ActivitiesEnum.UP_NICKNAME, _textController.text, _oldName),
-              toast.toast(
-                  context, ToastEnum.SUCCESS, 'Nome de usuário alterado!'),
-              Navigator.of(context).pop()
+              _upAllHistory(),
+            })
+        .catchError((error) => print('ERROR:' + error.toString()));
+  }
+
+  Future<void> _upAllHistory() async {
+    await api
+        .getAllUserHistory()
+        .then((result) async => {
+              if (result.size > 0)
+                for (var item in result.docs)
+                  await api
+                      .upNicknameHistory(item['id'])
+                      .then((result) => {_upAllComment()})
+            })
+        .catchError((error) => print('ERROR:' + error.toString()));
+  }
+
+  Future<void> _upAllComment() async {
+    await api
+        .getAllUserComment()
+        .then((result) async => {
+              if (result.size > 0)
+                for (var item in result.docs)
+                  await api.upNicknameComment(item['id']).then((result) => {
+                        ActivityUtil(ActivitiesEnum.UP_NICKNAME,
+                            _textController.text, _oldName),
+                        toast.toast(context, ToastEnum.SUCCESS,
+                            'Nome de usuário alterado!'),
+                        Navigator.of(context).pop()
+                      })
             })
         .catchError((error) => print('ERROR:' + error.toString()));
   }
@@ -146,10 +177,9 @@ class _NickNamePageState extends State<NickNamePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppbarComponent(
-        btnBack: true,
-        btnPublish: _isInputNotEmpty,
-        callback: (value) => _saveNickName(),
-      ),
+          btnBack: true,
+          btnPublish: _isInputNotEmpty,
+          callback: (value) => _saveNickName()),
       body: Column(
         children: [
           Padding(

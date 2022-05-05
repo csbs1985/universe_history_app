@@ -30,6 +30,7 @@ dependencies:
   styled_text: ^4.0.0+1
   flutter_styled_toast: ^2.0.0
   button3d: ^0.1.1
+  loading_animation_widget: ^1.1.0+5
 
   # firebase
   google_sign_in: ^5.2.3
