@@ -87,8 +87,16 @@ class _LoginPageState extends State<LoginPage> {
                     'qtyHistory': result.docs.first['qtyHistory'],
                     'qtyComment': result.docs.first['qtyComment'],
                   }),
-                  ActivityUtil(ActivitiesEnum.LOGIN, DeviceModel(), ''),
-                  Navigator.of(context).pushNamed('/home'),
+                  api
+                      .upStatusUser(
+                          UserStatus.ACTIVE.toString().split('.').last)
+                      .then((result) => {
+                            ActivityUtil(
+                                ActivitiesEnum.LOGIN, DeviceModel(), ''),
+                            Navigator.of(context).pushNamed('/home'),
+                          })
+                      .catchError(
+                          (error) => print('ERROR:' + error.toString())),
                 }
               else
                 {

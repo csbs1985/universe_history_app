@@ -5,7 +5,6 @@ import 'package:universe_history_app/components/alert_confirm_component.dart';
 import 'package:universe_history_app/components/btn_card_component.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
-import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/delete_account_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 
@@ -17,7 +16,6 @@ class DeleteAccountPage extends StatefulWidget {
 }
 
 class _DeleteAccountPageState extends State<DeleteAccountPage> {
-  final Api api = Api();
   final UserClass userClass = UserClass();
   final List<DeleteAccountModel> _allDeleteAccount =
       DeleteAccountModel.allDeleteAccount;
@@ -51,18 +49,14 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
                 'Dar uma tempo e manter meu conteúdo no History. Sua conta volta a ficar ativa quando entrar novamente com sua conta Apple ou Google cadastrada.',
             btnPrimaryLabel: 'Cancelar',
             btnSecondaryLabel: 'Desativar',
-            callback: (value) => _pressDisableAccount(value),
+            callback: (value) => {
+              !value
+                  ? Navigator.of(context).pop()
+                  : userClass.clean(
+                      context, UserStatus.DISABLED.toString().split('.').last)
+            },
           );
         });
-  }
-
-  void _pressDisableAccount(bool value) {
-    if (!value) Navigator.of(context).pop();
-
-    api
-        .upStatusUser(UserStatus.DISABLED.toString().split('.').last)
-        .then((result) => {userClass.clean(context)})
-        .catchError((error) => print('ERROR:' + error.toString()));
   }
 
   void _deleteAccount() {}

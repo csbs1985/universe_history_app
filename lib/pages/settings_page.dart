@@ -43,7 +43,10 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Future<void> goLogout(bool value) async {
-    value ? userClass.clean(context) : Navigator.of(context).pop();
+    value
+        ? userClass.clean(
+            context, UserStatus.INACTIVE.toString().split('.').last)
+        : Navigator.of(context).pop();
   }
 
   @override

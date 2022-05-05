@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:universe_history_app/components/toast_component.dart';
+import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/utils/device_util.dart';
 
@@ -75,17 +76,23 @@ class UserModel {
 }
 
 class UserClass {
+  final Api api = Api();
   final GoogleSignIn googleSignIn = GoogleSignIn();
   final ToastComponent toast = new ToastComponent();
 
-  Future<void> clean(BuildContext context) async {
+  Future<void> clean(BuildContext context, String _status) async {
     await googleSignIn
         .signOut()
         .then((value) => {
-              ActivityUtil(ActivitiesEnum.LOGOUT, DeviceModel(), ''),
-              currentUser.value = [],
-              deleteUser(),
-              Navigator.of(context).pushNamed("/home"),
+              api
+                  .upStatusUser(_status)
+                  .then((result) => {
+                        ActivityUtil(ActivitiesEnum.LOGOUT, DeviceModel(), ''),
+                        currentUser.value = [],
+                        deleteUser(),
+                        Navigator.of(context).pushNamed("/home"),
+                      })
+                  .catchError((error) => print('ERROR:' + error.toString())),
             })
         .catchError((error) {
       print('ERROR: ' + error.toString());
