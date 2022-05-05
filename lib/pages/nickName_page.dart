@@ -180,7 +180,7 @@ class _NickNamePageState extends State<NickNamePage> {
       onWillPop: () async => userNew.value ? true : false,
       child: Scaffold(
         appBar: AppbarComponent(
-            btnBack: userNew.value ? true : false,
+            btnBack: true,
             btnPublish: _isInputNotEmpty,
             callback: (value) => _saveNickName()),
         body: Column(

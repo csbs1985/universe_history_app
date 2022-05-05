@@ -1,7 +1,7 @@
 // ignore_for_file: no_logic_in_create_state, use_key_in_widget_constructors, unused_element, prefer_const_constructors
 
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:universe_history_app/components/button_3d_component.dart';
+import 'package:universe_history_app/components/alert_confirm_component.dart';
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -65,48 +65,12 @@ class _BtnConfirmComponentState extends State<BtnConfirmComponent> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return AlertDialog(
-          insetPadding: const EdgeInsets.all(20),
-          titlePadding: const EdgeInsets.all(20),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-          actionsPadding: const EdgeInsets.fromLTRB(10, 20, 10, 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          backgroundColor: uiColor.comp_1,
-          title: Text(
-            widget._title,
-            style: uiTextStyle.header2,
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: [
-                Text(
-                  widget._text,
-                  style: uiTextStyle.text1,
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Button3dComponent(
-                  label: widget._btnSecondaryLabel!,
-                  size: ButtonSizeEnum.MEDIUM,
-                  style: ButtonStyleEnum.SECOND,
-                  callback: (value) => widget._callback(true),
-                ),
-                Button3dComponent(
-                  label: widget._btnPrimaryLabel!,
-                  size: ButtonSizeEnum.MEDIUM,
-                  style: ButtonStyleEnum.PRIMARY,
-                  callback: (value) => widget._callback(false),
-                ),
-              ],
-            ),
-          ],
+        return AlertConfirmComponent(
+          title: widget._title,
+          text: widget._text,
+          btnPrimaryLabel: widget._btnPrimaryLabel,
+          btnSecondaryLabel: widget._btnSecondaryLabel,
+          callback: (value) => widget._callback(value),
         );
       },
     );

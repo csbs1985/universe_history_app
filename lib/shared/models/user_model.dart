@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_new, invalid_return_type_for_catch_error, avoid_print, unused_local_variable, avoid_returning_null_for_void
+// ignore_for_file: unnecessary_new, invalid_return_type_for_catch_error, avoid_print, unused_local_variable, avoid_returning_null_for_void, constant_identifier_names, unused_element
 
 import 'dart:convert';
 import 'dart:io';
@@ -21,7 +21,7 @@ class UserModel {
   late String email;
   late String channel;
   late String token;
-  late bool isDisabled;
+  late String status;
   late bool isNotification;
   late num qtyHistory;
   late num qtyComment;
@@ -31,7 +31,7 @@ class UserModel {
     required this.nickname,
     required this.upDateNickname,
     required this.date,
-    required this.isDisabled,
+    required this.status,
     required this.email,
     required this.channel,
     required this.token,
@@ -51,7 +51,7 @@ class UserModel {
         email: json['email'],
         channel: json['channel'],
         token: json['token'],
-        isDisabled: json['isDisabled'],
+        status: json['status'],
         isNotification: json['isNotification'],
         qtyHistory: json['qtyHistory'],
         qtyComment: json['qtyComment'],
@@ -68,7 +68,7 @@ class UserModel {
         'channel': user.channel,
         'token': user.token,
         'isNotification': user.isNotification,
-        'isDisabled': user.isDisabled,
+        'status': user.status,
         'qtyHistory': user.qtyHistory,
         'qtyComment': user.qtyComment,
       };
@@ -129,4 +129,20 @@ class UserClass {
       print(e);
     }
   }
+
+  UserStatus getUserStatus(String _status) {
+    switch (_status) {
+      case 'INACTIVE':
+        return UserStatus.INACTIVE;
+      case 'DISABLED':
+        return UserStatus.DISABLED;
+      case 'DELETED':
+        return UserStatus.DELETED;
+      case 'ACTIVE':
+      default:
+        return UserStatus.ACTIVE;
+    }
+  }
 }
+
+enum UserStatus { ACTIVE, INACTIVE, DISABLED, DELETED }

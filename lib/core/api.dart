@@ -162,6 +162,10 @@ class Api {
         .update({'userNickName': currentUser.value.first.nickname});
   }
 
+  upStatusUser(String _status) {
+    return user.doc(currentUser.value.first.id).update({'status': _status});
+  }
+
   upNicknameComment(String _id) {
     return comment
         .doc(_id)

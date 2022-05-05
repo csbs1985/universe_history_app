@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/btn_card_component.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
-import 'package:universe_history_app/components/btn_primary_component.dart';
+import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/shared/models/justtify_model.dart';
 
@@ -15,15 +15,15 @@ class JustifyPage extends StatefulWidget {
 }
 
 class _JustifyPageState extends State<JustifyPage> {
-  final List<JustifyModel> allJustify = JustifyModel.allJustify;
-  bool _btnDelete = false;
+  final List<JustifyModel> _allJustify = JustifyModel.allJustify;
+  bool _hasButton = false;
 
   late JustifyModel justifySelected;
 
   void _onPressed(JustifyModel item) {
     setState(() {
       justifySelected = item;
-      _btnDelete = true;
+      _hasButton = true;
     });
   }
 
@@ -40,7 +40,7 @@ class _JustifyPageState extends State<JustifyPage> {
       appBar: const AppbarBackComponent(),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -49,15 +49,17 @@ class _JustifyPageState extends State<JustifyPage> {
                 'Antes me diga o motivo do porque esta deletando sua conta History.',
               ),
               BtnCardComponent(
-                content: allJustify,
+                content: _allJustify,
                 callback: (value) => _onPressed(value),
               ),
               const SizedBox(height: 20),
-              BtnPrimaryComponent(
-                label: 'Justificar e deletar',
-                enabled: _btnDelete,
-                callback: (value) => _onDelete(value),
-              ),
+              if (_hasButton)
+                Button3dComponent(
+                  label: 'Justificar e deletar',
+                  style: ButtonStyleEnum.PRIMARY,
+                  size: ButtonSizeEnum.LARGE,
+                  callback: (value) => _onDelete(value),
+                ),
             ],
           ),
         ),
