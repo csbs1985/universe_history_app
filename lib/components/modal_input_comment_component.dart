@@ -312,6 +312,7 @@ class _ModalInputCommmentComponentState
               children: [
                 const DividerComponent(bottom: 0),
                 Container(
+                  color: uiColor.comp_1,
                   height: uiSize.input,
                   padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                   child: Row(
