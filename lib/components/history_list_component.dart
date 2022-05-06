@@ -29,7 +29,7 @@ class _HistoryItemState extends State<HistoryListComponent> {
   _getContent() {
     final value = menuItemSelected.value.id!;
     if (value == 'todas' || value.isEmpty) return api.getAllHistory();
-    if (value == 'minhas') return api.getAllUserHistory();
+    if (value == 'minhas') return api.getHistoryUser();
     if (value == 'salvas') return api.getAllBookmarks();
     return api.getAllHistoryFiltered(value);
   }

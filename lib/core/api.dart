@@ -100,6 +100,13 @@ class Api {
         .get();
   }
 
+  getHistoryUser() {
+    return history
+        .orderBy('date')
+        .where('userId', isEqualTo: currentUser.value.first.id)
+        .snapshots();
+  }
+
   getAllUserComment() {
     return comment
         .orderBy('date')
