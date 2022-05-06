@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:uuid/uuid.dart';
 
@@ -15,6 +16,8 @@ class DeleteAccountUtil {
 
   Future<void> deleteAccount(BuildContext _context, _justifySelected) async {
     Navigator.of(_context).pop();
+
+    currentDialog.value = 'Iniciando...';
 
     showDialog(
         context: _context,
@@ -37,7 +40,12 @@ class DeleteAccountUtil {
 
       await api
           .setJustify(_form)
-          .then((result) => _deletetAllHistory(_context))
+          .then(
+            (result) => {
+              currentDialog.value = 'Justificando...',
+              _deletetAllHistory(_context)
+            },
+          )
           .catchError((error) => print('ERROR:' + error));
     }
   }
@@ -47,8 +55,8 @@ class DeleteAccountUtil {
         .getAllUserHistory()
         .then((result) async => {
               if (result.size > 0)
-                for (var item in result.docs)
-                  await api.deleteHistory(item['id']),
+                currentDialog.value = 'Deletando histórias...',
+              for (var item in result.docs) await api.deleteHistory(item['id']),
               _upAllComment(_context)
             })
         .catchError((error) => print('ERROR:' + error));
@@ -59,8 +67,9 @@ class DeleteAccountUtil {
         .getAllUserComment()
         .then((result) async => {
               if (result.size > 0)
-                for (var item in result.docs)
-                  await api.upStatusUserComment(item['id']),
+                currentDialog.value = 'Atualizando comentários...',
+              for (var item in result.docs)
+                await api.upStatusUserComment(item['id']),
               userClass.delete(_context)
             })
         .catchError((error) => print('ERROR:' + error));

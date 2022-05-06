@@ -5,7 +5,6 @@ import 'package:universe_history_app/components/alert_confirm_component.dart';
 import 'package:universe_history_app/components/btn_card_component.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
-import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/pages/justify_page.dart';
 import 'package:universe_history_app/shared/models/delete_account_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
@@ -85,7 +84,6 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
       appBar: const AppbarBackComponent(),
       body: SingleChildScrollView(
         child: Padding(

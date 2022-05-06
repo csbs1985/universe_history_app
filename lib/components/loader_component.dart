@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -16,12 +17,19 @@ class LoaderComponent extends StatelessWidget {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(uiBorder.rounded)),
         content: SizedBox(
-          height: 100,
+          height: 110,
           child: Column(
             children: [
               LoadingAnimationWidget.newtonCradle(
                   size: 80, color: uiColor.first),
               const Text('Aguarde...', style: uiTextStyle.text1),
+              if (currentDialog.value != '')
+                ValueListenableBuilder(
+                    valueListenable: currentDialog,
+                    builder: (context, value, __) {
+                      return Text(currentDialog.value,
+                          style: uiTextStyle.text2);
+                    })
             ],
           ),
         ),

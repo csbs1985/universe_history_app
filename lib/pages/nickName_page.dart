@@ -7,6 +7,7 @@ import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/push_notification.dart';
+import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/core/api.dart';
@@ -106,6 +107,7 @@ class _NickNamePageState extends State<NickNamePage> {
   }
 
   Future<void> _saveNickName() async {
+    currentDialog.value = 'Iniciando...';
     currentUser.value.first.nickname =
         currentNickname.value = _textController.text;
 
@@ -134,47 +136,47 @@ class _NickNamePageState extends State<NickNamePage> {
   }
 
   Future<void> _upNickname() async {
-    var _now = DateTime.now().toString();
+    currentUser.value.first.nickname = _textController.text;
+    currentUser.value.first.upDateNickname = DateTime.now().toString();
+    currentDialog.value = 'Alterando nome de usuário...';
 
     await api
-        .upNickName(_now)
+        .upNickName()
         .then((result) => {
-              currentUser.value.first.upDateNickname = _now,
               _upAllHistory(),
             })
         .catchError((error) => print('ERROR:' + error.toString()));
   }
 
   Future<void> _upAllHistory() async {
+    currentDialog.value = 'Alterando nome de usuário nas histórias...';
+
     await api
         .getAllUserHistory()
         .then((result) async => {
               if (result.size > 0)
                 for (var item in result.docs)
-                  await api
-                      .upNicknameHistory(item['id'])
-                      .then((result) => {_upAllComment()})
+                  await api.upNicknameHistory(item['id']),
+              _upAllComment()
             })
         .catchError((error) => print('ERROR:' + error.toString()));
   }
 
   Future<void> _upAllComment() async {
+    currentDialog.value = 'Alterando nome de usuário nos comentários...';
+
     await api
         .getAllUserComment()
         .then((result) async => {
               if (result.size > 0)
                 for (var item in result.docs)
-                  await api.upNicknameComment(item['id']).then((result) => {
-                        ActivityUtil(ActivitiesEnum.UP_NICKNAME,
-                            _textController.text, _oldName),
-                        toast.toast(context, ToastEnum.SUCCESS,
-                            'Nome de usuário alterado!'),
-                        setState(() {
-                          currentUser.value.first.nickname =
-                              _textController.text;
-                        }),
-                        Navigator.of(context).pop()
-                      })
+                  await api.upNicknameComment(item['id']),
+              ActivityUtil(
+                  ActivitiesEnum.UP_NICKNAME, _textController.text, _oldName),
+              toast.toast(
+                  context, ToastEnum.SUCCESS, 'Nome de usuário alterado!'),
+              currentDialog.value = 'Finalizando...',
+              Navigator.of(context).pop()
             })
         .catchError((error) => print('ERROR:' + error.toString()));
   }
@@ -182,7 +184,7 @@ class _NickNamePageState extends State<NickNamePage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => userNew.value ? true : false,
+      onWillPop: () async => !userNew.value ? true : false,
       child: Scaffold(
         appBar: AppbarComponent(
             btnBack: userNew.value,

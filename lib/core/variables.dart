@@ -10,4 +10,4 @@ ValueNotifier<String> currentToken = ValueNotifier<String>('');
 
 ValueNotifier<bool> currentNotification = ValueNotifier<bool>(false);
 
-GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+ValueNotifier<String> currentDialog = ValueNotifier<String>('');

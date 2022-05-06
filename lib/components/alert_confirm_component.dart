@@ -47,9 +47,7 @@ class _AlertConfirmComponentState extends State<AlertConfirmComponent> {
       ),
       content: SingleChildScrollView(
         child: ListBody(
-          children: [
-            Text(widget._text, style: uiTextStyle.text1),
-          ],
+          children: [Text(widget._text, style: uiTextStyle.text1)],
         ),
       ),
       actions: [
