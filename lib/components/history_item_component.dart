@@ -89,7 +89,8 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
       _content['token'],
       _content['statusUser'],
     );
-    CommentClass.selectComment(_content);
+
+    commentClass.selectComment(_content);
 
     showCupertinoModalBottomSheet(
       expand: false,

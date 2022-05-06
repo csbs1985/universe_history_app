@@ -34,20 +34,15 @@ class _BtnCommentComponentState extends State<BtnCommentComponent> {
         color: uiColor.comp_1,
         child: Column(
           children: [
-            const DividerComponent(
-              bottom: 0,
-            ),
+            const DividerComponent(bottom: 0),
             GestureDetector(
               child: const SizedBox(
                 width: double.infinity,
                 height: uiSize.input,
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(16, 12, 10, 10),
-                  child: Text(
-                    "Escreva seu comentário...",
-                    style: uiTextStyle.text2,
-                    textAlign: TextAlign.left,
-                  ),
+                  child: Text("Escreva seu comentário...",
+                      style: uiTextStyle.text2, textAlign: TextAlign.left),
                 ),
               ),
               onTap: () {

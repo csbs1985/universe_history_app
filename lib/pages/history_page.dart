@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/btn_comment_component.dart';
+import 'package:universe_history_app/components/comment_item_component.dart';
+import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
@@ -54,30 +56,32 @@ class _HistoryPageState extends State<HistoryPage> {
         color: uiColor.comp_1,
         child: Stack(
           children: [
-            Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height,
-              padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TitleComponent(title: documents['title'], bottom: 0),
-                    ResumeComponent(resume: resumeUitl(documents)),
-                    Text(documents['text'], style: uiTextStyle.text1),
-                    Wrap(
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        for (var item in documents['categories'])
-                          Padding(
-                            padding: const EdgeInsets.only(right: 4),
-                            child: Text('#' + item, style: uiTextStyle.text2),
-                          ),
+                        TitleComponent(title: documents['title'], bottom: 0),
+                        ResumeComponent(resume: resumeUitl(documents)),
+                        Text(documents['text'], style: uiTextStyle.text1),
+                        Wrap(children: [
+                          for (var item in documents['categories'])
+                            Padding(
+                                padding: const EdgeInsets.only(right: 4),
+                                child:
+                                    Text('#' + item, style: uiTextStyle.text2)),
+                        ]),
+                        DividerComponent(top: 20, bottom: 4)
                       ],
                     ),
-                    // CommentComponent(),
-                    SizedBox(height: currentUser.value.isNotEmpty ? 68 : 10),
-                  ],
-                ),
+                  ),
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
+                      child: CommentItemComponent()),
+                ],
               ),
             ),
             if (currentUser.value.isNotEmpty) const BtnCommentComponent(),
