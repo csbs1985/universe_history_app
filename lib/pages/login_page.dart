@@ -9,6 +9,7 @@ import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
+import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
@@ -42,6 +43,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<User?> _loginGoogle() async {
+    currentDialog.value = 'Iniciando...';
+
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -98,6 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                       .upStatusUser(
                           UserStatus.ACTIVE.toString().split('.').last)
                       .then((result) => {
+                            currentDialog.value = 'Abrindo conta...',
                             ActivityUtil(
                                 ActivitiesEnum.LOGIN, DeviceModel(), ''),
                             Navigator.of(context).pushNamed('/home')
@@ -119,6 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                     'qtyHistory': 0,
                     'qtyComment': 0,
                   }),
+                  currentDialog.value = 'Criando conta...',
                   userNew.value = true,
                   await ActivityUtil(
                       ActivitiesEnum.NEW_ACCOUNT, user.displayName!, ''),

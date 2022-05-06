@@ -90,21 +90,20 @@ class UserClass {
               api.upStatusUser(_status).then((result) => {
                     ActivityUtil(ActivitiesEnum.LOGOUT, DeviceModel(), ''),
                     currentUser.value = [],
-                    deleteUser(),
                     Navigator.of(context).pushNamed("/home"),
                   })
             })
         .catchError((error) {
       print('ERROR: ' + error.toString());
       toast.toast(context, ToastEnum.WARNING,
-          'ERROR: não foi possivél sair da aplicação no momento, tente novamente mais tarde.');
+          'ERROR: não foi possível sair da aplicação no momento, tente novamente mais tarde.');
     });
   }
 
   Future<void> delete(
     BuildContext context,
   ) async {
-    api
+    await api
         .deleteUser(currentUser.value.first.id)
         .then((result) async => {
               _user = await FirebaseAuth.instance.currentUser,
@@ -136,11 +135,6 @@ class UserClass {
   Future<String> readUser() async {
     final file = await getFileUser();
     return file.readAsString();
-  }
-
-  Future<FileSystemEntity> deleteUser() async {
-    final file = await getFileUser();
-    return file.delete();
   }
 
   void setFileUser(String file) {

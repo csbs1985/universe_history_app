@@ -17,19 +17,22 @@ class LoaderComponent extends StatelessWidget {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(uiBorder.rounded)),
         content: SizedBox(
-          height: 110,
+          height: 120,
           child: Column(
             children: [
               LoadingAnimationWidget.newtonCradle(
                   size: 80, color: uiColor.first),
               const Text('Aguarde...', style: uiTextStyle.text1),
               if (currentDialog.value != '')
-                ValueListenableBuilder(
-                    valueListenable: currentDialog,
-                    builder: (context, value, __) {
-                      return Text(currentDialog.value,
-                          style: uiTextStyle.text2);
-                    })
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: ValueListenableBuilder(
+                      valueListenable: currentDialog,
+                      builder: (context, value, __) {
+                        return Text(currentDialog.value,
+                            style: uiTextStyle.text2);
+                      }),
+                )
             ],
           ),
         ),
