@@ -57,55 +57,62 @@ class _CommentState extends State<CommentComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 10, 10, 16),
-          child: Row(
-            children: [
-              if (currentHistory.value.first.qtyComment > 0)
-                AnimatedFlipCounter(
-                  duration: Duration(milliseconds: 500),
-                  value: currentHistory.value.first.qtyComment,
-                  textStyle: uiTextStyle.text1,
+    return Container(
+      padding: !currentUser.value.isNotEmpty
+          ? null
+          : EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom + 48),
+      height: MediaQuery.of(context).size.height,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 10, 10, 16),
+            child: Row(
+              children: [
+                if (currentHistory.value.first.qtyComment > 0)
+                  AnimatedFlipCounter(
+                    duration: Duration(milliseconds: 500),
+                    value: currentHistory.value.first.qtyComment,
+                    textStyle: uiTextStyle.text1,
+                  ),
+                ValueListenableBuilder(
+                  valueListenable: currentHistory,
+                  builder: (BuildContext context, value, __) {
+                    return Text(
+                      currentHistory.value.first.qtyComment > 1
+                          ? ' comentários'
+                          : ' comentário',
+                      style: uiTextStyle.text1,
+                    );
+                  },
                 ),
-              ValueListenableBuilder(
-                valueListenable: currentHistory,
-                builder: (BuildContext context, value, __) {
-                  return Text(
-                    currentHistory.value.first.qtyComment > 1
-                        ? ' comentários'
-                        : ' comentário',
-                    style: uiTextStyle.text1,
-                  );
-                },
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Expanded(
-          child: StreamBuilder(
-            stream: api.getAllComment(),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.none:
-                  return const CommentEmpty();
-                case ConnectionState.waiting:
-                  return SkeletonCommentComponent();
-                case ConnectionState.done:
-                default:
-                  try {
-                    return _list(context, snapshot);
-                  } catch (e) {
+          Expanded(
+            child: StreamBuilder(
+              stream: api.getAllComment(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
                     return const CommentEmpty();
-                  }
-              }
-            },
+                  case ConnectionState.waiting:
+                    return SkeletonCommentComponent();
+                  case ConnectionState.done:
+                  default:
+                    try {
+                      return _list(context, snapshot);
+                    } catch (e) {
+                      return const CommentEmpty();
+                    }
+                }
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

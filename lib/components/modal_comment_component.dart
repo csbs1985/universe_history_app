@@ -12,14 +12,7 @@ class ModalCommentComponent extends StatelessWidget {
       type: MaterialType.transparency,
       child: Stack(
         children: [
-          Container(
-            height: MediaQuery.of(context).size.height,
-            padding: currentUser.value.isNotEmpty
-                ? EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom + 48)
-                : null,
-            child: CommentComponent(),
-          ),
+          CommentComponent(),
           if (currentUser.value.isNotEmpty) const BtnCommentComponent(),
         ],
       ),
