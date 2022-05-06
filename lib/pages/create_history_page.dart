@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/components/appBar_component.dart';
+import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/components/select_categories_component.dart';
 import 'package:universe_history_app/components/select_toggle_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
@@ -100,7 +101,17 @@ class _CreateHistoryState extends State<CreateHistory> {
     });
   }
 
-  void _publishHistory() {
+  void _publishHistory(BuildContext context) {
+    FocusManager.instance.primaryFocus?.unfocus();
+    currentDialog.value = 'Criando...';
+
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const LoaderComponent();
+        });
+
     setState(() {
       if (currentHistory.value.isNotEmpty) {
         history = {
@@ -143,7 +154,7 @@ class _CreateHistoryState extends State<CreateHistory> {
                   titleController.text,
                   history['id'],
                 ),
-                _setUpQtyHistoryUser()
+                _setUpQtyHistoryUser(),
               })
           .catchError((error) => {
                 print('ERROR:' + error.toString()),
@@ -160,6 +171,7 @@ class _CreateHistoryState extends State<CreateHistory> {
         .setUpQtyHistoryUser()
         .then((value) => {
               if (currentHistory.value.isNotEmpty) Navigator.of(context).pop(),
+              Navigator.of(context).pop(),
               toast.toast(
                   context,
                   ToastEnum.SUCCESS,
@@ -178,7 +190,7 @@ class _CreateHistoryState extends State<CreateHistory> {
       appBar: AppbarComponent(
         btnBack: true,
         btnPublish: _btnPublish,
-        callback: (value) => _publishHistory(),
+        callback: (value) => _publishHistory(context),
       ),
       body: SingleChildScrollView(
         child: Column(
