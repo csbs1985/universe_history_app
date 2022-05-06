@@ -130,9 +130,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                           title: documents[index]['title'],
                           bottom: 0,
                         ),
-                        ResumeComponent(
-                          resume: resumeUitl(documents[index]),
-                        ),
+                        ResumeComponent(resume: resumeUitl(documents[index])),
                         ExpandableText(
                           documents[index]['text'],
                           style: uiTextStyle.text1,

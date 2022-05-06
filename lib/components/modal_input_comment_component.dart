@@ -130,6 +130,7 @@ class _ModalInputCommmentComponentState
         'userId': _commentEdit?['userId'] ?? currentUser.value.first.id,
         'userNickName':
             _commentEdit?['userNickName'] ?? currentUser.value.first.nickname,
+        'userStatus': currentUser.value.first.status,
       };
     });
 

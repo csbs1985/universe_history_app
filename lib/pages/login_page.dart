@@ -129,6 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                       ActivitiesEnum.NEW_ACCOUNT, user.displayName!, ''),
                   navService.pushNamed('/nickname'),
                 },
+              currentUser.value.first = userClass as UserModel,
             })
         .catchError((error) => print('ERROR:' + error.toString()));
   }

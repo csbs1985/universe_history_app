@@ -120,6 +120,12 @@ class _CommentState extends State<CommentComponent> {
     return false;
   }
 
+  Color _getBackColor(String _text) {
+    return _text.contains('@' + currentUser.value.first.nickname)
+        ? uiColor.second
+        : uiColor.comp_3;
+  }
+
   Widget _list(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     List<QueryDocumentSnapshot<dynamic>> documents = snapshot.data!.docs;
     return documents.isNotEmpty
@@ -127,17 +133,17 @@ class _CommentState extends State<CommentComponent> {
             shrinkWrap: true,
             itemCount: documents.length,
             itemBuilder: (BuildContext context, int index) => Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   GestureDetector(
                     child: Card(
-                      color: uiColor.comp_3,
+                      color: _getBackColor(documents[index]['text']),
                       margin: EdgeInsets.all(0),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(uiBorder.rounded),
-                      ),
+                          borderRadius:
+                              BorderRadius.circular(uiBorder.rounded)),
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(10, 6, 10, 8),
                         child: documents[index]['isDelete']
@@ -152,10 +158,14 @@ class _CommentState extends State<CommentComponent> {
                         : null,
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(2, 4, 0, 0),
-                    child: Text(resumeUitl(documents[index]),
-                        style: uiTextStyle.text2),
-                  )
+                      padding: const EdgeInsets.fromLTRB(2, 4, 0, 0),
+                      child: Text(
+                          resumeUitl(documents[index],
+                              type: ContentType.COMMENT
+                                  .toString()
+                                  .split('.')
+                                  .last),
+                          style: uiTextStyle.text2))
                 ],
               ),
             ),
@@ -163,11 +173,3 @@ class _CommentState extends State<CommentComponent> {
         : SkeletonCommentComponent();
   }
 }
-
-/*
-   return StyledText(
-      style: uiTextStyle.text1,
-      tags: {'em': StyledTextTag(style: uiTextStyle.text9)},
-      text: _text,
-    );
- */
