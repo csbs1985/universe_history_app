@@ -43,18 +43,30 @@ class _BtnConfirmComponentState extends State<BtnConfirmComponent> {
         child: SizedBox(
           width: double.infinity,
           height: 48,
-          child: TextButton.icon(
-            icon: SvgPicture.asset(widget._icon!),
-            label: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                ' ' + widget._title,
-                style: uiTextStyle.text1,
-              ),
-            ),
-            style: TextButton.styleFrom(padding: EdgeInsets.zero),
-            onPressed: () => _showAlertConfirm(),
-          ),
+          child: widget._icon != null
+              ? TextButton.icon(
+                  icon: SvgPicture.asset(widget._icon!),
+                  label: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      ' ' + widget._title,
+                      style: uiTextStyle.text1,
+                    ),
+                  ),
+                  style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                  onPressed: () => _showAlertConfirm(),
+                )
+              : TextButton(
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      widget._title,
+                      style: uiTextStyle.text1,
+                    ),
+                  ),
+                  style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                  onPressed: () => _showAlertConfirm(),
+                ),
         ),
       ),
     );

@@ -126,7 +126,6 @@ class _SettingsPageState extends State<SettingsPage> {
                               'Sair temporariamente ou deletar a conta History.'),
                           BtnConfirmComponent(
                             title: 'Sair',
-                            icon: uiSvg.block,
                             btnPrimaryLabel: 'Cancelar',
                             btnSecondaryLabel: 'Sair',
                             link: '/home',
