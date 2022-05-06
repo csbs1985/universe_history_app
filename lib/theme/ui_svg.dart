@@ -1,6 +1,7 @@
 // ignore_for_file: camel_case_types, constant_identifier_names
 
 class uiSvg {
+  static const String authorized = 'assets/icons/authorized.svg';
   static const String block = 'assets/icons/block.svg';
   static const String closed = 'assets/icons/closed.svg';
   static const String comment = 'assets/icons/comment.svg';

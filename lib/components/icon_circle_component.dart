@@ -6,13 +6,19 @@ import 'package:universe_history_app/theme/ui_border.dart';
 
 class IconCicleComponent extends StatefulWidget {
   const IconCicleComponent({
-    required Color color,
+    Color? color,
     required String icon,
+    double? size,
+    double? margin,
   })  : _color = color,
-        _icon = icon;
+        _icon = icon,
+        _size = size,
+        _margin = margin;
 
   final Color? _color;
   final String _icon;
+  final double? _size;
+  final double? _margin;
 
   @override
   _IconCicleComponentState createState() => _IconCicleComponentState();
@@ -24,11 +30,11 @@ class _IconCicleComponentState extends State<IconCicleComponent> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(uiBorder.circle),
       child: Container(
-        width: 32,
-        height: 32,
+        width: widget._size ?? 32,
+        height: widget._size ?? 32,
         color: widget._color,
         child: Padding(
-            padding: const EdgeInsets.all(8),
+            padding: EdgeInsets.all(widget._margin ?? 8),
             child: SvgPicture.asset(widget._icon)),
       ),
     );

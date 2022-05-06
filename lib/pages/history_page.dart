@@ -6,14 +6,13 @@ import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/btn_comment_component.dart';
 import 'package:universe_history_app/components/comment_item_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
-import 'package:universe_history_app/components/resume_component.dart';
+import 'package:universe_history_app/components/resume_history_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
-import 'package:universe_history_app/utils/resume_util.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({Key? key}) : super(key: key);
@@ -65,7 +64,7 @@ class _HistoryPageState extends State<HistoryPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TitleComponent(title: documents['title'], bottom: 0),
-                        ResumeComponent(resume: resumeUitl(documents)),
+                        ResumeHistoryComponent(resume: documents),
                         Text(documents['text'], style: uiTextStyle.text1),
                         Wrap(children: [
                           for (var item in documents['categories'])

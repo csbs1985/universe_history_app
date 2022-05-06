@@ -329,15 +329,14 @@ class _ModalInputCommmentComponentState
                                   context, MentionedCallEnum.ICON)),
                           const SizedBox(width: 10),
                           ToggleComponent(
-                            value: _textSigned,
-                            callback: (value) => _toggleAnonimous(),
-                          ),
+                              value: _textSigned,
+                              callback: (value) => _toggleAnonimous()),
                           const SizedBox(width: 10),
                           Text(
                               _textSigned
                                   ? currentUser.value.first.nickname
                                   : 'anônimo',
-                              style: uiTextStyle.text2),
+                              style: uiTextStyle.text2)
                         ],
                       ),
                       if (_isInputNotEmpty)

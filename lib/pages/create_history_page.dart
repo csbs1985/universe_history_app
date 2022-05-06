@@ -49,6 +49,7 @@ class _CreateHistoryState extends State<CreateHistory> {
   bool _isSigned = true;
   bool _isComment = true;
   bool _btnPublish = false;
+  bool _isAuthorized = false;
 
   List<String> _categories = [];
 
@@ -64,6 +65,7 @@ class _CreateHistoryState extends State<CreateHistory> {
       textController.text = currentHistory.value.first.text;
       _isSigned = currentHistory.value.first.isSigned;
       _isComment = currentHistory.value.first.isComment;
+      _isAuthorized = currentHistory.value.first.isAuthorized;
       _categories = currentHistory.value.first.categories;
     }
 
@@ -84,6 +86,13 @@ class _CreateHistoryState extends State<CreateHistory> {
     });
   }
 
+  void _setAuthorized() {
+    setState(() {
+      _isAuthorized = !_isAuthorized;
+      _canPublish();
+    });
+  }
+
   void _setCategories(List<String> value) {
     setState(() {
       _categories = value;
@@ -93,9 +102,7 @@ class _CreateHistoryState extends State<CreateHistory> {
 
   void _canPublish() {
     setState(() {
-      _btnPublish = (titleController.text.isNotEmpty &&
-              textController.text.isNotEmpty &&
-              _categories.isNotEmpty)
+      _btnPublish = (textController.text.isNotEmpty && _categories.isNotEmpty)
           ? true
           : false;
     });
@@ -123,6 +130,7 @@ class _CreateHistoryState extends State<CreateHistory> {
           'isSigned': _isSigned,
           'isEdit': true,
           'isDelete': false,
+          'isAuthorized': _isAuthorized,
           'qtyComment': currentHistory.value.first.qtyComment,
           'categories': _categories,
           'userId': currentUser.value.first.id,
@@ -138,6 +146,7 @@ class _CreateHistoryState extends State<CreateHistory> {
           'isSigned': _isSigned,
           'isEdit': false,
           'isDelete': false,
+          'isAuthorized': _isAuthorized,
           'qtyComment': 0,
           'categories': _categories,
           'userId': currentUser.value.first.id,
@@ -254,11 +263,21 @@ class _CreateHistoryState extends State<CreateHistory> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SelectToggleComponent(
-                callback: (value) => _setComment(),
                 title: 'Comentários',
                 resume:
                     'Ligado para habilitar ou desligado para desabilitar os comentários na história. ',
                 value: _isComment,
+                callback: (value) => _setComment(),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: SelectToggleComponent(
+                title: 'Autorizado',
+                resume:
+                    'Ligado para habilitar história de terceiro com autorização para publicar. ',
+                value: _isAuthorized,
+                callback: (value) => _setAuthorized(),
               ),
             ),
             SelectCategoriesComponent(

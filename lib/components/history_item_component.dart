@@ -11,7 +11,7 @@ import 'package:universe_history_app/components/modal_comment_component.dart';
 import 'package:universe_history_app/components/modal_input_comment_component.dart';
 import 'package:universe_history_app/components/modal_options_component.dart';
 import 'package:universe_history_app/components/no_history_component.dart';
-import 'package:universe_history_app/components/resume_component.dart';
+import 'package:universe_history_app/components/resume_history_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
@@ -22,7 +22,6 @@ import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
-import 'package:universe_history_app/utils/resume_util.dart';
 
 class HistoryItemComponent extends StatefulWidget {
   HistoryItemComponent({
@@ -122,16 +121,16 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
               return Column(
                 children: [
                   Container(
+                    width: double.infinity,
                     padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        TitleComponent(
-                          title: documents[index]['title'],
-                          bottom: 0,
-                        ),
-                        ResumeComponent(resume: resumeUitl(documents[index])),
+                        if (documents[index]['title'] != "")
+                          TitleComponent(
+                              title: documents[index]['title'], bottom: 0),
+                        ResumeHistoryComponent(resume: documents[index]),
                         ExpandableText(
                           documents[index]['text'],
                           style: uiTextStyle.text1,

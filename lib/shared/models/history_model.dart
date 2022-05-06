@@ -18,6 +18,7 @@ class HistoryModel {
     required this.isSigned,
     required this.isEdit,
     required this.isDelete,
+    required this.isAuthorized,
     required this.userId,
     required this.userNickName,
     required this.qtyComment,
@@ -34,6 +35,7 @@ class HistoryModel {
   late bool isSigned;
   late bool isEdit;
   late bool isDelete;
+  late bool isAuthorized;
   late int qtyComment;
   late List<String> categories;
 
@@ -49,6 +51,7 @@ class HistoryModel {
         isSigned: json['isSigned'],
         isEdit: json['isEdit'],
         isDelete: json['isDelete'],
+        isAuthorized: json['isAuthorized'],
         userId: json['userId'],
         userNickName: json['userNickName'],
         qtyComment: json['qtyComment'],
@@ -66,6 +69,7 @@ class HistoryModel {
         'isSigned': isSigned,
         'isEdit': isEdit,
         'isDelete': isDelete,
+        'isAuthorized': isAuthorized,
         'userId': userId,
         'userNickName': userNickName,
         'qtyComment': qtyComment,
