@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, prefer_final_fields, unused_field, prefer_is_empty, unrelated_type_equality_checks, unnecessary_brace_in_string_interps
+// ignore_for_file: avoid_print, prefer_final_fields, unused_field, prefer_is_empty, unrelated_type_equality_checks, unnecessary_brace_in_string_interps, unnecessary_null_comparison, unnecessary_new, unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,7 +36,7 @@ class _NickNamePageState extends State<NickNamePage> {
   int _rulesDays = 30;
   String _textDefault = 'nome de usuário atual';
   String _oldName = '';
-  String _regx = '[A-Za-z0-9-_.]';
+  String _regx = '[a-z0-9-_.]';
 
   late String _message = _textDefault;
 
@@ -58,7 +58,7 @@ class _NickNamePageState extends State<NickNamePage> {
     setState(() {
       var upDate = currentUser.value.first.upDateNickname;
 
-      if (upDate != "") {
+      if (upDate != null && upDate != '') {
         var _days = qtyDays(upDate);
 
         if (_days < _rulesDays) {
@@ -73,6 +73,16 @@ class _NickNamePageState extends State<NickNamePage> {
   }
 
   _keyUp(String text) {
+    RegExp regExp = new RegExp(_regx);
+
+    if (!regExp.hasMatch(_textController.text)) {
+      setState(() {
+        _isInputNotEmpty = false;
+        _message = "veja a cima os caracteres aceitos";
+      });
+      return;
+    }
+
     if (currentUser.value.isNotEmpty && _oldName == _textController.text) {
       setState(() {
         _isInputNotEmpty = false;
@@ -176,7 +186,7 @@ class _NickNamePageState extends State<NickNamePage> {
               toast.toast(
                   context, ToastEnum.SUCCESS, 'Nome de usuário alterado!'),
               currentDialog.value = 'Finalizando...',
-              Navigator.of(context).pop()
+              Navigator.of(context).pushNamed('/home')
             })
         .catchError((error) => print('ERROR:' + error.toString()));
   }
@@ -198,7 +208,7 @@ class _NickNamePageState extends State<NickNamePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const TitleResumeComponent('Nome de usuário',
-                      'Os nomes de usuário só podem usar letras, números, sublinhados e pontos. Ele deve ser único e de 6 à 20 caracteres. Você só poderá altera a cada 30 dias.'),
+                      'Os nomes de usuário só podem usar letras, números, sublinhados e pontos, deve ser único e de 6 à 20 caracteres. Você só poderá altera a cada 30 dias.'),
                   const SizedBox(height: 10),
                   Container(
                     color: uiColor.comp_1,

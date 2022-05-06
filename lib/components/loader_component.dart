@@ -17,7 +17,7 @@ class LoaderComponent extends StatelessWidget {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(uiBorder.rounded)),
         content: SizedBox(
-          height: 120,
+          height: 140,
           child: Column(
             children: [
               LoadingAnimationWidget.newtonCradle(
