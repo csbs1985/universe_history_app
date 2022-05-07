@@ -90,6 +90,8 @@ class UserClass {
               api.upStatusUser(_status).then((result) => {
                     ActivityUtil(ActivitiesEnum.LOGOUT, DeviceModel(), ''),
                     currentUser.value = [],
+                    toast.toast(context, ToastEnum.SUCCESS,
+                        'Você não esta mais logado!'),
                     Navigator.of(context).pushNamed("/home"),
                   })
             })
