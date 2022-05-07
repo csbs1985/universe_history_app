@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, avoid_print, invalid_return_type_for_catch_error, curly_braces_in_flow_control_structures
+// ignore_for_file: unused_import, avoid_print, invalid_return_type_for_catch_error, curly_braces_in_flow_control_structures, unnecessary_null_comparison
 
 import 'dart:developer';
 import 'dart:io';
@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
+import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
@@ -19,7 +20,8 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  final UserClass userClass = UserClass();
+  final Api api = Api();
+  final UserClass _userClass = UserClass();
 
   @override
   void initState() {
@@ -27,8 +29,15 @@ class _SplashPageState extends State<SplashPage> {
 
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user != null) {
-        userClass.readUser().then((file) {
-          if (file.isNotEmpty) userClass.setFileUser(file);
+        _userClass.readUser().then((file) async {
+          if (file.isNotEmpty) _userClass.setFileUser(file);
+          await api
+              .getUser(currentUser.value.first.email)
+              .then((result) => {
+                    _userClass.add(result.docs!.first),
+                  })
+              .catchError((error) => print('ERROR:' + error.toString()));
+          print('object');
         }).catchError((error) => print(error));
       }
       Navigator.of(context).pushNamed("/home");

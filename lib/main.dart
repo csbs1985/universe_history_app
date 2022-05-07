@@ -6,7 +6,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:no_context_navigation/no_context_navigation.dart';
-import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/navigation.dart';
 import 'package:universe_history_app/core/push_notification.dart';
 import 'package:universe_history_app/core/variables.dart';
@@ -28,7 +27,6 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   final PushNotification _notification = PushNotification();
-  final Api api = Api();
 
   @override
   Widget build(BuildContext context) {
