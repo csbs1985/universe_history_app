@@ -104,6 +104,8 @@ class _LoginPageState extends State<LoginPage> {
                             currentDialog.value = 'Abrindo conta...',
                             ActivityUtil(
                                 ActivitiesEnum.LOGIN, DeviceModel(), ''),
+                            toast.toast(context, ToastEnum.SUCCESS,
+                                'Bem vindo de volta ${currentUser.value.first.nickname}!'),
                             Navigator.of(context).pushNamed('/home')
                           })
                       .catchError((error) => print('ERROR:' + error.toString()))
