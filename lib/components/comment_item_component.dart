@@ -105,7 +105,7 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 10, 10, 16),
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                   child: Row(
                     children: [
                       if (currentHistory.value.first.qtyComment > 0)
@@ -164,6 +164,6 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
               ],
             ),
           )
-        : const SkeletonCommentComponent();
+        : const CommentEmpty();
   }
 }

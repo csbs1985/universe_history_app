@@ -275,7 +275,7 @@ class _CreateHistoryState extends State<CreateHistory> {
               child: SelectToggleComponent(
                 title: 'Autorizado',
                 resume:
-                    'Ligado para habilitar história de terceiro com autorização para publicar. ',
+                    'Ligado para marcar história como de terceiro com autorização para publicar. ',
                 value: _isAuthorized,
                 callback: (value) => _setAuthorized(),
               ),

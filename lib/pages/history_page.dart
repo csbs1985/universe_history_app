@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_new, avoid_print, prefer_const_constructors
+// ignore_for_file: unnecessary_new, avoid_print, prefer_const_constructors, prefer_final_fields, unused_local_variable
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +50,7 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget _history(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     QueryDocumentSnapshot<dynamic> documents = snapshot.data!.docs.first;
     return Scaffold(
+      backgroundColor: uiColor.comp_1,
       appBar: const AppbarBackComponent(),
       body: Material(
         color: uiColor.comp_1,
@@ -58,7 +59,7 @@ class _HistoryPageState extends State<HistoryPage> {
             SingleChildScrollView(
               child: Column(
                 children: [
-                  Padding(
+                  Container(
                     padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,8 +78,9 @@ class _HistoryPageState extends State<HistoryPage> {
                       ],
                     ),
                   ),
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
+                  Container(
+                      height: MediaQuery.of(context).size.height,
+                      padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
                       child: CommentItemComponent()),
                 ],
               ),

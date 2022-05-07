@@ -13,7 +13,7 @@ class _CommentState extends State<CommentListComponent> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height,
-      child: Expanded(child: CommentItemComponent()),
+      child: CommentItemComponent(),
     );
   }
 }
