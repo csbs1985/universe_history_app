@@ -43,7 +43,7 @@ class _AppbarComponentState extends State<AppbarComponent> {
     return AppBar(
       leading: IconButton(
         icon: SvgPicture.asset(widget._btnBack ? uiSvg.closed : uiSvg.closed),
-        onPressed: () => !widget._btnBack ? _back(context) : null,
+        onPressed: () => widget._btnBack ? _back(context) : null,
       ),
       actions: [
         if (widget._btnPublish)
