@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_new, avoid_print, prefer_const_constructors, prefer_final_fields, unused_local_variable
+// ignore_for_file: unnecessary_new, avoid_print, prefer_const_constructors, prefer_final_fields, unused_local_variable, prefer_generic_function_type_aliases, unused_field, unused_element, unnecessary_null_comparison
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +12,7 @@ import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
+import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -23,6 +24,10 @@ class HistoryPage extends StatefulWidget {
 
 class _HistoryPageState extends State<HistoryPage> {
   final Api api = new Api();
+
+  double _getHeight() {
+    return (MediaQuery.of(context).size.height * 0.5) - uiSize.input;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,34 +61,42 @@ class _HistoryPageState extends State<HistoryPage> {
         color: uiColor.comp_1,
         child: Stack(
           children: [
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TitleComponent(title: documents['title'], bottom: 0),
-                        ResumeHistoryComponent(resume: documents),
-                        Text(documents['text'], style: uiTextStyle.text1),
-                        Wrap(children: [
-                          for (var item in documents['categories'])
-                            Padding(
-                                padding: const EdgeInsets.only(right: 4),
-                                child:
-                                    Text('#' + item, style: uiTextStyle.text2)),
-                        ]),
-                        DividerComponent(top: 20, bottom: 4)
-                      ],
-                    ),
-                  ),
-                  Container(
-                      height: MediaQuery.of(context).size.height,
-                      padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                      child: CommentItemComponent()),
-                ],
-              ),
+            Column(
+              children: [
+                Container(
+                  height: _getHeight(),
+                  padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                  child: Builder(builder: (context) {
+                    return SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (documents['title'] != "")
+                            TitleComponent(
+                                title: documents['title'], bottom: 0),
+                          ResumeHistoryComponent(resume: documents),
+                          Text(documents['text'], style: uiTextStyle.text1),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 20),
+                            child: Wrap(children: [
+                              for (var item in documents['categories'])
+                                Padding(
+                                    padding: const EdgeInsets.only(right: 4),
+                                    child: Text('#' + item,
+                                        style: uiTextStyle.text2)),
+                            ]),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+                ),
+                DividerComponent(top: 0, bottom: 0, left: 16, right: 16),
+                Container(
+                    height: _getHeight(),
+                    padding: EdgeInsets.fromLTRB(8, 10, 8, 0),
+                    child: CommentItemComponent())
+              ],
             ),
             if (currentUser.value.isNotEmpty) const BtnCommentComponent(),
           ],
