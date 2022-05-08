@@ -16,12 +16,11 @@ class BtnCommentComponent extends StatefulWidget {
 class _BtnCommentComponentState extends State<BtnCommentComponent> {
   void _showModal(BuildContext context, String historyId, bool openKeyboard) {
     showCupertinoModalBottomSheet(
-      expand: true,
-      context: context,
-      barrierColor: Colors.black87,
-      duration: const Duration(milliseconds: 300),
-      builder: (context) => const ModalInputCommmentComponent(),
-    );
+        expand: true,
+        context: context,
+        barrierColor: Colors.black87,
+        duration: const Duration(milliseconds: 300),
+        builder: (context) => const ModalInputCommmentComponent());
   }
 
   @override
@@ -30,27 +29,22 @@ class _BtnCommentComponentState extends State<BtnCommentComponent> {
       bottom: MediaQuery.of(context).viewInsets.bottom,
       left: 0,
       right: 0,
-      child: Container(
-        color: uiColor.comp_1,
-        child: Column(
-          children: [
-            const DividerComponent(bottom: 0),
-            GestureDetector(
-              child: const SizedBox(
-                width: double.infinity,
-                height: uiSize.input,
-                child: Padding(
+      child: Column(
+        children: [
+          const DividerComponent(bottom: 0),
+          GestureDetector(
+            child: Container(
+              color: uiColor.comp_1,
+              width: double.infinity,
+              height: uiSize.input,
+              child: const Padding(
                   padding: EdgeInsets.fromLTRB(16, 12, 10, 10),
-                  child: Text("Escreva seu comentário...",
-                      style: uiTextStyle.text2, textAlign: TextAlign.left),
-                ),
-              ),
-              onTap: () {
-                _showModal(context, 'index', true);
-              },
+                  child: Text("Escrever comentário...",
+                      style: uiTextStyle.text2, textAlign: TextAlign.left)),
             ),
-          ],
-        ),
+            onTap: () => _showModal(context, 'index', true),
+          ),
+        ],
       ),
     );
   }
