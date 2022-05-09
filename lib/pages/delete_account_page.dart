@@ -70,9 +70,9 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertConfirmComponent(
-              title: 'Justificar e deletar',
+              title: 'Deletar',
               text:
-                  'Antes me diga o motivo do porque esta deletando sua conta History.',
+                  'Tem certeza que deseja excluir sua conta History definitivamente? Você não poderá mais ler, editar e visualizar suas hitórias e comentários. Somente poderá ler as histórias de outros escritores.',
               btnPrimaryLabel: 'Cancelar',
               btnSecondaryLabel: 'Deletar',
               callback: (value) => !value
