@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, unused_field
+// ignore_for_file: use_key_in_widget_constructors, unused_field, curly_braces_in_flow_control_structures
 
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -62,10 +62,11 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
     return false;
   }
 
-  Color _getBackColor(String _text) {
-    return _text.contains('@' + currentUser.value.first.nickname)
-        ? uiColor.second
-        : uiColor.comp_3;
+  Color _getBackColor(_index) {
+    if (_index['text'].contains('@' + currentUser.value.first.nickname))
+      return uiColor.first;
+    if (_index['userId'] == currentUser.value.first.id) return uiColor.second;
+    return uiColor.comp_3;
   }
 
   @override
@@ -132,7 +133,7 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
                     children: [
                       GestureDetector(
                         child: Card(
-                          color: _getBackColor(item['text']),
+                          color: _getBackColor(item),
                           margin: const EdgeInsets.all(0),
                           shape: RoundedRectangleBorder(
                               borderRadius:
