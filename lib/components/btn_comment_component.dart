@@ -27,13 +27,13 @@ class _BtnCommentComponentState extends State<BtnCommentComponent> {
 
   bool _isShow() {
     return currentHistory.value.first.isComment && currentUser.value.isNotEmpty
-        ? true
-        : false;
+        ? false
+        : true;
   }
 
   @override
   Widget build(BuildContext context) {
-    return !_isShow()
+    return _isShow()
         ? const SizedBox()
         : Positioned(
             bottom: MediaQuery.of(context).viewInsets.bottom,

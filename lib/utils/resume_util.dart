@@ -14,7 +14,7 @@ String resumeUitl(_item, {String? type}) {
       : author = _item['isSigned'] ? _item['userNickName'] : 'anônimo';
 
   var temp = _date + ' · ' + author;
-  return _item['isEdit'] ? temp + ' · editada' : temp;
+  return _item['isEdit'] ? temp + ' · editado' : temp;
 }
 
 enum ContentType { COMMENT, HISTORY }

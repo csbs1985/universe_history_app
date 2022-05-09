@@ -12,6 +12,8 @@ import 'package:universe_history_app/components/resume_history_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/shared/models/history_model.dart';
+import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -25,8 +27,10 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage> {
   final Api api = new Api();
 
-  double _getHeight() {
-    return (MediaQuery.of(context).size.height * 0.5) - uiSize.input;
+  double _getPaddingBottom() {
+    return currentHistory.value.first.isComment && currentUser.value.isNotEmpty
+        ? 0
+        : uiSize.input;
   }
 
   @override
@@ -35,26 +39,23 @@ class _HistoryPageState extends State<HistoryPage> {
 
     return Scaffold(
       appBar: const AppbarBackComponent(),
-      body: SingleChildScrollView(
-        child: StreamBuilder<QuerySnapshot>(
-          stream: api.getHistory(_idHistory),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.none:
+      body: StreamBuilder<QuerySnapshot>(
+        stream: api.getHistory(_idHistory),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return _notResult();
+            case ConnectionState.waiting:
+              return SkeletonHistoryItemComponent();
+            case ConnectionState.done:
+            default:
+              try {
+                return _history(context, snapshot);
+              } catch (error) {
                 return _notResult();
-              case ConnectionState.waiting:
-                return SkeletonHistoryItemComponent();
-              case ConnectionState.done:
-              default:
-                try {
-                  return _history(context, snapshot);
-                } catch (error) {
-                  return _notResult();
-                }
-            }
-          },
-        ),
+              }
+          }
+        },
       ),
     );
   }
@@ -68,38 +69,41 @@ class _HistoryPageState extends State<HistoryPage> {
           Builder(
             builder: (context) {
               return SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (documents['title'] != "")
-                            TitleComponent(
-                                title: documents['title'], bottom: 0),
-                          ResumeHistoryComponent(resume: documents),
-                          Text(documents['text'], style: uiTextStyle.text1),
-                          Wrap(children: [
-                            for (var item in documents['categories'])
-                              Padding(
-                                  padding: const EdgeInsets.only(right: 4),
-                                  child: Text('#' + item,
-                                      style: uiTextStyle.text2))
-                          ]),
-                          HistoryOptionsComponent(
-                              history: documents,
-                              type: HistoryOptionsType.HISTORYPAGE)
-                        ],
+                child: Container(
+                  padding: EdgeInsets.only(bottom: _getPaddingBottom()),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (documents['title'] != "")
+                              TitleComponent(
+                                  title: documents['title'], bottom: 0),
+                            ResumeHistoryComponent(resume: documents),
+                            Text(documents['text'], style: uiTextStyle.text1),
+                            Wrap(children: [
+                              for (var item in documents['categories'])
+                                Padding(
+                                    padding: const EdgeInsets.only(right: 4),
+                                    child: Text('#' + item,
+                                        style: uiTextStyle.text2))
+                            ]),
+                            HistoryOptionsComponent(
+                                history: documents,
+                                type: HistoryOptionsType.HISTORYPAGE)
+                          ],
+                        ),
                       ),
-                    ),
-                    DividerComponent(top: 0, bottom: 20, left: 16, right: 16),
-                    Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                        child: CommentItemComponent(
-                            type: HistoryOptionsType.HISTORYPAGE)),
-                  ],
+                      DividerComponent(top: 0, bottom: 20, left: 16, right: 16),
+                      Padding(
+                          padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                          child: CommentItemComponent(
+                              type: HistoryOptionsType.HISTORYPAGE)),
+                    ],
+                  ),
                 ),
               );
             },

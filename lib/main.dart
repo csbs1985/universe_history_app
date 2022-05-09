@@ -30,26 +30,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: uiColor.comp_1,
         statusBarIconBrightness: Brightness.light,
         statusBarBrightness: Brightness.light,
         systemNavigationBarColor: uiColor.comp_1,
-        systemNavigationBarIconBrightness: Brightness.light,
-      ),
-    );
+        systemNavigationBarIconBrightness: Brightness.light));
 
     if (currentToken.value == null) _notification.getToken();
 
     _notification.init();
 
     return MaterialApp(
-      navigatorKey: NavigationService.navigationKey,
-      debugShowCheckedModeBanner: false,
-      theme: uiTheme.theme1,
-      onGenerateRoute: Navigation.generateRoute,
-      home: const SplashPage(),
-    );
+        navigatorKey: NavigationService.navigationKey,
+        debugShowCheckedModeBanner: false,
+        theme: uiTheme.theme1,
+        onGenerateRoute: Navigation.generateRoute,
+        home: const SplashPage());
   }
 }
