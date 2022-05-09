@@ -22,8 +22,10 @@ class ItemNewComment extends StatefulWidget {
 }
 
 class _ItemNewCommentState extends State<ItemNewComment> {
+  final HistoryClass historyClass = HistoryClass();
+
   void _setHistory(item) {
-    HistoryClass.selectHistory(item);
+    historyClass.selectHistory(item);
     Navigator.of(context).pushNamed("/history");
   }
 
