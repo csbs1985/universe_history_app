@@ -6,6 +6,7 @@ import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/btn_comment_component.dart';
 import 'package:universe_history_app/components/comment_item_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
+import 'package:universe_history_app/components/history_options_component.dart';
 import 'package:universe_history_app/components/resume_history_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
@@ -91,6 +92,11 @@ class _HistoryPageState extends State<HistoryPage> {
                     );
                   }),
                 ),
+                Padding(
+                    padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    child: HistoryOptionsComponent(
+                        history: documents,
+                        type: HistoryOptionsType.HISTORYPAGE)),
                 DividerComponent(top: 0, bottom: 0, left: 16, right: 16),
                 Container(
                     height: _getHeight(),

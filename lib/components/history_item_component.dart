@@ -73,7 +73,9 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                               ),
                           ],
                         ),
-                        HistoryOptionsComponent(history: documents[index]),
+                        HistoryOptionsComponent(
+                            history: documents[index],
+                            type: HistoryOptionsType.HOMEPAGE),
                         const SizedBox(height: 10),
                         const DividerComponent(bottom: 0),
                       ],

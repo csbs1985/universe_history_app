@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, constant_identifier_names, unused_field
 
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -19,10 +19,13 @@ import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class HistoryOptionsComponent extends StatefulWidget {
   const HistoryOptionsComponent(
-      {required QueryDocumentSnapshot<dynamic> history})
-      : _history = history;
+      {required QueryDocumentSnapshot<dynamic> history,
+      required HistoryOptionsType type})
+      : _history = history,
+        _type = type;
 
   final QueryDocumentSnapshot<dynamic> _history;
+  final HistoryOptionsType _type;
 
   @override
   State<HistoryOptionsComponent> createState() =>
@@ -34,6 +37,26 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
   final CommentClass commentClass = CommentClass();
   final HistoryClass historyClass = HistoryClass();
   final OwnerClass ownerClass = OwnerClass();
+
+  bool _showComments(int _qtyComment) {
+    return _qtyComment <= 0 ? true : false;
+  }
+
+  bool _showComment(bool _isComment) {
+    return widget._type == HistoryOptionsType.HOMEPAGE &&
+            _isComment &&
+            currentUser.value.isNotEmpty
+        ? true
+        : false;
+  }
+
+  bool _showBookmark() {
+    return currentUser.value.isNotEmpty ? true : false;
+  }
+
+  bool _showOpen() {
+    return widget._type == HistoryOptionsType.HOMEPAGE ? true : false;
+  }
 
   void _selectHistory(Map<String, dynamic> _history) {
     ownerClass.selectOwner(
@@ -102,8 +125,8 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        widget._history['qtyComment'] < 1
-            ? const SizedBox()
+        _showComments(widget._history['qtyComment'])
+            ? Container()
             : TextButton(
                 child: Row(
                   children: [
@@ -121,8 +144,10 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
                   ],
                 ),
                 onPressed: () {
-                  _selectHistory(widget._history.data());
-                  _showModal(context, 'listCommentary ');
+                  if (widget._type == HistoryOptionsType.HOMEPAGE) {
+                    _selectHistory(widget._history.data());
+                    _showModal(context, 'listCommentary ');
+                  }
                 },
               ),
         ValueListenableBuilder(
@@ -131,8 +156,7 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (widget._history['isComment'] &&
-                    currentUser.value.isNotEmpty)
+                if (_showComment(widget._history['isComment']))
                   IconComponent(
                       icon: uiSvg.comment,
                       callback: (value) {
@@ -141,7 +165,7 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
                           _showModal(context, 'inputCommentary');
                         });
                       }),
-                if (currentUser.value.isNotEmpty)
+                if (_showBookmark())
                   ValueListenableBuilder(
                     valueListenable: currentBookmarks,
                     builder: (BuildContext context, value, __) {
@@ -157,13 +181,14 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
                       );
                     },
                   ),
-                IconComponent(
-                    icon: uiSvg.open,
-                    callback: (value) {
-                      _selectHistory(widget._history.data());
-                      Navigator.pushNamed(context, '/history',
-                          arguments: widget._history.data()['id']);
-                    }),
+                if (_showOpen())
+                  IconComponent(
+                      icon: uiSvg.open,
+                      callback: (value) {
+                        _selectHistory(widget._history.data());
+                        Navigator.pushNamed(context, '/history',
+                            arguments: widget._history.data()['id']);
+                      }),
                 IconComponent(
                   icon: uiSvg.options,
                   callback: (value) => {
@@ -179,3 +204,5 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
     );
   }
 }
+
+enum HistoryOptionsType { HOMEPAGE, HISTORYPAGE }
