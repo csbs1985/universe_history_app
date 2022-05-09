@@ -3,8 +3,6 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 
-ValueNotifier<int> currentQtyHistory = ValueNotifier<int>(0);
-ValueNotifier<String> currentDocHistory = ValueNotifier<String>('');
 ValueNotifier<List<HistoryModel>> currentHistory =
     ValueNotifier<List<HistoryModel>>([]);
 

@@ -23,8 +23,7 @@ class ItemNewComment extends StatefulWidget {
 
 class _ItemNewCommentState extends State<ItemNewComment> {
   void _setHistory(item) {
-    currentDocHistory.value = item['elementId'];
-    currentHistory.value.first.id = item['elementId'];
+    HistoryClass.selectHistory(item);
     Navigator.of(context).pushNamed("/history");
   }
 

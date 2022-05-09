@@ -165,7 +165,7 @@ class Api {
 
   upNumComment() {
     return history
-        .doc(currentDocHistory.value)
+        .doc(currentHistory.value.first.id)
         .update({'qtyComment': currentHistory.value.first.qtyComment});
   }
 

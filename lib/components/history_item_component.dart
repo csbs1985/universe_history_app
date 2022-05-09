@@ -51,7 +51,6 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
       _history['token'],
       _history['statusUser'],
     );
-    currentDocHistory.value = _history['id'];
     HistoryClass.selectHistory(_history);
   }
 
