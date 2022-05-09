@@ -12,7 +12,7 @@ class CommentEmpty extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
       child: Center(
         child: NoResultComponent(
-          text: 'Nenhum comentário ainda, seja o primeiro.',
+          text: 'Nenhum comentário ainda, ou os comentários foram desativados.',
         ),
       ),
     );

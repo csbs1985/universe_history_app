@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/comment_empty_component.dart';
+import 'package:universe_history_app/components/history_options_component.dart';
 import 'package:universe_history_app/components/modal_options_component.dart';
 import 'package:universe_history_app/components/skeleton_comment_component.dart';
 import 'package:universe_history_app/core/api.dart';
@@ -18,6 +19,10 @@ import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/resume_util.dart';
 
 class CommentItemComponent extends StatefulWidget {
+  const CommentItemComponent({required HistoryOptionsType type}) : _type = type;
+
+  final HistoryOptionsType _type;
+
   @override
   State<CommentItemComponent> createState() => _CommentItemComponentState();
 }
@@ -104,34 +109,36 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
 
   Widget _list(BuildContext context, snapshot) {
     List<QueryDocumentSnapshot<dynamic>> documents = snapshot.data!.docs;
-    return documents.isNotEmpty
-        ? Padding(
+    return !documents.isNotEmpty
+        ? const CommentEmpty()
+        : Padding(
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                  child: Row(
-                    children: [
-                      if (currentHistory.value.first.qtyComment > 0)
-                        AnimatedFlipCounter(
-                            duration: const Duration(milliseconds: 500),
-                            value: currentHistory.value.first.qtyComment,
-                            textStyle: uiTextStyle.text1),
-                      ValueListenableBuilder(
-                        valueListenable: currentHistory,
-                        builder: (BuildContext context, value, __) {
-                          return Text(
-                              currentHistory.value.first.qtyComment > 1
-                                  ? ' comentários'
-                                  : ' comentário',
-                              style: uiTextStyle.text1);
-                        },
-                      ),
-                    ],
+                if (widget._type == HistoryOptionsType.HOMEPAGE)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                    child: Row(
+                      children: [
+                        if (currentHistory.value.first.qtyComment > 0)
+                          AnimatedFlipCounter(
+                              duration: const Duration(milliseconds: 500),
+                              value: currentHistory.value.first.qtyComment,
+                              textStyle: uiTextStyle.text1),
+                        ValueListenableBuilder(
+                          valueListenable: currentHistory,
+                          builder: (BuildContext context, value, __) {
+                            return Text(
+                                currentHistory.value.first.qtyComment > 1
+                                    ? ' comentários'
+                                    : ' comentário',
+                                style: uiTextStyle.text1);
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
                 for (var item in documents)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,7 +176,6 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
                   ),
               ],
             ),
-          )
-        : const CommentEmpty();
+          );
   }
 }

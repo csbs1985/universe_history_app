@@ -25,19 +25,14 @@ class DividerComponent extends StatelessWidget {
       color: uiColor.comp_1,
       child: Column(
         children: [
-          SizedBox(
-            height: _top ?? 0,
-          ),
+          SizedBox(height: _top ?? 0),
           Divider(
-            height: 0.5,
-            thickness: 0.5,
-            indent: _left ?? 0,
-            endIndent: _right ?? 0,
-            color: uiColor.comp_3,
-          ),
-          SizedBox(
-            height: _bottom ?? 20,
-          ),
+              height: 0.5,
+              thickness: 0.5,
+              indent: _left ?? 0,
+              endIndent: _right ?? 0,
+              color: uiColor.comp_3),
+          SizedBox(height: _bottom ?? 20)
         ],
       ),
     );

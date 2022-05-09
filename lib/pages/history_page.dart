@@ -78,17 +78,13 @@ class _HistoryPageState extends State<HistoryPage> {
                                     title: documents['title'], bottom: 0),
                               ResumeHistoryComponent(resume: documents),
                               Text(documents['text'], style: uiTextStyle.text1),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 20),
-                                child: Wrap(children: [
-                                  for (var item in documents['categories'])
-                                    Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 4),
-                                        child: Text('#' + item,
-                                            style: uiTextStyle.text2))
-                                ]),
-                              ),
+                              Wrap(children: [
+                                for (var item in documents['categories'])
+                                  Padding(
+                                      padding: const EdgeInsets.only(right: 4),
+                                      child: Text('#' + item,
+                                          style: uiTextStyle.text2))
+                              ]),
                               HistoryOptionsComponent(
                                   history: documents,
                                   type: HistoryOptionsType.HISTORYPAGE)
@@ -96,10 +92,11 @@ class _HistoryPageState extends State<HistoryPage> {
                           ),
                         ),
                         DividerComponent(
-                            top: 0, bottom: 0, left: 16, right: 16),
+                            top: 0, bottom: 20, left: 16, right: 16),
                         Padding(
                             padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                            child: CommentItemComponent()),
+                            child: CommentItemComponent(
+                                type: HistoryOptionsType.HISTORYPAGE)),
                       ],
                     ),
                   );

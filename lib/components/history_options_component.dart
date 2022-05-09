@@ -39,7 +39,11 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
   final OwnerClass ownerClass = OwnerClass();
 
   bool _showComments(int _qtyComment) {
-    return _qtyComment <= 0 ? true : false;
+    return _qtyComment > 0 ? true : false;
+  }
+
+  String _fillComment(int _qtyComment) {
+    return _qtyComment > 1 ? ' comentários' : '1 comentários';
   }
 
   bool _showComment(bool _isComment) {
@@ -125,22 +129,18 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _showComments(widget._history['qtyComment'])
+        !_showComments(widget._history['qtyComment'])
             ? Container()
             : TextButton(
                 child: Row(
                   children: [
-                    AnimatedFlipCounter(
-                      duration: const Duration(milliseconds: 500),
-                      value: widget._history['qtyComment'],
-                      textStyle: uiTextStyle.text2,
-                    ),
-                    Text(
-                      widget._history['qtyComment'] > 1
-                          ? ' comentários'
-                          : ' comentário',
-                      style: uiTextStyle.text2,
-                    ),
+                    if (widget._history['qtyComment'] > 0)
+                      AnimatedFlipCounter(
+                          duration: const Duration(milliseconds: 500),
+                          value: widget._history['qtyComment'],
+                          textStyle: uiTextStyle.text2),
+                    Text(_fillComment(widget._history['qtyComment']),
+                        style: uiTextStyle.text2),
                   ],
                 ),
                 onPressed: () {
