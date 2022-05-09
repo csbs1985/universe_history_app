@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/modal_input_comment_component.dart';
+import 'package:universe_history_app/shared/models/history_model.dart';
+import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -23,29 +25,38 @@ class _BtnCommentComponentState extends State<BtnCommentComponent> {
         builder: (context) => const ModalInputCommmentComponent());
   }
 
+  bool _isShow() {
+    return currentHistory.value.first.isComment && currentUser.value.isNotEmpty
+        ? true
+        : false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: MediaQuery.of(context).viewInsets.bottom,
-      left: 0,
-      right: 0,
-      child: Column(
-        children: [
-          const DividerComponent(bottom: 0),
-          GestureDetector(
-            child: Container(
-              color: uiColor.comp_1,
-              width: double.infinity,
-              height: uiSize.input,
-              child: const Padding(
-                  padding: EdgeInsets.fromLTRB(16, 12, 10, 10),
-                  child: Text("Escrever comentário...",
-                      style: uiTextStyle.text2, textAlign: TextAlign.left)),
+    return !_isShow()
+        ? const SizedBox()
+        : Positioned(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+            left: 0,
+            right: 0,
+            child: Column(
+              children: [
+                const DividerComponent(bottom: 0),
+                GestureDetector(
+                  child: Container(
+                    color: uiColor.comp_1,
+                    width: double.infinity,
+                    height: uiSize.input,
+                    child: const Padding(
+                        padding: EdgeInsets.fromLTRB(16, 12, 10, 10),
+                        child: Text("Escrever comentário...",
+                            style: uiTextStyle.text2,
+                            textAlign: TextAlign.left)),
+                  ),
+                  onTap: () => _showModal(context, 'index', true),
+                ),
+              ],
             ),
-            onTap: () => _showModal(context, 'index', true),
-          ),
-        ],
-      ),
-    );
+          );
   }
 }

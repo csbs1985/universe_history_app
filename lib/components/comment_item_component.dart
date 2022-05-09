@@ -69,13 +69,18 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
     return uiColor.comp_3;
   }
 
+  double _getHeightPaddingBottom() {
+    return currentHistory.value.first.isComment && currentUser.value.isNotEmpty
+        ? MediaQuery.of(context).viewInsets.bottom + 48
+        : 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: !currentUser.value.isNotEmpty
           ? null
-          : EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom + 48),
+          : EdgeInsets.only(bottom: _getHeightPaddingBottom()),
       child: StreamBuilder(
         stream: api.getAllComment(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
