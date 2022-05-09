@@ -11,7 +11,6 @@ import 'package:universe_history_app/components/resume_history_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/core/api.dart';
-import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -56,56 +55,59 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget _history(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     QueryDocumentSnapshot<dynamic> documents = snapshot.data!.docs.first;
     return Scaffold(
-      backgroundColor: uiColor.comp_1,
       appBar: const AppbarBackComponent(),
       body: Material(
         color: uiColor.comp_1,
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                Container(
-                  height: _getHeight(),
-                  padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                  child: Builder(builder: (context) {
-                    return SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (documents['title'] != "")
-                            TitleComponent(
-                                title: documents['title'], bottom: 0),
-                          ResumeHistoryComponent(resume: documents),
-                          Text(documents['text'], style: uiTextStyle.text1),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 20),
-                            child: Wrap(children: [
-                              for (var item in documents['categories'])
-                                Padding(
-                                    padding: const EdgeInsets.only(right: 4),
-                                    child: Text('#' + item,
-                                        style: uiTextStyle.text2)),
-                            ]),
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Stack(
+            children: [
+              Builder(
+                builder: (context) {
+                  return SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (documents['title'] != "")
+                                TitleComponent(
+                                    title: documents['title'], bottom: 0),
+                              ResumeHistoryComponent(resume: documents),
+                              Text(documents['text'], style: uiTextStyle.text1),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 20),
+                                child: Wrap(children: [
+                                  for (var item in documents['categories'])
+                                    Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 4),
+                                        child: Text('#' + item,
+                                            style: uiTextStyle.text2))
+                                ]),
+                              ),
+                              HistoryOptionsComponent(
+                                  history: documents,
+                                  type: HistoryOptionsType.HISTORYPAGE)
+                            ],
                           ),
-                        ],
-                      ),
-                    );
-                  }),
-                ),
-                Padding(
-                    padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                    child: HistoryOptionsComponent(
-                        history: documents,
-                        type: HistoryOptionsType.HISTORYPAGE)),
-                DividerComponent(top: 0, bottom: 0, left: 16, right: 16),
-                Container(
-                    height: _getHeight(),
-                    padding: EdgeInsets.fromLTRB(8, 10, 8, 0),
-                    child: CommentItemComponent())
-              ],
-            ),
-            if (currentUser.value.isNotEmpty) const BtnCommentComponent(),
-          ],
+                        ),
+                        DividerComponent(
+                            top: 0, bottom: 0, left: 16, right: 16),
+                        Padding(
+                            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                            child: CommentItemComponent()),
+                      ],
+                    ),
+                  );
+                },
+              ),
+              const BtnCommentComponent(),
+            ],
+          ),
         ),
       ),
     );
