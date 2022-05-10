@@ -79,13 +79,6 @@ class Api {
         arrayContainsAny: [currentUser.value.first.id]).snapshots();
   }
 
-  getAllNotification() {
-    return notification
-        .orderBy('date')
-        .where('idUser', isEqualTo: currentUser.value.first.id)
-        .snapshots();
-  }
-
   getAllUserHistory() {
     return history
         .orderBy('date')

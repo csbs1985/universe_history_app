@@ -69,7 +69,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
         .orderBy('date', descending: true);
 
     _query = _lastDocument != null
-        ? _query = _query.startAfterDocument(_lastDocument!).limit(PAGE_SIZE)
+        ? _query.startAfterDocument(_lastDocument!).limit(PAGE_SIZE)
         : _query.limit(PAGE_SIZE);
 
     final List<ActivitiesModel> pagedData = await _query.get().then((value) {
@@ -108,65 +108,58 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppbarBackComponent(),
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-                child: TitleResumeComponent('Suas atividades', _getResume())),
-            NotificationListener<ScrollEndNotification>(
-              child: _data.isEmpty
-                  ? _noResult()
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: _data.length + (_allFetched ? 0 : 1),
-                      itemBuilder: (BuildContext context, index) {
-                        if (index == _data.length) {
-                          return const SkeletonActivityComponent();
-                        } else {
-                          final item = _data[index];
-                          key:
-                          ValueKey(item);
-                          ActivitiesEnum content = ActivitiesEnum.values
-                              .firstWhere((e) =>
-                                  e.name.toString() == _data[index].type);
+        appBar: const AppbarBackComponent(),
+        body: SingleChildScrollView(
+            controller: _scrollController,
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+                  child: TitleResumeComponent('Suas atividades', _getResume())),
+              NotificationListener<ScrollEndNotification>(
+                  child: _data.isEmpty
+                      ? _noResult()
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: _data.length + (_allFetched ? 0 : 1),
+                          itemBuilder: (BuildContext context, index) {
+                            if (index == _data.length) {
+                              return const SkeletonActivityComponent();
+                            } else {
+                              final item = _data[index];
+                              ActivitiesEnum content = ActivitiesEnum.values
+                                  .firstWhere((e) =>
+                                      e.name.toString() == _data[index].type);
 
-                          switch (content) {
-                            case ActivitiesEnum.NEW_HISTORY:
-                              return ItemNewHistory(history: item);
-                            case ActivitiesEnum.LOGIN:
-                            case ActivitiesEnum.LOGOUT:
-                              return ItemLoginLogout(history: item);
-                            case ActivitiesEnum.UP_NICKNAME:
-                              return ItemUpNickName(history: item);
-                            case ActivitiesEnum.NEW_COMMENT:
-                              return ItemNewComment(history: item);
-                            case ActivitiesEnum.NEW_NICKNAME:
-                              return ItemNewNickName(history: item);
-                            case ActivitiesEnum.UP_NOTIFICATION:
-                              return ItemNotificationComponent(history: item);
-                            case ActivitiesEnum.BLOCK_USER:
-                            case ActivitiesEnum.UNBLOCK_USER:
-                              return ItemUpBlockComponent(history: item);
-                            case ActivitiesEnum.TEMPORARILY_DISABLED:
-                              return ItemTemporarilyDesabledComponent(
-                                  history: item);
-                            case ActivitiesEnum.NEW_ACCOUNT:
-                            default:
-                              return ItemNewAccountComponent(history: item);
-                          }
-                        }
-                      },
-                    ),
-            ),
-          ],
-        ),
-      ),
-    );
+                              switch (content) {
+                                case ActivitiesEnum.NEW_HISTORY:
+                                  return ItemNewHistory(history: item);
+                                case ActivitiesEnum.LOGIN:
+                                case ActivitiesEnum.LOGOUT:
+                                  return ItemLoginLogout(history: item);
+                                case ActivitiesEnum.UP_NICKNAME:
+                                  return ItemUpNickName(history: item);
+                                case ActivitiesEnum.NEW_COMMENT:
+                                  return ItemNewComment(history: item);
+                                case ActivitiesEnum.NEW_NICKNAME:
+                                  return ItemNewNickName(history: item);
+                                case ActivitiesEnum.UP_NOTIFICATION:
+                                  return ItemNotificationComponent(
+                                      history: item);
+                                case ActivitiesEnum.BLOCK_USER:
+                                case ActivitiesEnum.UNBLOCK_USER:
+                                  return ItemUpBlockComponent(history: item);
+                                case ActivitiesEnum.TEMPORARILY_DISABLED:
+                                  return ItemTemporarilyDesabledComponent(
+                                      history: item);
+                                case ActivitiesEnum.NEW_ACCOUNT:
+                                default:
+                                  return ItemNewAccountComponent(history: item);
+                              }
+                            }
+                          }))
+            ])));
   }
 
   Widget _noResult() {
