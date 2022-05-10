@@ -26,44 +26,37 @@ class _ItemTemporarilyDesabledComponentState
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 4),
-            child: IconCicleComponent(
-              icon: uiSvg.temporarily_disabled,
-              color: uiColor.temporarily_disabled,
-            ),
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width - 32 - 20 - 20,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  StyledText(
-                    style: uiTextStyle.text4,
-                    tags: {
-                      'bold': StyledTextTag(
-                          style: const TextStyle(fontWeight: FontWeight.bold))
-                    },
-                    text:
-                        'Se você esta lendo este bilhete é porque voltou, sabia que não ia aguentar por muito tempo. Bem vindo de volta! 😍',
-                  ),
-                  ResumeComponent(
-                    resume: editDateUtil(DateTime.parse(widget._history.date)
-                        .millisecondsSinceEpoch),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                  padding: EdgeInsets.only(top: 4),
+                  child: IconCicleComponent(
+                      icon: uiSvg.temporarily_disabled,
+                      color: uiColor.temporarily_disabled)),
+              SizedBox(
+                  width: MediaQuery.of(context).size.width - 72,
+                  child: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            StyledText(
+                                style: uiTextStyle.text4,
+                                tags: {
+                                  'bold': StyledTextTag(
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold))
+                                },
+                                text:
+                                    'Se você esta lendo este bilhete é porque voltou, sabia que não ia aguentar por muito tempo. Bem vindo de volta! 😍'),
+                            ResumeComponent(
+                                resume: editDateUtil(
+                                    DateTime.parse(widget._history.date)
+                                        .millisecondsSinceEpoch))
+                          ])))
+            ]));
   }
 }
