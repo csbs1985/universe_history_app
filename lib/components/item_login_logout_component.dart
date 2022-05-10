@@ -10,16 +10,17 @@ import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
 
-class ItemLogin extends StatefulWidget {
-  const ItemLogin({required ActivitiesModel history}) : _history = history;
+class ItemLoginLogout extends StatefulWidget {
+  const ItemLoginLogout({required ActivitiesModel history})
+      : _history = history;
 
   final ActivitiesModel _history;
 
   @override
-  State<ItemLogin> createState() => _ItemLoginState();
+  State<ItemLoginLogout> createState() => _ItemLoginLogoutState();
 }
 
-class _ItemLoginState extends State<ItemLogin> {
+class _ItemLoginLogoutState extends State<ItemLoginLogout> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -28,10 +29,16 @@ class _ItemLoginState extends State<ItemLogin> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-              padding: EdgeInsets.only(top: 4),
-              child:
-                  IconCicleComponent(icon: uiSvg.login, color: uiColor.login)),
+          Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: IconCicleComponent(
+                icon: widget._history.type == 'LOGIN'
+                    ? uiSvg.login
+                    : uiSvg.logout,
+                color: widget._history.type == 'LOGIN'
+                    ? uiColor.login
+                    : uiColor.logout),
+          ),
           SizedBox(
             width: MediaQuery.of(context).size.width - 72,
             child: Padding(
@@ -45,11 +52,13 @@ class _ItemLoginState extends State<ItemLogin> {
                         'bold': StyledTextTag(
                             style: const TextStyle(fontWeight: FontWeight.bold))
                       },
-                      text:
-                          'Alguém, espero que seja você, entrou na sua conta History pelo aparelho <bold>${widget._history.content}</bold>.'),
+                      text: widget._history.type == 'LOGIN'
+                          ? 'Alguém, espero que seja você, entrou na sua conta History pelo aparelho <bold>${widget._history.content}</bold>.'
+                          : 'Ainda bem que voltou, porque registramos sua saída pelo aparelho <bold>${widget._history.content}</bold>.'),
                   ResumeComponent(
-                      resume: editDateUtil(DateTime.parse(widget._history.date)
-                          .millisecondsSinceEpoch)),
+                    resume: editDateUtil(DateTime.parse(widget._history.date)
+                        .millisecondsSinceEpoch),
+                  ),
                 ],
               ),
             ),

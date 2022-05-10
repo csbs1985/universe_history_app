@@ -1,10 +1,9 @@
-// ignore_for_file: unused_element, empty_statements, dead_code, unrelated_type_equality_checks, curly_braces_in_flow_control_structures, constant_identifier_names, unused_label
+// ignore_for_file: unused_element, empty_statements, dead_code, unrelated_type_equality_checks, curly_braces_in_flow_control_structures, constant_identifier_names, unused_label, unused_field, prefer_final_fields, avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
-import 'package:universe_history_app/components/item_login_component.dart';
-import 'package:universe_history_app/components/item_logout_component.dart';
+import 'package:universe_history_app/components/item_login_logout_component.dart';
 import 'package:universe_history_app/components/item_new_account_component.dart';
 import 'package:universe_history_app/components/item_new_comment_component.dart';
 import 'package:universe_history_app/components/item_new_history_component.dart';
@@ -37,7 +36,12 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
 
   bool _allFetched = false;
   bool _isLoading = false;
+
+  String _qtyHistory = 'henhuma história';
+  String _qtyComment = 'henhum comentário';
+
   final List<ActivitiesModel> _data = [];
+
   DocumentSnapshot? _lastDocument;
 
   @override
@@ -83,14 +87,22 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
     });
   }
 
-  String _getResume() {
-    var qtyHistory = currentUser.value.first.qtyHistory <= 0
-        ? 'Nenhuma história'
-        : '${currentUser.value.first.qtyHistory} histórias';
-    var qtyComment = currentUser.value.first.qtyComment <= 0
-        ? 'Nenhum comentário'
-        : '${currentUser.value.first.qtyComment} comentários';
-    return qtyHistory + ' · ' + qtyComment;
+  _getResume() {
+    api
+        .getUser(currentUser.value.first.email)
+        .then((result) => {
+              if (result.docs.first['qtyHistory'] == 1)
+                _qtyHistory = '1 história',
+              if (result.docs.first['qtyHistory'] > 1)
+                _qtyHistory = '${result.docs.first['qtyHistory']} histórias',
+              if (result.docs.first['qtyComment'] == 1)
+                _qtyComment = '1 comentário',
+              if (result.docs.first['qtyComment'] > 1)
+                _qtyComment = '${result.docs.first['qtyComment']} comentários',
+            })
+        .catchError((error) => print('ERROR:' + error.toString()));
+
+    return _qtyHistory + ' · ' + _qtyComment;
   }
 
   @override
@@ -127,9 +139,8 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
                             case ActivitiesEnum.NEW_HISTORY:
                               return ItemNewHistory(history: item);
                             case ActivitiesEnum.LOGIN:
-                              return ItemLogin(history: item);
                             case ActivitiesEnum.LOGOUT:
-                              return ItemLogout(history: item);
+                              return ItemLoginLogout(history: item);
                             case ActivitiesEnum.UP_NICKNAME:
                               return ItemUpNickName(history: item);
                             case ActivitiesEnum.NEW_COMMENT:
