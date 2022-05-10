@@ -23,10 +23,8 @@ class ItemNewComment extends StatefulWidget {
 class _ItemNewCommentState extends State<ItemNewComment> {
   final HistoryClass historyClass = HistoryClass();
 
-  void _setHistory(item) {
-    historyClass.selectHistory(item);
-    Navigator.of(context).pushNamed("/history");
-  }
+  void _setHistory(_item) =>
+      Navigator.pushNamed(context, '/history', arguments: _item.elementId);
 
   @override
   Widget build(BuildContext context) {
@@ -40,32 +38,28 @@ class _ItemNewCommentState extends State<ItemNewComment> {
               const Padding(
                 padding: EdgeInsets.only(top: 4),
                 child: IconCicleComponent(
-                  icon: uiSvg.comment,
-                  color: uiColor.new_comment,
-                ),
+                    icon: uiSvg.comment, color: uiColor.new_comment),
               ),
               SizedBox(
-                width: MediaQuery.of(context).size.width - 32 - 20 - 20,
+                width: MediaQuery.of(context).size.width - 72,
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  padding: const EdgeInsets.only(left: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       StyledText(
-                        style: uiTextStyle.text4,
-                        tags: {
-                          'bold': StyledTextTag(
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold))
-                        },
-                        text:
-                            'Você deixou um comentário na história <bold>${widget._history.content}</bold>. Pode ver a repercussão dele clicando aqui.',
-                      ),
+                          style: uiTextStyle.text4,
+                          tags: {
+                            'bold': StyledTextTag(
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold))
+                          },
+                          text:
+                              'Você deixou um comentário na história <bold>${widget._history.content}</bold>. Pode ver a repercussão dele clicando aqui.'),
                       ResumeComponent(
-                        resume: editDateUtil(
-                            DateTime.parse(widget._history.date)
-                                .millisecondsSinceEpoch),
-                      ),
+                          resume: editDateUtil(
+                              DateTime.parse(widget._history.date)
+                                  .millisecondsSinceEpoch)),
                     ],
                   ),
                 ),
