@@ -30,32 +30,29 @@ class _ItemUpNickNameState extends State<ItemUpNickName> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Padding(
-              padding: EdgeInsets.only(top: 4),
-              child: IconCicleComponent(
-                icon: uiSvg.up_nickname,
-                color: uiColor.up_nickname,
-              ),
-            ),
+                padding: EdgeInsets.only(top: 4),
+                child: IconCicleComponent(
+                    icon: uiSvg.up_nickname, color: uiColor.up_nickname)),
             SizedBox(
-              width: MediaQuery.of(context).size.width - 32 - 20 - 20,
+              width: MediaQuery.of(context).size.width - 72,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                padding: const EdgeInsets.only(left: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     StyledText(
-                      style: uiTextStyle.text4,
-                      tags: {
-                        'bold': StyledTextTag(
-                            style: const TextStyle(fontWeight: FontWeight.bold))
-                      },
-                      text:
-                          'Alterou seu usuário de <bold>${widget._history.elementId}</bold> para <bold>${widget._history.content}</bold>. Espero que goste desta vez, pode ser que o <bold>${widget._history.elementId}</bold> não esteja mais disponível. Clique e descubra.',
-                    ),
+                        style: uiTextStyle.text4,
+                        tags: {
+                          'bold': StyledTextTag(
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold))
+                        },
+                        text:
+                            'Alterou seu usuário de <bold>${widget._history.elementId}</bold> para <bold>${widget._history.content}</bold>. Espero que goste desta vez, pode ser que <bold>${widget._history.elementId}</bold> não esteja mais disponível. Clique e descubra.'),
                     ResumeComponent(
-                      resume: editDateUtil(DateTime.parse(widget._history.date)
-                          .millisecondsSinceEpoch),
-                    ),
+                        resume: editDateUtil(
+                            DateTime.parse(widget._history.date)
+                                .millisecondsSinceEpoch)),
                   ],
                 ),
               ),
