@@ -29,32 +29,27 @@ class _ItemLoginState extends State<ItemLogin> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.only(top: 4),
-            child: IconCicleComponent(
-              icon: uiSvg.login,
-              color: uiColor.login,
-            ),
-          ),
+              padding: EdgeInsets.only(top: 4),
+              child:
+                  IconCicleComponent(icon: uiSvg.login, color: uiColor.login)),
           SizedBox(
-            width: MediaQuery.of(context).size.width - 32 - 20 - 20,
+            width: MediaQuery.of(context).size.width - 72,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+              padding: const EdgeInsets.only(left: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   StyledText(
-                    style: uiTextStyle.text4,
-                    tags: {
-                      'bold': StyledTextTag(
-                          style: const TextStyle(fontWeight: FontWeight.bold))
-                    },
-                    text:
-                        'Alguém, espero que seja você, entrou na sua conta History pelo aparelho <bold>${widget._history.content}</bold>.',
-                  ),
+                      style: uiTextStyle.text4,
+                      tags: {
+                        'bold': StyledTextTag(
+                            style: const TextStyle(fontWeight: FontWeight.bold))
+                      },
+                      text:
+                          'Alguém, espero que seja você, entrou na sua conta History pelo aparelho <bold>${widget._history.content}</bold>.'),
                   ResumeComponent(
-                    resume: editDateUtil(DateTime.parse(widget._history.date)
-                        .millisecondsSinceEpoch),
-                  ),
+                      resume: editDateUtil(DateTime.parse(widget._history.date)
+                          .millisecondsSinceEpoch)),
                 ],
               ),
             ),
