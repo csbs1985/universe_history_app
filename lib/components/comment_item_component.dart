@@ -106,56 +106,51 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
     List<QueryDocumentSnapshot<dynamic>> documents = snapshot.data!.docs;
     return !documents.isNotEmpty
         ? const CommentEmpty()
-        : Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+        : Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 48),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               if (widget._type == HistoryOptionsType.HOMEPAGE)
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                  child: Row(
-                    children: [
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                    child: Row(children: [
                       if (currentHistory.value.first.qtyComment > 0)
                         AnimatedFlipCounter(
                             duration: const Duration(milliseconds: 500),
                             value: currentHistory.value.first.qtyComment,
                             textStyle: uiTextStyle.text1),
                       ValueListenableBuilder(
-                        valueListenable: currentHistory,
-                        builder: (BuildContext context, value, __) {
-                          return Text(
-                              currentHistory.value.first.qtyComment > 1
-                                  ? ' comentários'
-                                  : ' comentário',
-                              style: uiTextStyle.text1);
-                        },
-                      ),
-                    ],
-                  ),
-                ),
+                          valueListenable: currentHistory,
+                          builder: (BuildContext context, value, __) {
+                            return Text(
+                                currentHistory.value.first.qtyComment > 1
+                                    ? ' comentários'
+                                    : ' comentário',
+                                style: uiTextStyle.text1);
+                          })
+                    ])),
               for (var item in documents)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                      child: Card(
-                        color: _getBackColor(item),
-                        margin: const EdgeInsets.all(0),
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(uiBorder.rounded)),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 6, 10, 8),
-                          child: item['isDelete']
-                              ? Text('Comentário apagado!'.toUpperCase(),
-                                  style: uiTextStyle.text8)
-                              : Text(item['text'], style: uiTextStyle.text1),
-                        ),
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  GestureDetector(
+                    child: Card(
+                      color: _getBackColor(item),
+                      margin: const EdgeInsets.all(0),
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(uiBorder.rounded)),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 6, 10, 8),
+                        child: item['isDelete']
+                            ? Text('Comentário apagado!'.toUpperCase(),
+                                style: uiTextStyle.text8)
+                            : Text(item['text'], style: uiTextStyle.text1),
                       ),
-                      onLongPress: _canShowOption(item.data())
-                          ? () => _showModal(context, item.data())
-                          : null,
                     ),
-                    Padding(
+                    onLongPress: _canShowOption(item.data())
+                        ? () => _showModal(context, item.data())
+                        : null,
+                  ),
+                  Padding(
                       padding: const EdgeInsets.fromLTRB(2, 4, 0, 16),
                       child: Text(
                           resumeUitl(item,
@@ -163,11 +158,8 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
                                   .toString()
                                   .split('.')
                                   .last),
-                          style: uiTextStyle.text2),
-                    ),
-                  ],
-                ),
-            ],
-          );
+                          style: uiTextStyle.text2)),
+                ])
+            ]));
   }
 }

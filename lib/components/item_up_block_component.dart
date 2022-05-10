@@ -31,46 +31,37 @@ class _ItemUpBlockComponentState extends State<ItemUpBlockComponent> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 4),
-              child: IconCicleComponent(
-                icon: uiSvg.block,
-                color: uiColor.block_user,
-              ),
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width - 32 - 20 - 20,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    StyledText(
-                      style: uiTextStyle.text4,
-                      tags: {
-                        'bold': StyledTextTag(
-                            style: const TextStyle(fontWeight: FontWeight.bold))
-                      },
-                      text: _getText(widget._history.type),
-                    ),
-                    ResumeComponent(
-                      resume: editDateUtil(DateTime.parse(widget._history.date)
-                          .millisecondsSinceEpoch),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-      onTap: () => Navigator.of(context).pushNamed("/blocked"),
-    );
+        child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                      padding: EdgeInsets.only(top: 4),
+                      child: IconCicleComponent(
+                          icon: uiSvg.block, color: uiColor.block_user)),
+                  SizedBox(
+                      width: MediaQuery.of(context).size.width - 72,
+                      child: Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                StyledText(
+                                    style: uiTextStyle.text4,
+                                    tags: {
+                                      'bold': StyledTextTag(
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold))
+                                    },
+                                    text: _getText(widget._history.type)),
+                                ResumeComponent(
+                                    resume: editDateUtil(
+                                        DateTime.parse(widget._history.date)
+                                            .millisecondsSinceEpoch))
+                              ])))
+                ])),
+        onTap: () => Navigator.of(context).pushNamed("/blocked"));
   }
 }

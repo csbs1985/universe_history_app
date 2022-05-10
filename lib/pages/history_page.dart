@@ -96,10 +96,7 @@ class _HistoryPageState extends State<HistoryPage> {
                         ),
                       ),
                       DividerComponent(top: 0, bottom: 20, left: 16, right: 16),
-                      Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 0, 16, 48),
-                          child: CommentItemComponent(
-                              type: HistoryOptionsType.HISTORYPAGE)),
+                      CommentItemComponent(type: HistoryOptionsType.HISTORYPAGE)
                     ],
                   ),
                 ),
