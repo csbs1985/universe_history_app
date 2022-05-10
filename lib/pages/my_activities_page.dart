@@ -47,7 +47,8 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
+              _scrollController.position.maxScrollExtent &&
+          !_allFetched) {
         _getContent();
       }
     });
