@@ -1,20 +1,19 @@
 // ignore_for_file: unused_field, use_key_in_widget_constructors, prefer_typing_uninitialized_variables
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 import 'package:styled_text/styled_text.dart';
 import 'package:universe_history_app/components/icon_circle_component.dart';
 import 'package:universe_history_app/components/resume_component.dart';
+import 'package:universe_history_app/shared/models/activities_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
 
 class ItemLogin extends StatefulWidget {
-  const ItemLogin({required QueryDocumentSnapshot<dynamic> history})
-      : _history = history;
+  const ItemLogin({required ActivitiesModel history}) : _history = history;
 
-  final QueryDocumentSnapshot<dynamic> _history;
+  final ActivitiesModel _history;
 
   @override
   State<ItemLogin> createState() => _ItemLoginState();
@@ -50,10 +49,10 @@ class _ItemLoginState extends State<ItemLogin> {
                           style: const TextStyle(fontWeight: FontWeight.bold))
                     },
                     text:
-                        'Alguém, espero que seja você, entrou na sua conta History pelo aparelho <bold>${widget._history['content']}</bold>.',
+                        'Alguém, espero que seja você, entrou na sua conta History pelo aparelho <bold>${widget._history.content}</bold>.',
                   ),
                   ResumeComponent(
-                    resume: editDateUtil(DateTime.parse(widget._history['date'])
+                    resume: editDateUtil(DateTime.parse(widget._history.date)
                         .millisecondsSinceEpoch),
                   ),
                 ],

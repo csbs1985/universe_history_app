@@ -68,13 +68,6 @@ class Api {
     return history.orderBy('date').snapshots();
   }
 
-  getAllActivities() {
-    return activitie
-        .where('userId', isEqualTo: currentUser.value.first.id)
-        .orderBy('date')
-        .snapshots();
-  }
-
   getAllHistoryFiltered(String _filter) {
     return history
         .orderBy('date')

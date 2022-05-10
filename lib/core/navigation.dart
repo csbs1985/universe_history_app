@@ -71,7 +71,7 @@ class Navigation {
         );
       case '/my-activities':
         return PageTransition(
-          child: const MyActivitiesPage(),
+          child: const ActivitiesPage(),
           type: PageTransitionType.rightToLeft,
           settings: settings,
         );

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
+import 'package:universe_history_app/theme/ui_size.dart';
 
 class IconCicleComponent extends StatefulWidget {
   const IconCicleComponent({
@@ -30,8 +31,8 @@ class _IconCicleComponentState extends State<IconCicleComponent> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(uiBorder.circle),
       child: Container(
-        width: widget._size ?? 32,
-        height: widget._size ?? 32,
+        width: widget._size ?? uiSize.iconCircle,
+        height: widget._size ?? uiSize.iconCircle,
         color: widget._color,
         child: Padding(
             padding: EdgeInsets.all(widget._margin ?? 8),
