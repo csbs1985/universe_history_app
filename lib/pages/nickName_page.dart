@@ -55,11 +55,9 @@ class _NickNamePageState extends State<NickNamePage> {
   }
 
   _validateUpdateNickname() {
-    setState(() {
-      var upDate = currentUser.value.first.upDateNickname;
-
-      if (upDate != null && upDate != '') {
-        var _days = qtyDays(upDate);
+    api.getUser(currentUser.value.first.email).then((result) {
+      setState(() {
+        var _days = qtyDays(result.docs.first['upDateNickname']);
 
         if (_days < _rulesDays) {
           _hasInput = false;
@@ -68,8 +66,8 @@ class _NickNamePageState extends State<NickNamePage> {
               'espera mais ${_rulesDays - _days} dia(s) para alterar o usuário';
           return;
         }
-      }
-    });
+      });
+    }).catchError((error) => print('ERROR:' + error.toString()));
   }
 
   _keyUp(String text) {
