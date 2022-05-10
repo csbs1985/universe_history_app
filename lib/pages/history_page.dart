@@ -12,7 +12,6 @@ import 'package:universe_history_app/components/resume_history_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/core/api.dart';
-import 'package:universe_history_app/shared/models/history_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -27,10 +26,8 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage> {
   final Api api = new Api();
 
-  double _getPaddingBottom() {
-    return currentHistory.value.first.isComment && currentUser.value.isNotEmpty
-        ? 0
-        : uiSize.input;
+  double _getPaddingBottom(bool _isComment) {
+    return _isComment && currentUser.value.isNotEmpty ? 0 : uiSize.input;
   }
 
   @override
@@ -70,7 +67,8 @@ class _HistoryPageState extends State<HistoryPage> {
             builder: (context) {
               return SingleChildScrollView(
                 child: Container(
-                  padding: EdgeInsets.only(bottom: _getPaddingBottom()),
+                  padding: EdgeInsets.only(
+                      bottom: _getPaddingBottom(documents['isComment'])),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -99,7 +97,7 @@ class _HistoryPageState extends State<HistoryPage> {
                       ),
                       DividerComponent(top: 0, bottom: 20, left: 16, right: 16),
                       Padding(
-                          padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                          padding: const EdgeInsets.fromLTRB(16, 0, 16, 48),
                           child: CommentItemComponent(
                               type: HistoryOptionsType.HISTORYPAGE)),
                     ],

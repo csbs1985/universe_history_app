@@ -21,10 +21,10 @@ class ItemNewHistory extends StatefulWidget {
 }
 
 class _ItemNewHistoryState extends State<ItemNewHistory> {
-  void _setHistory(item) {
-    currentHistory.value.first.id = item['elementId'];
-    Navigator.of(context).pushNamed("/history");
-  }
+  final HistoryClass historyClass = HistoryClass();
+
+  void _setHistory(_item) =>
+      Navigator.pushNamed(context, '/history', arguments: _item.elementId);
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +56,9 @@ class _ItemNewHistoryState extends State<ItemNewHistory> {
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold))
                         },
-                        text:
-                            'Você criou uma história com o título <bold>${widget._history.content}</bold>. Pode acessa-lá clicando aqui.',
+                        text: widget._history.content.isNotEmpty
+                            ? 'Você criou uma história com o título <bold>${widget._history.content}</bold>. Pode acessa-lá clicando aqui.'
+                            : 'Você criou uma história <bold>sem título</bold>. Pode acessa-lá clicando aqui.',
                       ),
                       ResumeComponent(
                         resume: editDateUtil(

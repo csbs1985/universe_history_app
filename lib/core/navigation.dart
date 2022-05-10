@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:universe_history_app/pages/denounce_page.dart';
-import 'package:universe_history_app/pages/my_activities_page.dart';
+import 'package:universe_history_app/pages/activities_page.dart';
 import 'package:universe_history_app/pages/nickName_page.dart';
 import 'package:universe_history_app/pages/about_page.dart';
 import 'package:universe_history_app/pages/blocked_users_page.dart';
