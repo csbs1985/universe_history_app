@@ -40,7 +40,7 @@ class _blockedUsersPageState extends State<blockedUsersPage> {
               toast.toast(context, ToastEnum.SUCCESS,
                   '${blocked['blockedNickName']} desbloqueado!'),
             })
-        .catchError((error) => print('ERROR:' + error.toString()));
+        .catchError((error) => debugPrint('ERROR:' + error.toString()));
   }
 
   @override

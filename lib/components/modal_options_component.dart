@@ -102,7 +102,7 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                 toast.toast(context, ToastEnum.SUCCESS, 'Comentário deletado!'),
                 Navigator.of(context).pop(),
               })
-          .catchError((error) => print('ERROR:' + error.toString()));
+          .catchError((error) => debugPrint('ERROR:' + error.toString()));
     }
 
     Navigator.of(context).pop();
@@ -121,7 +121,7 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                 toast.toast(context, ToastEnum.SUCCESS, 'História deletada!'),
                 Navigator.of(context).pop(),
               })
-          .catchError((error) => print('ERROR:' + error.toString()));
+          .catchError((error) => debugPrint('ERROR:' + error.toString()));
     }
     Navigator.of(context).pop();
   }
@@ -142,7 +142,7 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                 toast.toast(context, ToastEnum.SUCCESS, 'Usuário bloqueado!'),
                 Navigator.of(context).pop(),
               })
-          .catchError((error) => print('ERROR:' + error.toString()));
+          .catchError((error) => debugPrint('ERROR:' + error.toString()));
     }
     Navigator.of(context).pop();
   }

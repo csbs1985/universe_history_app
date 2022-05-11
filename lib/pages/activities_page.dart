@@ -100,7 +100,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
               if (result.docs.first['qtyComment'] > 1)
                 _qtyComment = '${result.docs.first['qtyComment']} comentários',
             })
-        .catchError((error) => print('ERROR:' + error.toString()));
+        .catchError((error) => debugPrint('ERROR:' + error.toString()));
 
     return _qtyHistory + ' · ' + _qtyComment;
   }

@@ -63,7 +63,7 @@ class _ModalInputCommmentComponentState
                 _commentEdit = result.docs[0].data(),
                 _commentEdit?['edit'] = true,
               })
-          .catchError((error) => print('ERROR:' + error.toString()));
+          .catchError((error) => debugPrint('ERROR:' + error.toString()));
     }
 
     super.initState();

@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:universe_history_app/core/api.dart';
@@ -101,7 +102,7 @@ class PushNotification {
   void getToken() async {
     await api.getToken().then((_token) {
       api.setToken(_token).then((_result) => currentToken.value = _result);
-    }).catchError((error) => print('ERROR:' + error.toString()));
+    }).catchError((error) => debugPrint('ERROR:' + error.toString()));
   }
 
   Future<void> sendNotificationComment(
@@ -131,6 +132,6 @@ class PushNotification {
       } catch (error) {
         print("ERROR:" + error.toString());
       }
-    }).catchError((error) => print('ERROR:' + error.toString()));
+    }).catchError((error) => debugPrint('ERROR:' + error.toString()));
   }
 }

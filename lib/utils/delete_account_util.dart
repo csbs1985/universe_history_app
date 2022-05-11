@@ -46,7 +46,7 @@ class DeleteAccountUtil {
               _deletetAllHistory(_context)
             },
           )
-          .catchError((error) => print('ERROR:' + error));
+          .catchError((error) => debugPrint('ERROR:' + error));
     }
   }
 
@@ -59,7 +59,7 @@ class DeleteAccountUtil {
               for (var item in result.docs) await api.deleteHistory(item['id']),
               _upAllComment(_context)
             })
-        .catchError((error) => print('ERROR:' + error));
+        .catchError((error) => debugPrint('ERROR:' + error));
   }
 
   Future<void> _upAllComment(BuildContext _context) async {
@@ -72,6 +72,6 @@ class DeleteAccountUtil {
                 await api.upStatusUserComment(item['id']),
               userClass.delete(_context)
             })
-        .catchError((error) => print('ERROR:' + error));
+        .catchError((error) => debugPrint('ERROR:' + error));
   }
 }

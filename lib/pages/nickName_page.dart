@@ -67,7 +67,7 @@ class _NickNamePageState extends State<NickNamePage> {
           return;
         }
       });
-    }).catchError((error) => print('ERROR:' + error.toString()));
+    }).catchError((error) => debugPrint('ERROR:' + error.toString()));
   }
 
   _keyUp(String text) {
@@ -140,7 +140,7 @@ class _NickNamePageState extends State<NickNamePage> {
               toast.toast(context, ToastEnum.SUCCESS, 'Conta criada!'),
               Navigator.of(context).pushNamed('/home')
             })
-        .catchError((error) => print('ERROR:' + error.toString()));
+        .catchError((error) => debugPrint('ERROR:' + error.toString()));
   }
 
   Future<void> _upNickname() async {
@@ -153,7 +153,7 @@ class _NickNamePageState extends State<NickNamePage> {
         .then((result) => {
               _upAllHistory(),
             })
-        .catchError((error) => print('ERROR:' + error.toString()));
+        .catchError((error) => debugPrint('ERROR:' + error.toString()));
   }
 
   Future<void> _upAllHistory() async {
@@ -167,7 +167,7 @@ class _NickNamePageState extends State<NickNamePage> {
                   await api.upNicknameHistory(item['id']),
               _upAllComment()
             })
-        .catchError((error) => print('ERROR:' + error.toString()));
+        .catchError((error) => debugPrint('ERROR:' + error.toString()));
   }
 
   Future<void> _upAllComment() async {
@@ -186,7 +186,7 @@ class _NickNamePageState extends State<NickNamePage> {
               currentDialog.value = 'Finalizando...',
               Navigator.of(context).pushNamed('/home')
             })
-        .catchError((error) => print('ERROR:' + error.toString()));
+        .catchError((error) => debugPrint('ERROR:' + error.toString()));
   }
 
   @override

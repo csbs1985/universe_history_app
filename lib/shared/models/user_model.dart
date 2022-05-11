@@ -114,7 +114,7 @@ class UserClass {
               toast.toast(context, ToastEnum.SUCCESS, 'Conta deletada!'),
               navService.pushNamed('/home'),
             })
-        .catchError((error) => print('ERROR:' + error.toString()));
+        .catchError((error) => debugPrint('ERROR:' + error.toString()));
   }
 
   void add(Map<String, dynamic> _user) {

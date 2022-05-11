@@ -36,7 +36,7 @@ class _SplashPageState extends State<SplashPage> {
               .then((result) => {
                     _userClass.add(result.docs!.first),
                   })
-              .catchError((error) => print('ERROR:' + error.toString()));
+              .catchError((error) => debugPrint('ERROR:' + error.toString()));
           print('object');
         }).catchError((error) => print(error));
       }

@@ -166,7 +166,7 @@ class _CreateHistoryState extends State<CreateHistory> {
                 _setUpQtyHistoryUser(),
               })
           .catchError((error) => {
-                print('ERROR:' + error.toString()),
+                debugPrint('ERROR:' + error.toString()),
                 toast.toast(context, ToastEnum.WARNING,
                     'Erro ao publicar história, tente novamente mais tarde.')
               });
@@ -189,7 +189,7 @@ class _CreateHistoryState extends State<CreateHistory> {
                       : 'Sua história foi publicada.'),
               Navigator.of(context).pop(),
             })
-        .catchError((error) => print('ERROR:' + error.toString()));
+        .catchError((error) => debugPrint('ERROR:' + error.toString()));
   }
 
   @override

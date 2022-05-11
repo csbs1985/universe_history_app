@@ -108,7 +108,8 @@ class _LoginPageState extends State<LoginPage> {
                                 'Bem vindo de volta ${currentUser.value.first.nickname}!'),
                             Navigator.of(context).pushNamed('/home')
                           })
-                      .catchError((error) => print('ERROR:' + error.toString()))
+                      .catchError(
+                          (error) => debugPrint('ERROR:' + error.toString()))
                 }
               else
                 {
@@ -133,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                 },
               currentUser.value.first = userClass as UserModel,
             })
-        .catchError((error) => print('ERROR:' + error.toString()));
+        .catchError((error) => debugPrint('ERROR:' + error.toString()));
   }
 
   @override
