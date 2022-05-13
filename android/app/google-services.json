@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "345854385639-fr0k4nsu18vuvdm2lkhm5ssublsvt80t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.universe.history.app",
+            "certificate_hash": "72393af4224662f0a1bbfa4af62ee7fe19e28392"
+          }
+        },
+        {
           "client_id": "345854385639-o8oo4hep9203i7b0j7rij5i95u0msf1q.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -214,6 +214,7 @@ class _NickNamePageState extends State<NickNamePage> {
                       controller: _textController,
                       maxLines: 1,
                       maxLength: 20,
+                      autofocus: true,
                       style: uiTextStyle.text1,
                       onChanged: (value) => _keyUp(value),
                       inputFormatters: [

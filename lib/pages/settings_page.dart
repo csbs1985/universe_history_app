@@ -93,7 +93,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           const BtnLinkComponent(
                               'Nome de usuário', '/nickname'),
                           const BtnLinkComponent(
-                              'Suas atividades', '/my-activities'),
+                              'Suas atividades', '/activities'),
                           SelectToggleComponent(
                             callback: (value) => _toggleNotification(),
                             title: 'Notificações',

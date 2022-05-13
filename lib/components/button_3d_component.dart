@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
+import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class Button3dComponent extends StatefulWidget {
@@ -52,13 +53,18 @@ class _Button3dComponentState extends State<Button3dComponent> {
       _borderColor = uiColor.buttonSecondBorder;
       _styleText = uiTextStyle.buttonSecondLabel;
     }
+    if (widget._style == ButtonStyleEnum.DISABLED) {
+      _backColor = uiColor.buttonDisabled;
+      _borderColor = uiColor.buttonDisabledBorder;
+      _styleText = uiTextStyle.buttonLabel;
+    }
   }
 
   double _getWidth() {
     if (widget._size == ButtonSizeEnum.SMALL) return 90;
     if (widget._size == ButtonSizeEnum.MEDIUM) return 100;
     if (widget._size == ButtonSizeEnum.LARGE)
-      return MediaQuery.of(context).size.width - 32;
+      return MediaQuery.of(context).size.width - uiSize.widthFullLessPadding;
     return _width;
   }
 
@@ -78,54 +84,48 @@ class _Button3dComponentState extends State<Button3dComponent> {
         child: Stack(
           children: [
             Positioned(
-              bottom: 0,
-              child: Container(
-                width: _getWidth(),
-                height: _getHeight(),
-                decoration: BoxDecoration(
-                  color: _borderColor,
-                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                ),
-              ),
-            ),
+                bottom: 0,
+                child: Container(
+                    width: _getWidth(),
+                    height: _getHeight(),
+                    decoration: BoxDecoration(
+                        color: _borderColor,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(8))))),
             AnimatedPositioned(
               curve: Curves.easeIn,
               bottom: _position,
               duration: const Duration(milliseconds: 10),
               child: Container(
-                width: _getWidth(),
-                height: _getHeight(),
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                decoration: BoxDecoration(
-                  color: _backColor,
-                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                ),
-                child: Center(
-                  child: Text(
-                    widget._label,
-                    style: _styleText,
-                  ),
-                ),
-              ),
+                  width: _getWidth(),
+                  height: _getHeight(),
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                      color: _backColor,
+                      borderRadius: const BorderRadius.all(Radius.circular(8))),
+                  child: Center(child: Text(widget._label, style: _styleText))),
             ),
           ],
         ),
       ),
       onTapUp: (_) {
-        setState(() {
-          _position = _borderSize;
-          widget._callback(true);
-        });
+        if (widget._style != ButtonStyleEnum.DISABLED)
+          setState(() {
+            _position = _borderSize;
+            widget._callback(true);
+          });
       },
       onTapDown: (_) {
-        setState(() {
-          _position = 0;
-        });
+        if (widget._style != ButtonStyleEnum.DISABLED)
+          setState(() {
+            _position = 0;
+          });
       },
       onTapCancel: () {
-        setState(() {
-          _position = _borderSize;
-        });
+        if (widget._style != ButtonStyleEnum.DISABLED)
+          setState(() {
+            _position = _borderSize;
+          });
       },
     );
   }

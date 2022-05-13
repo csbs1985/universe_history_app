@@ -41,6 +41,30 @@ class uiTextStyle {
     color: uiColor.third,
   );
 
+  static const TextStyle title1 = TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.w700,
+    color: uiColor.third,
+  );
+
+  static const TextStyle loginLabel = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+    color: uiColor.third,
+  );
+
+  static const TextStyle loginLabelError = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+    color: uiColor.warning,
+  );
+
+  static const TextStyle loginLabelSuccess = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+    color: uiColor.success,
+  );
+
   static const TextStyle text1 = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w400,

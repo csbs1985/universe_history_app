@@ -6,15 +6,18 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:no_context_navigation/no_context_navigation.dart';
+import 'package:provider/provider.dart';
 import 'package:universe_history_app/core/navigation.dart';
 import 'package:universe_history_app/core/push_notification.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/pages/splash_page.dart';
+import 'package:universe_history_app/services/auth_service.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
@@ -22,7 +25,11 @@ Future<void> main() async {
 
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+        providers: [ChangeNotifierProvider(create: (context) => AuthService())],
+        child: MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {

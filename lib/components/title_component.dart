@@ -17,10 +17,7 @@ class TitleComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.fromLTRB(0, _top ?? 0, 0, _bottom ?? 10),
-      child: Text(
-        _title,
-        style: uiTextStyle.header1,
-      ),
+      child: Text(_title, style: uiTextStyle.title1),
     );
   }
 }

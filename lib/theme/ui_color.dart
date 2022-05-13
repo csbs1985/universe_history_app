@@ -23,6 +23,10 @@ class uiColor {
   static const Color buttonSecondLabel = uiColor.first;
   static const Color buttonSecondBorder = const Color(0xFF212324);
 
+  static const Color buttonDisabled = const Color(0xFF2a2d2e);
+  static const Color buttonDisabledLabel = uiColor.first;
+  static const Color buttonDisabledBorder = const Color(0xFF212324);
+
   static const Color icon = const Color(0xFFc9d1d9);
 
   static const Color block_user = const Color(0xFF0392CE);

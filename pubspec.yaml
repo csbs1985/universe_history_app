@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
+  provider: ^6.0.2
 
   # core
   flutter_launcher_icons: ^0.9.2 # flutter pub run flutter_launcher_icons:main
@@ -31,6 +32,7 @@ dependencies:
   flutter_styled_toast: ^2.0.0
   button3d: ^0.1.1
   loading_animation_widget: ^1.1.0+5
+  intro_slider: ^3.0.4
 
   # firebase
   google_sign_in: ^5.2.3
@@ -51,6 +53,7 @@ dependencies:
 
   # device
   device_info_plus: ^3.2.2
+  text_transformation_animation: ^0.1.4
 
 dev_dependencies:
   flutter_test:

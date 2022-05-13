@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:universe_history_app/pages/denounce_page.dart';
 import 'package:universe_history_app/pages/activities_page.dart';
+import 'package:universe_history_app/pages/login/login_nick_page.dart';
+import 'package:universe_history_app/pages/login/login_password_page.dart';
 import 'package:universe_history_app/pages/nickName_page.dart';
 import 'package:universe_history_app/pages/about_page.dart';
 import 'package:universe_history_app/pages/blocked_users_page.dart';
@@ -11,7 +13,7 @@ import 'package:universe_history_app/pages/delete_account_page.dart';
 import 'package:universe_history_app/pages/history_page.dart';
 import 'package:universe_history_app/pages/home_page.dart';
 import 'package:universe_history_app/pages/justify_page.dart';
-import 'package:universe_history_app/pages/login_page.dart';
+import 'package:universe_history_app/pages/login/login_page.dart';
 import 'package:universe_history_app/pages/notification_page.dart';
 import 'package:universe_history_app/pages/privacy_page.dart';
 import 'package:universe_history_app/pages/search_page.dart';
@@ -69,7 +71,19 @@ class Navigation {
           type: PageTransitionType.rightToLeft,
           settings: settings,
         );
-      case '/my-activities':
+      case '/login-nick':
+        return PageTransition(
+          child: const LoginNickPage(),
+          type: PageTransitionType.rightToLeft,
+          settings: settings,
+        );
+      case '/login-password':
+        return PageTransition(
+          child: const LoginPasswordPage(),
+          type: PageTransitionType.rightToLeft,
+          settings: settings,
+        );
+      case '/activities':
         return PageTransition(
           child: const ActivitiesPage(),
           type: PageTransitionType.rightToLeft,
