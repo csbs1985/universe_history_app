@@ -14,20 +14,20 @@ class DeleteAccountUtil {
 
   late Map<String, dynamic> _form;
 
-  Future<void> deleteAccount(BuildContext _context, _justifySelected) async {
-    Navigator.of(_context).pop();
+  Future<void> deleteAccount(BuildContext context, _justifySelected) async {
+    Navigator.of(context).pop();
 
     currentDialog.value = 'Iniciando...';
 
     showDialog(
-        context: _context,
+        context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return const LoaderComponent();
         });
 
     if (_justifySelected == null) {
-      _deletetAllHistory(_context);
+      _deletetAllHistory(context);
     } else {
       _form = {
         'id': uuid.v4(),
@@ -43,34 +43,34 @@ class DeleteAccountUtil {
           .then(
             (result) => {
               currentDialog.value = 'Justificando...',
-              _deletetAllHistory(_context)
+              _deletetAllHistory(context)
             },
           )
           .catchError((error) => debugPrint('ERROR:' + error));
     }
   }
 
-  Future<void> _deletetAllHistory(BuildContext _context) async {
+  Future<void> _deletetAllHistory(BuildContext context) async {
     await api
         .getAllUserHistory()
         .then((result) async => {
               if (result.size > 0)
                 currentDialog.value = 'Deletando histórias...',
               for (var item in result.docs) await api.deleteHistory(item['id']),
-              _upAllComment(_context)
+              _upAllComment(context)
             })
         .catchError((error) => debugPrint('ERROR:' + error));
   }
 
-  Future<void> _upAllComment(BuildContext _context) async {
-    await api
+  _upAllComment(BuildContext context) {
+    api
         .getAllUserComment()
         .then((result) async => {
               if (result.size > 0)
                 currentDialog.value = 'Atualizando comentários...',
               for (var item in result.docs)
                 await api.upStatusUserComment(item['id']),
-              userClass.delete(_context)
+              userClass.delete(context)
             })
         .catchError((error) => debugPrint('ERROR:' + error));
   }

@@ -1,7 +1,6 @@
 // ignore_for_file: curly_braces_in_flow_control_structures, unused_field, constant_identifier_names, prefer_final_fields, void_checks
 
 import 'package:flutter/material.dart';
-import 'package:text_transformation_animation/text_transformation_animation.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
@@ -44,8 +43,12 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _verify() {
+    currentLoginEmail.value = emailController.text;
+    currentLoginTypeForm.value = _buttonText;
+
     if (_buttonText == loginButtonText.VERIFY) return _validateEmail();
     if (_buttonText == loginButtonText.REGISTER) return _register();
+    if (_buttonText == loginButtonText.LOGIN) return _login();
   }
 
   _validateEmail() {
@@ -70,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                 setState(() {
                   if (result.size > 0) {
                     _labelText =
-                        'encontrei o usuário "${result.docs.first['nickname']}"';
+                        'encontrei "${result.docs.first['nickname']}", se for você pode entrar!';
                     _labelStyle = loginLabelStyle.SUCCESS;
                     _buttonText = loginButtonText.LOGIN;
                   } else {
@@ -85,22 +88,12 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  login() async {
-    // setState(() => _loading = true);
-    // try {
-    //   await context
-    //       .read<AuthService
-    //       .login(emailController.text, passwordController.text);
-    // } on AuthException catch (e) {
-    //   setState(() => _loading = false);
-    //   ScaffoldMessenger.of(context)
-    //       .showSnackBar(SnackBar(content: Text(e.message)));
-    // }
+  _register() async {
+    Navigator.pushNamed(context, '/login-nick');
   }
 
-  _register() async {
-    currentLoginEmail.value = emailController.text;
-    Navigator.pushNamed(context, '/login-nick', arguments: _buttonText);
+  _login() async {
+    Navigator.pushNamed(context, '/login-password');
   }
 
   @override
@@ -115,10 +108,7 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const TitleComponent(title: 'Qual seu email?'),
-              TextTransformationAnimation(
-                  text: _labelText,
-                  style: loginUtil.getLabelStyle(_labelStyle),
-                  duration: const Duration(milliseconds: 150)),
+              Text(_labelText, style: loginUtil.getLabelStyle(_labelStyle)),
               const SizedBox(height: uiPadding.medium),
               TextFormField(
                   autofocus: true,

@@ -1,9 +1,8 @@
-// ignore_for_file: prefer_final_fields
+// ignore_for_file: prefer_final_fields, curly_braces_in_flow_control_structures
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:text_transformation_animation/text_transformation_animation.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/loader_component.dart';
@@ -41,14 +40,22 @@ class _LoginNickPageState extends State<LoginPasswordPage> {
   loginButtonText _buttonText = loginButtonText.REGISTER;
 
   String _labelText = "digite sua senha";
-  String _regx = '[a-z0-9-_.@*&]';
+  String _regx = '[a-z0-9_@*&]';
 
-  bool _isButtonDisabled = true;
-  bool _showPassword = false;
+  bool _showButton = false;
+  bool _hiddenPassword = true;
+
+  @override
+  initState() {
+    super.initState();
+
+    if (currentLoginTypeForm.value == loginButtonText.LOGIN)
+      setState(() => _buttonText = loginButtonText.LOGIN);
+  }
 
   _keyUp(String _nick) {
     setState(() {
-      _isButtonDisabled = true;
+      _showButton = false;
       if (_nick.isEmpty) {
         _labelStyle = loginLabelStyle.NORMAL;
         _labelText = "digite sua senha";
@@ -57,17 +64,19 @@ class _LoginNickPageState extends State<LoginPasswordPage> {
         _labelText = "6 caracteres, no minímo";
       } else {
         _labelStyle = loginLabelStyle.SUCCESS;
-        _labelText = "senha válida, criar conta?";
-        _isButtonDisabled = false;
+        _showButton = true;
+        _labelText = currentLoginTypeForm.value == loginButtonText.LOGIN
+            ? "senha válida, entrando..."
+            : "senha válida, criar conta?";
       }
     });
   }
 
   void _toggleShow() {
-    setState(() => _showPassword = !_showPassword);
+    setState(() => _hiddenPassword = !_hiddenPassword);
   }
 
-  void _register() async {
+  void _pressedButton() {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -75,26 +84,44 @@ class _LoginNickPageState extends State<LoginPasswordPage> {
           return const LoaderComponent();
         });
 
+    currentLoginTypeForm.value == loginButtonText.LOGIN
+        ? _login()
+        : _register();
+  }
+
+  void _login() async {
     try {
-      await context.read<AuthService>().registerAuthentication(
+      await context.read<AuthService>().loginAuthentication(
           currentLoginEmail.value, passwordController.text);
-      notification.getToken();
-      _registerFirestore();
+      toast.toast(context, ToastEnum.SUCCESS, 'bem vindo de volta.');
     } on AuthException catch (e) {
-      Navigator.of(context).pop();
       setState(() {
         _labelStyle = loginLabelStyle.WARNING;
         _labelText = e.message;
       });
+      Navigator.of(context).pop();
+    }
+  }
+
+  void _register() {
+    try {
+      context.read<AuthService>().registerAuthentication(
+          currentLoginEmail.value, passwordController.text);
+      _registerFirestore();
+    } on AuthException catch (e) {
+      setState(() {
+        _labelStyle = loginLabelStyle.WARNING;
+        _labelText = e.message;
+      });
+      Navigator.of(context).pop();
     }
   }
 
   Future<void> _registerFirestore() async {
-    // qj9vVwxNvzPwa3AU1jeLLmCb5qI3
-    context.read<AuthService>().auth.currentUser!.uid;
-
+    String _idUser = context.read<AuthService>().auth.currentUser!.uid;
+    notification.getToken();
     userClass.add({
-      'id': context.read<AuthService>().auth.currentUser!.uid,
+      'id': _idUser,
       'date': DateTime.now().toString(),
       'nickname': currentLoginNick.value,
       'upDateNickname': '',
@@ -132,14 +159,11 @@ class _LoginNickPageState extends State<LoginPasswordPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const TitleComponent(title: 'Qual sua senha?'),
-              TextTransformationAnimation(
-                  text: _labelText,
-                  style: loginUtil.getLabelStyle(_labelStyle),
-                  duration: const Duration(milliseconds: 150)),
+              Text(_labelText, style: loginUtil.getLabelStyle(_labelStyle)),
               const SizedBox(height: uiPadding.medium),
               TextFormField(
                   autofocus: true,
-                  obscureText: _showPassword,
+                  obscureText: _hiddenPassword,
                   controller: passwordController,
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp(_regx))
@@ -150,17 +174,16 @@ class _LoginNickPageState extends State<LoginPasswordPage> {
               const SizedBox(height: uiPadding.xLarge),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Button3dComponent(
-                    label: 'mostrar',
+                    label: _hiddenPassword ? 'mostrar' : 'esconder',
                     size: ButtonSizeEnum.MEDIUM,
                     style: ButtonStyleEnum.SECOND,
                     callback: (value) => _toggleShow()),
-                Button3dComponent(
-                    label: loginUtil.getButtonText(_buttonText),
-                    size: ButtonSizeEnum.MEDIUM,
-                    style: _isButtonDisabled
-                        ? ButtonStyleEnum.DISABLED
-                        : ButtonStyleEnum.PRIMARY,
-                    callback: (value) => _register())
+                if (_showButton)
+                  Button3dComponent(
+                      label: loginUtil.getButtonText(_buttonText),
+                      size: ButtonSizeEnum.MEDIUM,
+                      style: ButtonStyleEnum.PRIMARY,
+                      callback: (value) => _pressedButton())
               ])
             ],
           ),

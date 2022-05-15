@@ -36,28 +36,35 @@ class AuthService extends ChangeNotifier {
       _getUser();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        throw AuthException('A senha é muito fraca!');
+        throw AuthException('a senha é muito fraca');
       } else if (e.code == 'email-already-in-use') {
-        throw AuthException('Este email já está cadastrado');
+        throw AuthException('este email já está cadastrado');
       }
     }
   }
 
-  login(String email, String senha) async {
+  loginAuthentication(String email, String senha) async {
     try {
       await auth.signInWithEmailAndPassword(email: email, password: senha);
       _getUser();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        throw AuthException('Email não encontrado. Cadastre-se.');
+        throw AuthException('email não encontrado. Cadastre-se.');
       } else if (e.code == 'wrong-password') {
-        throw AuthException('Senha incorreta. Tente novamente');
+        throw AuthException('senha incorreta. Tente novamente');
       }
     }
   }
 
   logout() async {
     await auth.signOut();
+    _getUser();
+  }
+
+  delete() async {
+    var _user = auth.currentUser;
+    _user!.delete();
+
     _getUser();
   }
 }

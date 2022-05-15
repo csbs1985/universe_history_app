@@ -2,13 +2,12 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/services/auth_service.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/utils/device_util.dart';
 
@@ -79,42 +78,37 @@ class UserModel {
 
 class UserClass {
   final Api api = Api();
-  final GoogleSignIn googleSignIn = GoogleSignIn();
-  final ToastComponent toast = new ToastComponent();
-  User? _user;
+  final AuthService authService = AuthService();
+  final ToastComponent toast = ToastComponent();
 
   Future<void> clean(BuildContext context, String _status) async {
-    await googleSignIn
-        .signOut()
-        .then((value) => {
-              api.upStatusUser(_status).then((result) => {
-                    ActivityUtil(ActivitiesEnum.LOGOUT, DeviceModel(), ''),
-                    currentUser.value = [],
-                    toast.toast(context, ToastEnum.SUCCESS,
-                        'Você não esta mais logado!'),
-                    Navigator.of(context).pushNamed("/home"),
-                  })
-            })
-        .catchError((error) {
-      print('ERROR: ' + error.toString());
+    try {
+      await context.read<AuthService>().logout();
+      ActivityUtil(ActivitiesEnum.LOGOUT, DeviceModel(), '');
+      currentUser.value = [];
+      toast.toast(
+          context, ToastEnum.SUCCESS, 'espero que isso não seja um adeus!');
+    } catch (e) {
       toast.toast(context, ToastEnum.WARNING,
-          'ERROR: não foi possível sair da aplicação no momento, tente novamente mais tarde.');
-    });
+          'não foi possível sair da aplicação no momento, tente novamente mais tarde.');
+    }
   }
 
-  Future<void> delete(
+  void delete(
     BuildContext context,
-  ) async {
-    await api
+  ) {
+    api
         .deleteUser(currentUser.value.first.id)
         .then((result) async => {
-              _user = await FirebaseAuth.instance.currentUser,
-              _user!.delete(),
+              await context.read<AuthService>().logout(),
               currentUser.value = [],
-              toast.toast(context, ToastEnum.SUCCESS, 'Conta deletada!'),
-              navService.pushNamed('/home'),
+              toast.toast(context, ToastEnum.SUCCESS, 'Conta deletada!')
             })
-        .catchError((error) => debugPrint('ERROR:' + error.toString()));
+        .catchError((error) {
+      debugPrint('ERROR:' + error.toString());
+      toast.toast(context, ToastEnum.WARNING,
+          'não foi possível delatar a conta no momento, tente novamente mais tarde.');
+    });
   }
 
   void add(Map<String, dynamic> _user) {

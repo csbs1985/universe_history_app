@@ -28,9 +28,7 @@ class AppbarComponent extends StatefulWidget with PreferredSizeWidget {
 class _AppbarComponentState extends State<AppbarComponent> {
   void _onPressed(BuildContext context) {
     setState(() {
-      if (widget._callback != null) {
-        widget._callback!(true);
-      }
+      if (widget._callback != null) widget._callback!(true);
     });
   }
 
@@ -41,20 +39,17 @@ class _AppbarComponentState extends State<AppbarComponent> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: IconButton(
-        icon: SvgPicture.asset(widget._btnBack ? uiSvg.closed : uiSvg.closed),
-        onPressed: () => widget._btnBack ? _back(context) : null,
-      ),
-      actions: [
-        if (widget._btnPublish)
-          Center(
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-              child: ButtonPublishComponent(
-                  callback: (value) => _onPressed(context)),
-            ),
-          ),
-      ],
-    );
+        leading: IconButton(
+            icon:
+                SvgPicture.asset(widget._btnBack ? uiSvg.closed : uiSvg.closed),
+            onPressed: () => widget._btnBack ? _back(context) : null),
+        actions: [
+          if (widget._btnPublish)
+            Center(
+                child: Container(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                    child: ButtonPublishComponent(
+                        callback: (value) => _onPressed(context))))
+        ]);
   }
 }

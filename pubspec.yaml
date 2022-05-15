@@ -21,21 +21,21 @@ dependencies:
   no_context_navigation: ^2.1.2
 
   # layout
-  page_transition: ^2.0.4
   flutter_svg: ^1.0.0
   expandable_text: ^2.2.0
-  modal_bottom_sheet: ^2.0.0
+  modal_bottom_sheet: ^2.0.1
   skeleton_animation: ^0.1.4
   circle_button: ^1.1.0
   flutter_switch: ^0.3.2
   styled_text: ^4.0.0+1
   flutter_styled_toast: ^2.0.0
   button3d: ^0.1.1
+
+  # animation
+  page_transition: ^2.0.4
   loading_animation_widget: ^1.1.0+5
-  intro_slider: ^3.0.4
 
   # firebase
-  google_sign_in: ^5.2.3
   cloud_firestore: ^3.1.7
   firebase_core: ^1.12.0
   firebase_auth: ^3.3.6
@@ -53,7 +53,6 @@ dependencies:
 
   # device
   device_info_plus: ^3.2.2
-  text_transformation_animation: ^0.1.4
 
 dev_dependencies:
   flutter_test:

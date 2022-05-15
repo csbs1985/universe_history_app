@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:text_transformation_animation/text_transformation_animation.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
@@ -30,7 +29,7 @@ class _LoginNickPageState extends State<LoginNickPage> {
   String _labelText = "digite seu usuário";
   String _regx = '[a-z0-9-_.]';
 
-  bool _isButtonDisabled = true;
+  bool _showButton = false;
 
   _keyUp(String _nick) {
     RegExp regExp = RegExp(_regx);
@@ -39,9 +38,11 @@ class _LoginNickPageState extends State<LoginNickPage> {
       if (_nick.isEmpty) {
         _labelStyle = loginLabelStyle.NORMAL;
         _labelText = "digite seu usuário";
+        _showButton = false;
       } else if (!regExp.hasMatch(_nick)) {
         _labelStyle = loginLabelStyle.WARNING;
         _labelText = "veja a cima os caracteres aceitos";
+        _showButton = false;
       } else if (_nick.length > 5) {
         api
             .getNickName(_nick)
@@ -50,10 +51,11 @@ class _LoginNickPageState extends State<LoginNickPage> {
                     if (result.size > 0) {
                       _labelText = 'nome de usuário indisponível';
                       _labelStyle = loginLabelStyle.WARNING;
+                      _showButton = false;
                     } else {
                       _labelText = 'nome de usuário disponível, seguir?';
                       _labelStyle = loginLabelStyle.SUCCESS;
-                      _isButtonDisabled = false;
+                      _showButton = true;
                     }
                   })
                 })
@@ -62,14 +64,14 @@ class _LoginNickPageState extends State<LoginNickPage> {
       } else {
         _labelStyle = loginLabelStyle.SUCCESS;
         _labelText = "digitando usuário...";
+        _showButton = false;
       }
     });
   }
 
   void _next() {
     currentLoginNick.value = nickController.text;
-    Navigator.pushNamed(context, '/login-password',
-        arguments: ModalRoute.of(context)!.settings.arguments);
+    Navigator.pushNamed(context, '/login-password');
   }
 
   @override
@@ -84,10 +86,7 @@ class _LoginNickPageState extends State<LoginNickPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const TitleComponent(title: 'Qual seu nome de usuário?'),
-              TextTransformationAnimation(
-                  text: _labelText,
-                  style: loginUtil.getLabelStyle(_labelStyle),
-                  duration: const Duration(milliseconds: 150)),
+              Text(_labelText, style: loginUtil.getLabelStyle(_labelStyle)),
               const SizedBox(height: uiPadding.medium),
               TextFormField(
                   autofocus: true,
@@ -102,13 +101,12 @@ class _LoginNickPageState extends State<LoginNickPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Button3dComponent(
-                      label: loginUtil.getButtonText(_buttonText),
-                      size: ButtonSizeEnum.MEDIUM,
-                      style: _isButtonDisabled
-                          ? ButtonStyleEnum.DISABLED
-                          : ButtonStyleEnum.PRIMARY,
-                      callback: (value) => _next())
+                  if (_showButton)
+                    Button3dComponent(
+                        label: loginUtil.getButtonText(_buttonText),
+                        size: ButtonSizeEnum.MEDIUM,
+                        style: ButtonStyleEnum.PRIMARY,
+                        callback: (value) => _next())
                 ],
               )
             ],
