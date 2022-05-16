@@ -35,6 +35,16 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
+  logout() async {
+    await auth.signOut();
+    getUser();
+  }
+
+  delete() async {
+    auth.currentUser!.delete();
+    getUser();
+  }
+
   getToken() async {
     await api
         .getToken()
@@ -70,16 +80,5 @@ class AuthService extends ChangeNotifier {
         throw AuthException('senha incorreta. Tente novamente');
       }
     }
-  }
-
-  logout() async {
-    await auth.signOut();
-    getUser();
-  }
-
-  delete() async {
-    var _user = auth.currentUser;
-    _user!.delete();
-    getUser();
   }
 }

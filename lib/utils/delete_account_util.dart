@@ -62,8 +62,8 @@ class DeleteAccountUtil {
         .catchError((error) => debugPrint('ERROR:' + error));
   }
 
-  _upAllComment(BuildContext context) {
-    api
+  _upAllComment(BuildContext context) async {
+    await api
         .getAllUserComment()
         .then((result) async => {
               if (result.size > 0)

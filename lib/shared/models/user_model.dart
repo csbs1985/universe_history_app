@@ -83,7 +83,7 @@ class UserClass {
 
   Future<void> clean(BuildContext context, String _status) async {
     try {
-      await context.read<AuthService>().logout();
+      await authService.logout();
       ActivityUtil(ActivitiesEnum.LOGOUT, DeviceModel(), '');
       currentUser.value = [];
       toast.toast(
@@ -94,17 +94,15 @@ class UserClass {
     }
   }
 
-  void delete(
-    BuildContext context,
-  ) {
-    api
+  Future<void> delete(BuildContext context) async {
+    await api
         .deleteUser(currentUser.value.first.id)
         .then((result) async => {
-              await context.read<AuthService>().logout(),
+              await authService.delete(),
               currentUser.value = [],
-              toast.toast(context, ToastEnum.SUCCESS, 'Conta deletada!')
             })
         .catchError((error) {
+      Navigator.of(context).pop();
       debugPrint('ERROR:' + error.toString());
       toast.toast(context, ToastEnum.WARNING,
           'não foi possível delatar a conta no momento, tente novamente mais tarde.');
