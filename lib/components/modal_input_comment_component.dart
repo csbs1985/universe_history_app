@@ -61,7 +61,7 @@ class _ModalInputCommmentComponentState
                 _isInputNotEmpty = true,
                 _textSigned = result.docs[0].data()['isSigned'],
                 _commentEdit = result.docs[0].data(),
-                _commentEdit?['edit'] = true,
+                _commentEdit?['edit'] = true
               })
           .catchError((error) => debugPrint('ERROR:' + error.toString()));
     }
@@ -82,9 +82,7 @@ class _ModalInputCommmentComponentState
         _isInputNotEmpty = _commentController.text.length > 0 ? true : false);
   }
 
-  void _toggleAnonimous() {
-    setState(() => _textSigned = !_textSigned);
-  }
+  _toggleAnonimous() => setState(() => _textSigned = !_textSigned);
 
   void _showMentioned(BuildContext context, MentionedCallEnum type) {
     showCupertinoModalBottomSheet(
@@ -130,7 +128,7 @@ class _ModalInputCommmentComponentState
         'userId': _commentEdit?['userId'] ?? currentUser.value.first.id,
         'userNickName':
             _commentEdit?['userNickName'] ?? currentUser.value.first.nickname,
-        'userStatus': currentUser.value.first.status,
+        'userStatus': currentUser.value.first.status
       };
     });
 
@@ -146,12 +144,9 @@ class _ModalInputCommmentComponentState
       api
           .upNumComment()
           .then((result) => {
-                ActivityUtil(
-                  ActivitiesEnum.NEW_COMMENT,
-                  _commentController.text,
-                  currentHistory.value.first.id,
-                ),
-                _setUpQtyCommentUser(),
+                ActivityUtil(ActivitiesEnum.NEW_COMMENT,
+                    _commentController.text, currentHistory.value.first.id),
+                _setUpQtyCommentUser()
               })
           .catchError((error) => print('ERROR: ' + error));
     });
@@ -173,7 +168,7 @@ class _ModalInputCommmentComponentState
                   isEdit
                       ? 'Seu comentário foi alterado.'
                       : 'Seu comentário foi publicado.'),
-              Navigator.of(context).pop(),
+              Navigator.of(context).pop()
             })
         .catchError((error) => print('ERROR: ' + error));
   }
@@ -279,78 +274,73 @@ class _ModalInputCommmentComponentState
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: uiColor.comp_1,
-      child: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom + 70),
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
-                  child: TextField(
-                    controller: _commentController,
-                    onChanged: (value) => keyUp(value),
-                    autofocus: true,
-                    maxLines: null,
-                    style: uiTextStyle.text1,
-                    decoration: const InputDecoration.collapsed(
-                        hintText:
-                            "Escreva aqui seu comentário, ele pode ajudar alguém em um momento difícil, escolha com cuidado suas palavras.",
-                        hintStyle: uiTextStyle.text7),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-            left: 0,
-            right: 0,
-            child: Column(
-              children: [
-                const DividerComponent(bottom: 0),
-                Container(
-                  color: uiColor.comp_1,
-                  height: uiSize.input,
-                  padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Row(
-                        children: [
-                          IconComponent(
-                              icon: uiSvg.clean, callback: (value) => _clean()),
-                          IconComponent(
-                              icon: uiSvg.mentioned,
-                              callback: (value) => _showMentioned(
-                                  context, MentionedCallEnum.ICON)),
-                          const SizedBox(width: 10),
-                          ToggleComponent(
-                            value: _textSigned,
-                            callback: (value) => _toggleAnonimous(),
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                              _textSigned
-                                  ? currentUser.value.first.nickname
-                                  : 'anônimo',
-                              style: uiTextStyle.text2),
-                        ],
-                      ),
-                      if (_isInputNotEmpty)
-                        ButtonPublishComponent(
-                            callback: (value) => _publishComment()),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+        color: uiColor.comp_1,
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+                child: Container(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom +
+                            uiSize.input),
+                    child: SingleChildScrollView(
+                        child: TextField(
+                            controller: _commentController,
+                            onChanged: (value) => keyUp(value),
+                            autofocus: true,
+                            minLines: 1,
+                            maxLines: null,
+                            style: uiTextStyle.text1,
+                            decoration: const InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: uiColor.comp_1, width: 0)),
+                                hintText:
+                                    "Escreva aqui seu comentário, ele pode ajudar alguém em um momento difícil, escolha com cuidado suas palavras.",
+                                hintStyle: uiTextStyle.text7))))),
+            Positioned(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+                left: 0,
+                right: 0,
+                child: Column(
+                  children: [
+                    const DividerComponent(bottom: 0),
+                    Container(
+                        color: uiColor.comp_1,
+                        height: uiSize.input,
+                        padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                              children: [
+                                IconComponent(
+                                    icon: uiSvg.clean,
+                                    callback: (value) => _clean()),
+                                IconComponent(
+                                    icon: uiSvg.mentioned,
+                                    callback: (value) => _showMentioned(
+                                        context, MentionedCallEnum.ICON)),
+                                const SizedBox(width: 10),
+                                ToggleComponent(
+                                    value: _textSigned,
+                                    callback: (value) => _toggleAnonimous()),
+                                const SizedBox(width: 10),
+                                Text(
+                                    _textSigned
+                                        ? currentUser.value.first.nickname
+                                        : 'anônimo',
+                                    style: uiTextStyle.text2)
+                              ],
+                            ),
+                            if (_isInputNotEmpty)
+                              ButtonPublishComponent(
+                                  callback: (value) => _publishComment())
+                          ],
+                        ))
+                  ],
+                ))
+          ],
+        ));
   }
 }
