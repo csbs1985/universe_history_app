@@ -66,7 +66,7 @@ class _blockedUsersPageState extends State<blockedUsersPage> {
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.data != null) {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                    WidgetsBinding.instance!.addPostFrameCallback((_) {
                       currentBlockedQty.value = snapshot.data!.size;
                     });
                   }
