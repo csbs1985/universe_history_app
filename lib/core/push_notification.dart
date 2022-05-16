@@ -99,14 +99,6 @@ class PushNotification {
     });
   }
 
-  void getToken() async {
-    await api.getToken().then((_token) async {
-      await api
-          .setToken(_token)
-          .then((_result) => currentToken.value = _result);
-    }).catchError((error) => debugPrint('ERROR:' + error.toString()));
-  }
-
   Future<void> sendNotificationComment(
       String title, String body, String idHistory, String _mencioned) async {
     await api.getTokenOwner(_mencioned).then((result) async {

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_final_fields, curly_braces_in_flow_control_structures
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +28,7 @@ class LoginPasswordPage extends StatefulWidget {
 }
 
 class _LoginNickPageState extends State<LoginPasswordPage> {
+  final AuthService authService = AuthService();
   final Api api = Api();
   final LoginUtil loginUtil = LoginUtil();
   final PushNotification notification = PushNotification();
@@ -118,17 +120,15 @@ class _LoginNickPageState extends State<LoginPasswordPage> {
   }
 
   Future<void> _registerFirestore() async {
-    String _idUser = context.read<AuthService>().auth.currentUser!.uid;
-    notification.getToken();
     userClass.add({
-      'id': _idUser,
+      'id': context.read<AuthService>().auth.currentUser?.uid,
       'date': DateTime.now().toString(),
       'nickname': currentLoginNick.value,
       'upDateNickname': '',
       'status': UserStatus.ACTIVE.toString().split('.').last,
       'email': currentLoginEmail.value,
       'channel': 'email',
-      'token': currentToken.value,
+      'token': context.read<AuthService>().getToken(),
       'isNotification': true,
       'qtyHistory': 0,
       'qtyComment': 0,

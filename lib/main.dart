@@ -44,8 +44,6 @@ class MyApp extends StatelessWidget {
         systemNavigationBarColor: uiColor.comp_1,
         systemNavigationBarIconBrightness: Brightness.light));
 
-    if (currentToken.value == null) _notification.getToken();
-
     _notification.init();
 
     return MaterialApp(

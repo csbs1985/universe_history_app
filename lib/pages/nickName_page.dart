@@ -128,7 +128,7 @@ class _NickNamePageState extends State<NickNamePage> {
 
     userNew.value ? _newNickname() : _upNickname();
 
-    _notification.getToken();
+    // _notification.getToken();
   }
 
   Future<void> _newNickname() async {

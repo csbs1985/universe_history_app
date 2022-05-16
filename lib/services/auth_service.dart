@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:universe_history_app/core/api.dart';
 
 class AuthException implements Exception {
   String message;
@@ -9,8 +10,11 @@ class AuthException implements Exception {
 }
 
 class AuthService extends ChangeNotifier {
+  final Api api = Api();
+
   FirebaseAuth auth = FirebaseAuth.instance;
   User? user;
+
   bool isLoading = true;
 
   AuthService() {
@@ -25,15 +29,24 @@ class AuthService extends ChangeNotifier {
     });
   }
 
-  _getUser() {
+  getUser() {
     user = auth.currentUser;
     notifyListeners();
+  }
+
+  String getToken() {
+    String token = '';
+    api
+        .getToken()
+        .then((String result) => token = result)
+        .catchError((error) => debugPrint('ERROR:' + error));
+    return token;
   }
 
   registerAuthentication(String email, String senha) async {
     try {
       await auth.createUserWithEmailAndPassword(email: email, password: senha);
-      _getUser();
+      getUser();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw AuthException('a senha é muito fraca');
@@ -46,7 +59,7 @@ class AuthService extends ChangeNotifier {
   loginAuthentication(String email, String senha) async {
     try {
       await auth.signInWithEmailAndPassword(email: email, password: senha);
-      _getUser();
+      getUser();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         throw AuthException('email não encontrado. Cadastre-se.');
@@ -58,13 +71,13 @@ class AuthService extends ChangeNotifier {
 
   logout() async {
     await auth.signOut();
-    _getUser();
+    getUser();
   }
 
   delete() async {
     var _user = auth.currentUser;
     _user!.delete();
 
-    _getUser();
+    getUser();
   }
 }
