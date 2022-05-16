@@ -1,9 +1,7 @@
 // ignore_for_file: prefer_final_fields, curly_braces_in_flow_control_structures
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/loader_component.dart';
@@ -93,7 +91,7 @@ class _LoginNickPageState extends State<LoginPasswordPage> {
 
   void _login() async {
     try {
-      await context.read<AuthService>().loginAuthentication(
+      await authService.loginAuthentication(
           currentLoginEmail.value, passwordController.text);
       toast.toast(context, ToastEnum.SUCCESS, 'bem vindo de volta.');
     } on AuthException catch (e) {
@@ -105,9 +103,9 @@ class _LoginNickPageState extends State<LoginPasswordPage> {
     }
   }
 
-  void _register() {
+  void _register() async {
     try {
-      context.read<AuthService>().registerAuthentication(
+      await authService.registerAuthentication(
           currentLoginEmail.value, passwordController.text);
       _registerFirestore();
     } on AuthException catch (e) {
@@ -121,14 +119,14 @@ class _LoginNickPageState extends State<LoginPasswordPage> {
 
   Future<void> _registerFirestore() async {
     userClass.add({
-      'id': context.read<AuthService>().auth.currentUser?.uid,
+      'id': authService.user?.uid,
       'date': DateTime.now().toString(),
       'nickname': currentLoginNick.value,
       'upDateNickname': '',
       'status': UserStatus.ACTIVE.toString().split('.').last,
       'email': currentLoginEmail.value,
       'channel': 'email',
-      'token': context.read<AuthService>().getToken(),
+      'token': authService.token ?? '',
       'isNotification': true,
       'qtyHistory': 0,
       'qtyComment': 0,

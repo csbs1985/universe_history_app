@@ -16,6 +16,7 @@ class AuthService extends ChangeNotifier {
   User? user;
 
   bool isLoading = true;
+  String? token;
 
   AuthService() {
     _authCheck();
@@ -34,19 +35,20 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
-  String getToken() {
-    String token = '';
-    api
+  getToken() async {
+    await api
         .getToken()
-        .then((String result) => token = result)
+        .then((String result) => {
+              token = result,
+            })
         .catchError((error) => debugPrint('ERROR:' + error));
-    return token;
   }
 
   registerAuthentication(String email, String senha) async {
     try {
       await auth.createUserWithEmailAndPassword(email: email, password: senha);
-      getUser();
+      await getUser();
+      await getToken();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw AuthException('a senha é muito fraca');
@@ -59,7 +61,8 @@ class AuthService extends ChangeNotifier {
   loginAuthentication(String email, String senha) async {
     try {
       await auth.signInWithEmailAndPassword(email: email, password: senha);
-      getUser();
+      await getUser();
+      await getToken();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         throw AuthException('email não encontrado. Cadastre-se.');
@@ -77,7 +80,6 @@ class AuthService extends ChangeNotifier {
   delete() async {
     var _user = auth.currentUser;
     _user!.delete();
-
     getUser();
   }
 }

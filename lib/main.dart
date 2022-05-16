@@ -9,7 +9,6 @@ import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:provider/provider.dart';
 import 'package:universe_history_app/core/navigation.dart';
 import 'package:universe_history_app/core/push_notification.dart';
-import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/pages/splash_page.dart';
 import 'package:universe_history_app/services/auth_service.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
