@@ -58,82 +58,76 @@ class _ModalMentionedComponentState extends State<ModalMentionedComponent> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: uiColor.comp_1,
-      child: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
-                  child: _snapshot == null
-                      ? _noResult()
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          reverse: true,
-                          itemCount: _snapshot!.length,
-                          itemBuilder: (BuildContext context, int index) =>
-                              Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  height: 48,
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 0, 10, 10),
-                                  child: TextButton(
-                                    child: Text(
-                                        '@' +
-                                            _snapshot![index].data['nickname'],
-                                        style: uiTextStyle.buttonSecondLabel),
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              uiColor.buttonSecond),
-                                    ),
-                                    onPressed: () =>
-                                        _setUser(_snapshot![index].data),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-            left: 0,
-            right: 0,
-            child: Column(
-              children: [
-                const DividerComponent(bottom: 0),
-                Container(
-                  height: uiSize.input,
-                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: Center(
-                    child: TextField(
-                      controller: _commentController,
-                      onChanged: (value) => keyUp(),
-                      autofocus: true,
-                      maxLines: null,
-                      style: uiTextStyle.text1,
-                      decoration: const InputDecoration.collapsed(
-                          hintText: "Mencionar usuário...",
-                          hintStyle: uiTextStyle.text7),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+        color: uiColor.comp_1,
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+                child: Container(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: SingleChildScrollView(
+                        child: Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+                            child: _snapshot == null
+                                ? _noResult()
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    reverse: true,
+                                    itemCount: _snapshot!.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) =>
+                                            Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 0, 10, 0),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                        height: uiSize.input,
+                                                        padding:
+                                                            const EdgeInsets.fromLTRB(
+                                                                0, 0, 10, 10),
+                                                        child: TextButton(
+                                                            child: Text('@' + _snapshot![index].data['nickname'],
+                                                                style: uiTextStyle
+                                                                    .buttonSecondLabel),
+                                                            style: ButtonStyle(
+                                                                backgroundColor:
+                                                                    MaterialStateProperty.all(uiColor
+                                                                        .buttonSecond)),
+                                                            onPressed: () => _setUser(
+                                                                _snapshot![index]
+                                                                    .data)))
+                                                  ],
+                                                ))))))),
+            Positioned(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+                left: 0,
+                right: 0,
+                child: Column(
+                  children: [
+                    const DividerComponent(bottom: 0),
+                    Container(
+                        height: 54,
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        child: Center(
+                            child: TextField(
+                                controller: _commentController,
+                                onChanged: (value) => keyUp(),
+                                autofocus: true,
+                                maxLines: null,
+                                style: uiTextStyle.text1,
+                                decoration: const InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: uiColor.comp_1, width: 0)),
+                                    hintText: "Mencionar usuário...",
+                                    hintStyle: uiTextStyle.text7))))
+                  ],
+                ))
+          ],
+        ));
   }
 
   Widget _noResult() {
