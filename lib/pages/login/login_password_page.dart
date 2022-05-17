@@ -148,45 +148,45 @@ class _LoginNickPageState extends State<LoginPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppbarBackComponent(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(
-              uiPadding.large, 0, uiPadding.large, uiPadding.large),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const TitleComponent(title: 'Qual sua senha?'),
-              Text(_labelText, style: loginUtil.getLabelStyle(_labelStyle)),
-              const SizedBox(height: uiPadding.medium),
-              TextFormField(
-                  autofocus: true,
-                  obscureText: _hiddenPassword,
-                  controller: passwordController,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(_regx))
+        appBar: const AppbarBackComponent(),
+        body: SingleChildScrollView(
+            child: Padding(
+                padding: const EdgeInsets.fromLTRB(
+                    uiPadding.large, 0, uiPadding.large, uiPadding.large),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const TitleComponent(title: 'Qual sua senha?'),
+                    Text(_labelText,
+                        style: loginUtil.getLabelStyle(_labelStyle)),
+                    const SizedBox(height: uiPadding.medium),
+                    TextFormField(
+                        autofocus: true,
+                        obscureText: _hiddenPassword,
+                        controller: passwordController,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(_regx))
+                        ],
+                        onChanged: (value) => _keyUp(value),
+                        style: uiTextStyle.text1,
+                        keyboardType: TextInputType.emailAddress),
+                    const SizedBox(height: uiPadding.xLarge),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Button3dComponent(
+                              label: _hiddenPassword ? 'mostrar' : 'esconder',
+                              size: ButtonSizeEnum.MEDIUM,
+                              style: ButtonStyleEnum.SECOND,
+                              callback: (value) => _toggleShow()),
+                          if (_showButton)
+                            Button3dComponent(
+                                label: loginUtil.getButtonText(_buttonText),
+                                size: ButtonSizeEnum.MEDIUM,
+                                style: ButtonStyleEnum.PRIMARY,
+                                callback: (value) => _pressedButton())
+                        ])
                   ],
-                  onChanged: (value) => _keyUp(value),
-                  style: uiTextStyle.text1,
-                  keyboardType: TextInputType.emailAddress),
-              const SizedBox(height: uiPadding.xLarge),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Button3dComponent(
-                    label: _hiddenPassword ? 'mostrar' : 'esconder',
-                    size: ButtonSizeEnum.MEDIUM,
-                    style: ButtonStyleEnum.SECOND,
-                    callback: (value) => _toggleShow()),
-                if (_showButton)
-                  Button3dComponent(
-                      label: loginUtil.getButtonText(_buttonText),
-                      size: ButtonSizeEnum.MEDIUM,
-                      style: ButtonStyleEnum.PRIMARY,
-                      callback: (value) => _pressedButton())
-              ])
-            ],
-          ),
-        ),
-      ),
-    );
+                ))));
   }
 }

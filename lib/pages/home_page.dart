@@ -46,84 +46,82 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () => exit(0),
-      child: Scaffold(
-        appBar: AppBar(
-          leadingWidth: double.infinity,
-          automaticallyImplyLeading: false,
-          elevation: 0,
-          toolbarHeight: 54,
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                LogoComponent(size: 20, callback: (value) => _scrollToTop())
-              ],
-            ),
-          ),
-          actions: [
-            // IconComponent(
-            //   icon: uiSvg.search,
-            //   route: 'search',
-            // ),
-            Padding(
-              padding: const EdgeInsets.only(top: 3),
-              child: ValueListenableBuilder(
-                valueListenable: currentNotification,
-                builder: (BuildContext context, value, __) {
-                  return Stack(
-                    children: [
-                      IconComponent(
-                          icon: uiSvg.notification, route: 'notification'),
-                      if (currentNotification.value)
-                        Positioned(
-                            top: 10,
-                            right: 12,
-                            child: CircleAvatar(
-                                radius: 4, backgroundColor: uiColor.first))
-                    ],
-                  );
-                },
+        onWillPop: () => exit(0),
+        child: Scaffold(
+            appBar: AppBar(
+              leadingWidth: double.infinity,
+              automaticallyImplyLeading: false,
+              elevation: 0,
+              toolbarHeight: 54,
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    LogoComponent(size: 20, callback: (value) => _scrollToTop())
+                  ],
+                ),
               ),
-            ),
-            IconComponent(icon: uiSvg.menu, route: 'settings'),
-            SizedBox(width: 10),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: uiColor.first,
-          elevation: 0,
-          child: SvgPicture.asset(uiSvg.create),
-          onPressed: () => {
-            currentHistory.value = [],
-            Navigator.of(context)
-                .pushNamed(currentUser.value.isNotEmpty ? "/create" : "/login")
-          },
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(uiBorder.rounded)),
-        ),
-        body: Container(
-          color: uiColor.comp_1,
-          child: SingleChildScrollView(
-            controller: _scrollController,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                MenuComponent(),
-                SizedBox(height: 10),
-                Flexible(
-                    child: HistoryListComponent(
-                        itemSelectedMenu: _itemSelectedMenu)),
-                AllForNowComponent(),
-                SizedBox(height: 50),
+              actions: [
+                // IconComponent(
+                //   icon: uiSvg.search,
+                //   route: 'search',
+                // ),
+                if (currentUser.value.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 3),
+                    child: ValueListenableBuilder(
+                      valueListenable: currentNotification,
+                      builder: (BuildContext context, value, __) {
+                        return Stack(
+                          children: [
+                            IconComponent(
+                                icon: uiSvg.notification,
+                                route: 'notification'),
+                            if (currentNotification.value)
+                              Positioned(
+                                  top: 10,
+                                  right: 12,
+                                  child: CircleAvatar(
+                                      radius: 4,
+                                      backgroundColor: uiColor.first))
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                IconComponent(icon: uiSvg.menu, route: 'settings'),
+                SizedBox(width: 10)
               ],
             ),
-          ),
-        ),
-      ),
-    );
+            floatingActionButton: FloatingActionButton(
+                backgroundColor: uiColor.first,
+                elevation: 0,
+                child: SvgPicture.asset(uiSvg.create),
+                onPressed: () => {
+                      currentHistory.value = [],
+                      Navigator.of(context).pushNamed(
+                          currentUser.value.isNotEmpty ? "/create" : "/login")
+                    },
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(uiBorder.rounded))),
+            body: Container(
+                color: uiColor.comp_1,
+                child: SingleChildScrollView(
+                    controller: _scrollController,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        MenuComponent(),
+                        SizedBox(height: 10),
+                        Flexible(
+                            child: HistoryListComponent(
+                                itemSelectedMenu: _itemSelectedMenu)),
+                        AllForNowComponent(),
+                        SizedBox(height: 50)
+                      ],
+                    )))));
   }
 }
