@@ -43,44 +43,38 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
               return Column(
                 children: [
                   Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        if (documents[index]['title'] != "")
-                          TitleComponent(
-                              title: documents[index]['title'], bottom: 0),
-                        ResumeHistoryComponent(resume: documents[index]),
-                        ExpandableText(
-                          documents[index]['text'],
-                          style: uiTextStyle.text1,
-                          expandText: 'continuar lendo',
-                          collapseText: 'fechar',
-                          maxLines: 10,
-                          linkColor: uiColor.first,
-                        ),
-                        Wrap(
-                          children: [
-                            for (var item in documents[index]['categories'])
-                              Padding(
-                                padding: const EdgeInsets.only(right: 4),
-                                child: Text(
-                                  '#' + item,
-                                  style: uiTextStyle.text2,
-                                ),
-                              ),
-                          ],
-                        ),
-                        HistoryOptionsComponent(
-                            history: documents[index],
-                            type: HistoryOptionsType.HOMEPAGE),
-                        const SizedBox(height: 10),
-                        const DividerComponent(bottom: 0),
-                      ],
-                    ),
-                  ),
+                      width: double.infinity,
+                      padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          if (documents[index]['title'] != "")
+                            TitleComponent(
+                                title: documents[index]['title'], bottom: 0),
+                          ResumeHistoryComponent(resume: documents[index]),
+                          ExpandableText(documents[index]['text'],
+                              style: uiTextStyle.text1,
+                              expandText: 'continuar lendo',
+                              collapseText: 'fechar',
+                              maxLines: 10,
+                              linkColor: uiColor.first),
+                          Wrap(
+                            children: [
+                              for (var item in documents[index]['categories'])
+                                Padding(
+                                    padding: const EdgeInsets.only(right: 4),
+                                    child: Text('#' + item,
+                                        style: uiTextStyle.text2))
+                            ],
+                          ),
+                          HistoryOptionsComponent(
+                              history: documents[index],
+                              type: HistoryOptionsType.HOMEPAGE),
+                          const SizedBox(height: 10),
+                          const DividerComponent(bottom: 0)
+                        ],
+                      ))
                 ],
               );
             },
