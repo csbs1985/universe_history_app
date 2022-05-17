@@ -89,16 +89,18 @@ class _ModalMentionedComponentState extends State<ModalMentionedComponent> {
                                                             const EdgeInsets.fromLTRB(
                                                                 0, 0, 10, 10),
                                                         child: TextButton(
-                                                            child: Text('@' + _snapshot![index].data['nickname'],
+                                                            child: Text(
+                                                                _snapshot![index].data['nickname'] +
+                                                                    ' - ' +
+                                                                    _snapshot![index].data[
+                                                                        'email'],
                                                                 style: uiTextStyle
                                                                     .buttonSecondLabel),
                                                             style: ButtonStyle(
                                                                 backgroundColor:
-                                                                    MaterialStateProperty.all(uiColor
-                                                                        .buttonSecond)),
-                                                            onPressed: () => _setUser(
-                                                                _snapshot![index]
-                                                                    .data)))
+                                                                    MaterialStateProperty.all(
+                                                                        uiColor.buttonSecond)),
+                                                            onPressed: () => _setUser(_snapshot![index].data)))
                                                   ],
                                                 ))))))),
             Positioned(

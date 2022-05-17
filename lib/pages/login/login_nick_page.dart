@@ -77,42 +77,41 @@ class _LoginNickPageState extends State<LoginNickPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppbarBackComponent(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(
-              uiPadding.large, 0, uiPadding.large, uiPadding.large),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const TitleComponent(title: 'Qual seu nome de usuário?'),
-              Text(_labelText, style: loginUtil.getLabelStyle(_labelStyle)),
-              const SizedBox(height: uiPadding.medium),
-              TextFormField(
-                  autofocus: true,
-                  controller: nickController,
-                  onChanged: (value) => _keyUp(value),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(_regx))
+        appBar: const AppbarBackComponent(),
+        body: SingleChildScrollView(
+            child: Padding(
+                padding: const EdgeInsets.fromLTRB(
+                    uiPadding.large, 0, uiPadding.large, uiPadding.large),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const TitleComponent(title: 'Qual seu nome de usuário?'),
+                    Text(_labelText,
+                        style: loginUtil.getLabelStyle(_labelStyle)),
+                    const SizedBox(height: uiPadding.medium),
+                    TextFormField(
+                        autofocus: true,
+                        maxLength: 20,
+                        controller: nickController,
+                        onChanged: (value) => _keyUp(value),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(_regx))
+                        ],
+                        style: uiTextStyle.text1,
+                        keyboardType: TextInputType.emailAddress),
+                    const SizedBox(height: uiPadding.xLarge),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        if (_showButton)
+                          Button3dComponent(
+                              label: loginUtil.getButtonText(_buttonText),
+                              size: ButtonSizeEnum.MEDIUM,
+                              style: ButtonStyleEnum.PRIMARY,
+                              callback: (value) => _next())
+                      ],
+                    )
                   ],
-                  style: uiTextStyle.text1,
-                  keyboardType: TextInputType.emailAddress),
-              const SizedBox(height: uiPadding.xLarge),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  if (_showButton)
-                    Button3dComponent(
-                        label: loginUtil.getButtonText(_buttonText),
-                        size: ButtonSizeEnum.MEDIUM,
-                        style: ButtonStyleEnum.PRIMARY,
-                        callback: (value) => _next())
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+                ))));
   }
 }
