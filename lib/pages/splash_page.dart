@@ -33,9 +33,7 @@ class _SplashPageState extends State<SplashPage> {
           if (file.isNotEmpty) _userClass.setFileUser(file);
           await api
               .getUser(currentUser.value.first.email)
-              .then((result) => {
-                    _userClass.add(result.docs!.first),
-                  })
+              .then((result) => _userClass.add(result.docs!.first))
               .catchError((error) => debugPrint('ERROR:' + error.toString()));
           print('object');
         }).catchError((error) => print(error));
@@ -47,19 +45,12 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () => exit(0),
-      child: Scaffold(
-        body: Row(
+        onWillPop: () => exit(0),
+        child: Scaffold(
+            body: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: const [
-            LogoComponent(
-              icon: uiSvg.logo,
-              size: 400,
-            ),
-          ],
-        ),
-      ),
-    );
+          children: const [LogoComponent(icon: uiSvg.logo, size: 400)],
+        )));
   }
 }

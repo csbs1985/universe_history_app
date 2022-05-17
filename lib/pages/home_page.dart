@@ -54,43 +54,46 @@ class _HomePageState extends State<HomePage> {
               elevation: 0,
               toolbarHeight: 54,
               leading: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    LogoComponent(size: 20, callback: (value) => _scrollToTop())
-                  ],
-                ),
-              ),
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        LogoComponent(
+                            size: 20, callback: (value) => _scrollToTop())
+                      ])),
               actions: [
                 // IconComponent(
                 //   icon: uiSvg.search,
                 //   route: 'search',
                 // ),
-                if (currentUser.value.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 3),
-                    child: ValueListenableBuilder(
-                      valueListenable: currentNotification,
-                      builder: (BuildContext context, value, __) {
-                        return Stack(
-                          children: [
-                            IconComponent(
-                                icon: uiSvg.notification,
-                                route: 'notification'),
-                            if (currentNotification.value)
-                              Positioned(
-                                  top: 10,
-                                  right: 12,
-                                  child: CircleAvatar(
-                                      radius: 4,
-                                      backgroundColor: uiColor.first))
-                          ],
-                        );
-                      },
-                    ),
-                  ),
+                ValueListenableBuilder(
+                  valueListenable: currentUser,
+                  builder: (BuildContext context, value, __) {
+                    return currentUser.value.isNotEmpty
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 3),
+                            child: ValueListenableBuilder(
+                                valueListenable: currentNotification,
+                                builder: (BuildContext context, value, __) {
+                                  return Stack(
+                                    children: [
+                                      IconComponent(
+                                          icon: uiSvg.notification,
+                                          route: 'notification'),
+                                      if (currentNotification.value)
+                                        Positioned(
+                                            top: 10,
+                                            right: 12,
+                                            child: CircleAvatar(
+                                                radius: 4,
+                                                backgroundColor: uiColor.first))
+                                    ],
+                                  );
+                                }))
+                        : Container();
+                  },
+                ),
                 IconComponent(icon: uiSvg.menu, route: 'settings'),
                 SizedBox(width: 10)
               ],
