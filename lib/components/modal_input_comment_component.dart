@@ -135,7 +135,7 @@ class _ModalInputCommmentComponentState
     api
         .setComment(_form)
         .then((result) => _upComment())
-        .catchError((error) => print('ERROR: ' + error));
+        .catchError((error) => debugPrint('ERROR: ' + error));
   }
 
   void _upComment() {
@@ -148,7 +148,7 @@ class _ModalInputCommmentComponentState
                     _commentController.text, currentHistory.value.first.id),
                 _setUpQtyCommentUser()
               })
-          .catchError((error) => print('ERROR: ' + error));
+          .catchError((error) => debugPrint('ERROR: ' + error));
     });
   }
 
@@ -170,7 +170,7 @@ class _ModalInputCommmentComponentState
                       : 'Seu comentário foi publicado.'),
               Navigator.of(context).pop()
             })
-        .catchError((error) => print('ERROR: ' + error));
+        .catchError((error) => debugPrint('ERROR: ' + error));
   }
 
   Future<void> _setNotificationOwner() async {
@@ -190,7 +190,7 @@ class _ModalInputCommmentComponentState
         .setNotification(_form)
         .then(
             (result) => _setPushNotificationOnwer(currentOwner.value.first.id))
-        .catchError((error) => print('ERROR: ' + error));
+        .catchError((error) => debugPrint('ERROR: ' + error));
   }
 
   Future<void> _setNotificationMencioned() async {
@@ -210,7 +210,7 @@ class _ModalInputCommmentComponentState
         await api
             .setNotification(_form)
             .then((result) => _setPushNotificationMentioned(item))
-            .catchError((error) => print('ERROR: ' + error));
+            .catchError((error) => debugPrint('ERROR: ' + error));
       }
     }
   }

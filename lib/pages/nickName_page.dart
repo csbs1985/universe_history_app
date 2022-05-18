@@ -111,7 +111,7 @@ class _NickNamePageState extends State<NickNamePage> {
                 }
               }),
             })
-        .catchError((error) => print('ERROR: ' + error));
+        .catchError((error) => debugPrint('ERROR: ' + error));
   }
 
   Future<void> _saveNickName() async {

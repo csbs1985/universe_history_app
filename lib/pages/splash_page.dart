@@ -35,8 +35,8 @@ class _SplashPageState extends State<SplashPage> {
               .getUser(currentUser.value.first.email)
               .then((result) => _userClass.add(result.docs!.first))
               .catchError((error) => debugPrint('ERROR:' + error.toString()));
-          print('object');
-        }).catchError((error) => print(error));
+          debugPrint('object');
+        }).catchError((error) => debugPrint(error));
       }
       Navigator.of(context).pushNamed("/home");
     });

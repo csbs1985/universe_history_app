@@ -135,7 +135,7 @@ class UserClass {
       var json = jsonDecode(file);
       add(json);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
   }
 

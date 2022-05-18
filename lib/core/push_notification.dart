@@ -50,11 +50,11 @@ class PushNotification {
     );
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized)
-      print('Usuário concedeu permissão.');
+      debugPrint('Usuário concedeu permissão.');
     else if (settings.authorizationStatus == AuthorizationStatus.provisional)
-      print('Usuário concedeu permissão provisória.');
+      debugPrint('Usuário concedeu permissão provisória.');
     else
-      print('Usuário não concedeu permissão ou ignorou a solicitação.');
+      debugPrint('Usuário não concedeu permissão ou ignorou a solicitação.');
   }
 
   void _loadFCM() async {
@@ -124,7 +124,7 @@ class PushNotification {
           ),
         );
       } catch (error) {
-        print("ERROR:" + error.toString());
+        debugPrint("ERROR:" + error.toString());
       }
     }).catchError((error) => debugPrint('ERROR:' + error.toString()));
   }
