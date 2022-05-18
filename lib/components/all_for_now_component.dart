@@ -6,14 +6,13 @@ class AllForNowComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(bottom: 20),
-      child: Center(
-        child: Text(
-          'Isso é tudo por enquanto.',
-          style: uiTextStyle.text2,
-        ),
-      ),
-    );
+    return Padding(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: Column(children: const [
+          Center(
+              child:
+                  Text('Isso é tudo por enquanto.', style: uiTextStyle.text2)),
+          SizedBox(height: 50)
+        ]));
   }
 }

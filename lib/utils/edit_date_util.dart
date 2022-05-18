@@ -1,8 +1,9 @@
 import 'package:intl/intl.dart';
 
-String editDateUtil(int timestamp) {
+String editDateUtil(String _data) {
   var now = DateTime.now();
-  var date = DateTime.fromMillisecondsSinceEpoch(timestamp);
+  var date = DateTime.fromMillisecondsSinceEpoch(
+      DateTime.parse(_data).millisecondsSinceEpoch);
   var diff = now.difference(date);
   var day = DateFormat('dd');
   var month = DateFormat('M');

@@ -135,9 +135,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                       _comment(item),
                                                       ResumeComponent(
                                                           resume: editDateUtil(
-                                                              DateTime.parse(
-                                                                      item.date)
-                                                                  .millisecondsSinceEpoch))
+                                                              item.date))
                                                     ]))),
                                         onTap: () => _readNotification(item))
                                   ]);

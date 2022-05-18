@@ -10,38 +10,30 @@ class SkeletonCommentComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Column(
+    return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Skeleton(
-            width: double.infinity,
-            height: 48,
-            textColor: uiColor.comp_3,
-            borderRadius: BorderRadius.circular(uiBorder.rounded),
-          ),
+              width: double.infinity,
+              height: 24,
+              textColor: uiColor.comp_3,
+              borderRadius: BorderRadius.circular(uiBorder.rounded)),
           const SizedBox(height: 10),
-          Row(
-            children: [
-              Skeleton(
+          Row(children: [
+            Skeleton(
                 width: 100,
-                height: 16,
+                height: 12,
                 textColor: uiColor.comp_3,
-                borderRadius: BorderRadius.circular(uiBorder.rounded),
-              ),
-              const SizedBox(width: 10),
-              Skeleton(
+                borderRadius: BorderRadius.circular(uiBorder.rounded)),
+            const SizedBox(width: 10),
+            Skeleton(
                 width: 100,
-                height: 16,
+                height: 12,
                 textColor: uiColor.comp_3,
-                borderRadius: BorderRadius.circular(uiBorder.rounded),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+                borderRadius: BorderRadius.circular(uiBorder.rounded)),
+          ]),
+          const SizedBox(height: 10)
+        ]);
   }
 }

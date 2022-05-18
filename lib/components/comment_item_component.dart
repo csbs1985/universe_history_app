@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, unused_field, curly_braces_in_flow_control_structures, unused_element
+// ignore_for_file: use_key_in_widget_constructors, unused_field, curly_braces_in_flow_control_structures, unused_element, constant_identifier_names
 
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -31,13 +31,69 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
   final Api api = Api();
   final OwnerClass ownerClass = OwnerClass();
   final CommentClass commentClass = CommentClass();
+  final ScrollController _scrollController = ScrollController();
+
+  final List<CommentModel> _data = [];
+
+  static const PAGE_SIZE = 11;
+
+  bool _allFetched = false;
+  bool _isLoading = false;
+
+  DocumentSnapshot? _lastDocument;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _getContent();
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+              _scrollController.position.maxScrollExtent &&
+          !_allFetched) {
+        _getContent();
+      }
+    });
+  }
+
+  Future<void> _getContent() async {
+    if (_isLoading) return;
+
+    setState(() => _isLoading = true);
+
+    final _idHistory = currentHistory.value.first.id;
+
+    Query _query = FirebaseFirestore.instance
+        .collection('comments')
+        .where('historyId', isEqualTo: _idHistory)
+        .orderBy('date', descending: true);
+
+    _query = _lastDocument != null
+        ? _query.startAfterDocument(_lastDocument!).limit(PAGE_SIZE)
+        : _query.limit(PAGE_SIZE);
+
+    final List<CommentModel> pagedData = await _query.get().then((value) {
+      _lastDocument = value.docs.isNotEmpty ? value.docs.last : null;
+
+      return value.docs
+          .map((e) => CommentModel.fromMap(e.data() as Map<String, dynamic>))
+          .toList();
+    });
+
+    setState(() {
+      _data.addAll(pagedData);
+      if (pagedData.length < PAGE_SIZE) _allFetched = true;
+      _isLoading = false;
+    });
+  }
 
   void _showModal(BuildContext context, dynamic _content) {
     ownerClass.selectOwner(
-      _content['userId'],
-      _content['userNickName'],
-      _content['userStatus'],
-      _content['token'],
+      _content.userId,
+      _content.userNickName,
+      _content.userStatus,
+      _content.token,
     );
 
     commentClass.selectComment(_content);
@@ -48,28 +104,28 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
         barrierColor: Colors.black87,
         duration: const Duration(milliseconds: 300),
         builder: (context) => ModalOptionsComponent(
-              _content['id'],
+              _content.id,
               'comentário',
-              _content['userId'],
-              _content['userNickName'],
-              _content['text'],
-              _content['isDelete'],
+              _content.userId,
+              _content.userNickName,
+              _content.text,
+              _content.isDelete,
             ));
   }
 
   bool _canShowOption(dynamic _content) {
-    if (currentUser.value.first.id == _content['userId']) {
-      if (!_content['isDelete']) return true;
+    if (currentUser.value.first.id == _content.userId) {
+      if (!_content.isDelete) return true;
     } else {
-      if (!_content['isDelete']) return true;
+      if (!_content.isDelete) return true;
     }
     return false;
   }
 
   Color _getBackColor(_index) {
-    if (_index['text'].contains('@' + currentUser.value.first.nickname))
+    if (_index.text.contains('@' + currentUser.value.first.nickname))
       return uiColor.first;
-    if (_index['userId'] == currentUser.value.first.id) return uiColor.second;
+    if (_index.userId == currentUser.value.first.id) return uiColor.second;
     return uiColor.comp_3;
   }
 
@@ -81,85 +137,84 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
 
   @override
   Widget build(BuildContext context) {
-    final _idHistory = ModalRoute.of(context)!.settings.arguments.toString();
-
-    return StreamBuilder(
-        stream: api.getAllComment(_idHistory),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-              return const CommentEmpty();
-            case ConnectionState.waiting:
-              return const SkeletonCommentComponent();
-            case ConnectionState.done:
-            default:
-              try {
-                return SingleChildScrollView(child: _list(context, snapshot));
-              } catch (e) {
-                return const CommentEmpty();
-              }
-          }
-        });
-  }
-
-  Widget _list(BuildContext context, snapshot) {
-    List<QueryDocumentSnapshot<dynamic>> documents = snapshot.data!.docs;
-    return !documents.isNotEmpty
-        ? const CommentEmpty()
-        : Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 48),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              if (widget._type == HistoryOptionsType.HOMEPAGE)
-                Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                    child: Row(children: [
-                      if (currentHistory.value.first.qtyComment > 0)
-                        AnimatedFlipCounter(
-                            duration: const Duration(milliseconds: 500),
-                            value: currentHistory.value.first.qtyComment,
-                            textStyle: uiTextStyle.text1),
-                      ValueListenableBuilder(
-                          valueListenable: currentHistory,
-                          builder: (BuildContext context, value, __) {
-                            return Text(
-                                currentHistory.value.first.qtyComment > 1
-                                    ? ' comentários'
-                                    : ' comentário',
-                                style: uiTextStyle.text1);
+    return SingleChildScrollView(
+        controller: _scrollController,
+        child: !_data.isNotEmpty
+            ? const CommentEmpty()
+            : Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 48),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (widget._type == HistoryOptionsType.HOMEPAGE)
+                        Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            child: Row(children: [
+                              if (currentHistory.value.first.qtyComment > 0)
+                                AnimatedFlipCounter(
+                                    duration: const Duration(milliseconds: 500),
+                                    value:
+                                        currentHistory.value.first.qtyComment,
+                                    textStyle: uiTextStyle.text1),
+                              ValueListenableBuilder(
+                                  valueListenable: currentHistory,
+                                  builder: (BuildContext context, value, __) {
+                                    return Text(
+                                        currentHistory.value.first.qtyComment >
+                                                1
+                                            ? ' comentários'
+                                            : ' comentário',
+                                        style: uiTextStyle.text1);
+                                  })
+                            ])),
+                      ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: _data.length + (_allFetched ? 0 : 1),
+                          itemBuilder: (BuildContext context, int index) {
+                            if (index == _data.length) {
+                              return const SkeletonCommentComponent();
+                            } else {
+                              final item = _data[index];
+                              return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    GestureDetector(
+                                      child: Card(
+                                        color: _getBackColor(item),
+                                        margin: const EdgeInsets.all(0),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                uiBorder.rounded)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              10, 6, 10, 8),
+                                          child: item.isDelete
+                                              ? Text(
+                                                  'Comentário apagado!'
+                                                      .toUpperCase(),
+                                                  style: uiTextStyle.text8)
+                                              : Text(item.text,
+                                                  style: uiTextStyle.text1),
+                                        ),
+                                      ),
+                                      onLongPress: _canShowOption(item)
+                                          ? () => _showModal(context, item)
+                                          : null,
+                                    ),
+                                    Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            2, 4, 0, 16),
+                                        child: Text(
+                                            resumeUitl(item,
+                                                type: ContentType.COMMENT
+                                                    .toString()
+                                                    .split('.')
+                                                    .last),
+                                            style: uiTextStyle.text2))
+                                  ]);
+                            }
                           })
-                    ])),
-              for (var item in documents)
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  GestureDetector(
-                    child: Card(
-                      color: _getBackColor(item),
-                      margin: const EdgeInsets.all(0),
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(uiBorder.rounded)),
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 6, 10, 8),
-                        child: item['isDelete']
-                            ? Text('Comentário apagado!'.toUpperCase(),
-                                style: uiTextStyle.text8)
-                            : Text(item['text'], style: uiTextStyle.text1),
-                      ),
-                    ),
-                    onLongPress: _canShowOption(item.data())
-                        ? () => _showModal(context, item.data())
-                        : null,
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.fromLTRB(2, 4, 0, 16),
-                      child: Text(
-                          resumeUitl(item,
-                              type: ContentType.COMMENT
-                                  .toString()
-                                  .split('.')
-                                  .last),
-                          style: uiTextStyle.text2))
-                ])
-            ]));
+                    ])));
   }
 }

@@ -38,7 +38,7 @@ class _blockedUsersPageState extends State<blockedUsersPage> {
         .then((result) => {
               currentBlockedQty.value--,
               toast.toast(context, ToastEnum.SUCCESS,
-                  '${blocked['blockedNickName']} desbloqueado!'),
+                  '${blocked['blockedNickName']} desbloqueado!')
             })
         .catchError((error) => debugPrint('ERROR:' + error.toString()));
   }
@@ -46,50 +46,44 @@ class _blockedUsersPageState extends State<blockedUsersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppbarBackComponent(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ValueListenableBuilder(
-                  valueListenable: currentBlockedQty,
-                  builder: (context, value, __) {
-                    return TitleResumeComponent(
-                      _numBlocked(),
-                      'Quando você bloqueia uma pessoa, este usuário não poderá mais ler suas histórias e comentários e comentar o que você escreve.',
-                    );
-                  }),
-              StreamBuilder<QuerySnapshot>(
-                stream: api.getAllBlock(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.data != null) {
-                    WidgetsBinding.instance!.addPostFrameCallback((_) {
-                      currentBlockedQty.value = snapshot.data!.size;
-                    });
-                  }
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.none:
-                      return _noResult();
-                    case ConnectionState.waiting:
-                      return const SkeletonBlockedComponent();
-                    case ConnectionState.done:
-                    default:
-                      try {
-                        return _list(context, snapshot);
-                      } catch (error) {
-                        return _noResult();
-                      }
-                  }
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+        appBar: const AppbarBackComponent(),
+        body: SingleChildScrollView(
+            child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ValueListenableBuilder(
+                          valueListenable: currentBlockedQty,
+                          builder: (context, value, __) {
+                            return TitleResumeComponent(_numBlocked(),
+                                'Quando você bloqueia uma pessoa, este usuário não poderá mais ler suas histórias e comentários e comentar o que você escreve.');
+                          }),
+                      StreamBuilder<QuerySnapshot>(
+                          stream: api.getAllBlock(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (snapshot.data != null) {
+                              WidgetsBinding.instance!
+                                  .addPostFrameCallback((_) {
+                                currentBlockedQty.value = snapshot.data!.size;
+                              });
+                            }
+                            switch (snapshot.connectionState) {
+                              case ConnectionState.none:
+                                return _noResult();
+                              case ConnectionState.waiting:
+                                return const SkeletonBlockedComponent();
+                              case ConnectionState.done:
+                              default:
+                                try {
+                                  return _list(context, snapshot);
+                                } catch (error) {
+                                  return _noResult();
+                                }
+                            }
+                          })
+                    ]))));
   }
 
   Widget _noResult() {
@@ -106,36 +100,26 @@ class _blockedUsersPageState extends State<blockedUsersPage> {
             itemCount: documents.length,
             itemBuilder: (BuildContext context, index) {
               return Container(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                width: (MediaQuery.of(context).size.width - 40),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  width: (MediaQuery.of(context).size.width - 40),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          documents[index]['blockedNickName'],
-                          style: uiTextStyle.text1,
-                        ),
-                        Text(
-                          editDateUtil(DateTime.parse(documents[index]['date'])
-                              .millisecondsSinceEpoch),
-                          style: uiTextStyle.text2,
-                        ),
-                      ],
-                    ),
-                    Button3dComponent(
-                      label: 'desbloquear',
-                      size: ButtonSizeEnum.MEDIUM,
-                      style: ButtonStyleEnum.PRIMARY,
-                      callback: (value) => _unlockUser(documents[index]),
-                    )
-                  ],
-                ),
-              );
-            },
-          )
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(documents[index]['blockedNickName'],
+                                  style: uiTextStyle.text1),
+                              Text(editDateUtil(documents[index]['date']),
+                                  style: uiTextStyle.text2)
+                            ]),
+                        Button3dComponent(
+                            label: 'desbloquear',
+                            size: ButtonSizeEnum.MEDIUM,
+                            style: ButtonStyleEnum.PRIMARY,
+                            callback: (value) => _unlockUser(documents[index]))
+                      ]));
+            })
         : _noResult();
   }
 }

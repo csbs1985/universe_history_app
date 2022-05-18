@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/icon_circle_component.dart';
@@ -25,18 +25,15 @@ class ResumeHistoryComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: _width,
-      padding: EdgeInsets.fromLTRB(0, _top ?? 0, 0, _bottom ?? 10),
-      child: Row(
-        children: [
+        width: _width,
+        padding: EdgeInsets.fromLTRB(0, _top ?? 0, 0, _bottom ?? 10),
+        child: Row(children: [
           if (_resume['isAuthorized'])
             const IconCicleComponent(
                 icon: uiSvg.authorized, size: 16, margin: 2),
           if (_resume['isAuthorized'])
             const Text(' · ', style: uiTextStyle.text2),
-          Text(resumeUitl(_resume), style: uiTextStyle.text2),
-        ],
-      ),
-    );
+          Text(resumeUitl(_resume), style: uiTextStyle.text2)
+        ]));
   }
 }

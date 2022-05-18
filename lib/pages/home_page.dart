@@ -114,17 +114,15 @@ class _HomePageState extends State<HomePage> {
                 child: SingleChildScrollView(
                     controller: _scrollController,
                     child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        MenuComponent(),
-                        SizedBox(height: 10),
-                        Flexible(
-                            child: HistoryListComponent(
-                                itemSelectedMenu: _itemSelectedMenu)),
-                        AllForNowComponent(),
-                        SizedBox(height: 50)
-                      ],
-                    )))));
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MenuComponent(),
+                          SizedBox(height: 10),
+                          Flexible(
+                              child: HistoryListComponent(
+                                  itemSelectedMenu: _itemSelectedMenu)),
+                          AllForNowComponent()
+                        ])))));
   }
 }
