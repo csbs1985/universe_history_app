@@ -8,4 +8,5 @@ class uiSize {
   static const double input = 48;
   static const double widthFullLessPadding = uiPadding.xLarge * 2;
   static const double sizePaddingTopBottomPage = 40;
+  static const double widthItemActiviries = 72;
 }

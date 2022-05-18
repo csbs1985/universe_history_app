@@ -6,6 +6,7 @@ import 'package:universe_history_app/components/icon_circle_component.dart';
 import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/shared/models/activities_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
+import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
@@ -37,26 +38,19 @@ class _ItemTemporarilyDesabledComponentState
                       icon: uiSvg.temporarily_disabled,
                       color: uiColor.temporarily_disabled)),
               SizedBox(
-                  width: MediaQuery.of(context).size.width - 72,
+                  width: MediaQuery.of(context).size.width -
+                      uiSize.widthItemActiviries,
                   child: Padding(
                       padding: const EdgeInsets.only(left: 10),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            StyledText(
-                                style: uiTextStyle.text4,
-                                tags: {
-                                  'bold': StyledTextTag(
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold))
-                                },
-                                text:
-                                    'Se você esta lendo este bilhete é porque voltou, sabia que não ia aguentar por muito tempo. Bem vindo de volta! 😍'),
-                            ResumeComponent(
-                                resume: editDateUtil(
-                                    DateTime.parse(widget._history.date)
-                                        .millisecondsSinceEpoch))
-                          ])))
+                      child: StyledText(
+                          style: uiTextStyle.text4,
+                          tags: {
+                            'bold': StyledTextTag(
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold))
+                          },
+                          text:
+                              'Se você esta lendo este bilhete é porque voltou, sabia que não ia aguentar por muito tempo. Bem vindo de volta! 😍')))
             ]));
   }
 }
