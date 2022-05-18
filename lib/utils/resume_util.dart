@@ -29,11 +29,11 @@ String resumeUitl(_item, {String? type}) {
   if (type == ContentType.COMMENT.toString().split('.').last) {
     _userStatus =
         _item is CommentModel ? _item.userStatus : _item['userStatus'];
-
-    _userStatus == UserStatus.DELETED.toString().split('.').last
-        ? author = 'usuário deletado'
-        : author = _isSigned! ? _userNickName! : 'anônimo';
   }
+
+  _userStatus == UserStatus.DELETED.toString().split('.').last
+      ? author = 'usuário deletado'
+      : author = _isSigned! ? _userNickName! : 'anônimo';
 
   var temp = _time + ' · ' + author;
   return _isEdit! ? temp + ' · editado' : temp;
