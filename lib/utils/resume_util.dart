@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names, unrelated_type_equality_checks
 
-import 'package:universe_history_app/shared/models/comment_model.dart';
-import 'package:universe_history_app/shared/models/user_model.dart';
+import 'package:universe_history_app/models/comment_model.dart';
+import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
 
 String resumeUitl(_item, {String? type}) {

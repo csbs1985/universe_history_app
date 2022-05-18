@@ -10,8 +10,8 @@ import 'package:universe_history_app/components/skeleton_notification_componen.d
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
-import 'package:universe_history_app/shared/models/notification_model.dart';
-import 'package:universe_history_app/shared/models/user_model.dart';
+import 'package:universe_history_app/models/notification_model.dart';
+import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';

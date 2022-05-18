@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/subtitle_resume_component.dart';
-import 'package:universe_history_app/shared/models/category_model.dart';
+import 'package:universe_history_app/models/category_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 
 class SelectCategoriesComponent extends StatefulWidget {

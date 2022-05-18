@@ -7,7 +7,7 @@ import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
-import 'package:universe_history_app/shared/models/category_model.dart';
+import 'package:universe_history_app/models/category_model.dart';
 
 class HistoryListComponent extends StatefulWidget {
   const HistoryListComponent({
@@ -52,7 +52,9 @@ class _HistoryItemState extends State<HistoryListComponent> {
                   default:
                     try {
                       return HistoryItemComponent(
-                          context: context, snapshot: snapshot);
+                        context: context,
+                        snapshot: snapshot,
+                      );
                     } catch (error) {
                       return _noResult();
                     }

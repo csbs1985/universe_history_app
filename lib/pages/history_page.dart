@@ -12,8 +12,8 @@ import 'package:universe_history_app/components/resume_history_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/core/api.dart';
-import 'package:universe_history_app/shared/models/history_model.dart';
-import 'package:universe_history_app/shared/models/user_model.dart';
+import 'package:universe_history_app/models/history_model.dart';
+import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 

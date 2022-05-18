@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/core/api.dart';
-import 'package:universe_history_app/shared/models/user_model.dart';
+import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 

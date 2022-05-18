@@ -10,10 +10,10 @@ import 'package:universe_history_app/components/modal_input_comment_component.da
 import 'package:universe_history_app/components/modal_options_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
-import 'package:universe_history_app/shared/models/comment_model.dart';
-import 'package:universe_history_app/shared/models/history_model.dart';
-import 'package:universe_history_app/shared/models/owner_model.dart';
-import 'package:universe_history_app/shared/models/user_model.dart';
+import 'package:universe_history_app/models/comment_model.dart';
+import 'package:universe_history_app/models/history_model.dart';
+import 'package:universe_history_app/models/owner_model.dart';
+import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 

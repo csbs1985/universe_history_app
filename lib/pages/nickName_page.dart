@@ -11,7 +11,7 @@ import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/core/api.dart';
-import 'package:universe_history_app/shared/models/user_model.dart';
+import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/qty_days_util.dart';

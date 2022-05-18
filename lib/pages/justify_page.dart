@@ -6,7 +6,7 @@ import 'package:universe_history_app/components/btn_card_component.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
-import 'package:universe_history_app/shared/models/justtify_model.dart';
+import 'package:universe_history_app/models/justtify_model.dart';
 import 'package:universe_history_app/utils/delete_account_util.dart';
 
 class JustifyPage extends StatefulWidget {

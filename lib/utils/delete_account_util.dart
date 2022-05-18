@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
-import 'package:universe_history_app/shared/models/user_model.dart';
+import 'package:universe_history_app/models/user_model.dart';
 import 'package:uuid/uuid.dart';
 
 class DeleteAccountUtil {

@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/core/variables.dart';
-import 'package:universe_history_app/shared/models/category_model.dart';
-import 'package:universe_history_app/shared/models/user_model.dart';
+import 'package:universe_history_app/models/category_model.dart';
+import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_button.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 

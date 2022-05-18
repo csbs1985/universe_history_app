@@ -7,9 +7,9 @@ import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
-import 'package:universe_history_app/shared/models/denounceJustify_model.dart';
-import 'package:universe_history_app/shared/models/owner_model.dart';
-import 'package:universe_history_app/shared/models/user_model.dart';
+import 'package:universe_history_app/models/denounceJustify_model.dart';
+import 'package:universe_history_app/models/owner_model.dart';
+import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:uuid/uuid.dart';
 

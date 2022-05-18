@@ -18,8 +18,8 @@ import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/skeleton_activity_componen.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/core/api.dart';
-import 'package:universe_history_app/shared/models/activities_model.dart';
-import 'package:universe_history_app/shared/models/user_model.dart';
+import 'package:universe_history_app/models/activities_model.dart';
+import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
 

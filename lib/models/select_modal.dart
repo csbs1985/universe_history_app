@@ -1,6 +1,6 @@
 // ignore_for_file: unnecessary_new
 
-import 'package:universe_history_app/shared/models/user_model.dart';
+import 'package:universe_history_app/models/user_model.dart';
 
 class SelectModel {
   final int id;

@@ -3,8 +3,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:styled_text/styled_text.dart';
 import 'package:universe_history_app/components/icon_circle_component.dart';
-import 'package:universe_history_app/shared/models/activities_model.dart';
-import 'package:universe_history_app/shared/models/history_model.dart';
+import 'package:universe_history_app/models/activities_model.dart';
+import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';

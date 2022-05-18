@@ -9,7 +9,7 @@ import 'package:universe_history_app/components/skeleton_blocked_componen.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
-import 'package:universe_history_app/shared/models/blocked_model.dart';
+import 'package:universe_history_app/models/blocked_model.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/components/title_component.dart';
-import 'package:universe_history_app/shared/models/common_questions_model.dart';
+import 'package:universe_history_app/models/common_questions_model.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 

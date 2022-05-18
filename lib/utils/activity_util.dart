@@ -1,7 +1,7 @@
 // ignore_for_file: unused_local_variable, constant_identifier_names, prefer_const_declarations, non_constant_identifier_names
 
 import 'package:universe_history_app/core/api.dart';
-import 'package:universe_history_app/shared/models/user_model.dart';
+import 'package:universe_history_app/models/user_model.dart';
 import 'package:uuid/uuid.dart';
 
 ActivityUtil(ActivitiesEnum type, String content, String elementId) async {

@@ -7,8 +7,8 @@ import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/pages/justify_page.dart';
-import 'package:universe_history_app/shared/models/delete_account_model.dart';
-import 'package:universe_history_app/shared/models/user_model.dart';
+import 'package:universe_history_app/models/delete_account_model.dart';
+import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/utils/delete_account_util.dart';
 
 class DeleteAccountPage extends StatefulWidget {
