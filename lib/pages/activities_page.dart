@@ -11,14 +11,17 @@ import 'package:universe_history_app/components/item_new_nickName_component.dart
 import 'package:universe_history_app/components/item_notification_component.dart';
 import 'package:universe_history_app/components/item_temporarily_desabled_component.dart';
 import 'package:universe_history_app/components/item_up_block_component.dart';
+import 'package:universe_history_app/components/item_up_history_component.dart';
 import 'package:universe_history_app/components/item_up_nickName_component.dart';
 import 'package:universe_history_app/components/no_history_component.dart';
+import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/skeleton_activity_componen.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/shared/models/activities_model.dart';
 import 'package:universe_history_app/shared/models/user_model.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
+import 'package:universe_history_app/utils/edit_date_util.dart';
 
 class ActivitiesPage extends StatefulWidget {
   const ActivitiesPage({Key? key}) : super(key: key);
@@ -132,31 +135,55 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
                                   .firstWhere((e) =>
                                       e.name.toString() == _data[index].type);
 
-                              switch (content) {
-                                case ActivitiesEnum.NEW_HISTORY:
-                                  return ItemNewHistory(history: item);
-                                case ActivitiesEnum.LOGIN:
-                                case ActivitiesEnum.LOGOUT:
-                                  return ItemLoginLogout(history: item);
-                                case ActivitiesEnum.UP_NICKNAME:
-                                  return ItemUpNickName(history: item);
-                                case ActivitiesEnum.NEW_COMMENT:
-                                  return ItemNewComment(history: item);
-                                case ActivitiesEnum.NEW_NICKNAME:
-                                  return ItemNewNickName(history: item);
-                                case ActivitiesEnum.UP_NOTIFICATION:
-                                  return ItemNotificationComponent(
-                                      history: item);
-                                case ActivitiesEnum.BLOCK_USER:
-                                case ActivitiesEnum.UNBLOCK_USER:
-                                  return ItemUpBlockComponent(history: item);
-                                case ActivitiesEnum.TEMPORARILY_DISABLED:
-                                  return ItemTemporarilyDesabledComponent(
-                                      history: item);
-                                case ActivitiesEnum.NEW_ACCOUNT:
-                                default:
-                                  return ItemNewAccountComponent(history: item);
-                              }
+                              return Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 0, 20, 10),
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        if (content ==
+                                            ActivitiesEnum.UP_HISTORY)
+                                          ItemUpHistory(history: item),
+                                        if (content ==
+                                            ActivitiesEnum.NEW_HISTORY)
+                                          ItemNewHistory(history: item),
+                                        if (content == ActivitiesEnum.LOGIN ||
+                                            content == ActivitiesEnum.LOGOUT)
+                                          ItemLoginLogout(history: item),
+                                        if (content ==
+                                            ActivitiesEnum.UP_NICKNAME)
+                                          ItemUpNickName(history: item),
+                                        if (content ==
+                                            ActivitiesEnum.NEW_COMMENT)
+                                          ItemNewComment(history: item),
+                                        if (content ==
+                                            ActivitiesEnum.NEW_NICKNAME)
+                                          ItemNewNickName(history: item),
+                                        if (content ==
+                                            ActivitiesEnum.UP_NOTIFICATION)
+                                          ItemNotificationComponent(
+                                              history: item),
+                                        if (content ==
+                                                ActivitiesEnum.BLOCK_USER ||
+                                            content ==
+                                                ActivitiesEnum.UNBLOCK_USER)
+                                          ItemUpBlockComponent(history: item),
+                                        if (content ==
+                                            ActivitiesEnum.TEMPORARILY_DISABLED)
+                                          ItemTemporarilyDesabledComponent(
+                                              history: item),
+                                        if (content ==
+                                            ActivitiesEnum.NEW_ACCOUNT)
+                                          ItemNewAccountComponent(
+                                              history: item),
+                                        Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                40, 2, 0, 0),
+                                            child: ResumeComponent(
+                                                resume:
+                                                    editDateUtil(item.date)))
+                                      ]));
                             }
                           }))
             ])));

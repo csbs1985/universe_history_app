@@ -22,29 +22,26 @@ class ItemNewAccountComponent extends StatefulWidget {
 class _ItemNewAccountComponentState extends State<ItemNewAccountComponent> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                  padding: EdgeInsets.only(top: 4),
-                  child: IconCicleComponent(
-                      icon: uiSvg.new_account, color: uiColor.new_account)),
-              SizedBox(
-                  width: MediaQuery.of(context).size.width - 32 - 20 - 20,
-                  child: Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: StyledText(
-                          style: uiTextStyle.text4,
-                          tags: {
-                            'bold': StyledTextTag(
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold))
-                          },
-                          text:
-                              'Esperam que encontrei o que veio buscar. Suas histórias e comentários podem mudar a vida de alguém...')))
-            ]));
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+              padding: EdgeInsets.only(top: 4),
+              child: IconCicleComponent(
+                  icon: uiSvg.new_account, color: uiColor.new_account)),
+          SizedBox(
+              width: MediaQuery.of(context).size.width - 32 - 20 - 20,
+              child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: StyledText(
+                      style: uiTextStyle.text4,
+                      tags: {
+                        'bold': StyledTextTag(
+                            style: const TextStyle(fontWeight: FontWeight.bold))
+                      },
+                      text:
+                          'Esperam que encontrei o que veio buscar. Suas histórias e comentários podem mudar a vida de alguém...')))
+        ]);
   }
 }

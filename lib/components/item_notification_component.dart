@@ -27,31 +27,27 @@ class _ItemNotificationComponentState extends State<ItemNotificationComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                  padding: EdgeInsets.only(top: 4),
-                  child: IconCicleComponent(
-                      icon: uiSvg.notification,
-                      color: uiColor.up_notification)),
-              SizedBox(
-                  width: MediaQuery.of(context).size.width -
-                      uiSize.widthItemActiviries,
-                  child: Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: StyledText(
-                          style: uiTextStyle.text4,
-                          tags: {
-                            'bold': StyledTextTag(
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold))
-                          },
-                          text:
-                              'Alteração de configurações para <bold>${_getText(widget._history.content)}</bold> todas as notificações de comentários em suas histórias.')))
-            ]));
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+              padding: EdgeInsets.only(top: 4),
+              child: IconCicleComponent(
+                  icon: uiSvg.notification, color: uiColor.up_notification)),
+          SizedBox(
+              width: MediaQuery.of(context).size.width -
+                  uiSize.widthItemActiviries,
+              child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: StyledText(
+                      style: uiTextStyle.text4,
+                      tags: {
+                        'bold': StyledTextTag(
+                            style: const TextStyle(fontWeight: FontWeight.bold))
+                      },
+                      text:
+                          'Alteração de configurações para <bold>${_getText(widget._history.content)}</bold> todas as notificações de comentários em suas histórias.')))
+        ]);
   }
 }

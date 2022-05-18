@@ -10,16 +10,16 @@ import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
-class ItemNewHistory extends StatefulWidget {
-  const ItemNewHistory({required ActivitiesModel history}) : _history = history;
+class ItemUpHistory extends StatefulWidget {
+  const ItemUpHistory({required ActivitiesModel history}) : _history = history;
 
   final ActivitiesModel _history;
 
   @override
-  State<ItemNewHistory> createState() => _ItemNewHistoryState();
+  State<ItemUpHistory> createState() => _ItemUpHistoryState();
 }
 
-class _ItemNewHistoryState extends State<ItemNewHistory> {
+class _ItemUpHistoryState extends State<ItemUpHistory> {
   final HistoryClass historyClass = HistoryClass();
 
   void _setHistory(_item) =>
@@ -49,8 +49,8 @@ class _ItemNewHistoryState extends State<ItemNewHistory> {
                                     fontWeight: FontWeight.bold))
                           },
                           text: widget._history.content.isNotEmpty
-                              ? 'Você criou uma história com o título <bold>${widget._history.content}</bold>. Pode acessa-lá clicando aqui.'
-                              : 'Você criou uma história <bold>sem título</bold>. Pode acessa-lá clicando aqui.')))
+                              ? 'Você atualizou a história com o título <bold>${widget._history.content}</bold>. Pode acessa-lá clicando aqui.'
+                              : 'Você atualizou a história <bold>sem título</bold>. Pode acessa-lá clicando aqui.')))
             ]),
         onTap: () => _setHistory(widget._history));
   }

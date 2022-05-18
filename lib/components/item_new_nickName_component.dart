@@ -23,31 +23,29 @@ class _ItemNewNickNameState extends State<ItemNewNickName> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                    padding: EdgeInsets.only(top: 4),
-                    child: IconCicleComponent(
-                        icon: uiSvg.new_nickname, color: uiColor.new_nickname)),
-                SizedBox(
-                    width: MediaQuery.of(context).size.width -
-                        uiSize.widthItemActiviries,
-                    child: Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: StyledText(
-                            style: uiTextStyle.text4,
-                            tags: {
-                              'bold': StyledTextTag(
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold))
-                            },
-                            text:
-                                'Acabou de definir seu usuário <bold>${widget._history.content}</bold> no Histoty. Pode altera-ló sempre que necessitar clicando aqui ou no item <bold>Nome de usuário</bold> no menu de configurações.')))
-              ])),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+                padding: EdgeInsets.only(top: 4),
+                child: IconCicleComponent(
+                    icon: uiSvg.new_nickname, color: uiColor.new_nickname)),
+            SizedBox(
+                width: MediaQuery.of(context).size.width -
+                    uiSize.widthItemActiviries,
+                child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: StyledText(
+                        style: uiTextStyle.text4,
+                        tags: {
+                          'bold': StyledTextTag(
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold))
+                        },
+                        text:
+                            'Acabou de definir seu usuário <bold>${widget._history.content}</bold> no Histoty. Pode altera-ló sempre que necessitar clicando aqui ou no item <bold>Nome de usuário</bold> no menu de configurações.')))
+          ]),
       onTap: () => Navigator.of(context).pushNamed("/nickname"),
     );
   }

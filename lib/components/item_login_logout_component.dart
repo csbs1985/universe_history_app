@@ -22,36 +22,33 @@ class ItemLoginLogout extends StatefulWidget {
 class _ItemLoginLogoutState extends State<ItemLoginLogout> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: IconCicleComponent(
-                      icon: widget._history.type == 'LOGIN'
-                          ? uiSvg.login
-                          : uiSvg.logout,
-                      color: widget._history.type == 'LOGIN'
-                          ? uiColor.login
-                          : uiColor.logout)),
-              SizedBox(
-                  width: MediaQuery.of(context).size.width -
-                      uiSize.widthItemActiviries,
-                  child: Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: StyledText(
-                          style: uiTextStyle.text4,
-                          tags: {
-                            'bold': StyledTextTag(
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold))
-                          },
-                          text: widget._history.type == 'LOGIN'
-                              ? 'Alguém, espero que seja você, entrou na sua conta History pelo aparelho <bold>${widget._history.content}</bold>.'
-                              : 'Ainda bem que voltou, porque registramos sua saída pelo aparelho <bold>${widget._history.content}</bold>.')))
-            ]));
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: IconCicleComponent(
+                  icon: widget._history.type == 'LOGIN'
+                      ? uiSvg.login
+                      : uiSvg.logout,
+                  color: widget._history.type == 'LOGIN'
+                      ? uiColor.login
+                      : uiColor.logout)),
+          SizedBox(
+              width: MediaQuery.of(context).size.width -
+                  uiSize.widthItemActiviries,
+              child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: StyledText(
+                      style: uiTextStyle.text4,
+                      tags: {
+                        'bold': StyledTextTag(
+                            style: const TextStyle(fontWeight: FontWeight.bold))
+                      },
+                      text: widget._history.type == 'LOGIN'
+                          ? 'Alguém, espero que seja você, entrou na sua conta History pelo aparelho <bold>${widget._history.content}</bold>.'
+                          : 'Ainda bem que voltou, porque registramos sua saída pelo aparelho <bold>${widget._history.content}</bold>.')))
+        ]);
   }
 }

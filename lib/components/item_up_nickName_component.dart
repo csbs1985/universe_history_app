@@ -22,31 +22,29 @@ class _ItemUpNickNameState extends State<ItemUpNickName> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                    padding: EdgeInsets.only(top: 4),
-                    child: IconCicleComponent(
-                        icon: uiSvg.up_nickname, color: uiColor.up_nickname)),
-                SizedBox(
-                    width: MediaQuery.of(context).size.width -
-                        uiSize.widthItemActiviries,
-                    child: Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: StyledText(
-                            style: uiTextStyle.text4,
-                            tags: {
-                              'bold': StyledTextTag(
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold))
-                            },
-                            text:
-                                'Alterou seu usuário de <bold>${widget._history.elementId}</bold> para <bold>${widget._history.content}</bold>. Espero que goste desta vez, pode ser que <bold>${widget._history.elementId}</bold> não esteja mais disponível. Clique e descubra.')))
-              ])),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+                padding: EdgeInsets.only(top: 4),
+                child: IconCicleComponent(
+                    icon: uiSvg.up_nickname, color: uiColor.up_nickname)),
+            SizedBox(
+                width: MediaQuery.of(context).size.width -
+                    uiSize.widthItemActiviries,
+                child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: StyledText(
+                        style: uiTextStyle.text4,
+                        tags: {
+                          'bold': StyledTextTag(
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold))
+                        },
+                        text:
+                            'Alterou seu usuário de <bold>${widget._history.elementId}</bold> para <bold>${widget._history.content}</bold>. Espero que goste desta vez, pode ser que <bold>${widget._history.elementId}</bold> não esteja mais disponível. Clique e descubra.')))
+          ]),
       onTap: () => Navigator.of(context).pushNamed("/nickname"),
     );
   }
