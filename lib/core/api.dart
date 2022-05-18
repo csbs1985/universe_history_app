@@ -57,10 +57,10 @@ class Api {
         .snapshots();
   }
 
-  getAllComment() {
+  getAllComment(String _idHistory) {
     return comment
         .orderBy('date', descending: true)
-        .where('historyId', isEqualTo: currentHistory.value.first.id)
+        .where('historyId', isEqualTo: _idHistory)
         .snapshots();
   }
 

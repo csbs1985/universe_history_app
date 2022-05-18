@@ -40,12 +40,11 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
             reverse: true,
             itemCount: documents.length,
             itemBuilder: (BuildContext context, index) {
-              return Column(
-                children: [
-                  Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-                      child: Column(
+              return Column(children: [
+                Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+                    child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -59,26 +58,21 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                               collapseText: 'fechar',
                               maxLines: 10,
                               linkColor: uiColor.first),
-                          Wrap(
-                            children: [
-                              for (var item in documents[index]['categories'])
-                                Padding(
-                                    padding: const EdgeInsets.only(right: 4),
-                                    child: Text('#' + item,
-                                        style: uiTextStyle.text2))
-                            ],
-                          ),
+                          Wrap(children: [
+                            for (var item in documents[index]['categories'])
+                              Padding(
+                                  padding: const EdgeInsets.only(right: 4),
+                                  child: Text('#' + item,
+                                      style: uiTextStyle.text2))
+                          ]),
                           HistoryOptionsComponent(
                               history: documents[index],
                               type: HistoryOptionsType.HOMEPAGE),
                           const SizedBox(height: 10),
                           const DividerComponent(bottom: 0)
-                        ],
-                      ))
-                ],
-              );
-            },
-          )
+                        ]))
+              ]);
+            })
         : const NoResultComponent(
             text:
                 'Não encontramos histórias que atendam sua pesquisa. Mas não desista, temos muitas outras histórias para você interagir.');

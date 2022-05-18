@@ -25,7 +25,6 @@ class NotificationPage extends StatefulWidget {
 
 class _NotificationPageState extends State<NotificationPage> {
   final Api api = Api();
-
   final ScrollController _scrollController = ScrollController();
 
   final List<NotificationModel> _data = [];
@@ -120,31 +119,30 @@ class _NotificationPageState extends State<NotificationPage> {
                                   children: [
                                     GestureDetector(
                                         child: Container(
-                                          width: double.infinity,
-                                          color: item.view
-                                              ? uiColor.comp_1
-                                              : uiColor.second,
-                                          child: Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                20, 4, 20, 4),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                _comment(item),
-                                                ResumeComponent(
-                                                    resume: editDateUtil(DateTime
-                                                            .parse(item.date)
-                                                        .millisecondsSinceEpoch))
-                                              ],
-                                            ),
-                                          ),
-                                        ),
+                                            width: double.infinity,
+                                            color: item.view
+                                                ? uiColor.comp_1
+                                                : uiColor.second,
+                                            child: Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        20, 4, 20, 4),
+                                                child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      _comment(item),
+                                                      ResumeComponent(
+                                                          resume: editDateUtil(
+                                                              DateTime.parse(
+                                                                      item.date)
+                                                                  .millisecondsSinceEpoch))
+                                                    ]))),
                                         onTap: () => _readNotification(item))
                                   ]);
                             }
-                          },
-                        ))
+                          }))
             ])));
   }
 

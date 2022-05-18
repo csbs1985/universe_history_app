@@ -43,19 +43,18 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
     commentClass.selectComment(_content);
 
     showCupertinoModalBottomSheet(
-      expand: false,
-      context: context,
-      barrierColor: Colors.black87,
-      duration: const Duration(milliseconds: 300),
-      builder: (context) => ModalOptionsComponent(
-        _content['id'],
-        'comentário',
-        _content['userId'],
-        _content['userNickName'],
-        _content['text'],
-        _content['isDelete'],
-      ),
-    );
+        expand: false,
+        context: context,
+        barrierColor: Colors.black87,
+        duration: const Duration(milliseconds: 300),
+        builder: (context) => ModalOptionsComponent(
+              _content['id'],
+              'comentário',
+              _content['userId'],
+              _content['userNickName'],
+              _content['text'],
+              _content['isDelete'],
+            ));
   }
 
   bool _canShowOption(dynamic _content) {
@@ -82,24 +81,25 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
 
   @override
   Widget build(BuildContext context) {
+    final _idHistory = ModalRoute.of(context)!.settings.arguments.toString();
+
     return StreamBuilder(
-      stream: api.getAllComment(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.none:
-            return const CommentEmpty();
-          case ConnectionState.waiting:
-            return const SkeletonCommentComponent();
-          case ConnectionState.done:
-          default:
-            try {
-              return SingleChildScrollView(child: _list(context, snapshot));
-            } catch (e) {
+        stream: api.getAllComment(_idHistory),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
               return const CommentEmpty();
-            }
-        }
-      },
-    );
+            case ConnectionState.waiting:
+              return const SkeletonCommentComponent();
+            case ConnectionState.done:
+            default:
+              try {
+                return SingleChildScrollView(child: _list(context, snapshot));
+              } catch (e) {
+                return const CommentEmpty();
+              }
+          }
+        });
   }
 
   Widget _list(BuildContext context, snapshot) {
@@ -158,7 +158,7 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
                                   .toString()
                                   .split('.')
                                   .last),
-                          style: uiTextStyle.text2)),
+                          style: uiTextStyle.text2))
                 ])
             ]));
   }

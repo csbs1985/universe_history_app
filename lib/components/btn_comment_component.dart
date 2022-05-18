@@ -39,24 +39,19 @@ class _BtnCommentComponentState extends State<BtnCommentComponent> {
             bottom: MediaQuery.of(context).viewInsets.bottom,
             left: 0,
             right: 0,
-            child: Column(
-              children: [
-                const DividerComponent(bottom: 0),
-                GestureDetector(
+            child: Column(children: [
+              const DividerComponent(bottom: 0),
+              GestureDetector(
                   child: Container(
-                    color: uiColor.comp_1,
-                    width: double.infinity,
-                    height: uiSize.input,
-                    child: const Padding(
-                        padding: EdgeInsets.fromLTRB(16, 12, 10, 10),
-                        child: Text("Escrever comentário...",
-                            style: uiTextStyle.text2,
-                            textAlign: TextAlign.left)),
-                  ),
-                  onTap: () => _showModal(context, 'index', true),
-                ),
-              ],
-            ),
-          );
+                      color: uiColor.comp_1,
+                      width: double.infinity,
+                      height: uiSize.input,
+                      child: const Padding(
+                          padding: EdgeInsets.fromLTRB(16, 12, 10, 10),
+                          child: Text("Escrever comentário...",
+                              style: uiTextStyle.text2,
+                              textAlign: TextAlign.left))),
+                  onTap: () => _showModal(context, 'index', true))
+            ]));
   }
 }
