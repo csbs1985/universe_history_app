@@ -1,7 +1,6 @@
 // ignore_for_file: unused_field
 
 import 'dart:convert';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:universe_history_app/core/api.dart';
