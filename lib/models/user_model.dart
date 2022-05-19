@@ -82,6 +82,7 @@ class UserClass {
 
   Future<void> clean(BuildContext context, String _status) async {
     try {
+      await api.setToken();
       await authService.logout();
       ActivityUtil(ActivitiesEnum.LOGOUT, DeviceModel(), '');
       currentUser.value = [];
@@ -97,6 +98,7 @@ class UserClass {
     await api
         .deleteUser(currentUser.value.first.id)
         .then((result) async => {
+              await api.setToken(),
               await authService.delete(),
               currentUser.value = [],
             })

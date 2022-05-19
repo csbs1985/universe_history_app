@@ -34,8 +34,8 @@ class Api {
     return user.where('id', isEqualTo: _user).get();
   }
 
-  setToken(String _token) {
-    return user.doc(currentUser.value.first.id).update({'token': _token});
+  setToken({String? token}) {
+    return user.doc(currentUser.value.first.id).update({'token': token ?? ''});
   }
 
   setBlock(Map<String, dynamic> _form) {
@@ -162,6 +162,10 @@ class Api {
   }
 
   upStatusUser(String _status) {
+    return user.doc(currentUser.value.first.id).update({'status': _status});
+  }
+
+  upToken(String _status) {
     return user.doc(currentUser.value.first.id).update({'status': _status});
   }
 

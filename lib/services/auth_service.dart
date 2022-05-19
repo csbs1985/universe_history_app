@@ -74,7 +74,7 @@ class AuthService extends ChangeNotifier {
                 'qtyComment': _user.docs.first['qtyComment'],
               }),
               if (token != null && currentUser.value.isNotEmpty)
-                await api.setToken(token!)
+                await api.setToken(token: token)
             })
         .catchError((error) => debugPrint('ERROR:' + error));
   }
