@@ -4,7 +4,7 @@ import 'package:algolia/algolia.dart';
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/no_history_component.dart';
-import 'package:universe_history_app/core/algolia.dart';
+import 'package:universe_history_app/services/algolia_service.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -111,14 +111,14 @@ class _ModalMentionedComponentState extends State<ModalMentionedComponent> {
                   children: [
                     const DividerComponent(bottom: 0),
                     Container(
-                        height: 54,
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        height: uiSize.input,
+                        padding: const EdgeInsets.all(0),
                         child: Center(
                             child: TextField(
                                 controller: _commentController,
                                 onChanged: (value) => keyUp(),
                                 autofocus: true,
-                                maxLines: null,
+                                maxLines: 1,
                                 style: uiTextStyle.text1,
                                 decoration: const InputDecoration(
                                     focusedBorder: OutlineInputBorder(
