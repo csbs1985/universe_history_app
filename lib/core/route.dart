@@ -20,7 +20,7 @@ import 'package:universe_history_app/pages/search_page.dart';
 import 'package:universe_history_app/pages/settings_page.dart';
 import 'package:universe_history_app/pages/terms_page.dart';
 
-class Navigation {
+class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/about':
@@ -141,4 +141,6 @@ class Navigation {
         );
     }
   }
+
+  static GlobalKey<NavigatorState>? navigatorKey = GlobalKey<NavigatorState>();
 }

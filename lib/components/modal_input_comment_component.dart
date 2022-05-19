@@ -2,15 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 import 'package:universe_history_app/components/button_publish_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/modal_mentioned_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/components/toggle_component.dart';
-import 'package:universe_history_app/core/push_notification.dart';
 import 'package:universe_history_app/pages/notification_page.dart';
 import 'package:universe_history_app/models/owner_model.dart';
+import 'package:universe_history_app/services/push_notification_service.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
@@ -38,7 +39,6 @@ class _ModalInputCommmentComponentState
   final UserClass userClass = UserClass();
   final Api api = Api();
   final Uuid uuid = const Uuid();
-  final PushNotification _notification = PushNotification();
 
   late Map<String, dynamic> _form;
 
@@ -97,7 +97,7 @@ class _ModalInputCommmentComponentState
   void _setText(_user, MentionedCallEnum type) {
     setState(() {
       _isInputNotEmpty = true;
-      var _id = _user['id'].toString();
+      var _id = _user['objectID'];
 
       idMencioned.contains(_id) ? null : idMencioned.add(_id);
 
@@ -236,8 +236,7 @@ class _ModalInputCommmentComponentState
             '"'
         : '"' + _commentController.text.trim() + '"';
 
-    _notification.sendNotificationComment(
-        title, body, currentHistory.value.first.id, _user);
+    _sendNotification(title, body, _user);
   }
 
   void _setPushNotificationMentioned(String _user) {
@@ -257,8 +256,13 @@ class _ModalInputCommmentComponentState
             '"'
         : '"' + _commentController.text.trim() + '"';
 
-    _notification.sendNotificationComment(
-        title, body, currentHistory.value.first.id, _user);
+    _sendNotification(title, body, _user);
+  }
+
+  Future<void> _sendNotification(
+      String _title, String _body, String _user) async {
+    await Provider.of<PushNotificationService>(context, listen: false)
+        .sendNotification(_title, _body, currentHistory.value.first.id, _user);
   }
 
   void _clean() {
@@ -275,72 +279,65 @@ class _ModalInputCommmentComponentState
   Widget build(BuildContext context) {
     return Material(
         color: uiColor.comp_1,
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-                child: Container(
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom +
-                            uiSize.input),
-                    child: SingleChildScrollView(
-                        child: TextField(
-                            controller: _commentController,
-                            onChanged: (value) => keyUp(value),
-                            autofocus: true,
-                            minLines: 1,
-                            maxLines: null,
-                            style: uiTextStyle.text1,
-                            decoration: const InputDecoration(
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: uiColor.comp_1, width: 0)),
-                                hintText:
-                                    "Escreva aqui seu comentário, ele pode ajudar alguém em um momento difícil, escolha com cuidado suas palavras.",
-                                hintStyle: uiTextStyle.text7))))),
-            Positioned(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
-                left: 0,
-                right: 0,
-                child: Column(
-                  children: [
-                    const DividerComponent(bottom: 0),
-                    Container(
-                        color: uiColor.comp_1,
-                        height: uiSize.input,
-                        padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Row(
-                              children: [
-                                IconComponent(
-                                    icon: uiSvg.clean,
-                                    callback: (value) => _clean()),
-                                IconComponent(
-                                    icon: uiSvg.mentioned,
-                                    callback: (value) => _showMentioned(
-                                        context, MentionedCallEnum.ICON)),
-                                const SizedBox(width: 10),
-                                ToggleComponent(
-                                    value: _textSigned,
-                                    callback: (value) => _toggleAnonimous()),
-                                const SizedBox(width: 10),
-                                Text(
-                                    _textSigned
-                                        ? currentUser.value.first.nickname
-                                        : 'anônimo',
-                                    style: uiTextStyle.text2)
-                              ],
-                            ),
-                            if (_isInputNotEmpty)
-                              ButtonPublishComponent(
-                                  callback: (value) => _publishComment())
-                          ],
-                        ))
-                  ],
-                ))
-          ],
-        ));
+        child: Stack(children: [
+          SingleChildScrollView(
+              child: Container(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom +
+                          uiSize.input),
+                  child: SingleChildScrollView(
+                      child: TextField(
+                          controller: _commentController,
+                          onChanged: (value) => keyUp(value),
+                          autofocus: true,
+                          minLines: 1,
+                          maxLines: null,
+                          style: uiTextStyle.text1,
+                          decoration: const InputDecoration(
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: uiColor.comp_1, width: 0)),
+                              hintText:
+                                  "Escreva aqui seu comentário, ele pode ajudar alguém em um momento difícil, escolha com cuidado suas palavras.",
+                              hintStyle: uiTextStyle.text7))))),
+          Positioned(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+              left: 0,
+              right: 0,
+              child: Column(children: [
+                const DividerComponent(bottom: 0),
+                Container(
+                    color: uiColor.comp_1,
+                    height: uiSize.input,
+                    padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(children: [
+                            IconComponent(
+                                icon: uiSvg.clean,
+                                callback: (value) => _clean()),
+                            IconComponent(
+                                icon: uiSvg.mentioned,
+                                callback: (value) => _showMentioned(
+                                    context, MentionedCallEnum.ICON)),
+                            const SizedBox(width: 10),
+                            ToggleComponent(
+                                value: _textSigned,
+                                callback: (value) => _toggleAnonimous()),
+                            const SizedBox(width: 10),
+                            Text(
+                                _textSigned
+                                    ? currentUser.value.first.nickname
+                                    : 'anônimo',
+                                style: uiTextStyle.text2)
+                          ]),
+                          if (_isInputNotEmpty)
+                            ButtonPublishComponent(
+                                callback: (value) => _publishComment())
+                        ]))
+              ]))
+        ]));
   }
 }

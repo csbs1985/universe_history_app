@@ -6,7 +6,6 @@ import 'package:universe_history_app/components/appBar_component.dart';
 import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
-import 'package:universe_history_app/core/push_notification.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
@@ -25,7 +24,6 @@ class NickNamePage extends StatefulWidget {
 
 class _NickNamePageState extends State<NickNamePage> {
   final Api api = Api();
-  final PushNotification _notification = PushNotification();
   final TextEditingController _textController = TextEditingController();
   final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
@@ -127,8 +125,6 @@ class _NickNamePageState extends State<NickNamePage> {
         });
 
     userNew.value ? _newNickname() : _upNickname();
-
-    // _notification.getToken();
   }
 
   Future<void> _newNickname() async {

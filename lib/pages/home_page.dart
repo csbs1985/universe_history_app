@@ -3,6 +3,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:universe_history_app/components/all_for_now_component.dart';
 import 'package:universe_history_app/components/history_list_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
@@ -11,6 +12,8 @@ import 'package:universe_history_app/components/menu_component.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
+import 'package:universe_history_app/services/local_notification_service.dart';
+import 'package:universe_history_app/services/push_notification_service.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
@@ -30,8 +33,20 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    DeviceUtil();
     super.initState();
+    initilizeFirebaseMessaging();
+    checkNotifications();
+    DeviceUtil();
+  }
+
+  initilizeFirebaseMessaging() async {
+    await Provider.of<PushNotificationService>(context, listen: false)
+        .initialize();
+  }
+
+  checkNotifications() async {
+    await Provider.of<LocalNotificationService>(context, listen: false)
+        .checkForNotifications();
   }
 
   void _scrollToTop() {

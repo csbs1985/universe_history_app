@@ -8,7 +8,6 @@ import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
-import 'package:universe_history_app/core/push_notification.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/services/auth_service.dart';
 import 'package:universe_history_app/models/user_model.dart';
@@ -29,7 +28,6 @@ class _LoginNickPageState extends State<LoginPasswordPage> {
   final AuthService authService = AuthService();
   final Api api = Api();
   final LoginUtil loginUtil = LoginUtil();
-  final PushNotification notification = PushNotification();
   final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
   final Uuid uuid = const Uuid();
@@ -154,39 +152,38 @@ class _LoginNickPageState extends State<LoginPasswordPage> {
                 padding: const EdgeInsets.fromLTRB(
                     uiPadding.large, 0, uiPadding.large, uiPadding.large),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const TitleComponent(title: 'Qual sua senha?'),
-                    Text(_labelText,
-                        style: loginUtil.getLabelStyle(_labelStyle)),
-                    const SizedBox(height: uiPadding.medium),
-                    TextFormField(
-                        autofocus: true,
-                        obscureText: _hiddenPassword,
-                        controller: passwordController,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp(_regx))
-                        ],
-                        onChanged: (value) => _keyUp(value),
-                        style: uiTextStyle.text1,
-                        keyboardType: TextInputType.emailAddress),
-                    const SizedBox(height: uiPadding.xLarge),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Button3dComponent(
-                              label: _hiddenPassword ? 'mostrar' : 'esconder',
-                              size: ButtonSizeEnum.MEDIUM,
-                              style: ButtonStyleEnum.SECOND,
-                              callback: (value) => _toggleShow()),
-                          if (_showButton)
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const TitleComponent(title: 'Qual sua senha?'),
+                      Text(_labelText,
+                          style: loginUtil.getLabelStyle(_labelStyle)),
+                      const SizedBox(height: uiPadding.medium),
+                      TextFormField(
+                          autofocus: true,
+                          obscureText: _hiddenPassword,
+                          controller: passwordController,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp(_regx))
+                          ],
+                          onChanged: (value) => _keyUp(value),
+                          style: uiTextStyle.text1,
+                          keyboardType: TextInputType.emailAddress),
+                      const SizedBox(height: uiPadding.xLarge),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
                             Button3dComponent(
-                                label: loginUtil.getButtonText(_buttonText),
+                                label: _hiddenPassword ? 'mostrar' : 'esconder',
                                 size: ButtonSizeEnum.MEDIUM,
-                                style: ButtonStyleEnum.PRIMARY,
-                                callback: (value) => _pressedButton())
-                        ])
-                  ],
-                ))));
+                                style: ButtonStyleEnum.SECOND,
+                                callback: (value) => _toggleShow()),
+                            if (_showButton)
+                              Button3dComponent(
+                                  label: loginUtil.getButtonText(_buttonText),
+                                  size: ButtonSizeEnum.MEDIUM,
+                                  style: ButtonStyleEnum.PRIMARY,
+                                  callback: (value) => _pressedButton())
+                          ])
+                    ]))));
   }
 }

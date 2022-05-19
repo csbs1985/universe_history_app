@@ -2,13 +2,14 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:no_context_navigation/no_context_navigation.dart';
-import 'package:universe_history_app/core/navigation.dart';
-import 'package:universe_history_app/core/push_notification.dart';
+import 'package:universe_history_app/core/route.dart';
 import 'package:universe_history_app/pages/splash_page.dart';
+import 'package:universe_history_app/services/local_notification_service.dart';
+import 'package:universe_history_app/services/push_notification_service.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_theme.dart';
 
@@ -20,14 +21,22 @@ Future<void> main() async {
 
   await Firebase.initializeApp();
 
-  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        Provider<LocalNotificationService>(
+            create: (context) => LocalNotificationService()),
+        Provider<PushNotificationService>(
+          create: (context) =>
+              PushNotificationService(context.read<LocalNotificationService>()),
+        )
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  final PushNotification _notification = PushNotification();
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -37,13 +46,11 @@ class MyApp extends StatelessWidget {
         systemNavigationBarColor: uiColor.comp_1,
         systemNavigationBarIconBrightness: Brightness.light));
 
-    _notification.init();
-
     return MaterialApp(
         navigatorKey: NavigationService.navigationKey,
         debugShowCheckedModeBanner: false,
         theme: uiTheme.theme1,
-        onGenerateRoute: Navigation.generateRoute,
+        onGenerateRoute: Routes.generateRoute,
         home: const SplashPage());
   }
 }

@@ -32,7 +32,7 @@ class _ModalMentionedComponentState extends State<ModalMentionedComponent> {
 
   @override
   initState() {
-    algolia = Aplication.algolia;
+    algolia = AlgoliaService.algolia;
     super.initState();
   }
 
@@ -73,36 +73,34 @@ class _ModalMentionedComponentState extends State<ModalMentionedComponent> {
                                     shrinkWrap: true,
                                     reverse: true,
                                     itemCount: _snapshot!.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) =>
-                                            Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        0, 0, 10, 0),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Container(
-                                                        height: uiSize.input,
-                                                        padding:
-                                                            const EdgeInsets.fromLTRB(
-                                                                0, 0, 10, 10),
-                                                        child: TextButton(
-                                                            child: Text(
-                                                                _snapshot![index].data['nickname'] +
-                                                                    ' - ' +
-                                                                    _snapshot![index].data[
-                                                                        'email'],
-                                                                style: uiTextStyle
-                                                                    .buttonSecondLabel),
-                                                            style: ButtonStyle(
-                                                                backgroundColor:
-                                                                    MaterialStateProperty.all(
-                                                                        uiColor.buttonSecond)),
-                                                            onPressed: () => _setUser(_snapshot![index].data)))
-                                                  ],
-                                                ))))))),
+                                    itemBuilder: (BuildContext context,
+                                            int index) =>
+                                        Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 0, 10, 0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                    height: uiSize.input,
+                                                    padding:
+                                                        const EdgeInsets.fromLTRB(
+                                                            0, 0, 10, 10),
+                                                    child: TextButton(
+                                                        child: Text(
+                                                            _snapshot![index].data[
+                                                                'nickname'],
+                                                            style: uiTextStyle
+                                                                .buttonSecondLabel),
+                                                        style: ButtonStyle(
+                                                            backgroundColor:
+                                                                MaterialStateProperty.all(uiColor
+                                                                    .buttonSecond)),
+                                                        onPressed: () =>
+                                                            _setUser(_snapshot![index].data)))
+                                              ],
+                                            ))))))),
             Positioned(
                 bottom: MediaQuery.of(context).viewInsets.bottom,
                 left: 0,
