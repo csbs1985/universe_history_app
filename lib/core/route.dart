@@ -14,7 +14,7 @@ import 'package:universe_history_app/pages/history_page.dart';
 import 'package:universe_history_app/pages/home_page.dart';
 import 'package:universe_history_app/pages/justify_page.dart';
 import 'package:universe_history_app/pages/login/login_page.dart';
-import 'package:universe_history_app/pages/notification_page.dart';
+import 'package:universe_history_app/pages/notification/notification_page.dart';
 import 'package:universe_history_app/pages/privacy_page.dart';
 import 'package:universe_history_app/pages/search_page.dart';
 import 'package:universe_history_app/pages/settings_page.dart';
