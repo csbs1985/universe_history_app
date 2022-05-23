@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_new, avoid_print, prefer_const_constructors, prefer_final_fields, unused_local_variable, prefer_generic_function_type_aliases, unused_field, unused_element, unnecessary_null_comparison
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
@@ -25,7 +23,7 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
-  final Api api = new Api();
+  final Api api = Api();
   final HistoryClass historyClass = HistoryClass();
 
   double _getPaddingBottom(bool _isComment) {
@@ -37,81 +35,96 @@ class _HistoryPageState extends State<HistoryPage> {
     final _idHistory = ModalRoute.of(context)!.settings.arguments.toString();
 
     return Scaffold(
-        appBar: const AppbarBackComponent(),
-        body: StreamBuilder<QuerySnapshot>(
-            stream: api.getHistory(_idHistory),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.none:
-                  return _notResult();
-                case ConnectionState.waiting:
-                  return SkeletonHistoryItemComponent();
-                case ConnectionState.done:
-                default:
-                  try {
-                    historyClass.selectHistory(snapshot.data!.docs.first.data()
-                        as Map<String, dynamic>);
-                    return _history(context, snapshot);
-                  } catch (error) {
-                    return _notResult();
-                  }
+      appBar: const AppbarBackComponent(),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: api.getHistory(_idHistory),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return _notResult();
+            case ConnectionState.waiting:
+              return const SkeletonHistoryItemComponent();
+            case ConnectionState.done:
+            default:
+              try {
+                historyClass.selectHistory(
+                    snapshot.data!.docs.first.data() as Map<String, dynamic>);
+                return _history(context, snapshot);
+              } catch (error) {
+                return _notResult();
               }
-            }));
+          }
+        },
+      ),
+    );
   }
 
   Widget _history(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     QueryDocumentSnapshot<dynamic> documents = snapshot.data!.docs.first;
     return SizedBox(
-        height: MediaQuery.of(context).size.height,
-        child: Stack(children: [
-          Builder(builder: (context) {
-            return SingleChildScrollView(
+      height: MediaQuery.of(context).size.height,
+      child: Stack(
+        children: [
+          Builder(
+            builder: (context) {
+              return SingleChildScrollView(
                 child: Container(
-                    padding: EdgeInsets.only(
-                        bottom: _getPaddingBottom(documents['isComment'])),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    if (documents['title'] != "")
-                                      TitleComponent(
-                                          title: documents['title'], bottom: 0),
-                                    ResumeHistoryComponent(resume: documents),
-                                    Text(documents['text'],
-                                        style: uiTextStyle.text1),
-                                    Wrap(children: [
-                                      for (var item in documents['categories'])
-                                        Padding(
-                                            padding:
-                                                const EdgeInsets.only(right: 4),
-                                            child: Text('#' + item,
-                                                style: uiTextStyle.text2))
-                                    ]),
-                                    HistoryOptionsComponent(
-                                        history: documents,
-                                        type: HistoryOptionsType.HISTORYPAGE)
-                                  ])),
-                          DividerComponent(
-                              top: 0, bottom: 20, left: 16, right: 16),
-                          CommentItemComponent(
-                              type: HistoryOptionsType.HISTORYPAGE)
-                        ])));
-          }),
+                  padding: EdgeInsets.only(
+                      bottom: _getPaddingBottom(documents['isComment'])),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (documents['title'] != "")
+                              TitleComponent(
+                                  title: documents['title'], bottom: 0),
+                            ResumeHistoryComponent(resume: documents),
+                            Text(documents['text'], style: uiTextStyle.text1),
+                            Wrap(children: [
+                              for (var item in documents['categories'])
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 4),
+                                  child: Text(
+                                    '#' + item,
+                                    style: uiTextStyle.text2,
+                                  ),
+                                )
+                            ]),
+                            HistoryOptionsComponent(
+                                history: documents,
+                                type: HistoryOptionsType.HISTORYPAGE)
+                          ],
+                        ),
+                      ),
+                      const DividerComponent(
+                          top: 0, bottom: 20, left: 16, right: 16),
+                      const CommentItemComponent(
+                          type: HistoryOptionsType.HISTORYPAGE)
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
           const BtnCommentComponent()
-        ]));
+        ],
+      ),
+    );
   }
 
   Widget _notResult() {
     return SizedBox(
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height,
-        child: Center(
-            child: NoResultComponent(
-                text: 'História deletada ou não foi possível encontrar')));
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height,
+      child: const Center(
+        child: NoResultComponent(
+          text: 'História deletada ou não foi possível encontrar',
+        ),
+      ),
+    );
   }
 }

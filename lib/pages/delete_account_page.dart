@@ -1,5 +1,3 @@
-// ignore_for_file: todo, avoid_print, prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/alert_confirm_component.dart';
 import 'package:universe_history_app/components/btn_card_component.dart';
@@ -20,7 +18,7 @@ class DeleteAccountPage extends StatefulWidget {
 
 class _DeleteAccountPageState extends State<DeleteAccountPage> {
   final UserClass userClass = UserClass();
-  final JustifyPage justifyPage = JustifyPage();
+  final JustifyPage justifyPage = const JustifyPage();
   final DeleteAccountUtil deleteAccountUtil = DeleteAccountUtil();
 
   final List<DeleteAccountModel> _allDeleteAccount =
@@ -46,40 +44,43 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
 
   void _disableAccount() {
     showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertConfirmComponent(
-            title: 'Desativar temporariamente',
-            text:
-                'Dar uma tempo e manter meu conteúdo no History. Sua conta volta a ficar ativa quando entrar novamente com sua conta Apple ou Google cadastrada.',
-            btnPrimaryLabel: 'Cancelar',
-            btnSecondaryLabel: 'Desativar',
-            callback: (value) => {
-              !value
-                  ? Navigator.of(context).pop()
-                  : userClass.clean(
-                      context, UserStatus.DISABLED.toString().split('.').last)
-            },
-          );
-        });
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertConfirmComponent(
+          title: 'Desativar temporariamente',
+          text:
+              'Dar uma tempo e manter meu conteúdo no History. Sua conta volta a ficar ativa quando entrar novamente com sua conta Apple ou Google cadastrada.',
+          btnPrimaryLabel: 'Cancelar',
+          btnSecondaryLabel: 'Desativar',
+          callback: (value) => {
+            !value
+                ? Navigator.of(context).pop()
+                : userClass.clean(
+                    context, UserStatus.DISABLED.toString().split('.').last)
+          },
+        );
+      },
+    );
   }
 
   void _showDialog() {
     showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext buildContext) {
-          return AlertConfirmComponent(
-              title: 'Deletar',
-              text:
-                  'Tem certeza que deseja excluir sua conta History definitivamente? Você não poderá mais ler, editar e visualizar suas hitórias e comentários. Somente poderá ler as histórias de outros escritores.',
-              btnPrimaryLabel: 'Cancelar',
-              btnSecondaryLabel: 'Deletar',
-              callback: (value) => !value
-                  ? Navigator.of(buildContext).pop()
-                  : deleteAccountUtil.deleteAccount(buildContext, null));
-        });
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext buildContext) {
+        return AlertConfirmComponent(
+          title: 'Deletar',
+          text:
+              'Tem certeza que deseja excluir sua conta History definitivamente? Você não poderá mais ler, editar e visualizar suas hitórias e comentários. Somente poderá ler as histórias de outros escritores.',
+          btnPrimaryLabel: 'Cancelar',
+          btnSecondaryLabel: 'Deletar',
+          callback: (value) => !value
+              ? Navigator.of(buildContext).pop()
+              : deleteAccountUtil.deleteAccount(buildContext, null),
+        );
+      },
+    );
   }
 
   @override

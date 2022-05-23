@@ -1,5 +1,3 @@
-// ignore_for_file: curly_braces_in_flow_control_structures, unused_field, constant_identifier_names, prefer_final_fields, void_checks
-
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/button_3d_component.dart';
@@ -46,12 +44,20 @@ class _LoginPageState extends State<LoginPage> {
     currentLoginEmail.value = emailController.text;
     currentLoginTypeForm.value = _buttonText;
 
-    if (_buttonText == loginButtonText.VERIFY) return _validateEmail();
     if (_buttonText == loginButtonText.REGISTER) return _register();
     if (_buttonText == loginButtonText.LOGIN) return _login();
+    if (_buttonText == loginButtonText.VERIFY) return _validateEmail();
   }
 
-  _validateEmail() {
+  void _register() async {
+    Navigator.pushNamed(context, '/login-nick');
+  }
+
+  void _login() async {
+    Navigator.pushNamed(context, '/login-password');
+  }
+
+  void _validateEmail() {
     setState(() {
       if (emailController.text.isEmpty) {
         _labelText = 'informe seu email';
@@ -88,14 +94,6 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  _register() async {
-    Navigator.pushNamed(context, '/login-nick');
-  }
-
-  _login() async {
-    Navigator.pushNamed(context, '/login-password');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,20 +109,22 @@ class _LoginPageState extends State<LoginPage> {
               Text(_labelText, style: loginUtil.getLabelStyle(_labelStyle)),
               const SizedBox(height: uiPadding.medium),
               TextFormField(
-                  autofocus: true,
-                  controller: emailController,
-                  onChanged: (value) => _keyUp(value),
-                  style: uiTextStyle.text1,
-                  keyboardType: TextInputType.emailAddress),
+                autofocus: true,
+                controller: emailController,
+                onChanged: (value) => _keyUp(value),
+                style: uiTextStyle.text1,
+                keyboardType: TextInputType.emailAddress,
+              ),
               const SizedBox(height: uiPadding.xLarge),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Button3dComponent(
-                      label: loginUtil.getButtonText(_buttonText),
-                      size: ButtonSizeEnum.MEDIUM,
-                      style: ButtonStyleEnum.PRIMARY,
-                      callback: (value) => _verify()),
+                    label: loginUtil.getButtonText(_buttonText),
+                    size: ButtonSizeEnum.MEDIUM,
+                    style: ButtonStyleEnum.PRIMARY,
+                    callback: (value) => _verify(),
+                  ),
                 ],
               )
             ],

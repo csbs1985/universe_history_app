@@ -1,5 +1,3 @@
-// ignore_for_file: unused_field, prefer_typing_uninitialized_variables, void_checks, unused_element, use_key_in_widget_constructors
-
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/btn_card_component.dart';
@@ -52,22 +50,24 @@ class _DenouncePageState extends State<DenouncePage> {
         'date': DateTime.now().toString(),
       };
 
-      setState(() {
-        api
-            .setDenounce(_form)
-            .then((result) => {
-                  ActivityUtil(
-                    ActivitiesEnum.DENOUNCE,
-                    currentOwner.value.first.nickname,
-                    _form['date'],
-                  ),
-                  toast.toast(
-                      context, ToastEnum.SUCCESS, 'Usuário denunciado!'),
-                  Navigator.of(context).pop(),
-                  Navigator.of(context).pop(),
-                })
-            .catchError((error) {});
-      });
+      setState(
+        () {
+          api
+              .setDenounce(_form)
+              .then((result) => {
+                    ActivityUtil(
+                      ActivitiesEnum.DENOUNCE,
+                      currentOwner.value.first.nickname,
+                      _form['date'],
+                    ),
+                    toast.toast(
+                        context, ToastEnum.SUCCESS, 'Usuário denunciado!'),
+                    Navigator.of(context).pop(),
+                    Navigator.of(context).pop(),
+                  })
+              .catchError((error) {});
+        },
+      );
     }
 
     return Scaffold(

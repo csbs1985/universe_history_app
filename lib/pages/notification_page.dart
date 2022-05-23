@@ -1,5 +1,3 @@
-// ignore_for_file: iterable_contains_unrelated_type, avoid_print, non_constant_identifier_names, constant_identifier_names, unnecessary_brace_in_string_interps, curly_braces_in_flow_control_structures
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:styled_text/styled_text.dart';
@@ -94,54 +92,66 @@ class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const AppbarBackComponent(),
-        body: SingleChildScrollView(
-            controller: _scrollController,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: TitleComponent(title: 'Notificações')),
-              NotificationListener<ScrollEndNotification>(
-                  child: _data.isEmpty
-                      ? _noResult()
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: _data.length + (_allFetched ? 0 : 1),
-                          itemBuilder: (BuildContext context, int index) {
-                            if (index == _data.length) {
-                              return const SkeletonNotificationComponent();
-                            } else {
-                              final item = _data[index];
-                              return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    GestureDetector(
-                                        child: Container(
-                                            width: double.infinity,
-                                            color: item.view
-                                                ? uiColor.comp_1
-                                                : uiColor.second,
-                                            child: Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        20, 4, 20, 4),
-                                                child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      _comment(item),
-                                                      ResumeComponent(
-                                                          resume: editDateUtil(
-                                                              item.date))
-                                                    ]))),
-                                        onTap: () => _readNotification(item))
-                                  ]);
-                            }
-                          }))
-            ])));
+      appBar: const AppbarBackComponent(),
+      body: SingleChildScrollView(
+        controller: _scrollController,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: TitleComponent(title: 'Notificações'),
+            ),
+            NotificationListener<ScrollEndNotification>(
+              child: _data.isEmpty
+                  ? _noResult()
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: _data.length + (_allFetched ? 0 : 1),
+                      itemBuilder: (BuildContext context, int index) {
+                        if (index == _data.length) {
+                          return const SkeletonNotificationComponent();
+                        } else {
+                          final item = _data[index];
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GestureDetector(
+                                child: Container(
+                                  width: double.infinity,
+                                  color: item.view
+                                      ? uiColor.comp_1
+                                      : uiColor.second,
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(20, 4, 20, 4),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        _comment(item),
+                                        ResumeComponent(
+                                          resume: editDateUtil(
+                                            item.date,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                onTap: () => _readNotification(item),
+                              )
+                            ],
+                          );
+                        }
+                      },
+                    ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _comment(index) {

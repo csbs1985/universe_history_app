@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:universe_history_app/pages/denounce_page.dart';
-import 'package:universe_history_app/pages/activities_page.dart';
+import 'package:universe_history_app/pages/activiti/activities_page.dart';
 import 'package:universe_history_app/pages/login/login_nick_page.dart';
 import 'package:universe_history_app/pages/login/login_password_page.dart';
 import 'package:universe_history_app/pages/nickName_page.dart';
@@ -14,7 +14,7 @@ import 'package:universe_history_app/pages/history_page.dart';
 import 'package:universe_history_app/pages/home_page.dart';
 import 'package:universe_history_app/pages/justify_page.dart';
 import 'package:universe_history_app/pages/login/login_page.dart';
-import 'package:universe_history_app/pages/notification/notification_page.dart';
+import 'package:universe_history_app/pages/notification_page.dart';
 import 'package:universe_history_app/pages/privacy_page.dart';
 import 'package:universe_history_app/pages/search_page.dart';
 import 'package:universe_history_app/pages/settings_page.dart';
@@ -31,7 +31,7 @@ class Routes {
         );
       case '/blocked':
         return PageTransition(
-          child: const blockedUsersPage(),
+          child: const BlockedUsersPage(),
           type: PageTransitionType.rightToLeft,
           settings: settings,
         );

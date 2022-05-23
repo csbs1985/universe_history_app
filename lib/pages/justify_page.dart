@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/alert_confirm_component.dart';
 import 'package:universe_history_app/components/btn_card_component.dart';
@@ -68,10 +66,11 @@ class _JustifyPageState extends State<JustifyPage> {
               const SizedBox(height: 20),
               if (_hasButton)
                 Button3dComponent(
-                    label: 'Justificar e deletar',
-                    style: ButtonStyleEnum.PRIMARY,
-                    size: ButtonSizeEnum.LARGE,
-                    callback: (value) => _showDialog(context))
+                  label: 'Justificar e deletar',
+                  style: ButtonStyleEnum.PRIMARY,
+                  size: ButtonSizeEnum.LARGE,
+                  callback: (value) => _showDialog(context),
+                )
             ],
           ),
         ),

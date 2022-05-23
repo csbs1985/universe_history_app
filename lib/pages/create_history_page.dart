@@ -1,12 +1,4 @@
-// ignore_for_file: unused_import, unused_field, avoid_print, prefer_final_fields, unnecessary_new, prefer_is_empty, todo, argument_type_not_assignable_to_error_handler, invalid_return_type_for_catch_error, prefer_typing_uninitialized_variables, unnecessary_null_comparison
-
-import 'dart:convert';
-import 'dart:developer';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/components/appBar_component.dart';
 import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/components/select_categories_component.dart';
@@ -16,10 +8,7 @@ import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/models/category_model.dart';
 import 'package:universe_history_app/models/history_model.dart';
-import 'package:universe_history_app/models/select_modal.dart';
 import 'package:universe_history_app/models/user_model.dart';
-import 'package:universe_history_app/theme/ui_color.dart';
-import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:uuid/uuid.dart';
@@ -40,8 +29,8 @@ class _CreateHistoryState extends State<CreateHistory> {
   TextEditingController titleController = TextEditingController();
   TextEditingController textController = TextEditingController();
 
-  final ToastComponent toast = new ToastComponent();
-  final Api api = new Api();
+  final ToastComponent toast = ToastComponent();
+  final Api api = Api();
   final UserClass userClass = UserClass();
   final Uuid uuid = const Uuid();
 
@@ -194,61 +183,67 @@ class _CreateHistoryState extends State<CreateHistory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: scaffoldKey,
-        appBar: AppbarComponent(
-            btnBack: true,
-            btnPublish: _btnPublish,
-            callback: (value) => _publishHistory(context)),
-        body: SingleChildScrollView(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
+      key: scaffoldKey,
+      appBar: AppbarComponent(
+          btnBack: true,
+          btnPublish: _btnPublish,
+          callback: (value) => _publishHistory(context)),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: TextField(
-                  controller: titleController,
-                  keyboardType: TextInputType.multiline,
-                  minLines: 1,
-                  maxLines: 2,
-                  maxLength: 60,
-                  autofocus: true,
-                  style: uiTextStyle.header1,
-                  onChanged: (value) => _canPublish(),
-                  decoration: const InputDecoration(
-                      counterText: "",
-                      hintText: 'Título',
-                      hintStyle: uiTextStyle.header2,
-                      enabledBorder:
-                          UnderlineInputBorder(borderSide: BorderSide.none),
-                      focusedBorder:
-                          UnderlineInputBorder(borderSide: BorderSide.none)))),
-          Container(
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-            child: TextField(
-              controller: textController,
-              keyboardType: TextInputType.multiline,
-              minLines: 3,
-              maxLines: null,
-              style: uiTextStyle.text1,
-              onChanged: (value) => _canPublish(),
-              decoration: const InputDecoration(
-                hintText: 'História',
-                hintStyle: uiTextStyle.text1,
-                enabledBorder:
-                    UnderlineInputBorder(borderSide: BorderSide.none),
-                focusedBorder:
-                    UnderlineInputBorder(borderSide: BorderSide.none),
+                controller: titleController,
+                keyboardType: TextInputType.multiline,
+                minLines: 1,
+                maxLines: 2,
+                maxLength: 60,
+                autofocus: true,
+                style: uiTextStyle.header1,
+                onChanged: (value) => _canPublish(),
+                decoration: const InputDecoration(
+                  counterText: "",
+                  hintText: 'Título',
+                  hintStyle: uiTextStyle.header2,
+                  enabledBorder:
+                      UnderlineInputBorder(borderSide: BorderSide.none),
+                  focusedBorder:
+                      UnderlineInputBorder(borderSide: BorderSide.none),
+                ),
               ),
             ),
-          ),
-          Padding(
+            Container(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              child: TextField(
+                controller: textController,
+                keyboardType: TextInputType.multiline,
+                minLines: 3,
+                maxLines: null,
+                style: uiTextStyle.text1,
+                onChanged: (value) => _canPublish(),
+                decoration: const InputDecoration(
+                  hintText: 'História',
+                  hintStyle: uiTextStyle.text1,
+                  enabledBorder:
+                      UnderlineInputBorder(borderSide: BorderSide.none),
+                  focusedBorder:
+                      UnderlineInputBorder(borderSide: BorderSide.none),
+                ),
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SelectToggleComponent(
-                  callback: (value) => _setPrivacy(),
-                  title: 'Assinatura',
-                  resume:
-                      'Ligado para assinar como ${currentUser.value.first.nickname} ou desligado para anônimo.',
-                  value: _isSigned)),
-          Padding(
+                callback: (value) => _setPrivacy(),
+                title: 'Assinatura',
+                resume:
+                    'Ligado para assinar como ${currentUser.value.first.nickname} ou desligado para anônimo.',
+                value: _isSigned,
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SelectToggleComponent(
                 title: 'Comentários',
@@ -256,23 +251,30 @@ class _CreateHistoryState extends State<CreateHistory> {
                     'Ligado para habilitar ou desligado para desabilitar os comentários na história. ',
                 value: _isComment,
                 callback: (value) => _setComment(),
-              )),
-          Padding(
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SelectToggleComponent(
-                  title: 'Autorizado',
-                  resume:
-                      'Ligado para marcar história como de terceiro com autorização para publicar. ',
-                  value: _isAuthorized,
-                  callback: (value) => _setAuthorized())),
-          SelectCategoriesComponent(
+                title: 'Autorizado',
+                resume:
+                    'Ligado para marcar história como de terceiro com autorização para publicar. ',
+                value: _isAuthorized,
+                callback: (value) => _setAuthorized(),
+              ),
+            ),
+            SelectCategoriesComponent(
               title: 'Assunto',
               resume: 'Selecione ao menos uma categoria/tema.',
               content: allCategories,
               selected: currentHistory.value.isNotEmpty
                   ? currentHistory.value.first.categories
                   : [],
-              callback: (value) => _setCategories(value))
-        ])));
+              callback: (value) => _setCategories(value),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

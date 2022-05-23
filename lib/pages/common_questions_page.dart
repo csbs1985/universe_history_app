@@ -35,16 +35,12 @@ class CommonQuestionsPage extends StatelessWidget {
                       item.question,
                       style: uiTextStyle.text1,
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const SizedBox(height: 10),
                     Text(
                       item.answer,
                       style: uiTextStyle.text7,
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                   ],
                 )
             ],

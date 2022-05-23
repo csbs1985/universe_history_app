@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable, unused_field, prefer_final_fields
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
@@ -24,10 +22,10 @@ class _LoginNickPageState extends State<LoginNickPage> {
   final nickController = TextEditingController();
 
   loginLabelStyle _labelStyle = loginLabelStyle.NORMAL;
-  loginButtonText _buttonText = loginButtonText.NEXT;
+  final loginButtonText _buttonText = loginButtonText.NEXT;
 
   String _labelText = "digite seu usuário";
-  String _regx = '[a-z0-9-_.]';
+  final String _regx = '[a-z0-9-_.]';
 
   bool _showButton = false;
 
@@ -77,41 +75,44 @@ class _LoginNickPageState extends State<LoginNickPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const AppbarBackComponent(),
-        body: SingleChildScrollView(
-            child: Padding(
-                padding: const EdgeInsets.fromLTRB(
-                    uiPadding.large, 0, uiPadding.large, uiPadding.large),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const TitleComponent(title: 'Qual seu nome de usuário?'),
-                    Text(_labelText,
-                        style: loginUtil.getLabelStyle(_labelStyle)),
-                    const SizedBox(height: uiPadding.medium),
-                    TextFormField(
-                        autofocus: true,
-                        maxLength: 20,
-                        controller: nickController,
-                        onChanged: (value) => _keyUp(value),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp(_regx))
-                        ],
-                        style: uiTextStyle.text1,
-                        keyboardType: TextInputType.emailAddress),
-                    const SizedBox(height: uiPadding.xLarge),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        if (_showButton)
-                          Button3dComponent(
-                              label: loginUtil.getButtonText(_buttonText),
-                              size: ButtonSizeEnum.MEDIUM,
-                              style: ButtonStyleEnum.PRIMARY,
-                              callback: (value) => _next())
-                      ],
-                    )
+      appBar: const AppbarBackComponent(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(
+              uiPadding.large, 0, uiPadding.large, uiPadding.large),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const TitleComponent(title: 'Qual seu nome de usuário?'),
+              Text(_labelText, style: loginUtil.getLabelStyle(_labelStyle)),
+              const SizedBox(height: uiPadding.medium),
+              TextFormField(
+                  autofocus: true,
+                  maxLength: 20,
+                  controller: nickController,
+                  onChanged: (value) => _keyUp(value),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(_regx))
                   ],
-                ))));
+                  style: uiTextStyle.text1,
+                  keyboardType: TextInputType.emailAddress),
+              const SizedBox(height: uiPadding.xLarge),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  if (_showButton)
+                    Button3dComponent(
+                      label: loginUtil.getButtonText(_buttonText),
+                      size: ButtonSizeEnum.MEDIUM,
+                      style: ButtonStyleEnum.PRIMARY,
+                      callback: (value) => _next(),
+                    )
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_final_fields, void_checks, curly_braces_in_flow_control_structures, non_constant_identifier_names, prefer_typing_uninitialized_variables
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
@@ -19,7 +17,8 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final Api api = Api();
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
+
   bool isFilter = false;
 
   bool _fetchText() {

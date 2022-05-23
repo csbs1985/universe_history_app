@@ -1,15 +1,11 @@
-// ignore_for_file: unused_import, avoid_print, invalid_return_type_for_catch_error, curly_braces_in_flow_control_structures, unnecessary_null_comparison
+// ignore_for_file: invalid_return_type_for_catch_error
 
-import 'dart:developer';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/models/user_model.dart';
-import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 
 class SplashPage extends StatefulWidget {
@@ -45,12 +41,16 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () => exit(0),
-        child: Scaffold(
-            body: Row(
+      onWillPop: () => exit(0),
+      child: Scaffold(
+        body: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: const [LogoComponent(icon: uiSvg.logo, size: 400)],
-        )));
+          children: const [
+            LogoComponent(icon: uiSvg.logo, size: 400),
+          ],
+        ),
+      ),
+    );
   }
 }
