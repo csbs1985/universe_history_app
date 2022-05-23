@@ -122,10 +122,10 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
 
   Color _getBackColor(_index) {
     if (_index.text.contains('@' + currentUser.value.first.nickname)) {
-      return uiColor.first;
+      return UiColor.first;
     }
-    if (_index.userId == currentUser.value.first.id) return uiColor.second;
-    return uiColor.comp_3;
+    if (_index.userId == currentUser.value.first.id) return UiColor.second;
+    return UiColor.comp_3;
   }
 
   @override
@@ -148,7 +148,7 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
                                     duration: const Duration(milliseconds: 500),
                                     value:
                                         currentHistory.value.first.qtyComment,
-                                    textStyle: uiTextStyle.text1),
+                                    textStyle: UiTextStyle.text1),
                               ValueListenableBuilder(
                                   valueListenable: currentHistory,
                                   builder: (BuildContext context, value, __) {
@@ -157,7 +157,7 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
                                                 1
                                             ? ' comentários'
                                             : ' comentário',
-                                        style: uiTextStyle.text1);
+                                        style: UiTextStyle.text1);
                                   })
                             ])),
                       ListView.builder(
@@ -178,7 +178,7 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
                                         margin: const EdgeInsets.all(0),
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(
-                                                uiBorder.rounded)),
+                                                UiBorder.rounded)),
                                         child: Padding(
                                           padding: const EdgeInsets.fromLTRB(
                                               10, 6, 10, 8),
@@ -186,9 +186,9 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
                                               ? Text(
                                                   'Comentário apagado!'
                                                       .toUpperCase(),
-                                                  style: uiTextStyle.text8)
+                                                  style: UiTextStyle.text8)
                                               : Text(item.text,
-                                                  style: uiTextStyle.text1),
+                                                  style: UiTextStyle.text1),
                                         ),
                                       ),
                                       onLongPress: _canShowOption(item)
@@ -204,7 +204,7 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
                                                     .toString()
                                                     .split('.')
                                                     .last),
-                                            style: uiTextStyle.text2))
+                                            style: UiTextStyle.text2))
                                   ]);
                             }
                           })

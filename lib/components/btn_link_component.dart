@@ -23,7 +23,7 @@ class _BtnLinkComponentState extends State<BtnLinkComponent> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: uiColor.comp_1,
+      color: UiColor.comp_1,
       child: SizedBox(
         width: double.infinity,
         height: 48,
@@ -32,7 +32,7 @@ class _BtnLinkComponentState extends State<BtnLinkComponent> {
             alignment: Alignment.centerLeft,
             child: Text(
               text,
-              style: uiTextStyle.text1,
+              style: UiTextStyle.text1,
             ),
           ),
           style: TextButton.styleFrom(padding: EdgeInsets.zero),

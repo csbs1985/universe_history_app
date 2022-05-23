@@ -28,16 +28,16 @@ class _ItemNewNickNameState extends State<ItemNewNickName> {
           const Padding(
               padding: EdgeInsets.only(top: 4),
               child: IconCicleComponent(
-                icon: uiSvg.new_nickname,
-                color: uiColor.new_nickname,
+                icon: UiSvg.new_nickname,
+                color: UiColor.new_nickname,
               )),
           SizedBox(
             width:
-                MediaQuery.of(context).size.width - uiSize.widthItemActiviries,
+                MediaQuery.of(context).size.width - UiSize.widthItemActiviries,
             child: Padding(
               padding: const EdgeInsets.only(left: 10),
               child: StyledText(
-                style: uiTextStyle.text4,
+                style: UiTextStyle.text4,
                 tags: {
                   'bold': StyledTextTag(
                     style: const TextStyle(fontWeight: FontWeight.bold),

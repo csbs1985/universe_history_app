@@ -29,18 +29,18 @@ class ResumeHistoryComponent extends StatelessWidget {
         children: [
           if (_resume['isAuthorized'])
             const IconCicleComponent(
-              icon: uiSvg.authorized,
+              icon: UiSvg.authorized,
               size: 16,
               margin: 2,
             ),
           if (_resume['isAuthorized'])
             const Text(
               ' · ',
-              style: uiTextStyle.text2,
+              style: UiTextStyle.text2,
             ),
           Text(
             resumeUitl(_resume),
-            style: uiTextStyle.text2,
+            style: UiTextStyle.text2,
           ),
         ],
       ),

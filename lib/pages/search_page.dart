@@ -42,21 +42,21 @@ class _SearchPageState extends State<SearchPage> {
               TextField(
                 controller: _searchController,
                 autofocus: true,
-                style: uiTextStyle.text1,
+                style: UiTextStyle.text1,
                 onChanged: (value) => _fetchText(),
                 decoration: InputDecoration(
                   counterText: "",
                   hintText: 'Buscar por usuário',
                   filled: true,
-                  fillColor: uiColor.comp_3,
-                  hintStyle: uiTextStyle.text1,
+                  fillColor: UiColor.comp_3,
+                  hintStyle: UiTextStyle.text1,
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(uiBorder.rounded),
+                    borderRadius: BorderRadius.circular(UiBorder.rounded),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(uiBorder.rounded),
+                    borderRadius: BorderRadius.circular(UiBorder.rounded),
                   ),
                 ),
               ),
@@ -103,7 +103,7 @@ class _SearchPageState extends State<SearchPage> {
           reverse: true,
           itemCount: documents.length,
           itemBuilder: (BuildContext context, index) {
-            return Text(documents[index]['nickname'], style: uiTextStyle.text1);
+            return Text(documents[index]['nickname'], style: UiTextStyle.text1);
           },
         ),
       ],

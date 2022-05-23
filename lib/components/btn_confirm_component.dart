@@ -37,7 +37,7 @@ class _BtnConfirmComponentState extends State<BtnConfirmComponent> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
       child: Material(
-        color: uiColor.comp_1,
+        color: UiColor.comp_1,
         child: SizedBox(
           width: double.infinity,
           height: 48,
@@ -48,7 +48,7 @@ class _BtnConfirmComponentState extends State<BtnConfirmComponent> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       ' ' + widget._title,
-                      style: uiTextStyle.text1,
+                      style: UiTextStyle.text1,
                     ),
                   ),
                   style: TextButton.styleFrom(padding: EdgeInsets.zero),
@@ -59,7 +59,7 @@ class _BtnConfirmComponentState extends State<BtnConfirmComponent> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       widget._title,
-                      style: uiTextStyle.text1,
+                      style: UiTextStyle.text1,
                     ),
                   ),
                   style: TextButton.styleFrom(padding: EdgeInsets.zero),

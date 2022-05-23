@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
           ),
           actions: [
             // IconComponent(
-            //   icon: uiSvg.search,
+            //   icon: UiSvg.search,
             //   route: 'search',
             // ),
             ValueListenableBuilder(
@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                             return Stack(
                               children: [
                                 const IconComponent(
-                                    icon: uiSvg.notification,
+                                    icon: UiSvg.notification,
                                     route: 'notification'),
                                 if (currentNotification.value)
                                   const Positioned(
@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                                     right: 12,
                                     child: CircleAvatar(
                                       radius: 4,
-                                      backgroundColor: uiColor.first,
+                                      backgroundColor: UiColor.first,
                                     ),
                                   ),
                               ],
@@ -106,25 +106,25 @@ class _HomePageState extends State<HomePage> {
                     : Container();
               },
             ),
-            const IconComponent(icon: uiSvg.menu, route: 'settings'),
+            const IconComponent(icon: UiSvg.menu, route: 'settings'),
             const SizedBox(width: 10)
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: uiColor.first,
+          backgroundColor: UiColor.first,
           elevation: 0,
-          child: SvgPicture.asset(uiSvg.create),
+          child: SvgPicture.asset(UiSvg.create),
           onPressed: () => {
             currentHistory.value = [],
             Navigator.of(context)
                 .pushNamed(currentUser.value.isNotEmpty ? "/create" : "/login")
           },
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(uiBorder.rounded),
+            borderRadius: BorderRadius.circular(UiBorder.rounded),
           ),
         ),
         body: Container(
-          color: uiColor.comp_1,
+          color: UiColor.comp_1,
           child: SingleChildScrollView(
             controller: _scrollController,
             child: Column(

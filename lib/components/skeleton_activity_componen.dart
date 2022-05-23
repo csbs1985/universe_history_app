@@ -16,10 +16,10 @@ class SkeletonActivityComponent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Skeleton(
-            width: uiSize.iconCircle,
-            height: uiSize.iconCircle,
-            textColor: uiColor.comp_3,
-            borderRadius: BorderRadius.circular(uiBorder.circle),
+            width: UiSize.iconCircle,
+            height: UiSize.iconCircle,
+            textColor: UiColor.comp_3,
+            borderRadius: BorderRadius.circular(UiBorder.circle),
           ),
           const SizedBox(width: 8),
           Column(
@@ -28,15 +28,15 @@ class SkeletonActivityComponent extends StatelessWidget {
               Skeleton(
                 width: MediaQuery.of(context).size.width - 82,
                 height: 16,
-                textColor: uiColor.comp_3,
-                borderRadius: BorderRadius.circular(uiBorder.rounded),
+                textColor: UiColor.comp_3,
+                borderRadius: BorderRadius.circular(UiBorder.rounded),
               ),
               const SizedBox(height: 4),
               Skeleton(
                 width: 100,
                 height: 12,
-                textColor: uiColor.comp_3,
-                borderRadius: BorderRadius.circular(uiBorder.rounded),
+                textColor: UiColor.comp_3,
+                borderRadius: BorderRadius.circular(UiBorder.rounded),
               ),
             ],
           ),

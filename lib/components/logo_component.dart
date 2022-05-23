@@ -39,12 +39,12 @@ class _LogoComponentState extends State<LogoComponent> {
   }
 
   Color? _setColor() {
-    if (widget._icon == uiSvg.logo) {
+    if (widget._icon == UiSvg.logo) {
       return null;
     } else if (widget._color != null) {
       return widget._color;
     }
-    return uiColor.icon;
+    return UiColor.icon;
   }
 
   @override
@@ -54,7 +54,7 @@ class _LogoComponentState extends State<LogoComponent> {
         padding: const EdgeInsets.all(0),
         margin: const EdgeInsets.all(0),
         child: SvgPicture.asset(
-          widget._icon ?? uiSvg.name,
+          widget._icon ?? UiSvg.name,
           color: _setColor(),
         ),
         constraints: BoxConstraints(

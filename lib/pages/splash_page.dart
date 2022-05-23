@@ -47,7 +47,7 @@ class _SplashPageState extends State<SplashPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: const [
-            LogoComponent(icon: uiSvg.logo, size: 400),
+            LogoComponent(icon: UiSvg.logo, size: 400),
           ],
         ),
       ),

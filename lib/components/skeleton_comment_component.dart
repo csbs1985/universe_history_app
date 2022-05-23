@@ -15,8 +15,8 @@ class SkeletonCommentComponent extends StatelessWidget {
         Skeleton(
           width: double.infinity,
           height: 24,
-          textColor: uiColor.comp_3,
-          borderRadius: BorderRadius.circular(uiBorder.rounded),
+          textColor: UiColor.comp_3,
+          borderRadius: BorderRadius.circular(UiBorder.rounded),
         ),
         const SizedBox(height: 10),
         Row(
@@ -24,15 +24,15 @@ class SkeletonCommentComponent extends StatelessWidget {
             Skeleton(
               width: 100,
               height: 12,
-              textColor: uiColor.comp_3,
-              borderRadius: BorderRadius.circular(uiBorder.rounded),
+              textColor: UiColor.comp_3,
+              borderRadius: BorderRadius.circular(UiBorder.rounded),
             ),
             const SizedBox(width: 10),
             Skeleton(
               width: 100,
               height: 12,
-              textColor: uiColor.comp_3,
-              borderRadius: BorderRadius.circular(uiBorder.rounded),
+              textColor: UiColor.comp_3,
+              borderRadius: BorderRadius.circular(UiBorder.rounded),
             ),
           ],
         ),

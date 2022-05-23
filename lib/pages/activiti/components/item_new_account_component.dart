@@ -23,13 +23,13 @@ class _ItemNewAccountComponentState extends State<ItemNewAccountComponent> {
         const Padding(
             padding: EdgeInsets.only(top: 4),
             child: IconCicleComponent(
-                icon: uiSvg.new_account, color: uiColor.new_account)),
+                icon: UiSvg.new_account, color: UiColor.new_account)),
         SizedBox(
           width: MediaQuery.of(context).size.width - 32 - 20 - 20,
           child: Padding(
             padding: const EdgeInsets.only(left: 10),
             child: StyledText(
-              style: uiTextStyle.text4,
+              style: UiTextStyle.text4,
               tags: {
                 'bold': StyledTextTag(
                   style: const TextStyle(

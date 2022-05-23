@@ -39,16 +39,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: uiColor.comp_1,
+        statusBarColor: UiColor.comp_1,
         statusBarIconBrightness: Brightness.light,
         statusBarBrightness: Brightness.light,
-        systemNavigationBarColor: uiColor.comp_1,
+        systemNavigationBarColor: UiColor.comp_1,
         systemNavigationBarIconBrightness: Brightness.light));
 
     return MaterialApp(
         navigatorKey: NavigationService.navigationKey,
         debugShowCheckedModeBanner: false,
-        theme: uiTheme.theme1,
+        theme: UiTheme.theme1,
         onGenerateRoute: Routes.generateRoute,
         home: const SplashPage());
   }

@@ -13,7 +13,7 @@ class TermsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: SvgPicture.asset(uiSvg.closed),
+          icon: SvgPicture.asset(UiSvg.closed),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -25,7 +25,7 @@ class TermsPage extends StatelessWidget {
             children: [
               const TitleComponent(title: 'Termo de uso'),
               StyledText(
-                  style: uiTextStyle.text4,
+                  style: UiTextStyle.text4,
                   tags: {
                     'b': StyledTextTag(
                       style: const TextStyle(fontWeight: FontWeight.w700),

@@ -34,7 +34,7 @@ class _ButtonPublishComponentState extends State<ButtonPublishComponent> {
                 width: _width,
                 height: _height,
                 decoration: const BoxDecoration(
-                  color: uiColor.buttonBorder,
+                  color: UiColor.buttonBorder,
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
               ),
@@ -48,13 +48,13 @@ class _ButtonPublishComponentState extends State<ButtonPublishComponent> {
                 height: _height,
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: const BoxDecoration(
-                  color: uiColor.button,
+                  color: UiColor.button,
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
                 child: const Center(
                   child: Text(
                     'Publicar',
-                    style: uiTextStyle.buttonPublish,
+                    style: UiTextStyle.buttonPublish,
                   ),
                 ),
               ),

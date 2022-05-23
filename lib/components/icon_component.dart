@@ -38,7 +38,7 @@ class _IconComponentState extends State<IconComponent> {
   Widget build(BuildContext context) {
     return IconButton(
       icon: SvgPicture.asset(widget._icon),
-      color: widget._color ?? uiColor.comp_3,
+      color: widget._color ?? UiColor.comp_3,
       onPressed: () => _onPressed(),
     );
   }

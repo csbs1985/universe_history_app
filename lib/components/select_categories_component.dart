@@ -77,15 +77,15 @@ class _SelectCategoriesComponentState extends State<SelectCategoriesComponent> {
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
                             color: _getSelected(item.id!)
-                                ? uiColor.buttonLabel
-                                : uiColor.buttonSecondLabel,
+                                ? UiColor.buttonLabel
+                                : UiColor.buttonSecondLabel,
                           ),
                         ),
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(
                             _getSelected(item.id!)
-                                ? uiColor.button
-                                : uiColor.buttonSecond,
+                                ? UiColor.button
+                                : UiColor.buttonSecond,
                           ),
                         ),
                       ),

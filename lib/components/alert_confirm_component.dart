@@ -38,17 +38,17 @@ class _AlertConfirmComponentState extends State<AlertConfirmComponent> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-      backgroundColor: uiColor.comp_1,
+      backgroundColor: UiColor.comp_1,
       title: Text(
         widget._title,
-        style: uiTextStyle.header2,
+        style: UiTextStyle.header2,
       ),
       content: SingleChildScrollView(
         child: ListBody(
           children: [
             Text(
               widget._text,
-              style: uiTextStyle.text1,
+              style: UiTextStyle.text1,
             )
           ],
         ),

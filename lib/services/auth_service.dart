@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_final_fields, curly_braces_in_flow_control_structures
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/core/api.dart';

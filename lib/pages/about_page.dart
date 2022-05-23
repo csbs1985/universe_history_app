@@ -13,7 +13,7 @@ class AboutPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: SvgPicture.asset(uiSvg.closed),
+          icon: SvgPicture.asset(UiSvg.closed),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -33,29 +33,29 @@ class AboutPage extends StatelessWidget {
               ),
               Text(
                 'Versão',
-                style: uiTextStyle.text2,
+                style: UiTextStyle.text2,
               ),
               Text(
                 'v1.0.0(c)',
-                style: uiTextStyle.text1,
+                style: UiTextStyle.text1,
               ),
               Text(
                 '17 de janeiro de 2022 às 10:20',
-                style: uiTextStyle.text1,
+                style: UiTextStyle.text1,
               ),
               SizedBox(
                 height: 30,
               ),
               Text(
                 'History e os logotipos e logomarcas do History são marcas registradas de Universe Inc. Todos os direitos registrados.',
-                style: uiTextStyle.text1,
+                style: UiTextStyle.text1,
               ),
               SizedBox(
                 height: 30,
               ),
               Text(
                 'History foi construído usando software de código aberto e licenciado.',
-                style: uiTextStyle.text1,
+                style: UiTextStyle.text1,
               ),
             ],
           ),

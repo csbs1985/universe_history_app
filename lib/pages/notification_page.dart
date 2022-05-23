@@ -121,8 +121,8 @@ class _NotificationPageState extends State<NotificationPage> {
                                 child: Container(
                                   width: double.infinity,
                                   color: item.view
-                                      ? uiColor.comp_1
-                                      : uiColor.second,
+                                      ? UiColor.comp_1
+                                      : UiColor.second,
                                   child: Padding(
                                     padding:
                                         const EdgeInsets.fromLTRB(20, 4, 20, 4),
@@ -171,8 +171,8 @@ class _NotificationPageState extends State<NotificationPage> {
           '<em>${index.nickName}</em> mencionou você em um comentário da história "<em>${index.content}</em>".';
 
     return StyledText(
-        style: uiTextStyle.text1,
-        tags: {'em': StyledTextTag(style: uiTextStyle.text10)},
+        style: UiTextStyle.text1,
+        tags: {'em': StyledTextTag(style: UiTextStyle.text10)},
         text: _text);
   }
 

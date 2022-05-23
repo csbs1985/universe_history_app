@@ -191,13 +191,13 @@ class _NickNamePageState extends State<NickNamePage> {
                     'Os nomes de usuário só podem usar letras, números, sublinhados e pontos, deve ser único e de 6 à 20 caracteres. Você só poderá altera a cada 30 dias.'),
                 const SizedBox(height: 10),
                 Container(
-                  color: uiColor.comp_1,
+                  color: UiColor.comp_1,
                   child: TextField(
                     controller: _textController,
                     maxLines: 1,
                     maxLength: 20,
                     autofocus: true,
-                    style: uiTextStyle.text1,
+                    style: UiTextStyle.text1,
                     onChanged: (value) => _keyUp(value),
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp(_regx))
@@ -205,30 +205,30 @@ class _NickNamePageState extends State<NickNamePage> {
                     decoration: InputDecoration(
                       enabled: _hasInput,
                       hintText: 'Nome de usuário',
-                      fillColor: _hasInput ? uiColor.comp_1 : uiColor.comp_3,
+                      fillColor: _hasInput ? UiColor.comp_1 : UiColor.comp_3,
                       filled: true,
-                      hintStyle: uiTextStyle.text7,
+                      hintStyle: UiTextStyle.text7,
                       counterStyle: const TextStyle(fontSize: 0),
                       disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(uiBorder.rounded),
+                        borderRadius: BorderRadius.circular(UiBorder.rounded),
                         borderSide:
-                            const BorderSide(width: 1, color: uiColor.warning),
+                            const BorderSide(width: 1, color: UiColor.warning),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(uiBorder.rounded),
+                        borderRadius: BorderRadius.circular(UiBorder.rounded),
                         borderSide: BorderSide(
                             width: 1,
                             color: _isInputNotEmpty
-                                ? uiColor.success
-                                : uiColor.warning),
+                                ? UiColor.success
+                                : UiColor.warning),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(uiBorder.rounded),
+                        borderRadius: BorderRadius.circular(UiBorder.rounded),
                         borderSide: BorderSide(
                           width: 1,
                           color: _isInputNotEmpty
-                              ? uiColor.success
-                              : uiColor.warning,
+                              ? UiColor.success
+                              : UiColor.warning,
                         ),
                       ),
                     ),
@@ -237,10 +237,10 @@ class _NickNamePageState extends State<NickNamePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(_message, style: uiTextStyle.text2),
+                    Text(_message, style: UiTextStyle.text2),
                     Text(
                       _counter.toString() + '/20',
-                      style: uiTextStyle.text2,
+                      style: UiTextStyle.text2,
                     )
                   ],
                 )

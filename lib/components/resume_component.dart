@@ -24,7 +24,7 @@ class ResumeComponent extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(0, _top ?? 0, 0, _bottom ?? 10),
       child: Text(
         _resume,
-        style: uiTextStyle.text2,
+        style: UiTextStyle.text2,
       ),
     );
   }

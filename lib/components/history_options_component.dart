@@ -136,11 +136,11 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
                       AnimatedFlipCounter(
                         duration: const Duration(milliseconds: 500),
                         value: widget._history['qtyComment'],
-                        textStyle: uiTextStyle.text2,
+                        textStyle: UiTextStyle.text2,
                       ),
                     Text(
                       _fillComment(widget._history['qtyComment']),
-                      style: uiTextStyle.text2,
+                      style: UiTextStyle.text2,
                     )
                   ],
                 ),
@@ -159,7 +159,7 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
               children: [
                 if (_showComment(widget._history['isComment']))
                   IconComponent(
-                    icon: uiSvg.comment,
+                    icon: UiSvg.comment,
                     callback: (value) {
                       setState(
                         () {
@@ -175,8 +175,8 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
                     builder: (BuildContext context, value, __) {
                       return IconComponent(
                         icon: _getBookmark(widget._history['id'])
-                            ? uiSvg.favorited
-                            : uiSvg.favorite,
+                            ? UiSvg.favorited
+                            : UiSvg.favorite,
                         callback: (value) {
                           _toggleBookmark(widget._history['id']);
                         },
@@ -185,7 +185,7 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
                   ),
                 if (_showOpen())
                   IconComponent(
-                    icon: uiSvg.open,
+                    icon: UiSvg.open,
                     callback: (value) {
                       _selectHistory(widget._history.data());
                       Navigator.pushNamed(context, '/history',
@@ -193,7 +193,7 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
                     },
                   ),
                 IconComponent(
-                  icon: uiSvg.options,
+                  icon: UiSvg.options,
                   callback: (value) => {
                     _selectHistory(widget._history.data()),
                     _showModalOptions(context, widget._history.data())

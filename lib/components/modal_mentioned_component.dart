@@ -53,7 +53,7 @@ class _ModalMentionedComponentState extends State<ModalMentionedComponent> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: uiColor.comp_1,
+      color: UiColor.comp_1,
       child: Stack(
         children: [
           SingleChildScrollView(
@@ -75,18 +75,18 @@ class _ModalMentionedComponentState extends State<ModalMentionedComponent> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  height: uiSize.input,
+                                  height: UiSize.input,
                                   padding:
                                       const EdgeInsets.fromLTRB(0, 0, 10, 10),
                                   child: TextButton(
                                     child: Text(
                                       _snapshot![index].data['nickname'],
-                                      style: uiTextStyle.buttonSecondLabel,
+                                      style: UiTextStyle.buttonSecondLabel,
                                     ),
                                     style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStateProperty.all(
-                                        uiColor.buttonSecond,
+                                        UiColor.buttonSecond,
                                       ),
                                     ),
                                     onPressed: () => _setUser(
@@ -110,7 +110,7 @@ class _ModalMentionedComponentState extends State<ModalMentionedComponent> {
               children: [
                 const DividerComponent(bottom: 0),
                 Container(
-                  height: uiSize.input,
+                  height: UiSize.input,
                   padding: const EdgeInsets.all(0),
                   child: Center(
                     child: TextField(
@@ -118,16 +118,16 @@ class _ModalMentionedComponentState extends State<ModalMentionedComponent> {
                       onChanged: (value) => keyUp(),
                       autofocus: true,
                       maxLines: 1,
-                      style: uiTextStyle.text1,
+                      style: UiTextStyle.text1,
                       decoration: const InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: uiColor.comp_1,
+                            color: UiColor.comp_1,
                             width: 0,
                           ),
                         ),
                         hintText: "Mencionar usuário...",
-                        hintStyle: uiTextStyle.text7,
+                        hintStyle: UiTextStyle.text7,
                       ),
                     ),
                   ),

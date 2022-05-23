@@ -44,14 +44,14 @@ class _BtnCommentComponentState extends State<BtnCommentComponent> {
                 const DividerComponent(bottom: 0),
                 GestureDetector(
                   child: Container(
-                    color: uiColor.comp_1,
+                    color: UiColor.comp_1,
                     width: double.infinity,
-                    height: uiSize.input,
+                    height: UiSize.input,
                     child: const Padding(
                       padding: EdgeInsets.fromLTRB(16, 12, 10, 10),
                       child: Text(
                         "Escrever comentário...",
-                        style: uiTextStyle.text2,
+                        style: UiTextStyle.text2,
                         textAlign: TextAlign.left,
                       ),
                     ),

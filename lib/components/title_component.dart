@@ -17,7 +17,7 @@ class TitleComponent extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(0, _top ?? 0, 0, _bottom ?? 10),
       child: Text(
         _title,
-        style: uiTextStyle.title1,
+        style: UiTextStyle.title1,
       ),
     );
   }

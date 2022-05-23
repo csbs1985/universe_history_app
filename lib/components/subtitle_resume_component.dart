@@ -21,7 +21,7 @@ class SubtitleResumeComponent extends StatelessWidget {
       children: [
         Text(
           _title,
-          style: uiTextStyle.text1,
+          style: UiTextStyle.text1,
         ),
         ResumeComponent(
           resume: _resume,

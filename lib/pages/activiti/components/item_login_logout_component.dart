@@ -27,18 +27,18 @@ class _ItemLoginLogoutState extends State<ItemLoginLogout> {
         Padding(
           padding: const EdgeInsets.only(top: 4),
           child: IconCicleComponent(
-            icon: widget._history.type == 'LOGIN' ? uiSvg.login : uiSvg.logout,
+            icon: widget._history.type == 'LOGIN' ? UiSvg.login : UiSvg.logout,
             color: widget._history.type == 'LOGIN'
-                ? uiColor.login
-                : uiColor.logout,
+                ? UiColor.login
+                : UiColor.logout,
           ),
         ),
         SizedBox(
-          width: MediaQuery.of(context).size.width - uiSize.widthItemActiviries,
+          width: MediaQuery.of(context).size.width - UiSize.widthItemActiviries,
           child: Padding(
             padding: const EdgeInsets.only(left: 10),
             child: StyledText(
-              style: uiTextStyle.text4,
+              style: UiTextStyle.text4,
               tags: {
                 'bold': StyledTextTag(
                     style: const TextStyle(fontWeight: FontWeight.bold))

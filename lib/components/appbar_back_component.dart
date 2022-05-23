@@ -12,10 +12,10 @@ class AppbarBackComponent extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return PreferredSize(
-      preferredSize: const Size.fromHeight(uiSize.appBar),
+      preferredSize: const Size.fromHeight(UiSize.appBar),
       child: AppBar(
         leading: IconButton(
-          icon: SvgPicture.asset(uiSvg.closed),
+          icon: SvgPicture.asset(UiSvg.closed),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),

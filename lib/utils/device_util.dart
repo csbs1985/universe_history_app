@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, curly_braces_in_flow_control_structures
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';

@@ -41,8 +41,8 @@ class _BtnCardComponentState extends State<BtnCardComponent> {
             child: TextButton(
               onPressed: () => _onPressed(item),
               style: _getSelected(item.id)
-                  ? uiButton.buttonCardActive
-                  : uiButton.buttonCard,
+                  ? UiButton.buttonCardActive
+                  : UiButton.buttonCard,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
                 child: Column(
@@ -51,15 +51,15 @@ class _BtnCardComponentState extends State<BtnCardComponent> {
                     Text(
                       item.title,
                       style: _getSelected(item.id)
-                          ? uiTextStyle.text5
-                          : uiTextStyle.text1,
+                          ? UiTextStyle.text5
+                          : UiTextStyle.text1,
                     ),
                     if (item.text.length > 0)
                       Text(
                         item.text,
                         style: _getSelected(item.id)
-                            ? uiTextStyle.text11
-                            : uiTextStyle.text2,
+                            ? UiTextStyle.text11
+                            : UiTextStyle.text2,
                       ),
                   ],
                 ),

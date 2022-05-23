@@ -13,7 +13,7 @@ class AllForNowComponent extends StatelessWidget {
           Center(
             child: Text(
               'Isso é tudo por enquanto.',
-              style: uiTextStyle.text2,
+              style: UiTextStyle.text2,
             ),
           ),
           SizedBox(height: 50)

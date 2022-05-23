@@ -27,7 +27,7 @@ class _HistoryPageState extends State<HistoryPage> {
   final HistoryClass historyClass = HistoryClass();
 
   double _getPaddingBottom(bool _isComment) {
-    return _isComment && currentUser.value.isNotEmpty ? 0 : uiSize.input;
+    return _isComment && currentUser.value.isNotEmpty ? 0 : UiSize.input;
   }
 
   @override
@@ -83,14 +83,14 @@ class _HistoryPageState extends State<HistoryPage> {
                               TitleComponent(
                                   title: documents['title'], bottom: 0),
                             ResumeHistoryComponent(resume: documents),
-                            Text(documents['text'], style: uiTextStyle.text1),
+                            Text(documents['text'], style: UiTextStyle.text1),
                             Wrap(children: [
                               for (var item in documents['categories'])
                                 Padding(
                                   padding: const EdgeInsets.only(right: 4),
                                   child: Text(
                                     '#' + item,
-                                    style: uiTextStyle.text2,
+                                    style: UiTextStyle.text2,
                                   ),
                                 )
                             ]),

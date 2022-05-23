@@ -69,7 +69,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         const SizedBox(height: 10),
                         const Text(
                           'Entrar ou criar conta',
-                          style: uiTextStyle.text1,
+                          style: UiTextStyle.text1,
                         ),
                         const SizedBox(height: 10),
                         Button3dComponent(

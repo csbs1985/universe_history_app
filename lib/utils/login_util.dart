@@ -1,5 +1,3 @@
-// ignore_for_file: constant_identifier_names, curly_braces_in_flow_control_structures
-
 import 'package:flutter/cupertino.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -11,9 +9,9 @@ ValueNotifier<loginButtonText> currentLoginTypeForm =
 
 class LoginUtil {
   TextStyle getLabelStyle(loginLabelStyle _value) {
-    if (_value == loginLabelStyle.SUCCESS) return uiTextStyle.loginLabelSuccess;
-    if (_value == loginLabelStyle.WARNING) return uiTextStyle.loginLabelError;
-    return uiTextStyle.loginLabel;
+    if (_value == loginLabelStyle.SUCCESS) return UiTextStyle.loginLabelSuccess;
+    if (_value == loginLabelStyle.WARNING) return UiTextStyle.loginLabelError;
+    return UiTextStyle.loginLabel;
   }
 
   String getButtonText(loginButtonText _value) {

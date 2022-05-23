@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print, prefer_const_constructors, use_key_in_constructors, unused_field, prefer_typing_uninitialized_variables
-
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/core/api.dart';
@@ -10,7 +8,7 @@ import 'package:uuid/uuid.dart';
 class DeleteAccountUtil {
   final Api api = Api();
   final UserClass userClass = UserClass();
-  final Uuid uuid = Uuid();
+  Uuid uuid = const Uuid();
 
   late Map<String, dynamic> _form;
 

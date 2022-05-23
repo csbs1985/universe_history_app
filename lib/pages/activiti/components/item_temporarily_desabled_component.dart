@@ -25,16 +25,16 @@ class _ItemTemporarilyDesabledComponentState
         const Padding(
           padding: EdgeInsets.only(top: 4),
           child: IconCicleComponent(
-            icon: uiSvg.temporarily_disabled,
-            color: uiColor.temporarily_disabled,
+            icon: UiSvg.temporarily_disabled,
+            color: UiColor.temporarily_disabled,
           ),
         ),
         SizedBox(
-          width: MediaQuery.of(context).size.width - uiSize.widthItemActiviries,
+          width: MediaQuery.of(context).size.width - UiSize.widthItemActiviries,
           child: Padding(
             padding: const EdgeInsets.only(left: 10),
             child: StyledText(
-              style: uiTextStyle.text4,
+              style: UiTextStyle.text4,
               tags: {
                 'bold': StyledTextTag(
                   style: const TextStyle(fontWeight: FontWeight.bold),

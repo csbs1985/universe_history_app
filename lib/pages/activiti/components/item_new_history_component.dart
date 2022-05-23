@@ -33,17 +33,17 @@ class _ItemNewHistoryState extends State<ItemNewHistory> {
             const Padding(
               padding: EdgeInsets.only(top: 4),
               child: IconCicleComponent(
-                icon: uiSvg.write,
-                color: uiColor.new_history,
+                icon: UiSvg.write,
+                color: UiColor.new_history,
               ),
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width -
-                  uiSize.widthItemActiviries,
+                  UiSize.widthItemActiviries,
               child: Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: StyledText(
-                  style: uiTextStyle.text4,
+                  style: UiTextStyle.text4,
                   tags: {
                     'bold': StyledTextTag(
                       style: const TextStyle(

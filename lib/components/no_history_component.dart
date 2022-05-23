@@ -15,12 +15,12 @@ class NoResultComponent extends StatelessWidget {
         children: [
           const Text(
             'Nada para mostrar',
-            style: uiTextStyle.text1,
+            style: UiTextStyle.text1,
             textAlign: TextAlign.center,
           ),
           Text(
             _text,
-            style: uiTextStyle.text2,
+            style: UiTextStyle.text2,
             textAlign: TextAlign.center,
           ),
         ],

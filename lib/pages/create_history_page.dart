@@ -201,12 +201,12 @@ class _CreateHistoryState extends State<CreateHistory> {
                 maxLines: 2,
                 maxLength: 60,
                 autofocus: true,
-                style: uiTextStyle.header1,
+                style: UiTextStyle.header1,
                 onChanged: (value) => _canPublish(),
                 decoration: const InputDecoration(
                   counterText: "",
                   hintText: 'Título',
-                  hintStyle: uiTextStyle.header2,
+                  hintStyle: UiTextStyle.header2,
                   enabledBorder:
                       UnderlineInputBorder(borderSide: BorderSide.none),
                   focusedBorder:
@@ -221,11 +221,11 @@ class _CreateHistoryState extends State<CreateHistory> {
                 keyboardType: TextInputType.multiline,
                 minLines: 3,
                 maxLines: null,
-                style: uiTextStyle.text1,
+                style: UiTextStyle.text1,
                 onChanged: (value) => _canPublish(),
                 decoration: const InputDecoration(
                   hintText: 'História',
-                  hintStyle: uiTextStyle.text1,
+                  hintStyle: UiTextStyle.text1,
                   enabledBorder:
                       UnderlineInputBorder(borderSide: BorderSide.none),
                   focusedBorder:

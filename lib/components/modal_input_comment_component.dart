@@ -276,14 +276,14 @@ class _ModalInputCommmentComponentState
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: uiColor.comp_1,
+      color: UiColor.comp_1,
       child: Stack(
         children: [
           SingleChildScrollView(
             child: Container(
               padding: EdgeInsets.only(
                   bottom:
-                      MediaQuery.of(context).viewInsets.bottom + uiSize.input),
+                      MediaQuery.of(context).viewInsets.bottom + UiSize.input),
               child: SingleChildScrollView(
                 child: TextField(
                   controller: _commentController,
@@ -291,14 +291,14 @@ class _ModalInputCommmentComponentState
                   autofocus: true,
                   minLines: 1,
                   maxLines: null,
-                  style: uiTextStyle.text1,
+                  style: UiTextStyle.text1,
                   decoration: const InputDecoration(
                     focusedBorder: OutlineInputBorder(
                         borderSide:
-                            BorderSide(color: uiColor.comp_1, width: 0)),
+                            BorderSide(color: UiColor.comp_1, width: 0)),
                     hintText:
                         "Escreva aqui seu comentário, ele pode ajudar alguém em um momento difícil, escolha com cuidado suas palavras.",
-                    hintStyle: uiTextStyle.text7,
+                    hintStyle: UiTextStyle.text7,
                   ),
                 ),
               ),
@@ -312,8 +312,8 @@ class _ModalInputCommmentComponentState
               children: [
                 const DividerComponent(bottom: 0),
                 Container(
-                  color: uiColor.comp_1,
-                  height: uiSize.input,
+                  color: UiColor.comp_1,
+                  height: UiSize.input,
                   padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -322,11 +322,11 @@ class _ModalInputCommmentComponentState
                       Row(
                         children: [
                           IconComponent(
-                            icon: uiSvg.clean,
+                            icon: UiSvg.clean,
                             callback: (value) => _clean(),
                           ),
                           IconComponent(
-                            icon: uiSvg.mentioned,
+                            icon: UiSvg.mentioned,
                             callback: (value) =>
                                 _showMentioned(context, MentionedCallEnum.ICON),
                           ),
@@ -340,7 +340,7 @@ class _ModalInputCommmentComponentState
                               _textSigned
                                   ? currentUser.value.first.nickname
                                   : 'anônimo',
-                              style: uiTextStyle.text2)
+                              style: UiTextStyle.text2)
                         ],
                       ),
                       if (_isInputNotEmpty)

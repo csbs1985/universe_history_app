@@ -12,7 +12,7 @@ class PrivacyPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: SvgPicture.asset(uiSvg.closed),
+          icon: SvgPicture.asset(UiSvg.closed),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -82,7 +82,7 @@ class PrivacyPage extends StatelessWidget {
                 '\n\n'
                 'Atualizaremos esta política de privacidade conforme necessário para que seja atual, precisa e o mais clara'
                 ' possível. O uso contínuo de nossos serviços confirma sua aceitação de nossa Política de Privacidade atualizada.',
-                style: uiTextStyle.text4,
+                style: UiTextStyle.text4,
               ),
             ],
           ),

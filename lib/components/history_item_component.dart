@@ -54,11 +54,11 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                         ),
                         ExpandableText(
                           documents[index]['text'],
-                          style: uiTextStyle.text1,
+                          style: UiTextStyle.text1,
                           expandText: 'continuar lendo',
                           collapseText: 'fechar',
                           maxLines: 10,
-                          linkColor: uiColor.first,
+                          linkColor: UiColor.first,
                         ),
                         Wrap(
                           children: [
@@ -67,7 +67,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                                 padding: const EdgeInsets.only(right: 4),
                                 child: Text(
                                   '#' + item,
-                                  style: uiTextStyle.text2,
+                                  style: UiTextStyle.text2,
                                 ),
                               ),
                           ],

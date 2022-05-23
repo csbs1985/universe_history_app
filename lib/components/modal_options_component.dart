@@ -161,7 +161,7 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: uiColor.comp_1,
+      color: UiColor.comp_1,
       child: Stack(
         children: [
           SingleChildScrollView(
@@ -172,13 +172,13 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                   if (_canCopy())
                     ButtonOptionComponent(
                       label: 'Copiar ' + widget._type,
-                      icon: uiSvg.copy,
+                      icon: UiSvg.copy,
                       callback: (value) => _copy(widget._text),
                     ),
                   if (_canEdit())
                     ButtonOptionComponent(
                       label: 'Editar ' + widget._type,
-                      icon: uiSvg.edit,
+                      icon: UiSvg.edit,
                       callback: (value) => _edit(context),
                     ),
                   if (_canDelete())
@@ -186,7 +186,7 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                       padding: const EdgeInsets.only(left: 8),
                       child: BtnConfirmComponent(
                         title: 'Excluir ' + widget._type,
-                        icon: uiSvg.delete,
+                        icon: UiSvg.delete,
                         btnPrimaryLabel: 'Cancelar',
                         btnSecondaryLabel: 'Excluir',
                         text:
@@ -199,7 +199,7 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                       padding: const EdgeInsets.only(left: 8),
                       child: BtnConfirmComponent(
                         title: 'Bloquear ' + widget._userNickName,
-                        icon: uiSvg.block,
+                        icon: UiSvg.block,
                         btnPrimaryLabel: 'Cancelar',
                         btnSecondaryLabel: 'Bloquear',
                         text:
@@ -210,7 +210,7 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
                   if (_canBlock())
                     ButtonOptionComponent(
                       label: 'Denunciar ' + widget._userNickName,
-                      icon: uiSvg.delate,
+                      icon: UiSvg.delate,
                       callback: (value) => _setDenounce(value),
                     ),
                 ],

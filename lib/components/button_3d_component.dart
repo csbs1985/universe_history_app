@@ -24,9 +24,9 @@ class Button3dComponent extends StatefulWidget {
 }
 
 class _Button3dComponentState extends State<Button3dComponent> {
-  Color _backColor = uiColor.first;
-  Color _borderColor = uiColor.second;
-  TextStyle _styleText = uiTextStyle.buttonLabel;
+  Color _backColor = UiColor.first;
+  Color _borderColor = UiColor.second;
+  TextStyle _styleText = UiTextStyle.buttonLabel;
 
   final double _borderSize = 4;
 
@@ -42,19 +42,19 @@ class _Button3dComponentState extends State<Button3dComponent> {
 
   _getStyle() {
     if (widget._style == ButtonStyleEnum.PRIMARY) {
-      _backColor = uiColor.button;
-      _borderColor = uiColor.buttonBorder;
-      _styleText = uiTextStyle.buttonLabel;
+      _backColor = UiColor.button;
+      _borderColor = UiColor.buttonBorder;
+      _styleText = UiTextStyle.buttonLabel;
     }
     if (widget._style == ButtonStyleEnum.SECOND) {
-      _backColor = uiColor.buttonSecond;
-      _borderColor = uiColor.buttonSecondBorder;
-      _styleText = uiTextStyle.buttonSecondLabel;
+      _backColor = UiColor.buttonSecond;
+      _borderColor = UiColor.buttonSecondBorder;
+      _styleText = UiTextStyle.buttonSecondLabel;
     }
     if (widget._style == ButtonStyleEnum.DISABLED) {
-      _backColor = uiColor.buttonDisabled;
-      _borderColor = uiColor.buttonDisabledBorder;
-      _styleText = uiTextStyle.buttonLabel;
+      _backColor = UiColor.buttonDisabled;
+      _borderColor = UiColor.buttonDisabledBorder;
+      _styleText = UiTextStyle.buttonLabel;
     }
   }
 
@@ -62,7 +62,7 @@ class _Button3dComponentState extends State<Button3dComponent> {
     if (widget._size == ButtonSizeEnum.SMALL) return 90;
     if (widget._size == ButtonSizeEnum.MEDIUM) return 100;
     if (widget._size == ButtonSizeEnum.LARGE) {
-      return MediaQuery.of(context).size.width - uiSize.widthFullLessPadding;
+      return MediaQuery.of(context).size.width - UiSize.widthFullLessPadding;
     }
     return _width;
   }

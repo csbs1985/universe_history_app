@@ -49,13 +49,13 @@ class _MenuComponentState extends State<MenuComponent> {
                           const SizedBox(width: 16),
                         TextButton(
                           style: _getSelected(widget.allCategories[index])
-                              ? uiButton.buttonMenuActive
-                              : uiButton.buttonMenu,
+                              ? UiButton.buttonMenuActive
+                              : UiButton.buttonMenu,
                           child: Text(
                             widget.allCategories[index].label!.toLowerCase(),
                             style: _getSelected(widget.allCategories[index])
-                                ? uiTextStyle.menuActive
-                                : uiTextStyle.menu,
+                                ? UiTextStyle.menuActive
+                                : UiTextStyle.menu,
                           ),
                           onPressed: () =>
                               _setSelected(widget.allCategories[index]),

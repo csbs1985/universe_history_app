@@ -101,21 +101,21 @@ class _LoginPageState extends State<LoginPage> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(
-              uiPadding.large, 0, uiPadding.large, uiPadding.large),
+              UiPadding.large, 0, UiPadding.large, UiPadding.large),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const TitleComponent(title: 'Qual seu email?'),
               Text(_labelText, style: loginUtil.getLabelStyle(_labelStyle)),
-              const SizedBox(height: uiPadding.medium),
+              const SizedBox(height: UiPadding.medium),
               TextFormField(
                 autofocus: true,
                 controller: emailController,
                 onChanged: (value) => _keyUp(value),
-                style: uiTextStyle.text1,
+                style: UiTextStyle.text1,
                 keyboardType: TextInputType.emailAddress,
               ),
-              const SizedBox(height: uiPadding.xLarge),
+              const SizedBox(height: UiPadding.xLarge),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

@@ -29,7 +29,7 @@ class _ButtonOptionComponentState extends State<ButtonOptionComponent> {
         alignment: Alignment.centerLeft,
         child: Text(
           ' ' + widget._label,
-          style: uiTextStyle.text1,
+          style: UiTextStyle.text1,
         ),
       ),
     );

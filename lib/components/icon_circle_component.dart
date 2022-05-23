@@ -27,10 +27,10 @@ class _IconCicleComponentState extends State<IconCicleComponent> {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(uiBorder.circle),
+      borderRadius: BorderRadius.circular(UiBorder.circle),
       child: Container(
-        width: widget._size ?? uiSize.iconCircle,
-        height: widget._size ?? uiSize.iconCircle,
+        width: widget._size ?? UiSize.iconCircle,
+        height: widget._size ?? UiSize.iconCircle,
         color: widget._color,
         child: Padding(
           padding: EdgeInsets.all(widget._margin ?? 8),

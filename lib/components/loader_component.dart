@@ -13,16 +13,16 @@ class LoaderComponent extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: AlertDialog(
-        backgroundColor: uiColor.comp_1,
+        backgroundColor: UiColor.comp_1,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(uiBorder.rounded)),
+            borderRadius: BorderRadius.circular(UiBorder.rounded)),
         content: SizedBox(
           height: 140,
           child: Column(
             children: [
               LoadingAnimationWidget.newtonCradle(
-                  size: 80, color: uiColor.first),
-              const Text('Aguarde...', style: uiTextStyle.text1),
+                  size: 80, color: UiColor.first),
+              const Text('Aguarde...', style: UiTextStyle.text1),
               if (currentDialog.value != '')
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
@@ -30,7 +30,7 @@ class LoaderComponent extends StatelessWidget {
                     valueListenable: currentDialog,
                     builder: (context, value, __) {
                       return Text(currentDialog.value,
-                          style: uiTextStyle.text2);
+                          style: UiTextStyle.text2);
                     },
                   ),
                 ),

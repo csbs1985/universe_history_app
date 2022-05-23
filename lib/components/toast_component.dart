@@ -7,18 +7,18 @@ import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class ToastComponent {
   void toast(BuildContext context, ToastEnum? type, String text) {
-    Color _style = uiColor.first;
+    Color _style = UiColor.first;
 
     switch (type) {
       case ToastEnum.SUCCESS:
-        _style = uiColor.success;
+        _style = UiColor.success;
         break;
       case ToastEnum.WARNING:
-        _style = uiColor.warning;
+        _style = UiColor.warning;
         break;
       case ToastEnum.INFO:
       default:
-        _style = uiColor.first;
+        _style = UiColor.first;
         break;
     }
 
@@ -26,11 +26,11 @@ class ToastComponent {
       text,
       context: context,
       position: StyledToastPosition.center,
-      textStyle: uiTextStyle.toast,
+      textStyle: UiTextStyle.toast,
       backgroundColor: _style,
       animation: StyledToastAnimation.slideToBottomFade,
       reverseAnimation: StyledToastAnimation.slideFromBottomFade,
-      borderRadius: BorderRadius.circular(uiBorder.rounded),
+      borderRadius: BorderRadius.circular(UiBorder.rounded),
     );
   }
 }

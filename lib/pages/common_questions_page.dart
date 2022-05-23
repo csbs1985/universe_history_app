@@ -16,7 +16,7 @@ class CommonQuestionsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: SvgPicture.asset(uiSvg.closed),
+          icon: SvgPicture.asset(UiSvg.closed),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -33,12 +33,12 @@ class CommonQuestionsPage extends StatelessWidget {
                   children: [
                     Text(
                       item.question,
-                      style: uiTextStyle.text1,
+                      style: UiTextStyle.text1,
                     ),
                     const SizedBox(height: 10),
                     Text(
                       item.answer,
-                      style: uiTextStyle.text7,
+                      style: UiTextStyle.text7,
                     ),
                     const SizedBox(height: 20),
                   ],

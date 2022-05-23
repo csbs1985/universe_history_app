@@ -111,9 +111,9 @@ class _BlockedUsersPageState extends State<BlockedUsersPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(documents[index]['blockedNickName'],
-                              style: uiTextStyle.text1),
+                              style: UiTextStyle.text1),
                           Text(editDateUtil(documents[index]['date']),
-                              style: uiTextStyle.text2)
+                              style: UiTextStyle.text2)
                         ]),
                     Button3dComponent(
                       label: 'desbloquear',

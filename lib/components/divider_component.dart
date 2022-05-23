@@ -20,7 +20,7 @@ class DividerComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: uiColor.comp_1,
+      color: UiColor.comp_1,
       child: Column(
         children: [
           SizedBox(height: _top ?? 0),
@@ -29,7 +29,7 @@ class DividerComponent extends StatelessWidget {
               thickness: 0.5,
               indent: _left ?? 0,
               endIndent: _right ?? 0,
-              color: uiColor.comp_3),
+              color: UiColor.comp_3),
           SizedBox(height: _bottom ?? 20)
         ],
       ),
