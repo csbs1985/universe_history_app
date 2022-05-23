@@ -1,5 +1,3 @@
-// ignore_for_file: use_key_in_widget_constructors, unused_element
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/theme/ui_color.dart';

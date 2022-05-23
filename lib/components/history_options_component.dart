@@ -1,5 +1,3 @@
-// ignore_for_file: use_key_in_widget_constructors, constant_identifier_names, unused_field
-
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -74,13 +72,14 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
 
   void _showModal(BuildContext context, String type) {
     showCupertinoModalBottomSheet(
-        expand: true,
-        context: context,
-        barrierColor: Colors.black87,
-        duration: const Duration(milliseconds: 300),
-        builder: (context) => type == 'inputCommentary'
-            ? const ModalInputCommmentComponent()
-            : ModalCommentComponent());
+      expand: true,
+      context: context,
+      barrierColor: Colors.black87,
+      duration: const Duration(milliseconds: 300),
+      builder: (context) => type == 'inputCommentary'
+          ? const ModalInputCommmentComponent()
+          : ModalCommentComponent(),
+    );
   }
 
   bool _getBookmark(String id) {
@@ -108,84 +107,104 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
     commentClass.selectComment(_content);
 
     showCupertinoModalBottomSheet(
-        expand: false,
-        context: context,
-        barrierColor: Colors.black87,
-        duration: const Duration(milliseconds: 300),
-        builder: (context) => ModalOptionsComponent(
-            _content['id'],
-            'história',
-            _content['userId'],
-            _content['userNickName'],
-            _content['text'],
-            _content['isDelete']));
+      expand: false,
+      context: context,
+      barrierColor: Colors.black87,
+      duration: const Duration(milliseconds: 300),
+      builder: (context) => ModalOptionsComponent(
+        _content['id'],
+        'história',
+        _content['userId'],
+        _content['userNickName'],
+        _content['text'],
+        _content['isDelete'],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      !_showComments(widget._history['qtyComment'])
-          ? Container()
-          : TextButton(
-              child: Row(children: [
-                if (widget._history['qtyComment'] > 0)
-                  AnimatedFlipCounter(
-                      duration: const Duration(milliseconds: 500),
-                      value: widget._history['qtyComment'],
-                      textStyle: uiTextStyle.text2),
-                Text(_fillComment(widget._history['qtyComment']),
-                    style: uiTextStyle.text2)
-              ]),
-              onPressed: () {
-                if (widget._type == HistoryOptionsType.HOMEPAGE) {
-                  _selectHistory(widget._history.data());
-                  _showModal(context, 'listCommentary ');
-                }
-              }),
-      ValueListenableBuilder(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        !_showComments(widget._history['qtyComment'])
+            ? Container()
+            : TextButton(
+                child: Row(
+                  children: [
+                    if (widget._history['qtyComment'] > 0)
+                      AnimatedFlipCounter(
+                        duration: const Duration(milliseconds: 500),
+                        value: widget._history['qtyComment'],
+                        textStyle: uiTextStyle.text2,
+                      ),
+                    Text(
+                      _fillComment(widget._history['qtyComment']),
+                      style: uiTextStyle.text2,
+                    )
+                  ],
+                ),
+                onPressed: () {
+                  if (widget._type == HistoryOptionsType.HOMEPAGE) {
+                    _selectHistory(widget._history.data());
+                    _showModal(context, 'listCommentary ');
+                  }
+                },
+              ),
+        ValueListenableBuilder(
           valueListenable: currentUser,
           builder: (context, value, __) {
             return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  if (_showComment(widget._history['isComment']))
-                    IconComponent(
-                        icon: uiSvg.comment,
-                        callback: (value) {
-                          setState(() {
-                            _selectHistory(widget._history.data());
-                            _showModal(context, 'inputCommentary');
-                          });
-                        }),
-                  if (_showBookmark())
-                    ValueListenableBuilder(
-                        valueListenable: currentBookmarks,
-                        builder: (BuildContext context, value, __) {
-                          return IconComponent(
-                              icon: _getBookmark(widget._history['id'])
-                                  ? uiSvg.favorited
-                                  : uiSvg.favorite,
-                              callback: (value) {
-                                _toggleBookmark(widget._history['id']);
-                              });
-                        }),
-                  if (_showOpen())
-                    IconComponent(
-                        icon: uiSvg.open,
-                        callback: (value) {
-                          _selectHistory(widget._history.data());
-                          Navigator.pushNamed(context, '/history',
-                              arguments: widget._history.data()['id']);
-                        }),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (_showComment(widget._history['isComment']))
                   IconComponent(
-                      icon: uiSvg.options,
-                      callback: (value) => {
-                            _selectHistory(widget._history.data()),
-                            _showModalOptions(context, widget._history.data())
-                          })
-                ]);
-          })
-    ]);
+                    icon: uiSvg.comment,
+                    callback: (value) {
+                      setState(
+                        () {
+                          _selectHistory(widget._history.data());
+                          _showModal(context, 'inputCommentary');
+                        },
+                      );
+                    },
+                  ),
+                if (_showBookmark())
+                  ValueListenableBuilder(
+                    valueListenable: currentBookmarks,
+                    builder: (BuildContext context, value, __) {
+                      return IconComponent(
+                        icon: _getBookmark(widget._history['id'])
+                            ? uiSvg.favorited
+                            : uiSvg.favorite,
+                        callback: (value) {
+                          _toggleBookmark(widget._history['id']);
+                        },
+                      );
+                    },
+                  ),
+                if (_showOpen())
+                  IconComponent(
+                    icon: uiSvg.open,
+                    callback: (value) {
+                      _selectHistory(widget._history.data());
+                      Navigator.pushNamed(context, '/history',
+                          arguments: widget._history.data()['id']);
+                    },
+                  ),
+                IconComponent(
+                  icon: uiSvg.options,
+                  callback: (value) => {
+                    _selectHistory(widget._history.data()),
+                    _showModalOptions(context, widget._history.data())
+                  },
+                ),
+              ],
+            );
+          },
+        ),
+      ],
+    );
   }
 }
 

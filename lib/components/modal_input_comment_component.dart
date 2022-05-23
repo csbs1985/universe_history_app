@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_is_empty, unused_field, void_checks, avoid_print, unnecessary_new, use_key_in_widget_constructors, curly_braces_in_flow_control_structures, import_of_legacy_library_into_null_safe
-
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
@@ -70,7 +68,7 @@ class _ModalInputCommmentComponentState
   }
 
   void keyUp(String _text) {
-    if (_text.length > 0) {
+    if (_text.isNotEmpty) {
       var lastString = _text.substring(_text.length - 1, _text.length);
 
       if ((_text.length <= 1 && _text.contains('@')) ||
@@ -91,7 +89,7 @@ class _ModalInputCommmentComponentState
         barrierColor: Colors.black87,
         duration: const Duration(milliseconds: 300),
         builder: (context) => ModalMentionedComponent(
-            type: type, callback: (value) => _setText(value, type)));
+            callback: (value) => _setText(value, type)));
   }
 
   void _setText(_user, MentionedCallEnum type) {
@@ -278,66 +276,85 @@ class _ModalInputCommmentComponentState
   @override
   Widget build(BuildContext context) {
     return Material(
-        color: uiColor.comp_1,
-        child: Stack(children: [
+      color: uiColor.comp_1,
+      child: Stack(
+        children: [
           SingleChildScrollView(
-              child: Container(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).viewInsets.bottom +
-                          uiSize.input),
-                  child: SingleChildScrollView(
-                      child: TextField(
-                          controller: _commentController,
-                          onChanged: (value) => keyUp(value),
-                          autofocus: true,
-                          minLines: 1,
-                          maxLines: null,
-                          style: uiTextStyle.text1,
-                          decoration: const InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: uiColor.comp_1, width: 0)),
-                              hintText:
-                                  "Escreva aqui seu comentário, ele pode ajudar alguém em um momento difícil, escolha com cuidado suas palavras.",
-                              hintStyle: uiTextStyle.text7))))),
+            child: Container(
+              padding: EdgeInsets.only(
+                  bottom:
+                      MediaQuery.of(context).viewInsets.bottom + uiSize.input),
+              child: SingleChildScrollView(
+                child: TextField(
+                  controller: _commentController,
+                  onChanged: (value) => keyUp(value),
+                  autofocus: true,
+                  minLines: 1,
+                  maxLines: null,
+                  style: uiTextStyle.text1,
+                  decoration: const InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: uiColor.comp_1, width: 0)),
+                    hintText:
+                        "Escreva aqui seu comentário, ele pode ajudar alguém em um momento difícil, escolha com cuidado suas palavras.",
+                    hintStyle: uiTextStyle.text7,
+                  ),
+                ),
+              ),
+            ),
+          ),
           Positioned(
-              bottom: MediaQuery.of(context).viewInsets.bottom,
-              left: 0,
-              right: 0,
-              child: Column(children: [
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+            left: 0,
+            right: 0,
+            child: Column(
+              children: [
                 const DividerComponent(bottom: 0),
                 Container(
-                    color: uiColor.comp_1,
-                    height: uiSize.input,
-                    padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                  color: uiColor.comp_1,
+                  height: uiSize.input,
+                  padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
                         children: [
-                          Row(children: [
-                            IconComponent(
-                                icon: uiSvg.clean,
-                                callback: (value) => _clean()),
-                            IconComponent(
-                                icon: uiSvg.mentioned,
-                                callback: (value) => _showMentioned(
-                                    context, MentionedCallEnum.ICON)),
-                            const SizedBox(width: 10),
-                            ToggleComponent(
-                                value: _textSigned,
-                                callback: (value) => _toggleAnonimous()),
-                            const SizedBox(width: 10),
-                            Text(
-                                _textSigned
-                                    ? currentUser.value.first.nickname
-                                    : 'anônimo',
-                                style: uiTextStyle.text2)
-                          ]),
-                          if (_isInputNotEmpty)
-                            ButtonPublishComponent(
-                                callback: (value) => _publishComment())
-                        ]))
-              ]))
-        ]));
+                          IconComponent(
+                            icon: uiSvg.clean,
+                            callback: (value) => _clean(),
+                          ),
+                          IconComponent(
+                            icon: uiSvg.mentioned,
+                            callback: (value) =>
+                                _showMentioned(context, MentionedCallEnum.ICON),
+                          ),
+                          const SizedBox(width: 10),
+                          ToggleComponent(
+                            value: _textSigned,
+                            callback: (value) => _toggleAnonimous(),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                              _textSigned
+                                  ? currentUser.value.first.nickname
+                                  : 'anônimo',
+                              style: uiTextStyle.text2)
+                        ],
+                      ),
+                      if (_isInputNotEmpty)
+                        ButtonPublishComponent(
+                          callback: (value) => _publishComment(),
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

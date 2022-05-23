@@ -1,5 +1,3 @@
-// ignore_for_file: use_key_in_widget_constructors, dead_code, sized_box_for_whitespace, unused_field, prefer_final_fields, curly_braces_in_flow_control_structures, constant_identifier_names
-
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
@@ -63,8 +61,9 @@ class _Button3dComponentState extends State<Button3dComponent> {
   double _getWidth() {
     if (widget._size == ButtonSizeEnum.SMALL) return 90;
     if (widget._size == ButtonSizeEnum.MEDIUM) return 100;
-    if (widget._size == ButtonSizeEnum.LARGE)
+    if (widget._size == ButtonSizeEnum.LARGE) {
       return MediaQuery.of(context).size.width - uiSize.widthFullLessPadding;
+    }
     return _width;
   }
 
@@ -78,7 +77,7 @@ class _Button3dComponentState extends State<Button3dComponent> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: Container(
+      child: SizedBox(
         width: _getWidth(),
         height: _getHeight() + _borderSize,
         child: Stack(
@@ -109,23 +108,26 @@ class _Button3dComponentState extends State<Button3dComponent> {
         ),
       ),
       onTapUp: (_) {
-        if (widget._style != ButtonStyleEnum.DISABLED)
+        if (widget._style != ButtonStyleEnum.DISABLED) {
           setState(() {
             _position = _borderSize;
             widget._callback(true);
           });
+        }
       },
       onTapDown: (_) {
-        if (widget._style != ButtonStyleEnum.DISABLED)
+        if (widget._style != ButtonStyleEnum.DISABLED) {
           setState(() {
             _position = 0;
           });
+        }
       },
       onTapCancel: () {
-        if (widget._style != ButtonStyleEnum.DISABLED)
+        if (widget._style != ButtonStyleEnum.DISABLED) {
           setState(() {
             _position = _borderSize;
           });
+        }
       },
     );
   }

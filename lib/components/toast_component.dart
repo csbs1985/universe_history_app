@@ -1,5 +1,3 @@
-// ignore_for_file: unused_element, unused_local_variable, unused_label, constant_identifier_names
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';

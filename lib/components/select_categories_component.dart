@@ -1,5 +1,3 @@
-// ignore_for_file: use_key_in_widget_constructors, iterable_contains_unrelated_type
-
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/subtitle_resume_component.dart';
 import 'package:universe_history_app/models/category_model.dart';
@@ -85,9 +83,10 @@ class _SelectCategoriesComponentState extends State<SelectCategoriesComponent> {
                         ),
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(
-                              _getSelected(item.id!)
-                                  ? uiColor.button
-                                  : uiColor.buttonSecond),
+                            _getSelected(item.id!)
+                                ? uiColor.button
+                                : uiColor.buttonSecond,
+                          ),
                         ),
                       ),
                     ),

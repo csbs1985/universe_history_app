@@ -1,5 +1,3 @@
-// ignore_for_file: use_key_in_widget_constructors
-
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/subtitle_resume_component.dart';
 import 'package:universe_history_app/components/toggle_component.dart';

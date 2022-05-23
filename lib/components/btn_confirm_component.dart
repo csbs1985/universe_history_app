@@ -1,5 +1,3 @@
-// ignore_for_file: no_logic_in_create_state, use_key_in_widget_constructors, unused_element, prefer_const_constructors
-
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/components/alert_confirm_component.dart';
 import 'package:flutter/material.dart';

@@ -1,12 +1,10 @@
-// ignore_for_file: use_key_in_widget_constructors, unused_field, curly_braces_in_flow_control_structures, unused_element, constant_identifier_names
-
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:universe_history_app/components/comment_empty_component.dart';
 import 'package:universe_history_app/components/history_options_component.dart';
 import 'package:universe_history_app/components/modal_options_component.dart';
+import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/skeleton_comment_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/models/comment_model.dart';
@@ -123,16 +121,11 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
   }
 
   Color _getBackColor(_index) {
-    if (_index.text.contains('@' + currentUser.value.first.nickname))
+    if (_index.text.contains('@' + currentUser.value.first.nickname)) {
       return uiColor.first;
+    }
     if (_index.userId == currentUser.value.first.id) return uiColor.second;
     return uiColor.comp_3;
-  }
-
-  double _getHeightPaddingBottom(bool _isComment) {
-    return _isComment && currentUser.value.isNotEmpty
-        ? MediaQuery.of(context).viewInsets.bottom + 48
-        : 0;
   }
 
   @override
@@ -140,7 +133,7 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
     return SingleChildScrollView(
         controller: _scrollController,
         child: !_data.isNotEmpty
-            ? const CommentEmpty()
+            ? _noResult()
             : Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 48),
                 child: Column(
@@ -216,5 +209,10 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
                             }
                           })
                     ])));
+  }
+
+  Widget _noResult() {
+    return const NoResultComponent(
+        text: 'Nenhum comentário ainda, ou os comentários foram desativados.');
   }
 }

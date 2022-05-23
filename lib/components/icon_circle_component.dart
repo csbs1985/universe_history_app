@@ -1,5 +1,3 @@
-// ignore_for_file: use_key_in_widget_constructors, unused_element
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
@@ -35,8 +33,9 @@ class _IconCicleComponentState extends State<IconCicleComponent> {
         height: widget._size ?? uiSize.iconCircle,
         color: widget._color,
         child: Padding(
-            padding: EdgeInsets.all(widget._margin ?? 8),
-            child: SvgPicture.asset(widget._icon)),
+          padding: EdgeInsets.all(widget._margin ?? 8),
+          child: SvgPicture.asset(widget._icon),
+        ),
       ),
     );
   }

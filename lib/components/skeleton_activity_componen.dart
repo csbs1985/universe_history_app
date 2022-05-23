@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_unnecessary_containers
-
 import 'package:flutter/cupertino.dart';
 import 'package:skeleton_animation/skeleton_animation.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
@@ -18,25 +16,28 @@ class SkeletonActivityComponent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Skeleton(
-              width: uiSize.iconCircle,
-              height: uiSize.iconCircle,
-              textColor: uiColor.comp_3,
-              borderRadius: BorderRadius.circular(uiBorder.circle)),
+            width: uiSize.iconCircle,
+            height: uiSize.iconCircle,
+            textColor: uiColor.comp_3,
+            borderRadius: BorderRadius.circular(uiBorder.circle),
+          ),
           const SizedBox(width: 8),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Skeleton(
-                  width: MediaQuery.of(context).size.width - 82,
-                  height: 16,
-                  textColor: uiColor.comp_3,
-                  borderRadius: BorderRadius.circular(uiBorder.rounded)),
+                width: MediaQuery.of(context).size.width - 82,
+                height: 16,
+                textColor: uiColor.comp_3,
+                borderRadius: BorderRadius.circular(uiBorder.rounded),
+              ),
               const SizedBox(height: 4),
               Skeleton(
-                  width: 100,
-                  height: 12,
-                  textColor: uiColor.comp_3,
-                  borderRadius: BorderRadius.circular(uiBorder.rounded)),
+                width: 100,
+                height: 12,
+                textColor: uiColor.comp_3,
+                borderRadius: BorderRadius.circular(uiBorder.rounded),
+              ),
             ],
           ),
         ],

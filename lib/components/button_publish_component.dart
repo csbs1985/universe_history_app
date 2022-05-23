@@ -1,5 +1,3 @@
-// ignore_for_file: use_key_in_widget_constructors, dead_code, sized_box_for_whitespace, unused_field, prefer_final_fields, curly_braces_in_flow_control_structures, constant_identifier_names
-
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -16,17 +14,16 @@ class ButtonPublishComponent extends StatefulWidget {
 }
 
 class _ButtonPublishComponentState extends State<ButtonPublishComponent> {
-  final double _borderSize = 4;
-
   late double _position = _borderSize;
 
-  double _width = 60;
-  double _height = 28;
+  final double _borderSize = 4;
+  final double _width = 60;
+  final double _height = 28;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: Container(
+      child: SizedBox(
         width: _width,
         height: _height + _borderSize,
         child: Stack(

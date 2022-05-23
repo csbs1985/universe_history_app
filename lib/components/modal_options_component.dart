@@ -1,5 +1,3 @@
-// ignore_for_file: use_key_in_widget_constructors, avoid_print, constant_identifier_names
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';

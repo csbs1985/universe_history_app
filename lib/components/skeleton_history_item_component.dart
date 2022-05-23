@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_unnecessary_containers
-
 import 'package:flutter/cupertino.dart';
 import 'package:skeleton_animation/skeleton_animation.dart';
 import 'package:universe_history_app/theme/ui_border.dart';

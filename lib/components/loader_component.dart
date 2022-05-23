@@ -27,12 +27,13 @@ class LoaderComponent extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: ValueListenableBuilder(
-                      valueListenable: currentDialog,
-                      builder: (context, value, __) {
-                        return Text(currentDialog.value,
-                            style: uiTextStyle.text2);
-                      }),
-                )
+                    valueListenable: currentDialog,
+                    builder: (context, value, __) {
+                      return Text(currentDialog.value,
+                          style: uiTextStyle.text2);
+                    },
+                  ),
+                ),
             ],
           ),
         ),

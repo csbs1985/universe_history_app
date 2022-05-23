@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, unused_field, prefer_final_fields, unused_local_variable, prefer_typing_uninitialized_variables, unnecessary_null_in_if_null_operators, must_call_super
+// ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/theme/ui_button.dart';
@@ -48,15 +48,19 @@ class _BtnCardComponentState extends State<BtnCardComponent> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(item.title,
-                        style: _getSelected(item.id)
-                            ? uiTextStyle.text5
-                            : uiTextStyle.text1),
+                    Text(
+                      item.title,
+                      style: _getSelected(item.id)
+                          ? uiTextStyle.text5
+                          : uiTextStyle.text1,
+                    ),
                     if (item.text.length > 0)
-                      Text(item.text,
-                          style: _getSelected(item.id)
-                              ? uiTextStyle.text11
-                              : uiTextStyle.text2),
+                      Text(
+                        item.text,
+                        style: _getSelected(item.id)
+                            ? uiTextStyle.text11
+                            : uiTextStyle.text2,
+                      ),
                   ],
                 ),
               ),
