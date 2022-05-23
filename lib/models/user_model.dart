@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_new, invalid_return_type_for_catch_error, avoid_print, unused_local_variable, avoid_returning_null_for_void, constant_identifier_names, unused_element, await_only_futures
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';

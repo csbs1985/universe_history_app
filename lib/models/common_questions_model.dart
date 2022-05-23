@@ -1,7 +1,3 @@
-// ignore_for_file: unnecessary_new, unused_import
-
-import 'package:flutter/cupertino.dart';
-
 class CommonQuestionsModel {
   final String id;
   final String question;
@@ -11,13 +7,13 @@ class CommonQuestionsModel {
       {required this.id, required this.question, required this.answer});
 
   static List<CommonQuestionsModel> allQuestions = [
-    new CommonQuestionsModel(
+    CommonQuestionsModel(
         id: '0',
         question: 'Por que não utilizamos fotos no perfil?',
         answer:
             'O History não tem o objetivo de deixar ninguém famoso ou divulgar seu perfil e sim contar historias. E o'
             ' anonimato pode encorajar algumas delas.'),
-    new CommonQuestionsModel(
+    CommonQuestionsModel(
       id: '1',
       question: 'Por que não podemos curtir e compartilhar conteúdo?',
       answer:
@@ -25,7 +21,7 @@ class CommonQuestionsModel {
           ' onde os usuários buscam aceitação e contam o número de curtidas e compartilhamentos. Queremos que seja um'
           ' lugar onde qualquer um conte seus segredos e que seja seguro e discreto.',
     ),
-    new CommonQuestionsModel(
+    CommonQuestionsModel(
       id: '2',
       question:
           'Por que tem a opção de escrever histórias e comentário anônimo?',

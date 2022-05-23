@@ -1,5 +1,3 @@
-// ignore_for_file: void_checks
-
 class DenounceModel {
   DenounceModel({
     required this.id,

@@ -25,7 +25,7 @@ class _DenouncePageState extends State<DenouncePage> {
   final Uuid uuid = const Uuid();
   final ToastComponent toast = ToastComponent();
   final List<DenounceJustifyModel> _allDenounceJustify =
-      DenounceJustifyModel.AllDenounceJustify;
+      DenounceJustifyModel.allDenounceJustify;
 
   bool _hasButton = false;
 

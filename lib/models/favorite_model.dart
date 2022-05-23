@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_new
-
 class FavoriteModel {
   final String id;
   final String history;
@@ -12,17 +10,17 @@ class FavoriteModel {
   });
 
   static List<FavoriteModel> allFavorite = [
-    new FavoriteModel(
+    FavoriteModel(
       id: '0',
       user: 'charlesSantos',
       history: '0',
     ),
-    new FavoriteModel(
+    FavoriteModel(
       id: '1',
       user: 'charlesSantos',
       history: '1',
     ),
-    new FavoriteModel(
+    FavoriteModel(
       id: '2',
       user: 'charlesSantos',
       history: '2',

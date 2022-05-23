@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names, unnecessary_new
-
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 

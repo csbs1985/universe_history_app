@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:universe_history_app/models/comment_model.dart';
