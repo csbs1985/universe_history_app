@@ -114,7 +114,7 @@ class TermsPage extends StatelessWidget {
                       '\n\n'
                       'Serviços terceirizados'
                       '\n\n'
-                      '>Nossos Serviços podem permitir que você acesse, use ou interaja com sites, aplicativos, conteúdo e outros produtos e serviços de terceiros. Quando'
+                      'Nossos Serviços podem permitir que você acesse, use ou interaja com sites, aplicativos, conteúdo e outros produtos e serviços de terceiros. Quando'
                       ' você usa serviços de terceiros, seus termos e políticas de privacidade regem o uso desses serviços.'
                       '\n\n'
                       'Seus direitos e licença'

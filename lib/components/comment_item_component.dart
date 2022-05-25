@@ -131,84 +131,98 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-        controller: _scrollController,
-        child: !_data.isNotEmpty
-            ? _noResult()
-            : Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 48),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (widget._type == HistoryOptionsType.HOMEPAGE)
-                        Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                            child: Row(children: [
-                              if (currentHistory.value.first.qtyComment > 0)
-                                AnimatedFlipCounter(
-                                    duration: const Duration(milliseconds: 500),
-                                    value:
-                                        currentHistory.value.first.qtyComment,
-                                    textStyle: UiTextStyle.text1),
-                              ValueListenableBuilder(
-                                  valueListenable: currentHistory,
-                                  builder: (BuildContext context, value, __) {
-                                    return Text(
-                                        currentHistory.value.first.qtyComment >
-                                                1
-                                            ? ' comentários'
-                                            : ' comentário',
-                                        style: UiTextStyle.text1);
-                                  })
-                            ])),
-                      ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: _data.length + (_allFetched ? 0 : 1),
-                          itemBuilder: (BuildContext context, int index) {
-                            if (index == _data.length) {
-                              return const SkeletonCommentComponent();
-                            } else {
-                              final item = _data[index];
-                              return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    GestureDetector(
-                                      child: Card(
-                                        color: _getBackColor(item),
-                                        margin: const EdgeInsets.all(0),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                UiBorder.rounded)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              10, 6, 10, 8),
-                                          child: item.isDelete
-                                              ? Text(
-                                                  'Comentário apagado!'
-                                                      .toUpperCase(),
-                                                  style: UiTextStyle.text8)
-                                              : Text(item.text,
-                                                  style: UiTextStyle.text1),
+      controller: _scrollController,
+      child: !_data.isNotEmpty
+          ? _noResult()
+          : Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 48),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (widget._type == HistoryOptionsType.HOMEPAGE)
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      child: Row(
+                        children: [
+                          if (currentHistory.value.first.qtyComment > 0)
+                            AnimatedFlipCounter(
+                              duration: const Duration(milliseconds: 500),
+                              value: currentHistory.value.first.qtyComment,
+                              textStyle: UiTextStyle.text1,
+                            ),
+                          ValueListenableBuilder(
+                            valueListenable: currentHistory,
+                            builder: (BuildContext context, value, __) {
+                              return Text(
+                                currentHistory.value.first.qtyComment > 1
+                                    ? ' comentários'
+                                    : ' comentário',
+                                style: UiTextStyle.text1,
+                              );
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: _data.length + (_allFetched ? 0 : 1),
+                    itemBuilder: (BuildContext context, int index) {
+                      if (index == _data.length) {
+                        return const SkeletonCommentComponent();
+                      } else {
+                        final item = _data[index];
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                              child: Card(
+                                color: _getBackColor(item),
+                                margin: const EdgeInsets.all(0),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    UiBorder.rounded,
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(10, 6, 10, 8),
+                                  child: item.isDelete
+                                      ? Text(
+                                          'Comentário apagado!'.toUpperCase(),
+                                          style: UiTextStyle.text8,
+                                        )
+                                      : Text(
+                                          item.text,
+                                          style: UiTextStyle.text1,
                                         ),
-                                      ),
-                                      onLongPress: _canShowOption(item)
-                                          ? () => _showModal(context, item)
-                                          : null,
-                                    ),
-                                    Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            2, 4, 0, 16),
-                                        child: Text(
-                                            resumeUitl(item,
-                                                type: ContentType.COMMENT
-                                                    .toString()
-                                                    .split('.')
-                                                    .last),
-                                            style: UiTextStyle.text2))
-                                  ]);
-                            }
-                          })
-                    ])));
+                                ),
+                              ),
+                              onLongPress: _canShowOption(item)
+                                  ? () => _showModal(context, item)
+                                  : null,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(2, 4, 0, 16),
+                              child: Text(
+                                resumeUitl(item,
+                                    type: ContentType.COMMENT
+                                        .toString()
+                                        .split('.')
+                                        .last),
+                                style: UiTextStyle.text2,
+                              ),
+                            )
+                          ],
+                        );
+                      }
+                    },
+                  )
+                ],
+              ),
+            ),
+    );
   }
 
   Widget _noResult() {
