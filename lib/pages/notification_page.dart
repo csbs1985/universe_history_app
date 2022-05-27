@@ -41,7 +41,6 @@ class _NotificationPageState extends State<NotificationPage> {
         .addPostFrameCallback((_) => currentNotification.value = false);
 
     _getContent();
-
     _scrollController.addListener(inifiniteScrolling);
   }
 
@@ -138,9 +137,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                       children: [
                                         _comment(item),
                                         ResumeComponent(
-                                          resume: editDateUtil(
-                                            item.date,
-                                          ),
+                                          resume: editDateUtil(item.date),
                                         )
                                       ],
                                     ),

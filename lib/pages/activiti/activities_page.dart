@@ -35,7 +35,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
 
   static const PAGE_SIZE = 10;
 
-  bool _allFetched = false;
+  bool _loading = false;
   bool _isLoading = false;
 
   String _qtyHistory = 'henhuma história';
@@ -49,14 +49,13 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
   void initState() {
     super.initState();
     _getContent();
+    _scrollController.addListener(inifiniteScrolling);
+  }
 
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-              _scrollController.position.maxScrollExtent &&
-          !_allFetched) {
-        _getContent();
-      }
-    });
+  inifiniteScrolling() {
+    if (_scrollController.position.pixels ==
+            _scrollController.position.maxScrollExtent &&
+        !_loading) _getContent();
   }
 
   Future<void> _getContent() async {
@@ -83,7 +82,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
 
     setState(() {
       _data.addAll(pagedData);
-      if (pagedData.length < PAGE_SIZE) _allFetched = true;
+      if (pagedData.length < PAGE_SIZE) _loading = true;
       _isLoading = false;
     });
   }
@@ -104,6 +103,12 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
         .catchError((error) => debugPrint('ERROR:' + error.toString()));
 
     return _qtyHistory + ' · ' + _qtyComment;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
   }
 
   @override
@@ -128,7 +133,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
                   : ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: _data.length + (_allFetched ? 0 : 1),
+                      itemCount: _data.length + (_loading ? 0 : 1),
                       itemBuilder: (BuildContext context, index) {
                         if (index == _data.length) {
                           return const SkeletonActivityComponent();
