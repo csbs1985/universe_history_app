@@ -29,11 +29,17 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
     List<QueryDocumentSnapshot<dynamic>> documents =
         widget._snapshot.data!.docs;
     return documents.isNotEmpty
-        ? ListView.builder(
+        ? ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             reverse: true,
             itemCount: documents.length,
+            separatorBuilder: (_, __) => const DividerComponent(
+              left: 16,
+              top: 0,
+              right: 16,
+              bottom: 10,
+            ),
             itemBuilder: (BuildContext context, index) {
               return Column(
                 children: [
@@ -73,10 +79,9 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                           ],
                         ),
                         HistoryOptionsComponent(
-                            history: documents[index],
-                            type: HistoryOptionsType.HOMEPAGE),
-                        const SizedBox(height: 10),
-                        const DividerComponent(bottom: 0)
+                          history: documents[index],
+                          type: HistoryOptionsType.HOMEPAGE,
+                        )
                       ],
                     ),
                   )
@@ -86,6 +91,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
           )
         : const NoResultComponent(
             text:
-                'Não encontramos histórias que atendam sua pesquisa. Mas não desista, temos muitas outras histórias para você interagir.');
+                'Não encontramos histórias que atendam sua pesquisa. Mas não desista, temos muitas outras histórias para você interagir.',
+          );
   }
 }
