@@ -36,7 +36,6 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
             itemCount: documents.length,
             separatorBuilder: (_, __) => const DividerComponent(
               left: 16,
-              top: 0,
               right: 16,
               bottom: 10,
             ),

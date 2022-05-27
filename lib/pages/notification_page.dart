@@ -27,9 +27,9 @@ class _NotificationPageState extends State<NotificationPage> {
 
   final List<NotificationModel> _data = [];
 
-  static const PAGE_SIZE = 10;
+  static const PAGE_SIZE = 15;
 
-  bool _allFetched = false;
+  bool loading = false;
   bool _isLoading = false;
 
   DocumentSnapshot? _lastDocument;
@@ -42,13 +42,13 @@ class _NotificationPageState extends State<NotificationPage> {
 
     _getContent();
 
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-              _scrollController.position.maxScrollExtent &&
-          !_allFetched) {
-        _getContent();
-      }
-    });
+    _scrollController.addListener(inifiniteScrolling);
+  }
+
+  inifiniteScrolling() {
+    if (_scrollController.position.pixels ==
+            _scrollController.position.maxScrollExtent &&
+        !loading) _getContent();
   }
 
   Future<void> _getContent() async {
@@ -76,7 +76,7 @@ class _NotificationPageState extends State<NotificationPage> {
 
     setState(() {
       _data.addAll(pagedData);
-      if (pagedData.length < PAGE_SIZE) _allFetched = true;
+      if (pagedData.length < PAGE_SIZE) loading = true;
       _isLoading = false;
     });
   }
@@ -87,6 +87,12 @@ class _NotificationPageState extends State<NotificationPage> {
       setState(() => _history.view = true);
     }
     Navigator.pushNamed(context, '/history', arguments: _history.idContent);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
   }
 
   @override
@@ -108,7 +114,7 @@ class _NotificationPageState extends State<NotificationPage> {
                   : ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: _data.length + (_allFetched ? 0 : 1),
+                      itemCount: _data.length + (loading ? 0 : 1),
                       itemBuilder: (BuildContext context, int index) {
                         if (index == _data.length) {
                           return const SkeletonNotificationComponent();
@@ -122,7 +128,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                   width: double.infinity,
                                   color: item.view
                                       ? UiColor.comp_1
-                                      : UiColor.second,
+                                      : UiColor.comp_3,
                                   child: Padding(
                                     padding:
                                         const EdgeInsets.fromLTRB(20, 4, 20, 4),
