@@ -25,7 +25,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -48,6 +48,12 @@ class _HomePageState extends State<HomePage> {
   void _scrollToTop() {
     _scrollController.animateTo(0,
         duration: const Duration(milliseconds: 300), curve: Curves.linear);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
   }
 
   @override

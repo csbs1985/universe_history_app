@@ -91,6 +91,7 @@ class _NotificationPageState extends State<NotificationPage> {
   @override
   void dispose() {
     super.dispose();
+    _scrollController.removeListener(inifiniteScrolling);
     _scrollController.dispose();
   }
 

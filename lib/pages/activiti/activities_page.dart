@@ -108,6 +108,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
   @override
   void dispose() {
     super.dispose();
+    _scrollController.removeListener(inifiniteScrolling);
     _scrollController.dispose();
   }
 

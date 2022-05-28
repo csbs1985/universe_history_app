@@ -129,6 +129,13 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _scrollController.removeListener(() {});
+    _scrollController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       controller: _scrollController,
