@@ -12,6 +12,7 @@ import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
+import 'package:universe_history_app/models/category_model.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/services/local_notification_service.dart';
@@ -210,7 +211,9 @@ class _HomePageState extends State<HomePage> {
               children: [
                 MenuComponent(),
                 const SizedBox(height: 10),
-                Flexible(child: _list())
+                Flexible(
+                  child: _list(),
+                ),
               ],
             ),
           ),
@@ -220,27 +223,37 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _list() {
-    return Container(
-      child: _data.isEmpty
-          ? _noResult()
-          : ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: _data.length + (loading ? 0 : 1),
-              separatorBuilder: (_, __) => const DividerComponent(
-                left: 16,
-                right: 16,
-                bottom: 10,
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                if (index == _data.length) {
-                  return const SkeletonHistoryItemComponent();
-                } else {
-                  final item = _data[index];
-                  return HistoryItemComponent(data: item);
-                }
-              },
-            ),
+    return ValueListenableBuilder<CategoryModel>(
+      valueListenable: menuItemSelected,
+      builder: (context, value, __) {
+        return ValueListenableBuilder<CategoryModel>(
+          valueListenable: menuItemSelected,
+          builder: (context, value, __) {
+            return Container(
+              child: _data.isEmpty
+                  ? _noResult()
+                  : ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: _data.length + (loading ? 0 : 1),
+                      separatorBuilder: (_, __) => const DividerComponent(
+                        left: 16,
+                        right: 16,
+                        bottom: 10,
+                      ),
+                      itemBuilder: (BuildContext context, int index) {
+                        if (index == _data.length) {
+                          return const SkeletonHistoryItemComponent();
+                        } else {
+                          final item = _data[index];
+                          return HistoryItemComponent(data: item);
+                        }
+                      },
+                    ),
+            );
+          },
+        );
+      },
     );
   }
 
