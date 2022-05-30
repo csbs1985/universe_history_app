@@ -67,8 +67,8 @@ class CommentClass {
     currentQtyComment.value = qty;
   }
 
-  void selectComment(Map<String, dynamic> _comment) {
+  void selectComment(CommentModel _comment) {
     currentComment.value = [];
-    currentComment.value.add(CommentModel.fromJson(_comment));
+    currentComment.value.add(_comment);
   }
 }

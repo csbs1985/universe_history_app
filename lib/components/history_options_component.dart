@@ -1,5 +1,4 @@
 import 'package:animated_flip_counter/animated_flip_counter.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/icon_component.dart';
@@ -16,13 +15,13 @@ import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class HistoryOptionsComponent extends StatefulWidget {
-  const HistoryOptionsComponent(
-      {required QueryDocumentSnapshot<dynamic> history,
-      required HistoryOptionsType type})
-      : _history = history,
+  const HistoryOptionsComponent({
+    required HistoryModel history,
+    required HistoryOptionsType type,
+  })  : _history = history,
         _type = type;
 
-  final QueryDocumentSnapshot<dynamic> _history;
+  final HistoryModel _history;
   final HistoryOptionsType _type;
 
   @override
@@ -41,7 +40,7 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
   }
 
   String _fillComment(int _qtyComment) {
-    return _qtyComment > 1 ? ' comentários' : '1 comentários';
+    return _qtyComment > 1 ? ' comentários' : ' comentário';
   }
 
   bool _showComment(bool _isComment) {
@@ -60,13 +59,7 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
     return widget._type == HistoryOptionsType.HOMEPAGE ? true : false;
   }
 
-  void _selectHistory(Map<String, dynamic> _history) {
-    ownerClass.selectOwner(
-      _history['userId'],
-      _history['userNickName'],
-      _history['token'],
-      _history['statusUser'],
-    );
+  void _selectHistory(_history) {
     historyClass.selectHistory(_history);
   }
 
@@ -97,14 +90,7 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
   }
 
   void _showModalOptions(BuildContext context, dynamic _content) {
-    ownerClass.selectOwner(
-      _content['userId'],
-      _content['userNickName'],
-      _content['token'],
-      _content['statusUser'],
-    );
-
-    commentClass.selectComment(_content);
+    historyClass.selectHistory(_content);
 
     showCupertinoModalBottomSheet(
       expand: false,
@@ -112,12 +98,12 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
       barrierColor: Colors.black87,
       duration: const Duration(milliseconds: 300),
       builder: (context) => ModalOptionsComponent(
-        _content['id'],
+        _content.id,
         'história',
-        _content['userId'],
-        _content['userNickName'],
-        _content['text'],
-        _content['isDelete'],
+        _content.userId,
+        _content.userNickName,
+        _content.text,
+        _content.isDelete,
       ),
     );
   }
@@ -127,26 +113,26 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        !_showComments(widget._history['qtyComment'])
+        !_showComments(widget._history.qtyComment)
             ? Container()
             : TextButton(
                 child: Row(
                   children: [
-                    if (widget._history['qtyComment'] > 0)
+                    if (widget._history.qtyComment > 0)
                       AnimatedFlipCounter(
                         duration: const Duration(milliseconds: 500),
-                        value: widget._history['qtyComment'],
+                        value: widget._history.qtyComment,
                         textStyle: UiTextStyle.text2,
                       ),
                     Text(
-                      _fillComment(widget._history['qtyComment']),
+                      _fillComment(widget._history.qtyComment),
                       style: UiTextStyle.text2,
                     )
                   ],
                 ),
                 onPressed: () {
                   if (widget._type == HistoryOptionsType.HOMEPAGE) {
-                    _selectHistory(widget._history.data());
+                    _selectHistory(widget._history);
                     _showModal(context, 'listCommentary ');
                   }
                 },
@@ -157,13 +143,13 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (_showComment(widget._history['isComment']))
+                if (_showComment(widget._history.isComment))
                   IconComponent(
                     icon: UiSvg.comment,
                     callback: (value) {
                       setState(
                         () {
-                          _selectHistory(widget._history.data());
+                          _selectHistory(widget._history);
                           _showModal(context, 'inputCommentary');
                         },
                       );
@@ -174,11 +160,11 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
                     valueListenable: currentBookmarks,
                     builder: (BuildContext context, value, __) {
                       return IconComponent(
-                        icon: _getBookmark(widget._history['id'])
+                        icon: _getBookmark(widget._history.id)
                             ? UiSvg.favorited
                             : UiSvg.favorite,
                         callback: (value) {
-                          _toggleBookmark(widget._history['id']);
+                          _toggleBookmark(widget._history.id);
                         },
                       );
                     },
@@ -187,16 +173,16 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
                   IconComponent(
                     icon: UiSvg.open,
                     callback: (value) {
-                      _selectHistory(widget._history.data());
+                      _selectHistory(widget._history);
                       Navigator.pushNamed(context, '/history',
-                          arguments: widget._history.data()['id']);
+                          arguments: widget._history.id);
                     },
                   ),
                 IconComponent(
                   icon: UiSvg.options,
                   callback: (value) => {
-                    _selectHistory(widget._history.data()),
-                    _showModalOptions(context, widget._history.data())
+                    _selectHistory(widget._history),
+                    _showModalOptions(context, widget._history)
                   },
                 ),
               ],

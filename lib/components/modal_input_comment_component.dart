@@ -77,7 +77,7 @@ class _ModalInputCommmentComponentState
     }
 
     setState(() =>
-        _isInputNotEmpty = _commentController.text.length > 0 ? true : false);
+        _isInputNotEmpty = _commentController.text.isNotEmpty ? true : false);
   }
 
   _toggleAnonimous() => setState(() => _textSigned = !_textSigned);
@@ -150,13 +150,14 @@ class _ModalInputCommmentComponentState
     });
   }
 
-  Future<void> _setUpQtyCommentUser() async {
+  void _setUpQtyCommentUser() {
     if (!isEdit) currentUser.value.first.qtyComment++;
 
-    await api
+    api
         .setUpQtyCommentUser()
         .then((value) => {
-              if (currentUser.value.first.id != currentOwner.value.first.id)
+              if (currentUser.value.first.id !=
+                  currentHistory.value.first.userId)
                 _setNotificationOwner(),
               if (idMencioned.isNotEmpty) _setNotificationMencioned(),
               if (isEdit) Navigator.of(context).pop(),

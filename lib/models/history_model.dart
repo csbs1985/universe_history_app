@@ -74,8 +74,8 @@ class HistoryModel {
 }
 
 class HistoryClass {
-  void selectHistory(Map<String, dynamic> _history) {
+  void selectHistory(_history) {
     currentHistory.value = [];
-    currentHistory.value.add(HistoryModel.fromJson(_history));
+    currentHistory.value.add(_history);
   }
 }
