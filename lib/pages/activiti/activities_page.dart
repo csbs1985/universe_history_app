@@ -53,9 +53,11 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
   }
 
   inifiniteScrolling() {
-    if (_scrollController.position.pixels ==
-            _scrollController.position.maxScrollExtent &&
-        !_loading) _getContent();
+    var triggerFetchMoreSize =
+        _scrollController.position.maxScrollExtent * 0.20;
+
+    if (_scrollController.position.pixels > triggerFetchMoreSize && !_loading)
+      _getContent();
   }
 
   Future<void> _getContent() async {
@@ -128,64 +130,61 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
                 _getResume(),
               ),
             ),
-            NotificationListener<ScrollEndNotification>(
-              child: _data.isEmpty
-                  ? _noResult()
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: _data.length + (_loading ? 0 : 1),
-                      itemBuilder: (BuildContext context, index) {
-                        if (index == _data.length) {
-                          return const SkeletonActivityComponent();
-                        } else {
-                          final item = _data[index];
-                          ActivitiesEnum content = ActivitiesEnum.values
-                              .firstWhere((e) =>
-                                  e.name.toString() == _data[index].type);
+            _data.isEmpty
+                ? _noResult()
+                : ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: _data.length + (_loading ? 0 : 1),
+                    itemBuilder: (BuildContext context, index) {
+                      if (index == _data.length) {
+                        return const SkeletonActivityComponent();
+                      } else {
+                        final item = _data[index];
+                        ActivitiesEnum content = ActivitiesEnum.values
+                            .firstWhere(
+                                (e) => e.name.toString() == _data[index].type);
 
-                          return Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (content == ActivitiesEnum.UP_HISTORY)
-                                  ItemUpHistory(history: item),
-                                if (content == ActivitiesEnum.NEW_HISTORY)
-                                  ItemNewHistory(history: item),
-                                if (content == ActivitiesEnum.LOGIN ||
-                                    content == ActivitiesEnum.LOGOUT)
-                                  ItemLoginLogout(history: item),
-                                if (content == ActivitiesEnum.UP_NICKNAME)
-                                  ItemUpNickName(history: item),
-                                if (content == ActivitiesEnum.NEW_COMMENT)
-                                  ItemNewComment(history: item),
-                                if (content == ActivitiesEnum.NEW_NICKNAME)
-                                  ItemNewNickName(history: item),
-                                if (content == ActivitiesEnum.UP_NOTIFICATION)
-                                  ItemNotificationComponent(history: item),
-                                if (content == ActivitiesEnum.BLOCK_USER ||
-                                    content == ActivitiesEnum.UNBLOCK_USER)
-                                  ItemUpBlockComponent(history: item),
-                                if (content ==
-                                    ActivitiesEnum.TEMPORARILY_DISABLED)
-                                  const ItemTemporarilyDesabledComponent(),
-                                if (content == ActivitiesEnum.NEW_ACCOUNT)
-                                  const ItemNewAccountComponent(),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(40, 2, 0, 0),
-                                  child: ResumeComponent(
-                                    resume: editDateUtil(item.date),
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
-                        }
-                      },
-                    ),
-            )
+                        return Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (content == ActivitiesEnum.UP_HISTORY)
+                                ItemUpHistory(history: item),
+                              if (content == ActivitiesEnum.NEW_HISTORY)
+                                ItemNewHistory(history: item),
+                              if (content == ActivitiesEnum.LOGIN ||
+                                  content == ActivitiesEnum.LOGOUT)
+                                ItemLoginLogout(history: item),
+                              if (content == ActivitiesEnum.UP_NICKNAME)
+                                ItemUpNickName(history: item),
+                              if (content == ActivitiesEnum.NEW_COMMENT)
+                                ItemNewComment(history: item),
+                              if (content == ActivitiesEnum.NEW_NICKNAME)
+                                ItemNewNickName(history: item),
+                              if (content == ActivitiesEnum.UP_NOTIFICATION)
+                                ItemNotificationComponent(history: item),
+                              if (content == ActivitiesEnum.BLOCK_USER ||
+                                  content == ActivitiesEnum.UNBLOCK_USER)
+                                ItemUpBlockComponent(history: item),
+                              if (content ==
+                                  ActivitiesEnum.TEMPORARILY_DISABLED)
+                                const ItemTemporarilyDesabledComponent(),
+                              if (content == ActivitiesEnum.NEW_ACCOUNT)
+                                const ItemNewAccountComponent(),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(40, 2, 0, 0),
+                                child: ResumeComponent(
+                                  resume: editDateUtil(item.date),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      }
+                    },
+                  )
           ],
         ),
       ),

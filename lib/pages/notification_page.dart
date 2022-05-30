@@ -45,9 +45,11 @@ class _NotificationPageState extends State<NotificationPage> {
   }
 
   inifiniteScrolling() {
-    if (_scrollController.position.pixels ==
-            _scrollController.position.maxScrollExtent &&
-        !loading) _getContent();
+    var triggerFetchMoreSize =
+        _scrollController.position.maxScrollExtent * 0.20;
+
+    if (_scrollController.position.pixels > triggerFetchMoreSize && !loading)
+      _getContent();
   }
 
   Future<void> _getContent() async {
@@ -108,50 +110,47 @@ class _NotificationPageState extends State<NotificationPage> {
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: TitleComponent(title: 'Notificações'),
             ),
-            NotificationListener<ScrollEndNotification>(
-              child: _data.isEmpty
-                  ? _noResult()
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: _data.length + (loading ? 0 : 1),
-                      itemBuilder: (BuildContext context, int index) {
-                        if (index == _data.length) {
-                          return const SkeletonNotificationComponent();
-                        } else {
-                          final item = _data[index];
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              GestureDetector(
-                                child: Container(
-                                  width: double.infinity,
-                                  color: item.view
-                                      ? UiColor.comp_1
-                                      : UiColor.comp_3,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(20, 4, 20, 4),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        _comment(item),
-                                        ResumeComponent(
-                                          resume: editDateUtil(item.date),
-                                        )
-                                      ],
-                                    ),
+            _data.isEmpty
+                ? _noResult()
+                : ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: _data.length + (loading ? 0 : 1),
+                    itemBuilder: (BuildContext context, int index) {
+                      if (index == _data.length) {
+                        return const SkeletonNotificationComponent();
+                      } else {
+                        final item = _data[index];
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                              child: Container(
+                                width: double.infinity,
+                                color:
+                                    item.view ? UiColor.comp_1 : UiColor.comp_3,
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 4, 20, 4),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      _comment(item),
+                                      ResumeComponent(
+                                        resume: editDateUtil(item.date),
+                                      )
+                                    ],
                                   ),
                                 ),
-                                onTap: () => _readNotification(item),
-                              )
-                            ],
-                          );
-                        }
-                      },
-                    ),
-            )
+                              ),
+                              onTap: () => _readNotification(item),
+                            )
+                          ],
+                        );
+                      }
+                    },
+                  )
           ],
         ),
       ),

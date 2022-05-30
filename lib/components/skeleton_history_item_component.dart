@@ -9,14 +9,14 @@ class SkeletonHistoryItemComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Skeleton(
             width: double.infinity,
-            height: 28,
+            height: 20,
             textColor: UiColor.comp_3,
             borderRadius: BorderRadius.circular(UiBorder.rounded),
           ),
@@ -25,14 +25,14 @@ class SkeletonHistoryItemComponent extends StatelessWidget {
             children: [
               Skeleton(
                 width: 100,
-                height: 16,
+                height: 12,
                 textColor: UiColor.comp_3,
                 borderRadius: BorderRadius.circular(UiBorder.rounded),
               ),
               const SizedBox(width: 10),
               Skeleton(
                 width: 100,
-                height: 16,
+                height: 12,
                 textColor: UiColor.comp_3,
                 borderRadius: BorderRadius.circular(UiBorder.rounded),
               ),
@@ -41,7 +41,7 @@ class SkeletonHistoryItemComponent extends StatelessWidget {
           const SizedBox(height: 10),
           Skeleton(
             width: double.infinity,
-            height: 100,
+            height: 32,
             textColor: UiColor.comp_3,
             borderRadius: BorderRadius.circular(UiBorder.rounded),
           ),
@@ -51,36 +51,34 @@ class SkeletonHistoryItemComponent extends StatelessWidget {
             children: [
               Skeleton(
                 width: 120,
-                height: 20,
+                height: 12,
                 textColor: UiColor.comp_3,
                 borderRadius: BorderRadius.circular(UiBorder.rounded),
               ),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Skeleton(
-                      width: 40,
-                      height: 20,
-                      textColor: UiColor.comp_3,
-                      borderRadius: BorderRadius.circular(UiBorder.rounded),
-                    ),
-                    const SizedBox(width: 10),
-                    Skeleton(
-                      width: 40,
-                      height: 20,
-                      textColor: UiColor.comp_3,
-                      borderRadius: BorderRadius.circular(UiBorder.rounded),
-                    ),
-                    const SizedBox(width: 10),
-                    Skeleton(
-                      width: 40,
-                      height: 20,
-                      textColor: UiColor.comp_3,
-                      borderRadius: BorderRadius.circular(UiBorder.rounded),
-                    ),
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Skeleton(
+                    width: 40,
+                    height: 12,
+                    textColor: UiColor.comp_3,
+                    borderRadius: BorderRadius.circular(UiBorder.rounded),
+                  ),
+                  const SizedBox(width: 10),
+                  Skeleton(
+                    width: 40,
+                    height: 12,
+                    textColor: UiColor.comp_3,
+                    borderRadius: BorderRadius.circular(UiBorder.rounded),
+                  ),
+                  const SizedBox(width: 10),
+                  Skeleton(
+                    width: 40,
+                    height: 12,
+                    textColor: UiColor.comp_3,
+                    borderRadius: BorderRadius.circular(UiBorder.rounded),
+                  ),
+                ],
               )
             ],
           ),
