@@ -95,8 +95,9 @@ class _HistoryPageState extends State<HistoryPage> {
                                 )
                             ]),
                             HistoryOptionsComponent(
-                                history: documents,
-                                type: HistoryOptionsType.HISTORYPAGE)
+                              history: documents,
+                              type: HistoryOptionsType.HISTORYPAGE,
+                            )
                           ],
                         ),
                       ),

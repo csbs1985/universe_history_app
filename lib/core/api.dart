@@ -62,33 +62,11 @@ class Api {
         .snapshots();
   }
 
-  getAllHistory() {
-    return history.orderBy('date').snapshots();
-  }
-
-  getAllHistoryFiltered(String _filter) {
-    return history
-        .orderBy('date')
-        .where('categories', arrayContainsAny: [_filter]).snapshots();
-  }
-
-  getAllBookmarks() {
-    return bookmark.orderBy('date').where('user',
-        arrayContainsAny: [currentUser.value.first.id]).snapshots();
-  }
-
   getAllUserHistory() {
     return history
         .orderBy('date')
         .where('userId', isEqualTo: currentUser.value.first.id)
         .get();
-  }
-
-  getHistoryUser() {
-    return history
-        .orderBy('date')
-        .where('userId', isEqualTo: currentUser.value.first.id)
-        .snapshots();
   }
 
   getAllUserComment() {

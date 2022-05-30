@@ -9,17 +9,10 @@ String resumeUitl(_item, {String? type}) {
   bool? _isEdit;
   bool? _isSigned;
 
-  if (_item is CommentModel) {
-    _date = _item.date;
-    _isEdit = _item.isEdit;
-    _isSigned = _item.isSigned;
-    _userNickName = _item.userNickName;
-  } else {
-    _date = _item['date'];
-    _isEdit = _item['isEdit'];
-    _isSigned = _item['isSigned'];
-    _userNickName = _item['userNickName'];
-  }
+  _date = _item.date;
+  _isEdit = _item.isEdit;
+  _isSigned = _item.isSigned;
+  _userNickName = _item.userNickName;
 
   var _time = editDateUtil(_date!);
   var author = '';

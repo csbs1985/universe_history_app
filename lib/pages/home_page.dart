@@ -1,12 +1,16 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:universe_history_app/components/all_for_now_component.dart';
-import 'package:universe_history_app/components/history_list_component.dart';
+import 'package:universe_history_app/components/divider_component.dart';
+import 'package:universe_history_app/components/history_item_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/components/menu_component.dart';
+import 'package:universe_history_app/components/no_history_component.dart';
+import 'package:universe_history_app/components/skeleton_history_item_component.dart';
+import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
@@ -25,7 +29,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final Api api = Api();
   final ScrollController _scrollController = ScrollController();
+
+  final List<HistoryModel> _data = [];
+
+  bool loading = false;
+  bool _isLoading = false;
+
+  DocumentSnapshot? _lastDocument;
+
+  static const PAGE_SIZE = 10;
 
   @override
   void initState() {
@@ -33,11 +47,68 @@ class _HomePageState extends State<HomePage> {
     initilizeFirebaseMessaging();
     checkNotifications();
     DeviceUtil();
+    _getContent();
+    _scrollController.addListener(inifiniteScrolling);
+  }
+
+  inifiniteScrolling() {
+    var triggerFetchMoreSize =
+        _scrollController.position.maxScrollExtent * 0.20;
+
+    if (_scrollController.position.pixels > triggerFetchMoreSize && !loading)
+      _getContent();
   }
 
   initilizeFirebaseMessaging() async {
     await Provider.of<PushNotificationService>(context, listen: false)
         .initialize();
+  }
+
+  Future<void> _getContent() async {
+    if (_isLoading) return;
+
+    setState(() => _isLoading = true);
+
+    final value = menuItemSelected.value.id!;
+
+    Query _query;
+    if (value == 'todas' || value.isEmpty) {
+      _query = FirebaseFirestore.instance
+          .collection('historys')
+          .orderBy('date', descending: true);
+    } else if (value == 'minhas') {
+      _query = FirebaseFirestore.instance
+          .collection('historys')
+          .where('userId', isEqualTo: currentUser.value.first.id)
+          .orderBy('date', descending: true);
+    } else if (value == 'salvas') {
+      _query = FirebaseFirestore.instance.collection('bookmarks').where('user',
+          arrayContainsAny: [
+            currentUser.value.first.id
+          ]).orderBy('date', descending: true);
+    } else {
+      _query = FirebaseFirestore.instance.collection('historys').where(
+          'categories',
+          arrayContainsAny: [value]).orderBy('date', descending: true);
+    }
+
+    _query = _lastDocument != null
+        ? _query.startAfterDocument(_lastDocument!).limit(PAGE_SIZE)
+        : _query.limit(PAGE_SIZE);
+
+    final List<HistoryModel> pagedData = await _query.get().then((value) {
+      _lastDocument = value.docs.isNotEmpty ? value.docs.last : null;
+
+      return value.docs
+          .map((e) => HistoryModel.fromMap(e.data() as Map<String, dynamic>))
+          .toList();
+    });
+
+    setState(() {
+      _data.addAll(pagedData);
+      if (pagedData.length < PAGE_SIZE) loading = true;
+      _isLoading = false;
+    });
   }
 
   checkNotifications() async {
@@ -139,13 +210,43 @@ class _HomePageState extends State<HomePage> {
               children: [
                 MenuComponent(),
                 const SizedBox(height: 10),
-                const Flexible(child: HistoryListComponent()),
-                const AllForNowComponent()
+                Flexible(child: _list())
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Widget _list() {
+    return Container(
+      child: _data.isEmpty
+          ? _noResult()
+          : ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: _data.length + (loading ? 0 : 1),
+              separatorBuilder: (_, __) => const DividerComponent(
+                left: 16,
+                right: 16,
+                bottom: 10,
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                if (index == _data.length) {
+                  return const SkeletonHistoryItemComponent();
+                } else {
+                  final item = _data[index];
+                  return HistoryItemComponent(data: item);
+                }
+              },
+            ),
+    );
+  }
+
+  Widget _noResult() {
+    return const NoResultComponent(
+        text:
+            'Não encontramos histórias que atendam sua pesquisa. Mas não desista, temos muitas outras histórias para você interagir.');
   }
 }
