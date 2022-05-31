@@ -4,14 +4,14 @@ import 'package:universe_history_app/components/history_options_component.dart';
 import 'package:universe_history_app/components/resume_history_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/core/api.dart';
-import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class HistoryItemComponent extends StatefulWidget {
-  const HistoryItemComponent({required HistoryModel data}) : _data = data;
+  const HistoryItemComponent({required Map<String, dynamic> snapshot})
+      : _snapshot = snapshot;
 
-  final HistoryModel _data;
+  final Map<String, dynamic> _snapshot;
 
   @override
   State<HistoryItemComponent> createState() => _HistoryItemComponentState();
@@ -31,14 +31,14 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              if (widget._data.title != "")
+              if (widget._snapshot['title'] != "")
                 TitleComponent(
-                  title: widget._data.title,
+                  title: widget._snapshot['title'],
                   bottom: 0,
                 ),
-              ResumeHistoryComponent(resume: widget._data),
+              ResumeHistoryComponent(resume: widget._snapshot),
               ExpandableText(
-                widget._data.text,
+                widget._snapshot['text'],
                 style: UiTextStyle.text1,
                 expandText: 'continuar lendo',
                 collapseText: 'fechar',
@@ -47,7 +47,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
               ),
               Wrap(
                 children: [
-                  for (var item in widget._data.categories)
+                  for (var item in widget._snapshot['categories'])
                     Padding(
                       padding: const EdgeInsets.only(right: 4),
                       child: Text(
@@ -58,7 +58,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                 ],
               ),
               HistoryOptionsComponent(
-                history: widget._data,
+                history: widget._snapshot,
                 type: HistoryOptionsType.HOMEPAGE,
               )
             ],
