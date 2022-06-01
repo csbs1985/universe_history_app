@@ -4,11 +4,12 @@ import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/components/select_categories_component.dart';
 import 'package:universe_history_app/components/select_toggle_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
-import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/models/category_model.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
+import 'package:universe_history_app/services/auth_service.dart';
+import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:uuid/uuid.dart';
@@ -21,6 +22,12 @@ class CreateHistoryModal extends StatefulWidget {
 }
 
 class _CreateHistoryModalState extends State<CreateHistoryModal> {
+  final HistoryClass historyClass = HistoryClass();
+  final RealtimeDatabaseService db = RealtimeDatabaseService();
+  final ToastComponent toast = ToastComponent();
+  final UserClass userClass = UserClass();
+  final Uuid uuid = const Uuid();
+
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   List<CategoryModel> allCategories = CategoryModel.allCategories;
@@ -28,11 +35,6 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
 
   TextEditingController titleController = TextEditingController();
   TextEditingController textController = TextEditingController();
-
-  final ToastComponent toast = ToastComponent();
-  final Api api = Api();
-  final UserClass userClass = UserClass();
-  final Uuid uuid = const Uuid();
 
   bool isEdit = false;
   bool _isSigned = true;
@@ -97,9 +99,9 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
     });
   }
 
-  void _publishHistory(BuildContext context) {
+  Future<void> _publishHistory(BuildContext context) async {
     FocusManager.instance.primaryFocus?.unfocus();
-    currentDialog.value = 'Criando...';
+    currentDialog.value = 'Criando história...';
 
     showDialog(
         context: context,
@@ -110,7 +112,7 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
 
     setState(() {
       if (currentHistory.value.isNotEmpty) {
-        history = {
+        historyClass.add({
           'id': currentHistory.value.first.id,
           'title': titleController.text.trim(),
           'text': textController.text.trim(),
@@ -118,15 +120,15 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
           'isComment': _isComment,
           'isSigned': _isSigned,
           'isEdit': true,
-          'isDelete': false,
           'isAuthorized': _isAuthorized,
           'qtyComment': currentHistory.value.first.qtyComment,
           'categories': _categories,
           'userId': currentUser.value.first.id,
-          'userNickName': currentUser.value.first.name
-        };
+          'userName': currentUser.value.first.name,
+          'bookmarks': currentHistory.value.first.bookmarks
+        });
       } else {
-        history = {
+        historyClass.add({
           'id': uuid.v4(),
           'title': titleController.text.trim(),
           'text': textController.text.trim(),
@@ -134,50 +136,46 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
           'isComment': _isComment,
           'isSigned': _isSigned,
           'isEdit': false,
-          'isDelete': false,
           'isAuthorized': _isAuthorized,
           'qtyComment': 0,
           'categories': _categories,
           'userId': currentUser.value.first.id,
-          'userNickName': currentUser.value.first.name
-        };
+          'userName': currentUser.value.first.name,
+          'bookmarks': [],
+        });
       }
-      api
-          .setHistory(history)
-          .then((value) => {
-                ActivityUtil(
-                    isEdit
-                        ? ActivitiesEnum.NEW_HISTORY
-                        : ActivitiesEnum.UP_HISTORY,
-                    titleController.text,
-                    history['id']),
-                _setUpQtyHistoryUser()
-              })
-          .catchError((error) => {
-                debugPrint('ERROR:' + error.toString()),
-                toast.toast(context, ToastEnum.WARNING,
-                    'Erro ao publicar história, tente novamente mais tarde.')
-              });
     });
+
+    try {
+      await db.postNewHistory(currentHistory.value.first);
+      _setUpQtyHistoryUser();
+    } on AuthException catch (error) {
+      debugPrint('ERROR => postNewHistory:' + error.toString());
+      toast.toast(context, ToastEnum.WARNING,
+          'Erro ao publicar história, tente novamente mais tarde.');
+    }
   }
 
   Future<void> _setUpQtyHistoryUser() async {
     if (!isEdit) currentUser.value.first.qtyHistory++;
 
-    await api
-        .setUpQtyHistoryUser()
-        .then((value) => {
-              if (currentHistory.value.isNotEmpty) Navigator.of(context).pop(),
-              Navigator.of(context).pop(),
-              toast.toast(
-                  context,
-                  ToastEnum.SUCCESS,
-                  isEdit
-                      ? 'Sua história foi alterada.'
-                      : 'Sua história foi publicada.'),
-              Navigator.of(context).pop()
-            })
-        .catchError((error) => debugPrint('ERROR:' + error.toString()));
+    await db
+        .pathQtyHistoryUser(currentUser.value.first.id)
+        .then((value) => _success())
+        .catchError((error) =>
+            debugPrint('ERROR => _setUpQtyHistoryUser:' + error.toString()));
+  }
+
+  void _success() {
+    ActivityUtil(
+      isEdit ? ActivitiesEnum.NEW_HISTORY : ActivitiesEnum.UP_HISTORY,
+      titleController.text,
+      currentHistory.value.first.id,
+    );
+    if (currentHistory.value.isNotEmpty) Navigator.of(context).pop();
+    toast.toast(context, ToastEnum.SUCCESS,
+        isEdit ? 'Sua história foi alterada.' : 'Sua história foi publicada.');
+    Navigator.of(context).pop();
   }
 
   @override
@@ -185,9 +183,10 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppbarComponent(
-          btnBack: true,
-          btnPublish: _btnPublish,
-          callback: (value) => _publishHistory(context)),
+        btnBack: true,
+        btnPublish: _btnPublish,
+        callback: (value) => _publishHistory(context),
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -200,7 +199,6 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
                 minLines: 1,
                 maxLines: 2,
                 maxLength: 60,
-                autofocus: true,
                 style: UiTextStyle.header1,
                 onChanged: (value) => _canPublish(),
                 decoration: const InputDecoration(
@@ -236,11 +234,11 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SelectToggleComponent(
-                callback: (value) => _setPrivacy(),
                 title: 'Assinatura',
                 resume:
                     'Ligado para assinar como ${currentUser.value.first.name} ou desligado para anônimo.',
                 value: _isSigned,
+                callback: (value) => _setPrivacy(),
               ),
             ),
             Padding(

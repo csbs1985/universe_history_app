@@ -13,12 +13,12 @@ class HistoryModel {
     required this.isComment,
     required this.isSigned,
     required this.isEdit,
-    required this.isDelete,
     required this.isAuthorized,
     required this.userId,
-    required this.userNickName,
+    required this.userName,
     required this.qtyComment,
     required this.categories,
+    required this.bookmarks,
   });
 
   late String id;
@@ -26,14 +26,14 @@ class HistoryModel {
   late String text;
   late String date;
   late String userId;
-  late String userNickName;
+  late String userName;
   late bool isComment;
   late bool isSigned;
   late bool isEdit;
-  late bool isDelete;
   late bool isAuthorized;
   late int qtyComment;
   late List<String> categories;
+  late List<String> bookmarks;
 
   factory HistoryModel.fromJson(Map<String, dynamic> json) =>
       HistoryModel.fromMap(json);
@@ -46,12 +46,12 @@ class HistoryModel {
         isComment: json['isComment'],
         isSigned: json['isSigned'],
         isEdit: json['isEdit'],
-        isDelete: json['isDelete'],
         isAuthorized: json['isAuthorized'],
         userId: json['userId'],
-        userNickName: json['userNickName'],
+        userName: json['userName'],
         qtyComment: json['qtyComment'],
         categories: json['categories'].cast<String>(),
+        bookmarks: json['bookmarks'].cast<String>(),
       );
 
   String toJson() => json.encode(toMap());
@@ -64,16 +64,21 @@ class HistoryModel {
         'isComment': isComment,
         'isSigned': isSigned,
         'isEdit': isEdit,
-        'isDelete': isDelete,
         'isAuthorized': isAuthorized,
         'userId': userId,
-        'userNickName': userNickName,
+        'userName': userName,
         'qtyComment': qtyComment,
         'categories': categories,
+        'bookmarks': bookmarks,
       };
 }
 
 class HistoryClass {
+  void add(Map<String, dynamic> _history) {
+    currentHistory.value = [];
+    currentHistory.value.add(HistoryModel.fromJson(_history));
+  }
+
   void selectHistory(_history) {
     currentHistory.value = [];
     currentHistory.value.add(_history);

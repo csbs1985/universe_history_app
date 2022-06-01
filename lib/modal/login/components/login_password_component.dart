@@ -128,18 +128,18 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
 
     currentDialog.value = 'Criando conta...';
 
-    await db
-        .postNewUser(currentUser.value.first)
-        .then((result) => {
-              ActivityUtil(
-                ActivitiesEnum.NEW_NICKNAME,
-                currentLoginNick.value,
-                '',
-              ),
-              toast.toast(context, ToastEnum.SUCCESS,
-                  '${currentLoginNick.value}, criamos sua conta'),
-            })
-        .catchError((error) => debugPrint('ERROR:' + error.toString()));
+    try {
+      await db.postNewUser(currentUser.value.first);
+      ActivityUtil(
+        ActivitiesEnum.NEW_NICKNAME,
+        currentLoginNick.value,
+        '',
+      );
+      toast.toast(context, ToastEnum.SUCCESS,
+          '${currentLoginNick.value}, criamos sua conta');
+    } on AuthException catch (error) {
+      debugPrint('ERROR:' + error.toString());
+    }
   }
 
   @override
