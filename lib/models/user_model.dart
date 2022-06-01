@@ -78,13 +78,18 @@ class UserClass {
 
   Future<void> clean(BuildContext context, String _status) async {
     try {
-      await db.pathToken(currentUser.value.first.id);
       await authService.logout();
+      await db.pathLogout(
+        currentUser.value.first.id,
+        '',
+        UserStatus.INACTIVE.toString().split('.').last,
+      );
       ActivityUtil(ActivitiesEnum.LOGOUT, DeviceModel(), '');
       currentUser.value = [];
       toast.toast(
           context, ToastEnum.SUCCESS, 'espero que isso não seja um adeus!');
-    } catch (e) {
+    } catch (error) {
+      debugPrint('ERROR => _setUpQtyHistoryUser:' + error.toString());
       toast.toast(context, ToastEnum.WARNING,
           'não foi possível sair da aplicação no momento, tente novamente mais tarde.');
     }
@@ -94,7 +99,11 @@ class UserClass {
     await api
         .deleteUser(currentUser.value.first.id)
         .then((result) async => {
-              await db.pathToken(currentUser.value.first.id),
+              await db.pathLogout(
+                currentUser.value.first.id,
+                '',
+                UserStatus.DELETED.toString().split('.').last,
+              ),
               await authService.delete(),
               currentUser.value = [],
             })

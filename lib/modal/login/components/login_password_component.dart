@@ -61,7 +61,7 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
         _labelStyle = loginLabelStyle.SUCCESS;
         _showButton = true;
         _labelText = currentLoginTypeForm.value == loginButtonText.LOGIN
-            ? "senha válida, entrando..."
+            ? "senha válida, entrar?"
             : "senha válida, criar conta?";
       }
     });
@@ -132,21 +132,14 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
         .postNewUser(currentUser.value.first)
         .then((result) => {
               ActivityUtil(
-                  ActivitiesEnum.NEW_NICKNAME, currentLoginNick.value, ''),
+                ActivitiesEnum.NEW_NICKNAME,
+                currentLoginNick.value,
+                '',
+              ),
               toast.toast(context, ToastEnum.SUCCESS,
                   '${currentLoginNick.value}, criamos sua conta'),
             })
         .catchError((error) => debugPrint('ERROR:' + error.toString()));
-
-    // await api
-    //     .setUser(UserModel.toMap(currentUser.value.first))
-    //     .then((result) => {
-    //           ActivityUtil(
-    //               ActivitiesEnum.NEW_NICKNAME, currentLoginNick.value, ''),
-    //           toast.toast(context, ToastEnum.SUCCESS,
-    //               '${currentLoginNick.value}, criamos sua conta'),
-    //         })
-    //     .catchError((error) => debugPrint('ERROR:' + error.toString()));
   }
 
   @override

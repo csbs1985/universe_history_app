@@ -122,9 +122,7 @@ class Api {
   }
 
   upNicknameHistory(String _id) {
-    return history
-        .doc(_id)
-        .update({'userNickName': currentUser.value.first.name});
+    return history.doc(_id).update({'userName': currentUser.value.first.name});
   }
 
   upStatusUser(String _status) {
@@ -136,9 +134,7 @@ class Api {
   }
 
   upNicknameComment(String _id) {
-    return comment
-        .doc(_id)
-        .update({'userNickName': currentUser.value.first.name});
+    return comment.doc(_id).update({'userName': currentUser.value.first.name});
   }
 
   upStatusUserComment(String _id) {
@@ -180,12 +176,6 @@ class Api {
     return user
         .doc(currentUser.value.first.id)
         .update({'isNotification': currentUser.value.first.isNotification});
-  }
-
-  setUpQtyHistoryUser() {
-    return user
-        .doc(currentUser.value.first.id)
-        .update({'qtyHistory': currentUser.value.first.qtyHistory});
   }
 
   setUpQtyCommentUser() {

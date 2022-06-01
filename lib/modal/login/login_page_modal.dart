@@ -15,14 +15,9 @@ class LoginPageModal extends StatefulWidget {
 
 class _LoginPageModalState extends State<LoginPageModal> {
   @override
-  void dispose() {
-    setState(() {
-      currentLogin.value = loginPageType.EMAIL;
-      currentLoginEmail.value = '';
-      currentLoginNick.value = '';
-      currentLoginPassword.value = '';
-    });
-    super.dispose();
+  void initState() {
+    currentLogin.value = loginPageType.EMAIL;
+    super.initState();
   }
 
   @override
