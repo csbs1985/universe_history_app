@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:universe_history_app/models/comment_model.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
@@ -22,18 +21,9 @@ class Api {
   CollectionReference notification =
       FirebaseFirestore.instance.collection('notifications');
   CollectionReference user = FirebaseFirestore.instance.collection('users');
-  Future<String?> token = FirebaseMessaging.instance.getToken();
-
-  getToken() {
-    return token;
-  }
 
   getTokenOwner(String _user) {
     return user.where('id', isEqualTo: _user).get();
-  }
-
-  setToken({String? token}) {
-    return user.doc(currentUser.value.first.id).update({'token': token ?? ''});
   }
 
   setBlock(Map<String, dynamic> _form) {

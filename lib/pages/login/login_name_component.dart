@@ -72,7 +72,7 @@ class _LoginNameComponentState extends State<LoginNameComponent> {
 
   void _next() {
     currentLoginNick.value = nickController.text;
-    Navigator.pushNamed(context, '/login-password');
+    currentLogin.value = loginPageType.PASSWORD;
   }
 
   @override

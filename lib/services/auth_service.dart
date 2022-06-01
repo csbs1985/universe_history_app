@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/models/user_model.dart';
+import 'package:universe_history_app/services/realtime_database_service.dart';
 
 class AuthException implements Exception {
   String message;
@@ -9,7 +9,7 @@ class AuthException implements Exception {
 }
 
 class AuthService extends ChangeNotifier {
-  final Api api = Api();
+  final RealtimeDatabaseService db = RealtimeDatabaseService();
 
   FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -45,36 +45,35 @@ class AuthService extends ChangeNotifier {
   }
 
   getToken() async {
-    await api
+    await db
         .getToken()
         .then((String result) => {
               token = result,
             })
-        .catchError((error) => debugPrint('ERROR:' + error));
+        .catchError((error) => debugPrint('ERROR => getToken:' + error));
   }
 
   setToken() async {
     await getToken();
-    await api
-        .getUser(auth.currentUser!.email)
+    await db
+        .getUserEmail(auth.currentUser!.email!)
         .then((_user) async => {
               UserClass().add({
-                'id': _user.docs.first['id'],
-                'date': _user.docs.first['date'],
-                'name': _user.docs.first['name'],
-                'upDateName': _user.docs.first['upDateName'],
-                'status': _user.docs.first['status'],
-                'email': _user.docs.first['email'],
-                'channel': _user.docs.first['channel'],
-                'token': _user.docs.first['token'],
-                'isNotification': _user.docs.first['isNotification'],
-                'qtyHistory': _user.docs.first['qtyHistory'],
-                'qtyComment': _user.docs.first['qtyComment'],
+                'id': _user.children.single.value['id'],
+                'date': _user.children.single.value['date'],
+                'name': _user.children.single.value['name'],
+                'upDateName': _user.children.single.value['upDateName'],
+                'status': _user.children.single.value['status'],
+                'email': _user.children.single.value['email'],
+                'token': _user.children.single.value['token'],
+                'isNotification': _user.children.single.value['isNotification'],
+                'qtyHistory': _user.children.single.value['qtyHistory'],
+                'qtyComment': _user.children.single.value['qtyComment'],
               }),
               if (token != null && currentUser.value.isNotEmpty)
-                await api.setToken(token: token)
+                await db.pathToken(currentUser.value.first.id, token: token)
             })
-        .catchError((error) => debugPrint('ERROR:' + error));
+        .catchError((error) => debugPrint('ERROR => setToken:' + error));
   }
 
   registerAuthentication(String email, String senha) async {

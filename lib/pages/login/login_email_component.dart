@@ -43,8 +43,10 @@ class _LoginEmailComponentState extends State<LoginEmailComponent> {
     currentLoginTypeForm.value = _buttonText;
 
     if (_buttonText == loginButtonText.VERIFY) return _checkEmail();
-    if (_buttonText == loginButtonText.REGISTER) currentLogin.value = 'name';
-    if (_buttonText == loginButtonText.LOGIN) currentLogin.value = 'password';
+    if (_buttonText == loginButtonText.REGISTER)
+      currentLogin.value = loginPageType.NAME;
+    if (_buttonText == loginButtonText.LOGIN)
+      currentLogin.value = loginPageType.PASSWORD;
   }
 
   void _checkEmail() {
@@ -110,9 +112,6 @@ class _LoginEmailComponentState extends State<LoginEmailComponent> {
             onChanged: (value) => _keyUp(value),
             style: UiTextStyle.text1,
             keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(
-              counterStyle: TextStyle(fontSize: 0),
-            ),
           ),
           const SizedBox(height: UiPadding.xLarge),
           Row(

@@ -71,7 +71,7 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
     setState(() => _hiddenPassword = !_hiddenPassword);
   }
 
-  void _pressedButton() {
+  void _pressed() {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -120,7 +120,6 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
       'upDateName': '',
       'status': UserStatus.ACTIVE.toString().split('.').last,
       'email': currentLoginEmail.value,
-      'channel': 'email',
       'token': authService.token ?? '',
       'isNotification': true,
       'qtyHistory': 0,
@@ -176,9 +175,6 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
             onChanged: (value) => _keyUp(value),
             style: UiTextStyle.text1,
             keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(
-              counterStyle: TextStyle(fontSize: 0),
-            ),
           ),
           const SizedBox(height: UiPadding.xLarge),
           Row(
@@ -195,7 +191,7 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
                   label: loginUtil.getButtonText(_buttonText),
                   size: ButtonSizeEnum.MEDIUM,
                   style: ButtonStyleEnum.PRIMARY,
-                  callback: (value) => _pressedButton(),
+                  callback: (value) => _pressed(),
                 )
             ],
           )

@@ -17,7 +17,18 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    currentLogin.value = 'email';
+    currentLogin.value = loginPageType.EMAIL;
+  }
+
+  @override
+  void dispose() {
+    setState(() {
+      currentLogin.value = loginPageType.EMAIL;
+      currentLoginEmail.value = '';
+      currentLoginNick.value = '';
+      currentLoginPassword.value = '';
+    });
+    super.dispose();
   }
 
   @override
@@ -33,11 +44,11 @@ class _LoginPageState extends State<LoginPage> {
               builder: (context, value, __) {
                 return Column(
                   children: [
-                    if (currentLogin.value == 'email')
+                    if (currentLogin.value == loginPageType.EMAIL)
                       const LoginEmailComponent(),
-                    if (currentLogin.value == 'name')
+                    if (currentLogin.value == loginPageType.NAME)
                       const LoginNameComponent(),
-                    if (currentLogin.value == 'password')
+                    if (currentLogin.value == loginPageType.PASSWORD)
                       const LoginPasswordComponent(),
                   ],
                 );

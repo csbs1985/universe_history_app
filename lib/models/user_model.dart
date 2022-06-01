@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/services/auth_service.dart';
+import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/utils/device_util.dart';
 
@@ -72,11 +73,12 @@ class UserModel {
 class UserClass {
   final Api api = Api();
   final AuthService authService = AuthService();
+  final RealtimeDatabaseService db = RealtimeDatabaseService();
   final ToastComponent toast = ToastComponent();
 
   Future<void> clean(BuildContext context, String _status) async {
     try {
-      await api.setToken();
+      await db.pathToken(currentUser.value.first.id);
       await authService.logout();
       ActivityUtil(ActivitiesEnum.LOGOUT, DeviceModel(), '');
       currentUser.value = [];
@@ -92,7 +94,7 @@ class UserClass {
     await api
         .deleteUser(currentUser.value.first.id)
         .then((result) async => {
-              await api.setToken(),
+              await db.pathToken(currentUser.value.first.id),
               await authService.delete(),
               currentUser.value = [],
             })

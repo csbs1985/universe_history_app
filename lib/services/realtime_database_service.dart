@@ -1,11 +1,14 @@
 // ignore_for_file: avoid_print, invalid_return_type_for_catch_error
 
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:universe_history_app/models/user_model.dart';
 
 class RealtimeDatabaseService {
   DatabaseReference histories = FirebaseDatabase.instance.ref('histories');
   DatabaseReference users = FirebaseDatabase.instance.ref('users');
+
+  Future<String?> token = FirebaseMessaging.instance.getToken();
 
   getUserEmail(String _email) async {
     return await users.orderByChild('email').equalTo(_email).get();
@@ -15,8 +18,12 @@ class RealtimeDatabaseService {
     return await users.orderByChild('name').equalTo(_name).get();
   }
 
+  getToken() {
+    return token;
+  }
+
   postNewUser(UserModel user) {
-    users.push().child(user.id).set({
+    users.child(user.id).set({
       'date': user.date,
       'email': user.email,
       'id': user.id,
@@ -27,7 +34,11 @@ class RealtimeDatabaseService {
       'status': user.status,
       'token': user.token,
       'upDateName': user.upDateName,
-    }).asStream();
+    });
+  }
+
+  pathToken(_user, {String? token}) async {
+    await users.child(_user).update({"token": token ?? ''});
   }
 
   /////////////////////////
