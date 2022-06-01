@@ -4,12 +4,12 @@ ValueNotifier<int> currentBlockedQty = ValueNotifier<int>(0);
 
 class BlockedModel {
   final String userId;
-  final String userNickName;
+  final String userName;
   final String date;
 
   BlockedModel({
     required this.userId,
-    required this.userNickName,
+    required this.userName,
     required this.date,
   });
 }

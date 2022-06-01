@@ -29,13 +29,13 @@ class OwnerModel {
 class OwnerClass {
   void selectOwner(
     String _id,
-    String _userNickName,
+    String _userName,
     String _token,
     String _userStatus,
   ) {
     var owner = {
       'id': _id,
-      'name': _userNickName,
+      'name': _userName,
       'token': _token,
       'userStatus': _userStatus
     };

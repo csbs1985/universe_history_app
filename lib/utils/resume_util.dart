@@ -5,14 +5,14 @@ import 'package:universe_history_app/utils/edit_date_util.dart';
 String resumeUitl(_item, {String? type}) {
   String? _userStatus;
   String? _date;
-  String? _userNickName;
+  String? _userName;
   bool? _isEdit;
   bool? _isSigned;
 
   _date = _item.date;
   _isEdit = _item.isEdit;
   _isSigned = _item.isSigned;
-  _userNickName = _item.userNickName;
+  _userName = _item.userName;
 
   var _time = editDateUtil(_date!);
   var author = '';
@@ -24,7 +24,7 @@ String resumeUitl(_item, {String? type}) {
 
   _userStatus == UserStatus.DELETED.toString().split('.').last
       ? author = 'usuário deletado'
-      : author = _isSigned! ? _userNickName! : 'anônimo';
+      : author = _isSigned! ? _userName! : 'anônimo';
 
   var temp = _time + ' · ' + author;
   return _isEdit! ? temp + ' · editado' : temp;

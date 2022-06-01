@@ -101,7 +101,7 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
         _content.id,
         'história',
         _content.userId,
-        _content.userNickName,
+        _content.userName,
         _content.text,
         _content.isDelete,
       ),

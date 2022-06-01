@@ -122,8 +122,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
         'isDelete': false,
         'text': _commentController.text.trim(),
         'userId': _commentEdit?['userId'] ?? currentUser.value.first.id,
-        'userNickName':
-            _commentEdit?['userNickName'] ?? currentUser.value.first.name,
+        'userName': _commentEdit?['userName'] ?? currentUser.value.first.name,
         'userStatus': currentUser.value.first.status
       };
     });

@@ -15,7 +15,7 @@ class CommentModel {
     required this.isDelete,
     required this.text,
     required this.userId,
-    required this.userNickName,
+    required this.userName,
     required this.userStatus,
   });
 
@@ -24,7 +24,7 @@ class CommentModel {
   late String historyId;
   late String text;
   late String userId;
-  late String userNickName;
+  late String userName;
   late String userStatus;
   late bool isSigned;
   late bool isEdit;
@@ -42,7 +42,7 @@ class CommentModel {
         isDelete: json['isDelete'],
         text: json['text'],
         userId: json['userId'],
-        userNickName: json['userNickName'],
+        userName: json['userName'],
         userStatus: json['userStatus'],
       );
 
@@ -57,7 +57,7 @@ class CommentModel {
         'isDelete': isDelete,
         'text': text,
         'userId': userId,
-        'userNickName': userNickName,
+        'userName': userName,
         'userStatus': userStatus
       };
 }

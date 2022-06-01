@@ -18,20 +18,20 @@ class OptionsModal extends StatefulWidget {
     String id,
     String type,
     String idUser,
-    String userNickName,
+    String userName,
     String text,
     bool isDelete,
   )   : _id = id,
         _type = type,
         _idUser = idUser,
-        _userNickName = userNickName,
+        _userName = userName,
         _text = text,
         _isDelete = isDelete;
 
   final String _id;
   final String _type;
   final String _idUser;
-  final String _userNickName;
+  final String _userName;
   final String _text;
   final bool _isDelete;
 
@@ -95,7 +95,7 @@ class _OptionsModalState extends State<OptionsModal> {
                 ActivityUtil(
                   ActivitiesEnum.DELETE_COMMENT,
                   widget._text,
-                  widget._userNickName,
+                  widget._userName,
                 ),
                 toast.toast(context, ToastEnum.SUCCESS, 'Comentário deletado!'),
                 Navigator.of(context).pop(),
@@ -114,7 +114,7 @@ class _OptionsModalState extends State<OptionsModal> {
                 ActivityUtil(
                   ActivitiesEnum.DELETE_HISTORY,
                   widget._text,
-                  widget._userNickName,
+                  widget._userName,
                 ),
                 toast.toast(context, ToastEnum.SUCCESS, 'História deletada!'),
                 Navigator.of(context).pop(),
@@ -130,7 +130,7 @@ class _OptionsModalState extends State<OptionsModal> {
         'id': uuid.v4(),
         'blockerId': currentUser.value.first.id,
         'blockedId': widget._idUser,
-        'blockedNickName': widget._userNickName,
+        'blockedNickName': widget._userName,
         'date': DateTime.now().toString(),
       };
 
@@ -198,7 +198,7 @@ class _OptionsModalState extends State<OptionsModal> {
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
                       child: BtnConfirmComponent(
-                        title: 'Bloquear ' + widget._userNickName,
+                        title: 'Bloquear ' + widget._userName,
                         icon: UiSvg.block,
                         btnPrimaryLabel: 'Cancelar',
                         btnSecondaryLabel: 'Bloquear',
@@ -209,7 +209,7 @@ class _OptionsModalState extends State<OptionsModal> {
                     ),
                   if (_canBlock())
                     ButtonOptionComponent(
-                      label: 'Denunciar ' + widget._userNickName,
+                      label: 'Denunciar ' + widget._userName,
                       icon: UiSvg.delate,
                       callback: (value) => _setDenounce(value),
                     ),

@@ -89,7 +89,7 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
   void _showModal(BuildContext context, dynamic _content) {
     ownerClass.selectOwner(
       _content.userId,
-      _content.userNickName,
+      _content.userName,
       _content.userStatus,
       _content.token,
     );
@@ -105,7 +105,7 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
               _content.id,
               'comentário',
               _content.userId,
-              _content.userNickName,
+              _content.userName,
               _content.text,
               _content.isDelete,
             ));
