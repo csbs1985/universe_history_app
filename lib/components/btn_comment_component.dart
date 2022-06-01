@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/divider_component.dart';
-import 'package:universe_history_app/components/modal_input_comment_component.dart';
+import 'package:universe_history_app/modal/input_comment_modal.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
@@ -22,7 +22,7 @@ class _BtnCommentComponentState extends State<BtnCommentComponent> {
         context: context,
         barrierColor: Colors.black87,
         duration: const Duration(milliseconds: 300),
-        builder: (context) => const ModalInputCommmentComponent());
+        builder: (context) => const InputCommmentModal());
   }
 
   bool _isShow() {

@@ -14,10 +14,11 @@ import 'package:universe_history_app/components/menu_component.dart';
 import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/core/variables.dart';
+import 'package:universe_history_app/modal/login/login_page_modal.dart';
 import 'package:universe_history_app/models/category_model.dart';
+import 'package:universe_history_app/modal/create_history_modal.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
-import 'package:universe_history_app/pages/login/login_page.dart';
 import 'package:universe_history_app/services/local_notification_service.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
@@ -91,8 +92,8 @@ class _HomePageState extends State<HomePage> {
       barrierColor: Colors.black87,
       duration: const Duration(milliseconds: 300),
       builder: (context) => currentUser.value.isNotEmpty
-          ? const Text('create')
-          : const LoginPage(),
+          ? const CreateHistoryModal()
+          : const LoginPageModal(),
     );
   }
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/btn_comment_component.dart';
 import 'package:universe_history_app/components/comment_list_component.dart';
 
-class ModalCommentComponent extends StatelessWidget {
+class CommentModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(

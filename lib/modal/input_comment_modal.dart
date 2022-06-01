@@ -4,9 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:universe_history_app/components/button_publish_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
-import 'package:universe_history_app/components/modal_mentioned_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/components/toggle_component.dart';
+import 'package:universe_history_app/modal/mentioned_modal.dart';
 import 'package:universe_history_app/models/owner_model.dart';
 import 'package:universe_history_app/pages/notification_page.dart';
 import 'package:universe_history_app/services/push_notification_service.dart';
@@ -20,18 +20,16 @@ import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:uuid/uuid.dart';
 
-class ModalInputCommmentComponent extends StatefulWidget {
-  const ModalInputCommmentComponent({String? id}) : _id = id;
+class InputCommmentModal extends StatefulWidget {
+  const InputCommmentModal({String? id}) : _id = id;
 
   final String? _id;
 
   @override
-  _ModalInputCommmentComponentState createState() =>
-      _ModalInputCommmentComponentState();
+  _InputCommmentModalState createState() => _InputCommmentModalState();
 }
 
-class _ModalInputCommmentComponentState
-    extends State<ModalInputCommmentComponent> {
+class _InputCommmentModalState extends State<InputCommmentModal> {
   final TextEditingController _commentController = TextEditingController();
   final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
@@ -88,8 +86,8 @@ class _ModalInputCommmentComponentState
         context: context,
         barrierColor: Colors.black87,
         duration: const Duration(milliseconds: 300),
-        builder: (context) => ModalMentionedComponent(
-            callback: (value) => _setText(value, type)));
+        builder: (context) =>
+            MentionedModal(callback: (value) => _setText(value, type)));
   }
 
   void _setText(_user, MentionedCallEnum type) {

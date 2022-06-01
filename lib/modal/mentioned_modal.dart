@@ -7,18 +7,16 @@ import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
-class ModalMentionedComponent extends StatefulWidget {
-  const ModalMentionedComponent({required Function callback})
-      : _callback = callback;
+class MentionedModal extends StatefulWidget {
+  const MentionedModal({required Function callback}) : _callback = callback;
 
   final Function _callback;
 
   @override
-  _ModalMentionedComponentState createState() =>
-      _ModalMentionedComponentState();
+  _MentionedModalState createState() => _MentionedModalState();
 }
 
-class _ModalMentionedComponentState extends State<ModalMentionedComponent> {
+class _MentionedModalState extends State<MentionedModal> {
   final TextEditingController _commentController = TextEditingController();
 
   Algolia? algolia;

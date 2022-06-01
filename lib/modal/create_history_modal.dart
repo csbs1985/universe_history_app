@@ -13,14 +13,14 @@ import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:uuid/uuid.dart';
 
-class CreateHistory extends StatefulWidget {
-  const CreateHistory({Key? key}) : super(key: key);
+class CreateHistoryModal extends StatefulWidget {
+  const CreateHistoryModal({Key? key}) : super(key: key);
 
   @override
-  _CreateHistoryState createState() => _CreateHistoryState();
+  _CreateHistoryModalState createState() => _CreateHistoryModalState();
 }
 
-class _CreateHistoryState extends State<CreateHistory> {
+class _CreateHistoryModalState extends State<CreateHistoryModal> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   List<CategoryModel> allCategories = CategoryModel.allCategories;

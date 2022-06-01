@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/btn_confirm_component.dart';
 import 'package:universe_history_app/components/button_option_component.dart';
-import 'package:universe_history_app/components/modal_input_comment_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/modal/input_comment_modal.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
@@ -13,8 +13,8 @@ import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:uuid/uuid.dart';
 
-class ModalOptionsComponent extends StatefulWidget {
-  const ModalOptionsComponent(
+class OptionsModal extends StatefulWidget {
+  const OptionsModal(
     String id,
     String type,
     String idUser,
@@ -36,10 +36,10 @@ class ModalOptionsComponent extends StatefulWidget {
   final bool _isDelete;
 
   @override
-  _ModalOptionsComponentState createState() => _ModalOptionsComponentState();
+  _OptionsModalState createState() => _OptionsModalState();
 }
 
-class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
+class _OptionsModalState extends State<OptionsModal> {
   final ToastComponent toast = ToastComponent();
   final Api api = Api();
   final Uuid uuid = const Uuid();
@@ -155,7 +155,7 @@ class _ModalOptionsComponentState extends State<ModalOptionsComponent> {
         context: context,
         barrierColor: Colors.black87,
         duration: const Duration(milliseconds: 300),
-        builder: (context) => ModalInputCommmentComponent(id: widget._id));
+        builder: (context) => InputCommmentModal(id: widget._id));
   }
 
   @override

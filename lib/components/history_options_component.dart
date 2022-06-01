@@ -2,11 +2,11 @@ import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/icon_component.dart';
-import 'package:universe_history_app/components/modal_comment_component.dart';
-import 'package:universe_history_app/components/modal_input_comment_component.dart';
-import 'package:universe_history_app/components/modal_options_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
+import 'package:universe_history_app/modal/comment_modal.dart';
+import 'package:universe_history_app/modal/input_comment_modal.dart';
+import 'package:universe_history_app/modal/options_modal.dart';
 import 'package:universe_history_app/models/comment_model.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/owner_model.dart';
@@ -70,8 +70,8 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
       barrierColor: Colors.black87,
       duration: const Duration(milliseconds: 300),
       builder: (context) => type == 'inputCommentary'
-          ? const ModalInputCommmentComponent()
-          : ModalCommentComponent(),
+          ? const InputCommmentModal()
+          : CommentModal(),
     );
   }
 
@@ -97,7 +97,7 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
       context: context,
       barrierColor: Colors.black87,
       duration: const Duration(milliseconds: 300),
-      builder: (context) => ModalOptionsComponent(
+      builder: (context) => OptionsModal(
         _content.id,
         'história',
         _content.userId,
