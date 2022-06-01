@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
+ValueNotifier<String> currentLogin = ValueNotifier<String>('email');
 ValueNotifier<String> currentLoginEmail = ValueNotifier<String>('');
 ValueNotifier<String> currentLoginNick = ValueNotifier<String>('');
 ValueNotifier<String> currentLoginPassword = ValueNotifier<String>('');

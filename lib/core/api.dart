@@ -89,13 +89,13 @@ class Api {
   }
 
   getNickName(String _nickname) {
-    return user.where('nickname', isEqualTo: _nickname).get();
+    return user.where('name', isEqualTo: _nickname).get();
   }
 
   getUsersNickName(String _nickname) {
     return user
-        .where('nickname', arrayContainsAny: ['_nickname'])
-        .orderBy('nickname')
+        .where('name', arrayContainsAny: ['_nickname'])
+        .orderBy('name')
         .snapshots();
   }
 
@@ -134,7 +134,7 @@ class Api {
   upNicknameHistory(String _id) {
     return history
         .doc(_id)
-        .update({'userNickName': currentUser.value.first.nickname});
+        .update({'userNickName': currentUser.value.first.name});
   }
 
   upStatusUser(String _status) {
@@ -148,7 +148,7 @@ class Api {
   upNicknameComment(String _id) {
     return comment
         .doc(_id)
-        .update({'userNickName': currentUser.value.first.nickname});
+        .update({'userNickName': currentUser.value.first.name});
   }
 
   upStatusUserComment(String _id) {
@@ -181,8 +181,8 @@ class Api {
 
   upNickName() {
     return user.doc(currentUser.value.first.id).update({
-      'nickname': currentUser.value.first.nickname,
-      'upDateNickname': currentUser.value.first.upDateNickname
+      'name': currentUser.value.first.name,
+      'upDateName': currentUser.value.first.upDateName
     });
   }
 

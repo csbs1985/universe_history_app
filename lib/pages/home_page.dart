@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutterfire_ui/database.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:universe_history_app/components/history_item_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
@@ -12,11 +13,11 @@ import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/components/menu_component.dart';
 import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
-import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/models/category_model.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
+import 'package:universe_history_app/pages/login/login_page.dart';
 import 'package:universe_history_app/services/local_notification_service.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
@@ -31,7 +32,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final Api api = Api();
   final ScrollController _scrollController = ScrollController();
 
   bool loading = false;
@@ -80,6 +80,20 @@ class _HomePageState extends State<HomePage> {
   void dispose() {
     super.dispose();
     _scrollController.dispose();
+  }
+
+  void _onPressed(BuildContext context) {
+    currentHistory.value = [];
+
+    showCupertinoModalBottomSheet(
+      expand: true,
+      context: context,
+      barrierColor: Colors.black87,
+      duration: const Duration(milliseconds: 300),
+      builder: (context) => currentUser.value.isNotEmpty
+          ? const Text('create')
+          : const LoginPage(),
+    );
   }
 
   @override
@@ -149,11 +163,7 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: UiColor.first,
           elevation: 0,
           child: SvgPicture.asset(UiSvg.create),
-          onPressed: () => {
-            currentHistory.value = [],
-            Navigator.of(context)
-                .pushNamed(currentUser.value.isNotEmpty ? "/create" : "/login")
-          },
+          onPressed: () => _onPressed(context),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(UiBorder.rounded),
           ),
@@ -168,9 +178,9 @@ class _HomePageState extends State<HomePage> {
               children: [
                 MenuComponent(),
                 const SizedBox(height: 10),
-                Flexible(
-                  child: _list(),
-                ),
+                // Flexible(
+                //   child: _list(),
+                // ),
               ],
             ),
           ),

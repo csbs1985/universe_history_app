@@ -1,31 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
-import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/services/auth_service.dart';
 import 'package:universe_history_app/models/user_model.dart';
+import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_padding.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/utils/login_util.dart';
 import 'package:uuid/uuid.dart';
 
-class LoginPasswordPage extends StatefulWidget {
-  const LoginPasswordPage({Key? key}) : super(key: key);
+class LoginPasswordComponent extends StatefulWidget {
+  const LoginPasswordComponent({Key? key}) : super(key: key);
 
   @override
-  State<LoginPasswordPage> createState() => _LoginNickPageState();
+  State<LoginPasswordComponent> createState() => _LoginNickPageState();
 }
 
-class _LoginNickPageState extends State<LoginPasswordPage> {
+class _LoginNickPageState extends State<LoginPasswordComponent> {
   final AuthService authService = AuthService();
-  final Api api = Api();
   final LoginUtil loginUtil = LoginUtil();
+  final RealtimeDatabaseService db = RealtimeDatabaseService();
   final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
   final Uuid uuid = const Uuid();
@@ -117,8 +116,8 @@ class _LoginNickPageState extends State<LoginPasswordPage> {
     userClass.add({
       'id': authService.user?.uid,
       'date': DateTime.now().toString(),
-      'nickname': currentLoginNick.value,
-      'upDateNickname': '',
+      'name': currentLoginNick.value,
+      'upDateName': '',
       'status': UserStatus.ACTIVE.toString().split('.').last,
       'email': currentLoginEmail.value,
       'channel': 'email',
@@ -130,8 +129,8 @@ class _LoginNickPageState extends State<LoginPasswordPage> {
 
     currentDialog.value = 'Criando conta...';
 
-    await api
-        .setUser(UserModel.toMap(currentUser.value.first))
+    await db
+        .postNewUser(currentUser.value.first)
         .then((result) => {
               ActivityUtil(
                   ActivitiesEnum.NEW_NICKNAME, currentLoginNick.value, ''),
@@ -139,58 +138,68 @@ class _LoginNickPageState extends State<LoginPasswordPage> {
                   '${currentLoginNick.value}, criamos sua conta'),
             })
         .catchError((error) => debugPrint('ERROR:' + error.toString()));
+
+    // await api
+    //     .setUser(UserModel.toMap(currentUser.value.first))
+    //     .then((result) => {
+    //           ActivityUtil(
+    //               ActivitiesEnum.NEW_NICKNAME, currentLoginNick.value, ''),
+    //           toast.toast(context, ToastEnum.SUCCESS,
+    //               '${currentLoginNick.value}, criamos sua conta'),
+    //         })
+    //     .catchError((error) => debugPrint('ERROR:' + error.toString()));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const AppbarBackComponent(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(
-              UiPadding.large, 0, UiPadding.large, UiPadding.large),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const TitleComponent(title: 'Qual sua senha?'),
-              Text(
-                _labelText,
-                style: loginUtil.getLabelStyle(_labelStyle),
-              ),
-              const SizedBox(height: UiPadding.medium),
-              TextFormField(
-                autofocus: true,
-                obscureText: _hiddenPassword,
-                controller: passwordController,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(_regx))
-                ],
-                onChanged: (value) => _keyUp(value),
-                style: UiTextStyle.text1,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              const SizedBox(height: UiPadding.xLarge),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Button3dComponent(
-                    label: _hiddenPassword ? 'mostrar' : 'esconder',
-                    size: ButtonSizeEnum.MEDIUM,
-                    style: ButtonStyleEnum.SECOND,
-                    callback: (value) => _toggleShow(),
-                  ),
-                  if (_showButton)
-                    Button3dComponent(
-                      label: loginUtil.getButtonText(_buttonText),
-                      size: ButtonSizeEnum.MEDIUM,
-                      style: ButtonStyleEnum.PRIMARY,
-                      callback: (value) => _pressedButton(),
-                    )
-                ],
-              )
-            ],
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        UiPadding.large,
+        0,
+        UiPadding.large,
+        UiPadding.large,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const TitleComponent(title: 'Qual sua senha?'),
+          Text(
+            _labelText,
+            style: loginUtil.getLabelStyle(_labelStyle),
           ),
-        ),
+          const SizedBox(height: UiPadding.medium),
+          TextFormField(
+            autofocus: true,
+            obscureText: _hiddenPassword,
+            controller: passwordController,
+            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(_regx))],
+            onChanged: (value) => _keyUp(value),
+            style: UiTextStyle.text1,
+            keyboardType: TextInputType.emailAddress,
+            decoration: const InputDecoration(
+              counterStyle: TextStyle(fontSize: 0),
+            ),
+          ),
+          const SizedBox(height: UiPadding.xLarge),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Button3dComponent(
+                label: _hiddenPassword ? 'mostrar' : 'esconder',
+                size: ButtonSizeEnum.MEDIUM,
+                style: ButtonStyleEnum.SECOND,
+                callback: (value) => _toggleShow(),
+              ),
+              if (_showButton)
+                Button3dComponent(
+                  label: loginUtil.getButtonText(_buttonText),
+                  size: ButtonSizeEnum.MEDIUM,
+                  style: ButtonStyleEnum.PRIMARY,
+                  callback: (value) => _pressedButton(),
+                )
+            ],
+          )
+        ],
       ),
     );
   }

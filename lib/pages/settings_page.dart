@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/btn_confirm_component.dart';
 import 'package:universe_history_app/components/btn_link_component.dart';
 import 'package:universe_history_app/components/button_3d_component.dart';
@@ -8,7 +9,9 @@ import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
+import 'package:universe_history_app/pages/login/login_page.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 
@@ -46,6 +49,18 @@ class _SettingsPageState extends State<SettingsPage> {
         : Navigator.of(context).pop();
   }
 
+  void _login(BuildContext context) {
+    currentHistory.value = [];
+
+    showCupertinoModalBottomSheet(
+      expand: true,
+      context: context,
+      barrierColor: Colors.black87,
+      duration: const Duration(milliseconds: 300),
+      builder: (context) => const LoginPage(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,8 +91,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           label: 'Entrar',
                           size: ButtonSizeEnum.MEDIUM,
                           style: ButtonStyleEnum.PRIMARY,
-                          callback: (value) =>
-                              Navigator.of(context).pushNamed("/login"),
+                          callback: (value) => _login(context),
                         ),
                       ],
                     ),
@@ -88,7 +102,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       children: [
                         const TitleResumeComponent('Conta',
                             'Mantenha seus dados atualizados e consulte seu conteúdo.'),
-                        const BtnLinkComponent('Nome de usuário', '/nickname'),
+                        const BtnLinkComponent('Nome de usuário', '/name'),
                         const BtnLinkComponent(
                             'Suas atividades', '/activities'),
                         SelectToggleComponent(
