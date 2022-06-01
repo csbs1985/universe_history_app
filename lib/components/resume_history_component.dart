@@ -29,13 +29,13 @@ class ResumeHistoryComponent extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(0, _top ?? 0, 0, _bottom ?? 10),
       child: Row(
         children: [
-          if (_resume.isAuthorized)
+          if (_resume['isAuthorized'])
             const IconCicleComponent(
               icon: UiSvg.authorized,
               size: 16,
               margin: 2,
             ),
-          if (_resume.isAuthorized)
+          if (_resume['isAuthorized'])
             const Text(
               ' · ',
               style: UiTextStyle.text2,

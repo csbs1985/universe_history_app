@@ -9,10 +9,10 @@ String resumeUitl(_item, {String? type}) {
   bool? _isEdit;
   bool? _isSigned;
 
-  _date = _item.date;
-  _isEdit = _item.isEdit;
-  _isSigned = _item.isSigned;
-  _userName = _item.userName;
+  _date = _item['date'];
+  _isEdit = _item['isEdit'];
+  _isSigned = _item['isSigned'];
+  _userName = _item['userName'];
 
   var _time = editDateUtil(_date!);
   var author = '';

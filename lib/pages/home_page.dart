@@ -20,6 +20,7 @@ import 'package:universe_history_app/modal/create_history_modal.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/services/local_notification_service.dart';
+import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
@@ -34,36 +35,32 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final ScrollController _scrollController = ScrollController();
+  final RealtimeDatabaseService db = RealtimeDatabaseService();
 
   bool loading = false;
+  var query;
 
   @override
   void initState() {
     super.initState();
     checkNotifications();
     DeviceUtil();
+    _getDatabase();
   }
 
   _getDatabase() {
     final value = menuItemSelected.value.id!;
 
     if (value == 'todas' || value.isEmpty) {
-      return FirebaseDatabase.instance.ref('historys').orderByChild('date');
+      query = FirebaseDatabase.instance.ref('histories').orderByChild('date');
     } else if (value == 'minhas') {
-      return FirebaseDatabase.instance
-          .ref('historys')
-          .equalTo(currentUser.value.first.id)
-          .orderByChild('date');
+      query =
+          db.histories.orderByChild('date').equalTo(currentUser.value.first.id);
     } else if (value == 'salvas') {
-      return FirebaseDatabase.instance
-          .ref('bookmarks')
-          .equalTo(currentUser.value.first.id)
-          .orderByChild('date');
+      query =
+          db.histories.orderByChild('date').equalTo(currentUser.value.first.id);
     } else {
-      return FirebaseDatabase.instance
-          .ref('historys')
-          .equalTo(value)
-          .orderByChild('date');
+      query = db.histories.orderByChild('date').equalTo(value);
     }
   }
 
@@ -179,9 +176,9 @@ class _HomePageState extends State<HomePage> {
               children: [
                 MenuComponent(),
                 const SizedBox(height: 10),
-                // Flexible(
-                //   child: _list(),
-                // ),
+                Flexible(
+                  child: _list(),
+                ),
               ],
             ),
           ),
@@ -195,12 +192,16 @@ class _HomePageState extends State<HomePage> {
       valueListenable: menuItemSelected,
       builder: (context, value, __) {
         return FirebaseDatabaseListView(
+          query: query,
+          reverse: true,
           pageSize: 10,
-          query: _getDatabase(),
+          shrinkWrap: true,
+          padding: const EdgeInsets.only(bottom: 72),
+          physics: const NeverScrollableScrollPhysics(),
           loadingBuilder: (context) => const SkeletonHistoryItemComponent(),
           errorBuilder: (context, error, stackTrace) => _noResult(),
           itemBuilder: (context, snapshot) {
-            Map<String, dynamic> data = snapshot.value as Map<String, dynamic>;
+            Map<String, dynamic> data = HistoryModel.toMap(snapshot.value);
             return HistoryItemComponent(snapshot: data);
           },
         );

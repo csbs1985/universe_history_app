@@ -41,7 +41,7 @@ class RealtimeDatabaseService {
   }
 
   postNewUser(UserModel _user) {
-    users.child(_user.id).set({
+    return users.child(_user.id).set({
       'date': _user.date,
       'email': _user.email,
       'id': _user.id,
@@ -56,7 +56,7 @@ class RealtimeDatabaseService {
   }
 
   postNewHistory(HistoryModel _history) {
-    histories.child(_history.id).set({
+    return histories.child(_history.id).set({
       'id': _history.id,
       'title': _history.title,
       'text': _history.text,
