@@ -15,12 +15,6 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   @override
-  void initState() {
-    super.initState();
-    currentLogin.value = loginPageType.EMAIL;
-  }
-
-  @override
   void dispose() {
     setState(() {
       currentLogin.value = loginPageType.EMAIL;
