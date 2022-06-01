@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable
+// ignore_for_file: unused_local_variable, prefer_typing_uninitialized_variables
 
 import 'dart:io';
 import 'package:firebase_database/firebase_database.dart';
@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> {
   final RealtimeDatabaseService db = RealtimeDatabaseService();
 
   bool loading = false;
+
   var query;
 
   @override
@@ -45,22 +46,26 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     checkNotifications();
     DeviceUtil();
-    _getDatabase();
   }
 
   _getDatabase() {
     final value = menuItemSelected.value.id!;
 
     if (value == 'todas' || value.isEmpty) {
-      query = FirebaseDatabase.instance.ref('histories').orderByChild('date');
+      return db.histories.orderByChild('date');
     } else if (value == 'minhas') {
-      query =
-          db.histories.orderByChild('date').equalTo(currentUser.value.first.id);
+      return db.histories
+          .orderByChild('date')
+          .equalTo(currentUser.value.first.id);
     } else if (value == 'salvas') {
-      query =
-          db.histories.orderByChild('date').equalTo(currentUser.value.first.id);
+      return db.histories
+          .orderByChild('date')
+          .equalTo(currentUser.value.first.id);
     } else {
-      query = db.histories.orderByChild('date').equalTo(value);
+      return db.histories
+          .child('categories')
+          .orderByChild('date')
+          .equalTo(value);
     }
   }
 
@@ -80,7 +85,7 @@ class _HomePageState extends State<HomePage> {
     _scrollController.dispose();
   }
 
-  void _onPressed(BuildContext context) {
+  void _onPressedFloatingButton(BuildContext context) {
     currentHistory.value = [];
 
     showCupertinoModalBottomSheet(
@@ -161,7 +166,7 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: UiColor.first,
           elevation: 0,
           child: SvgPicture.asset(UiSvg.create),
-          onPressed: () => _onPressed(context),
+          onPressed: () => _onPressedFloatingButton(context),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(UiBorder.rounded),
           ),
@@ -192,7 +197,7 @@ class _HomePageState extends State<HomePage> {
       valueListenable: menuItemSelected,
       builder: (context, value, __) {
         return FirebaseDatabaseListView(
-          query: query,
+          query: _getDatabase(),
           reverse: true,
           pageSize: 10,
           shrinkWrap: true,
