@@ -42,20 +42,20 @@ class _NickNamePageState extends State<NickNamePage> {
     super.initState();
 
     if (currentUser.value.isNotEmpty) {
-      _oldName = currentUser.value.first.nickname;
-      currentNickname.value = currentUser.value.first.nickname;
-      _textController.text = currentUser.value.first.nickname;
-      _counter = currentUser.value.first.nickname.length;
+      _oldName = currentUser.value.first.name;
+      currentNickname.value = currentUser.value.first.name;
+      _textController.text = currentUser.value.first.name;
+      _counter = currentUser.value.first.name.length;
     }
 
-    _validateUpdateNickname();
+    _validateupDateName();
     _keyUp(_oldName);
   }
 
-  _validateUpdateNickname() {
+  _validateupDateName() {
     api.getUser(currentUser.value.first.email).then((result) {
       setState(() {
-        var _days = qtyDays(result.docs.first['upDateNickname']);
+        var _days = qtyDays(result.docs.first['upDateName']);
 
         if (_days < _rulesDays) {
           _hasInput = false;
@@ -114,8 +114,7 @@ class _NickNamePageState extends State<NickNamePage> {
 
   Future<void> _saveNickName() async {
     currentDialog.value = 'Iniciando...';
-    currentUser.value.first.nickname =
-        currentNickname.value = _textController.text;
+    currentUser.value.first.name = currentNickname.value = _textController.text;
 
     showDialog(
         context: context,
@@ -128,8 +127,8 @@ class _NickNamePageState extends State<NickNamePage> {
   }
 
   Future<void> _upNickname() async {
-    currentUser.value.first.nickname = _textController.text;
-    currentUser.value.first.upDateNickname = DateTime.now().toString();
+    currentUser.value.first.name = _textController.text;
+    currentUser.value.first.upDateName = DateTime.now().toString();
     currentDialog.value = 'Alterando nome de usuário...';
 
     await api

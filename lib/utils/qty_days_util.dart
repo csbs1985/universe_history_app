@@ -1,6 +1,6 @@
-int qtyDays(String _upDateNickname) {
+int qtyDays(String _upDateName) {
   var _date = DateTime.fromMillisecondsSinceEpoch(
-      DateTime.parse(_upDateNickname).millisecondsSinceEpoch);
+      DateTime.parse(_upDateName).millisecondsSinceEpoch);
   var _now = DateTime.now();
   var _diff = _now.difference(_date);
 

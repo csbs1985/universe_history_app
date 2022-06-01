@@ -50,7 +50,7 @@ class _ItemUpNickNameState extends State<ItemUpNickName> {
           )
         ],
       ),
-      onTap: () => Navigator.of(context).pushNamed("/nickname"),
+      onTap: () => Navigator.of(context).pushNamed("/name"),
     );
   }
 }

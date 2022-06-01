@@ -14,11 +14,10 @@ ValueNotifier<bool> userNew = ValueNotifier<bool>(false);
 
 class UserModel {
   late String id;
-  late String nickname;
-  late String upDateNickname;
+  late String name;
+  late String upDateName;
   late String date;
   late String email;
-  late String channel;
   late String token;
   late String status;
   late bool isNotification;
@@ -27,12 +26,11 @@ class UserModel {
 
   UserModel({
     required this.id,
-    required this.nickname,
-    required this.upDateNickname,
+    required this.name,
+    required this.upDateName,
     required this.date,
     required this.status,
     required this.email,
-    required this.channel,
     required this.token,
     required this.isNotification,
     required this.qtyHistory,
@@ -44,11 +42,10 @@ class UserModel {
 
   factory UserModel.fromMap(Map<String, dynamic> json) => UserModel(
         id: json['id'],
-        nickname: json['nickname'],
-        upDateNickname: json['upDateNickname'],
+        name: json['name'],
+        upDateName: json['upDateName'],
         date: json["date"],
         email: json['email'],
-        channel: json['channel'],
         token: json['token'],
         status: json['status'],
         isNotification: json['isNotification'],
@@ -60,11 +57,10 @@ class UserModel {
 
   static Map<String, dynamic> toMap(UserModel user) => {
         'id': user.id,
-        'nickname': user.nickname,
-        'upDateNickname': user.upDateNickname,
+        'name': user.name,
+        'upDateName': user.upDateName,
         'date': user.date,
         'email': user.email,
-        'channel': user.channel,
         'token': user.token,
         'isNotification': user.isNotification,
         'status': user.status,

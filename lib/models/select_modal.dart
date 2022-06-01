@@ -12,8 +12,7 @@ class SelectModel {
   static List<SelectModel> allPrivacy = [
     SelectModel(id: 0, label: "assinar história como anônimo"),
     SelectModel(
-        id: 1,
-        label: "assinar história como ${currentUser.value.first.nickname}"),
+        id: 1, label: "assinar história como ${currentUser.value.first.name}"),
   ];
 
   static List<SelectModel> allComment = [

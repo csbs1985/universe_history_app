@@ -123,7 +123,7 @@ class _CreateHistoryState extends State<CreateHistory> {
           'qtyComment': currentHistory.value.first.qtyComment,
           'categories': _categories,
           'userId': currentUser.value.first.id,
-          'userNickName': currentUser.value.first.nickname
+          'userNickName': currentUser.value.first.name
         };
       } else {
         history = {
@@ -139,7 +139,7 @@ class _CreateHistoryState extends State<CreateHistory> {
           'qtyComment': 0,
           'categories': _categories,
           'userId': currentUser.value.first.id,
-          'userNickName': currentUser.value.first.nickname
+          'userNickName': currentUser.value.first.name
         };
       }
       api
@@ -239,7 +239,7 @@ class _CreateHistoryState extends State<CreateHistory> {
                 callback: (value) => _setPrivacy(),
                 title: 'Assinatura',
                 resume:
-                    'Ligado para assinar como ${currentUser.value.first.nickname} ou desligado para anônimo.',
+                    'Ligado para assinar como ${currentUser.value.first.name} ou desligado para anônimo.',
                 value: _isSigned,
               ),
             ),

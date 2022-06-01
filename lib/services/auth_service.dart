@@ -61,8 +61,8 @@ class AuthService extends ChangeNotifier {
               UserClass().add({
                 'id': _user.docs.first['id'],
                 'date': _user.docs.first['date'],
-                'nickname': _user.docs.first['nickname'],
-                'upDateNickname': _user.docs.first['upDateNickname'],
+                'name': _user.docs.first['name'],
+                'upDateName': _user.docs.first['upDateName'],
                 'status': _user.docs.first['status'],
                 'email': _user.docs.first['email'],
                 'channel': _user.docs.first['channel'],

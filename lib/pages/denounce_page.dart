@@ -44,7 +44,7 @@ class _DenouncePageState extends State<DenouncePage> {
         'id': uuid.v4(),
         'idUser': currentUser.value.first.id,
         'idDenounced': currentOwner.value.first.id,
-        'nickDenounced': currentOwner.value.first.nickname,
+        'nickDenounced': currentOwner.value.first.name,
         'code': justifySelected.id,
         'justify': justifySelected.title,
         'date': DateTime.now().toString(),
@@ -57,7 +57,7 @@ class _DenouncePageState extends State<DenouncePage> {
               .then((result) => {
                     ActivityUtil(
                       ActivitiesEnum.DENOUNCE,
-                      currentOwner.value.first.nickname,
+                      currentOwner.value.first.name,
                       _form['date'],
                     ),
                     toast.toast(

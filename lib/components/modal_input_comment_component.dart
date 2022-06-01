@@ -101,13 +101,13 @@ class _ModalInputCommmentComponentState
 
       if (type == MentionedCallEnum.ICON)
         _commentController.text =
-            _commentController.text + '@' + _user['nickname'] + ' ';
+            _commentController.text + '@' + _user['name'] + ' ';
 
       if (type == MentionedCallEnum.KEYBOARD) {
         var value = _commentController.text
             .substring(0, _commentController.text.length - 1);
 
-        _commentController.text = value + '@' + _user['nickname'] + ' ';
+        _commentController.text = value + '@' + _user['name'] + ' ';
       }
     });
   }
@@ -125,7 +125,7 @@ class _ModalInputCommmentComponentState
         'text': _commentController.text.trim(),
         'userId': _commentEdit?['userId'] ?? currentUser.value.first.id,
         'userNickName':
-            _commentEdit?['userNickName'] ?? currentUser.value.first.nickname,
+            _commentEdit?['userNickName'] ?? currentUser.value.first.name,
         'userStatus': currentUser.value.first.status
       };
     });
@@ -176,7 +176,7 @@ class _ModalInputCommmentComponentState
     _form = {
       'id': uuid.v4(),
       'idUser': currentHistory.value.first.userId,
-      'nickName': _textSigned ? currentUser.value.first.nickname : 'anônimo',
+      'nickName': _textSigned ? currentUser.value.first.name : 'anônimo',
       'view': false,
       'idContent': currentHistory.value.first.id,
       'content': currentHistory.value.first.title,
@@ -198,8 +198,7 @@ class _ModalInputCommmentComponentState
         _form = {
           'id': uuid.v4(),
           'idUser': item,
-          'nickName':
-              _textSigned ? currentUser.value.first.nickname : 'anônimo',
+          'nickName': _textSigned ? currentUser.value.first.name : 'anônimo',
           'view': false,
           'idContent': currentHistory.value.first.id,
           'content': currentHistory.value.first.title,
@@ -220,7 +219,7 @@ class _ModalInputCommmentComponentState
     var body = '';
 
     title = _textSigned
-        ? (currentUser.value.first.nickname +
+        ? (currentUser.value.first.name +
             ' fez um comentário na história "' +
             history.title +
             '"')
@@ -229,7 +228,7 @@ class _ModalInputCommmentComponentState
             '" recebeu um comentário anônimo.');
 
     body = _textSigned
-        ? currentUser.value.first.nickname +
+        ? currentUser.value.first.name +
             ': "' +
             _commentController.text.trim() +
             '"'
@@ -243,13 +242,13 @@ class _ModalInputCommmentComponentState
     var title = '';
     var body = '';
 
-    title = currentUser.value.first.nickname +
+    title = currentUser.value.first.name +
         ' mencionou você em um comentário da história "' +
         history.title +
         '".';
 
     body = _textSigned
-        ? currentUser.value.first.nickname +
+        ? currentUser.value.first.name +
             ': "' +
             _commentController.text.trim() +
             '"'
@@ -339,7 +338,7 @@ class _ModalInputCommmentComponentState
                           const SizedBox(width: 10),
                           Text(
                               _textSigned
-                                  ? currentUser.value.first.nickname
+                                  ? currentUser.value.first.name
                                   : 'anônimo',
                               style: UiTextStyle.text2)
                         ],

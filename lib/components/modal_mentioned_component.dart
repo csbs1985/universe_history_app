@@ -80,7 +80,7 @@ class _ModalMentionedComponentState extends State<ModalMentionedComponent> {
                                       const EdgeInsets.fromLTRB(0, 0, 10, 10),
                                   child: TextButton(
                                     child: Text(
-                                      _snapshot![index].data['nickname'],
+                                      _snapshot![index].data['name'],
                                       style: UiTextStyle.buttonSecondLabel,
                                     ),
                                     style: ButtonStyle(

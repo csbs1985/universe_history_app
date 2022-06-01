@@ -121,7 +121,7 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
   }
 
   Color _getBackColor(_index) {
-    if (_index.text.contains('@' + currentUser.value.first.nickname)) {
+    if (_index.text.contains('@' + currentUser.value.first.name)) {
       return UiColor.first;
     }
     if (_index.userId == currentUser.value.first.id) return UiColor.second;

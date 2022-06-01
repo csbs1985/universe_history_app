@@ -103,7 +103,7 @@ class _SearchPageState extends State<SearchPage> {
           reverse: true,
           itemCount: documents.length,
           itemBuilder: (BuildContext context, index) {
-            return Text(documents[index]['nickname'], style: UiTextStyle.text1);
+            return Text(documents[index]['name'], style: UiTextStyle.text1);
           },
         ),
       ],
