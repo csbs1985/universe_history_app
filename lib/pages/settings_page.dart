@@ -9,7 +9,7 @@ import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/core/api.dart';
-import 'package:universe_history_app/modal/login/login_page_modal.dart';
+import 'package:universe_history_app/modal/login/login_modal.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -57,7 +57,7 @@ class _SettingsPageState extends State<SettingsPage> {
       context: context,
       barrierColor: Colors.black87,
       duration: const Duration(milliseconds: 300),
-      builder: (context) => const LoginPageModal(),
+      builder: (context) => const LoginModal(),
     );
   }
 

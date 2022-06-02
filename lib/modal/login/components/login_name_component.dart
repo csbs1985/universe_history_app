@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
+import 'package:universe_history_app/modal/login/login_model.dart';
 import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_padding.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
-import 'package:universe_history_app/utils/login_util.dart';
 
 class LoginNameComponent extends StatefulWidget {
   const LoginNameComponent({Key? key}) : super(key: key);
@@ -15,13 +15,13 @@ class LoginNameComponent extends StatefulWidget {
 }
 
 class _LoginNameComponentState extends State<LoginNameComponent> {
-  final LoginUtil loginUtil = LoginUtil();
+  final LoginClass loginClass = LoginClass();
   final RealtimeDatabaseService db = RealtimeDatabaseService();
 
   final nickController = TextEditingController();
 
-  loginLabelStyle _labelStyle = loginLabelStyle.NORMAL;
-  final loginButtonText _buttonText = loginButtonText.NEXT;
+  String _labelStyle = loginLabelStyle.NORMAL.name;
+  final String _buttonText = loginButtonText.NEXT.name;
 
   String _labelText = "digite seu usuário";
   final String _regx = '[a-z0-9-_.]';
@@ -33,17 +33,17 @@ class _LoginNameComponentState extends State<LoginNameComponent> {
 
     setState(() {
       if (_nick.isEmpty) {
-        _labelStyle = loginLabelStyle.NORMAL;
+        _labelStyle = loginLabelStyle.NORMAL.name;
         _labelText = "digite seu usuário";
         _showButton = false;
       } else if (!regExp.hasMatch(_nick)) {
-        _labelStyle = loginLabelStyle.WARNING;
+        _labelStyle = loginLabelStyle.WARNING.name;
         _labelText = "veja a cima os caracteres aceitos";
         _showButton = false;
       } else if (_nick.length > 5) {
         _checkNameEmpty(_nick);
       } else {
-        _labelStyle = loginLabelStyle.SUCCESS;
+        _labelStyle = loginLabelStyle.SUCCESS.name;
         _labelText = "digitando usuário...";
         _showButton = false;
       }
@@ -57,11 +57,11 @@ class _LoginNameComponentState extends State<LoginNameComponent> {
               setState(() {
                 if (result.exists) {
                   _labelText = 'nome de usuário indisponível';
-                  _labelStyle = loginLabelStyle.WARNING;
+                  _labelStyle = loginLabelStyle.WARNING.name;
                   _showButton = false;
                 } else {
                   _labelText = 'nome de usuário disponível, seguir?';
-                  _labelStyle = loginLabelStyle.SUCCESS;
+                  _labelStyle = loginLabelStyle.SUCCESS.name;
                   _showButton = true;
                 }
               })
@@ -71,8 +71,8 @@ class _LoginNameComponentState extends State<LoginNameComponent> {
   }
 
   void _next() {
-    currentLoginNick.value = nickController.text;
-    currentLogin.value = loginPageType.PASSWORD;
+    currentLoginName.value = nickController.text;
+    currentLoginType.value = loginPageType.PASSWORD.name;
   }
 
   @override
@@ -90,7 +90,7 @@ class _LoginNameComponentState extends State<LoginNameComponent> {
           const TitleComponent(title: 'Qual seu nome de usuário?'),
           Text(
             _labelText,
-            style: loginUtil.getLabelStyle(_labelStyle),
+            style: loginClass.getLabelStyle(_labelStyle),
           ),
           const SizedBox(height: UiPadding.medium),
           TextFormField(
@@ -111,7 +111,7 @@ class _LoginNameComponentState extends State<LoginNameComponent> {
             children: [
               if (_showButton)
                 Button3dComponent(
-                  label: loginUtil.getButtonText(_buttonText),
+                  label: loginClass.getButtonText(_buttonText),
                   size: ButtonSizeEnum.MEDIUM,
                   style: ButtonStyleEnum.PRIMARY,
                   callback: (value) => _next(),

@@ -5,13 +5,13 @@ import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/variables.dart';
+import 'package:universe_history_app/modal/login/login_model.dart';
 import 'package:universe_history_app/services/auth_service.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_padding.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
-import 'package:universe_history_app/utils/login_util.dart';
 import 'package:uuid/uuid.dart';
 
 class LoginPasswordComponent extends StatefulWidget {
@@ -23,7 +23,7 @@ class LoginPasswordComponent extends StatefulWidget {
 
 class _LoginNickPageState extends State<LoginPasswordComponent> {
   final AuthService authService = AuthService();
-  final LoginUtil loginUtil = LoginUtil();
+  final LoginClass loginClass = LoginClass();
   final RealtimeDatabaseService db = RealtimeDatabaseService();
   final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
@@ -31,8 +31,8 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
 
   final passwordController = TextEditingController();
 
-  loginLabelStyle _labelStyle = loginLabelStyle.NORMAL;
-  loginButtonText _buttonText = loginButtonText.REGISTER;
+  String _labelStyle = loginLabelStyle.NORMAL.name;
+  String _buttonText = loginButtonText.REGISTER.name;
 
   String _labelText = "digite sua senha";
   final String _regx = '[a-z0-9_@*&]';
@@ -44,23 +44,23 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
   initState() {
     super.initState();
 
-    if (currentLoginTypeForm.value == loginButtonText.LOGIN)
-      setState(() => _buttonText = loginButtonText.LOGIN);
+    if (currentLoginButton.value == loginButtonText.LOGIN.name)
+      setState(() => _buttonText = loginButtonText.LOGIN.name);
   }
 
   _keyUp(String _nick) {
     setState(() {
       _showButton = false;
       if (_nick.isEmpty) {
-        _labelStyle = loginLabelStyle.NORMAL;
+        _labelStyle = loginLabelStyle.NORMAL.name;
         _labelText = "digite sua senha";
       } else if (_nick.length < 6) {
-        _labelStyle = loginLabelStyle.WARNING;
+        _labelStyle = loginLabelStyle.WARNING.name;
         _labelText = "6 caracteres, no minímo";
       } else {
-        _labelStyle = loginLabelStyle.SUCCESS;
+        _labelStyle = loginLabelStyle.SUCCESS.name;
         _showButton = true;
-        _labelText = currentLoginTypeForm.value == loginButtonText.LOGIN
+        _labelText = currentLoginButton.value == loginButtonText.LOGIN.name
             ? "senha válida, entrar?"
             : "senha válida, criar conta?";
       }
@@ -79,7 +79,7 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
           return const LoaderComponent();
         });
 
-    currentLoginTypeForm.value == loginButtonText.LOGIN
+    currentLoginButton.value == loginButtonText.LOGIN.name
         ? _login()
         : _register();
   }
@@ -87,11 +87,13 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
   void _login() async {
     try {
       await authService.loginAuthentication(
-          currentLoginEmail.value, passwordController.text);
+        currentLoginEmail.value,
+        passwordController.text,
+      );
       toast.toast(context, ToastEnum.SUCCESS, 'bem vindo de volta.');
     } on AuthException catch (e) {
       setState(() {
-        _labelStyle = loginLabelStyle.WARNING;
+        _labelStyle = loginLabelStyle.WARNING.name;
         _labelText = e.message;
       });
       Navigator.of(context).pop();
@@ -101,11 +103,13 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
   void _register() async {
     try {
       await authService.registerAuthentication(
-          currentLoginEmail.value, passwordController.text);
+        currentLoginEmail.value,
+        passwordController.text,
+      );
       _registerFirestore();
     } on AuthException catch (e) {
       setState(() {
-        _labelStyle = loginLabelStyle.WARNING;
+        _labelStyle = loginLabelStyle.WARNING.name;
         _labelText = e.message;
       });
       Navigator.of(context).pop();
@@ -116,7 +120,7 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
     userClass.add({
       'id': authService.user?.uid,
       'date': DateTime.now().toString(),
-      'name': currentLoginNick.value,
+      'name': currentLoginName.value,
       'upDateName': '',
       'status': UserStatus.ACTIVE.toString().split('.').last,
       'email': currentLoginEmail.value,
@@ -132,11 +136,11 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
       await db.postNewUser(currentUser.value.first);
       ActivityUtil(
         ActivitiesEnum.NEW_NICKNAME,
-        currentLoginNick.value,
+        currentLoginName.value,
         '',
       );
       toast.toast(context, ToastEnum.SUCCESS,
-          '${currentLoginNick.value}, criamos sua conta');
+          '${currentLoginName.value}, criamos sua conta');
     } on AuthException catch (error) {
       debugPrint('ERROR:' + error.toString());
     }
@@ -157,7 +161,7 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
           const TitleComponent(title: 'Qual sua senha?'),
           Text(
             _labelText,
-            style: loginUtil.getLabelStyle(_labelStyle),
+            style: loginClass.getLabelStyle(_labelStyle),
           ),
           const SizedBox(height: UiPadding.medium),
           TextFormField(
@@ -181,7 +185,7 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
               ),
               if (_showButton)
                 Button3dComponent(
-                  label: loginUtil.getButtonText(_buttonText),
+                  label: loginClass.getButtonText(_buttonText),
                   size: ButtonSizeEnum.MEDIUM,
                   style: ButtonStyleEnum.PRIMARY,
                   callback: (value) => _pressed(),

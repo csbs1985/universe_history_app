@@ -1,7 +1,6 @@
 // ignore_for_file: unused_local_variable, prefer_typing_uninitialized_variables
 
 import 'dart:io';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutterfire_ui/database.dart';
@@ -14,7 +13,8 @@ import 'package:universe_history_app/components/menu_component.dart';
 import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/core/variables.dart';
-import 'package:universe_history_app/modal/login/login_page_modal.dart';
+import 'package:universe_history_app/modal/login/login_modal.dart';
+import 'package:universe_history_app/modal/login/login_model.dart';
 import 'package:universe_history_app/models/category_model.dart';
 import 'package:universe_history_app/modal/create_history_modal.dart';
 import 'package:universe_history_app/models/history_model.dart';
@@ -34,8 +34,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final ScrollController _scrollController = ScrollController();
+  final LoginClass loginClass = LoginClass();
   final RealtimeDatabaseService db = RealtimeDatabaseService();
+  final ScrollController _scrollController = ScrollController();
 
   bool loading = false;
 
@@ -88,14 +89,16 @@ class _HomePageState extends State<HomePage> {
   void _onPressedFloatingButton(BuildContext context) {
     currentHistory.value = [];
 
+    if (currentUser.value.isEmpty) loginClass.clean();
+
     showCupertinoModalBottomSheet(
       expand: true,
       context: context,
       barrierColor: Colors.black87,
       duration: const Duration(milliseconds: 300),
-      builder: (context) => currentUser.value.isNotEmpty
-          ? const CreateHistoryModal()
-          : const LoginPageModal(),
+      builder: (context) => currentUser.value.isEmpty
+          ? const LoginModal()
+          : const CreateHistoryModal(),
     );
   }
 

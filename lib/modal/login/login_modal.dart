@@ -3,23 +3,17 @@ import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/modal/login/components/login_email_component.dart';
 import 'package:universe_history_app/modal/login/components/login_name_component.dart';
 import 'package:universe_history_app/modal/login/components/login_password_component.dart';
+import 'package:universe_history_app/modal/login/login_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
-import 'package:universe_history_app/utils/login_util.dart';
 
-class LoginPageModal extends StatefulWidget {
-  const LoginPageModal({Key? key}) : super(key: key);
+class LoginModal extends StatefulWidget {
+  const LoginModal({Key? key}) : super(key: key);
 
   @override
-  _LoginPageModalState createState() => _LoginPageModalState();
+  _LoginModalState createState() => _LoginModalState();
 }
 
-class _LoginPageModalState extends State<LoginPageModal> {
-  @override
-  void initState() {
-    currentLogin.value = loginPageType.EMAIL;
-    super.initState();
-  }
-
+class _LoginModalState extends State<LoginModal> {
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -29,15 +23,15 @@ class _LoginPageModalState extends State<LoginPageModal> {
           children: [
             const AppbarBackComponent(),
             ValueListenableBuilder(
-              valueListenable: currentLogin,
+              valueListenable: currentLoginType,
               builder: (context, value, __) {
                 return Column(
                   children: [
-                    if (currentLogin.value == loginPageType.EMAIL)
+                    if (currentLoginType.value == loginPageType.EMAIL.name)
                       const LoginEmailComponent(),
-                    if (currentLogin.value == loginPageType.NAME)
+                    if (currentLoginType.value == loginPageType.NAME.name)
                       const LoginNameComponent(),
-                    if (currentLogin.value == loginPageType.PASSWORD)
+                    if (currentLoginType.value == loginPageType.PASSWORD.name)
                       const LoginPasswordComponent(),
                   ],
                 );
