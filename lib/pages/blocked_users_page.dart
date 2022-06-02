@@ -35,7 +35,7 @@ class _BlockedUsersPageState extends State<BlockedUsersPage> {
         .deleteBlock(blocked['id'])
         .then((result) => {
               currentBlockedQty.value--,
-              toast.toast(context, ToastEnum.SUCCESS,
+              toast.toast(context, ToastEnum.SUCCESS.name,
                   '${blocked['blockedNickName']} desbloqueado!')
             })
         .catchError((error) => debugPrint('ERROR:' + error.toString()));

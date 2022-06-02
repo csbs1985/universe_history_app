@@ -86,11 +86,11 @@ class UserClass {
       );
       ActivityUtil(ActivitiesEnum.LOGOUT, DeviceModel(), '');
       currentUser.value = [];
-      toast.toast(
-          context, ToastEnum.SUCCESS, 'espero que isso não seja um adeus!');
+      toast.toast(context, ToastEnum.SUCCESS.name,
+          'espero que isso não seja um adeus!');
     } catch (error) {
       debugPrint('ERROR => _setUpQtyHistoryUser:' + error.toString());
-      toast.toast(context, ToastEnum.WARNING,
+      toast.toast(context, ToastEnum.WARNING.name,
           'não foi possível sair da aplicação no momento, tente novamente mais tarde.');
     }
   }
@@ -110,7 +110,7 @@ class UserClass {
         .catchError((error) {
       Navigator.of(context).pop();
       debugPrint('ERROR:' + error.toString());
-      toast.toast(context, ToastEnum.WARNING,
+      toast.toast(context, ToastEnum.WARNING.name,
           'não foi possível delatar a conta no momento, tente novamente mais tarde.');
     });
   }

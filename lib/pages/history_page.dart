@@ -103,8 +103,8 @@ class _HistoryPageState extends State<HistoryPage> {
                       ),
                       const DividerComponent(
                           top: 0, bottom: 20, left: 16, right: 16),
-                      const CommentItemComponent(
-                          type: HistoryOptionsType.HISTORYPAGE)
+                      CommentItemComponent(
+                          type: HistoryOptionsType.HISTORYPAGE.name)
                     ],
                   ),
                 ),

@@ -165,7 +165,7 @@ class _NickNamePageState extends State<NickNamePage> {
               ActivityUtil(
                   ActivitiesEnum.UP_NICKNAME, _textController.text, _oldName),
               toast.toast(
-                  context, ToastEnum.SUCCESS, 'Nome de usuário alterado!'),
+                  context, ToastEnum.SUCCESS.name, 'Nome de usuário alterado!'),
               currentDialog.value = 'Finalizando...',
               Navigator.of(context).pushNamed('/home')
             })

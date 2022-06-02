@@ -6,20 +6,14 @@ import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class ToastComponent {
-  void toast(BuildContext context, ToastEnum? type, String text) {
+  void toast(BuildContext context, String? type, String text) {
     Color _style = UiColor.first;
-
-    switch (type) {
-      case ToastEnum.SUCCESS:
-        _style = UiColor.success;
-        break;
-      case ToastEnum.WARNING:
-        _style = UiColor.warning;
-        break;
-      case ToastEnum.INFO:
-      default:
-        _style = UiColor.first;
-        break;
+    if (type == ToastEnum.SUCCESS.name) {
+      _style = UiColor.success;
+    } else if (type == ToastEnum.WARNING.name) {
+      _style = UiColor.warning;
+    } else {
+      _style = UiColor.first;
     }
 
     showToast(

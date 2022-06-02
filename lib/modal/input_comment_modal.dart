@@ -160,7 +160,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
               if (isEdit) Navigator.of(context).pop(),
               toast.toast(
                   context,
-                  ToastEnum.SUCCESS,
+                  ToastEnum.SUCCESS.name,
                   isEdit
                       ? 'Seu comentário foi alterado.'
                       : 'Seu comentário foi publicado.'),

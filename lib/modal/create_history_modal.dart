@@ -151,7 +151,7 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
       _setUpQtyHistoryUser();
     } on AuthException catch (error) {
       debugPrint('ERROR => postNewHistory:' + error.toString());
-      toast.toast(context, ToastEnum.WARNING,
+      toast.toast(context, ToastEnum.WARNING.name,
           'Erro ao publicar história, tente novamente mais tarde.');
     }
   }
@@ -173,7 +173,7 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
       currentHistory.value.first.id,
     );
     if (currentHistory.value.isNotEmpty) Navigator.of(context).pop();
-    toast.toast(context, ToastEnum.SUCCESS,
+    toast.toast(context, ToastEnum.SUCCESS.name,
         isEdit ? 'Sua história foi alterada.' : 'Sua história foi publicada.');
     Navigator.of(context).pop();
   }

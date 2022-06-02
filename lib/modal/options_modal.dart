@@ -71,7 +71,7 @@ class _OptionsModalState extends State<OptionsModal> {
 
   void _copy(String _text) {
     Clipboard.setData(ClipboardData(text: _text));
-    toast.toast(context, ToastEnum.SUCCESS, 'Texto copiado!');
+    toast.toast(context, ToastEnum.SUCCESS.name, 'Texto copiado!');
     Navigator.of(context).pop();
   }
 
@@ -97,7 +97,8 @@ class _OptionsModalState extends State<OptionsModal> {
                   widget._text,
                   widget._userName,
                 ),
-                toast.toast(context, ToastEnum.SUCCESS, 'Comentário deletado!'),
+                toast.toast(
+                    context, ToastEnum.SUCCESS.name, 'Comentário deletado!'),
                 Navigator.of(context).pop(),
               })
           .catchError((error) => debugPrint('ERROR:' + error.toString()));
@@ -116,7 +117,8 @@ class _OptionsModalState extends State<OptionsModal> {
                   widget._text,
                   widget._userName,
                 ),
-                toast.toast(context, ToastEnum.SUCCESS, 'História deletada!'),
+                toast.toast(
+                    context, ToastEnum.SUCCESS.name, 'História deletada!'),
                 Navigator.of(context).pop(),
               })
           .catchError((error) => debugPrint('ERROR:' + error.toString()));
@@ -137,7 +139,8 @@ class _OptionsModalState extends State<OptionsModal> {
       api
           .setBlock(_form)
           .then((result) => {
-                toast.toast(context, ToastEnum.SUCCESS, 'Usuário bloqueado!'),
+                toast.toast(
+                    context, ToastEnum.SUCCESS.name, 'Usuário bloqueado!'),
                 Navigator.of(context).pop(),
               })
           .catchError((error) => debugPrint('ERROR:' + error.toString()));

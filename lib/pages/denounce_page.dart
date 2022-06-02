@@ -61,7 +61,7 @@ class _DenouncePageState extends State<DenouncePage> {
                       _form['date'],
                     ),
                     toast.toast(
-                        context, ToastEnum.SUCCESS, 'Usuário denunciado!'),
+                        context, ToastEnum.SUCCESS.name, 'Usuário denunciado!'),
                     Navigator.of(context).pop(),
                     Navigator.of(context).pop(),
                   })

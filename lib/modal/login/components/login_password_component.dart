@@ -90,7 +90,7 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
         currentLoginEmail.value,
         passwordController.text,
       );
-      toast.toast(context, ToastEnum.SUCCESS, 'bem vindo de volta.');
+      toast.toast(context, ToastEnum.SUCCESS.name, 'bem vindo de volta.');
     } on AuthException catch (e) {
       setState(() {
         _labelStyle = loginLabelStyle.WARNING.name;
@@ -139,7 +139,7 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
         currentLoginName.value,
         '',
       );
-      toast.toast(context, ToastEnum.SUCCESS,
+      toast.toast(context, ToastEnum.SUCCESS.name,
           '${currentLoginName.value}, criamos sua conta');
     } on AuthException catch (error) {
       debugPrint('ERROR:' + error.toString());

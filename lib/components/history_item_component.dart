@@ -5,6 +5,7 @@ import 'package:universe_history_app/components/history_options_component.dart';
 import 'package:universe_history_app/components/resume_history_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -61,7 +62,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
               ),
               HistoryOptionsComponent(
                 history: widget._snapshot,
-                type: HistoryOptionsType.HOMEPAGE,
+                type: HistoryOptionsType.HOMEPAGE.name,
               )
             ],
           ),
