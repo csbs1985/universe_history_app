@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/skeleton_comment_component.dart';
-import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/modal/options_modal.dart';
 import 'package:universe_history_app/models/comment_model.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/owner_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
+import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -27,9 +27,9 @@ class CommentItemComponent extends StatefulWidget {
 }
 
 class _CommentItemComponentState extends State<CommentItemComponent> {
-  final Api api = Api();
-  final OwnerClass ownerClass = OwnerClass();
   final CommentClass commentClass = CommentClass();
+  final OwnerClass ownerClass = OwnerClass();
+  final RealtimeDatabaseService db = RealtimeDatabaseService();
   final ScrollController _scrollController = ScrollController();
 
   final List<CommentModel> _data = [];

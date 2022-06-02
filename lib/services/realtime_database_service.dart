@@ -6,7 +6,10 @@ import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
 
 class RealtimeDatabaseService {
+  DatabaseReference comments = FirebaseDatabase.instance.ref('comments');
   DatabaseReference histories = FirebaseDatabase.instance.ref('histories');
+  DatabaseReference notifications =
+      FirebaseDatabase.instance.ref('notifications');
   DatabaseReference users = FirebaseDatabase.instance.ref('users');
 
   Future<String?> token = FirebaseMessaging.instance.getToken();
@@ -36,22 +39,32 @@ class RealtimeDatabaseService {
         .update({"qtyHistory": currentUser.value.first.qtyHistory});
   }
 
+  pathQtyCommentHistory(HistoryModel _history) {
+    return histories
+        .child(_history.id)
+        .update({'qtyComment': _history.qtyComment});
+  }
+
+  pathQtyCommentUser(UserModel _user) {
+    return users.child(_user.id).update({'qtyComment': _user.qtyComment});
+  }
+
   pathToken(_user, {String? token}) async {
     await users.child(_user).update({"token": token ?? ''});
   }
 
-  postNewUser(UserModel _user) {
-    return users.child(_user.id).set({
-      'date': _user.date,
-      'email': _user.email,
-      'id': _user.id,
-      'isNotification': _user.isNotification,
-      'name': _user.name,
-      'qtyComment': _user.qtyComment,
-      'qtyHistory': _user.qtyHistory,
-      'status': _user.status,
-      'token': _user.token,
-      'upDateName': _user.upDateName,
+  postNewComment(Map<String, dynamic> _comment) {
+    return comments.child(_comment['id']).set({
+      'date': _comment['date'],
+      'historyId': _comment['historyId'],
+      'id': _comment['id'],
+      'isDelete': _comment['isDelete'],
+      'isEdit': _comment['isEdit'],
+      'isSigned': _comment['isSigned'],
+      'text': _comment['text'],
+      'userId': _comment['userId'],
+      'userName': _comment['userName'],
+      'userStatus': _comment['userStatus'],
     });
   }
 
@@ -70,6 +83,34 @@ class RealtimeDatabaseService {
       'userId': _history.userId,
       'userName': _history.userName,
       'bookmarks': _history.bookmarks,
+    });
+  }
+
+  postNewNotification(Map<String, dynamic> _notification) {
+    return notifications.child(_notification['id']).set({
+      'content': _notification['content'],
+      'date': _notification['date'],
+      'id': _notification['id'],
+      'idContent': _notification['idContent'],
+      'userId': _notification['userId'],
+      'userName': _notification['userName'],
+      'status': _notification['status'],
+      'view': _notification['view'],
+    });
+  }
+
+  postNewUser(UserModel _user) {
+    return users.child(_user.id).set({
+      'date': _user.date,
+      'email': _user.email,
+      'id': _user.id,
+      'isNotification': _user.isNotification,
+      'name': _user.name,
+      'qtyComment': _user.qtyComment,
+      'qtyHistory': _user.qtyHistory,
+      'status': _user.status,
+      'token': _user.token,
+      'upDateName': _user.upDateName,
     });
   }
 }

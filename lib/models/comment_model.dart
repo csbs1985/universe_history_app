@@ -7,28 +7,28 @@ ValueNotifier<num> currentQtyComment = ValueNotifier(0);
 
 class CommentModel {
   CommentModel({
-    required this.id,
     required this.date,
     required this.historyId,
-    required this.isSigned,
-    required this.isEdit,
+    required this.id,
     required this.isDelete,
+    required this.isEdit,
+    required this.isSigned,
     required this.text,
     required this.userId,
     required this.userName,
     required this.userStatus,
   });
 
-  late String id;
   late String date;
   late String historyId;
+  late String id;
+  late bool isDelete;
+  late bool isEdit;
+  late bool isSigned;
   late String text;
   late String userId;
   late String userName;
   late String userStatus;
-  late bool isSigned;
-  late bool isEdit;
-  late bool isDelete;
 
   factory CommentModel.fromJson(Map<String, dynamic> json) =>
       CommentModel.fromMap(json);

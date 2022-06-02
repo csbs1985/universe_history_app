@@ -89,16 +89,8 @@ class Api {
     return history.doc(_form['id']).set(_form);
   }
 
-  setNotification(Map<String, dynamic> _form) {
-    return notification.doc(_form['id']).set(_form);
-  }
-
   setActivities(Map<String, dynamic> _form) {
     return activitie.doc().set(_form);
-  }
-
-  setComment(Map<String, dynamic> _form) {
-    return comment.doc(_form['id']).set(_form);
   }
 
   setUser(Map<String, dynamic> _form) {
@@ -109,12 +101,6 @@ class Api {
     return bookmark
         .doc(currentUser.value.first.id)
         .update({'historyId': currentBookmarks.value});
-  }
-
-  upNumComment() {
-    return history
-        .doc(currentHistory.value.first.id)
-        .update({'qtyComment': currentHistory.value.first.qtyComment});
   }
 
   upNicknameHistory(String _id) {

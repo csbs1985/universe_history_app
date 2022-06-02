@@ -7,9 +7,10 @@ import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/components/toggle_component.dart';
 import 'package:universe_history_app/modal/mentioned_modal.dart';
-import 'package:universe_history_app/models/owner_model.dart';
 import 'package:universe_history_app/pages/notification_page.dart';
+import 'package:universe_history_app/services/auth_service.dart';
 import 'package:universe_history_app/services/push_notification_service.dart';
+import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
@@ -30,6 +31,7 @@ class InputCommmentModal extends StatefulWidget {
 }
 
 class _InputCommmentModalState extends State<InputCommmentModal> {
+  final RealtimeDatabaseService db = RealtimeDatabaseService();
   final TextEditingController _commentController = TextEditingController();
   final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
@@ -40,7 +42,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
 
   Map<String, dynamic>? _commentEdit;
 
-  bool isEdit = false;
+  bool _isEdit = false;
   bool _isInputNotEmpty = false;
   bool _textSigned = true;
 
@@ -48,8 +50,9 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
 
   @override
   void initState() {
+    // edit
     if (widget._id != null) {
-      isEdit = true;
+      _isEdit = true;
       api
           .getComment(widget._id!)
           .then((result) => {
@@ -110,16 +113,18 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
     });
   }
 
-  void _publishComment() {
+  ///// publicar notificação
+
+  Future<void> _postNewComment() async {
     setState(() {
       _form = {
-        'id': _commentEdit?['id'] ?? uuid.v4(),
         'date': _commentEdit?['date'] ?? DateTime.now().toString(),
         'historyId':
             _commentEdit?['historyId'] ?? currentHistory.value.first.id,
-        'isSigned': _textSigned,
-        'isEdit': _commentEdit?['edit'] ?? false,
+        'id': _commentEdit?['id'] ?? uuid.v4(),
         'isDelete': false,
+        '_isEdit': _commentEdit?['edit'] ?? false,
+        'isSigned': _textSigned,
         'text': _commentController.text.trim(),
         'userId': _commentEdit?['userId'] ?? currentUser.value.first.id,
         'userName': _commentEdit?['userName'] ?? currentUser.value.first.name,
@@ -127,49 +132,54 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
       };
     });
 
-    api
-        .setComment(_form)
-        .then((result) => _upComment())
-        .catchError((error) => debugPrint('ERROR: ' + error));
+    try {
+      await db.postNewComment(_form);
+      _pathQtyCommentHistory();
+    } on AuthException catch (error) {
+      debugPrint('ERROR => postNewComment: ' + error.toString());
+    }
   }
 
-  void _upComment() {
-    setState(() {
-      if (!isEdit) currentHistory.value.first.qtyComment++;
-      api
-          .upNumComment()
-          .then((result) => {
-                ActivityUtil(ActivitiesEnum.NEW_COMMENT,
-                    _commentController.text, currentHistory.value.first.id),
-                _setUpQtyCommentUser()
-              })
-          .catchError((error) => debugPrint('ERROR: ' + error));
-    });
+  Future<void> _pathQtyCommentHistory() async {
+    if (!_isEdit) currentHistory.value.first.qtyComment++;
+
+    try {
+      await db.pathQtyCommentHistory(currentHistory.value.first);
+      ActivityUtil(
+        ActivitiesEnum.NEW_COMMENT.name,
+        _commentController.text,
+        currentHistory.value.first.id,
+      );
+      _pathQtyCommentUser();
+    } on AuthException catch (error) {
+      debugPrint('ERROR => pathQtyCommentHistory: ' + error.toString());
+    }
   }
 
-  void _setUpQtyCommentUser() {
-    if (!isEdit) currentUser.value.first.qtyComment++;
+  Future<void> _pathQtyCommentUser() async {
+    if (!_isEdit) currentUser.value.first.qtyComment++;
 
-    api
-        .setUpQtyCommentUser()
-        .then((value) => {
-              if (currentUser.value.first.id !=
-                  currentHistory.value.first.userId)
-                _setNotificationOwner(),
-              if (idMencioned.isNotEmpty) _setNotificationMencioned(),
-              if (isEdit) Navigator.of(context).pop(),
-              toast.toast(
-                  context,
-                  ToastEnum.SUCCESS.name,
-                  isEdit
-                      ? 'Seu comentário foi alterado.'
-                      : 'Seu comentário foi publicado.'),
-              Navigator.of(context).pop()
-            })
-        .catchError((error) => debugPrint('ERROR: ' + error));
+    try {
+      await db.pathQtyCommentUser(currentUser.value.first);
+      if (currentUser.value.first.id != currentHistory.value.first.userId) {
+        _postNewNotification();
+      }
+      if (idMencioned.isNotEmpty) _setNotificationMencioned();
+      if (_isEdit) Navigator.of(context).pop();
+      toast.toast(
+        context,
+        ToastEnum.SUCCESS.name,
+        _isEdit
+            ? 'Seu comentário foi alterado.'
+            : 'Seu comentário foi publicado.',
+      );
+      Navigator.of(context).pop();
+    } on AuthException catch (error) {
+      debugPrint('ERROR => pathQtyCommentUser: ' + error.toString());
+    }
   }
 
-  Future<void> _setNotificationOwner() async {
+  Future<void> _postNewNotification() async {
     _form = {
       'id': uuid.v4(),
       'idUser': currentHistory.value.first.userId,
@@ -182,31 +192,12 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
           ? NotificationEnum.COMMENT_SIGNED.toString()
           : NotificationEnum.COMMENT_ANONYMOUS.toString()
     };
-    await api
-        .setNotification(_form)
-        .then(
-            (result) => _setPushNotificationOnwer(currentOwner.value.first.id))
-        .catchError((error) => debugPrint('ERROR: ' + error));
-  }
 
-  Future<void> _setNotificationMencioned() async {
-    for (var item in idMencioned) {
-      if (currentUser.value.first.id != item) {
-        _form = {
-          'id': uuid.v4(),
-          'idUser': item,
-          'nickName': _textSigned ? currentUser.value.first.name : 'anônimo',
-          'view': false,
-          'idContent': currentHistory.value.first.id,
-          'content': currentHistory.value.first.title,
-          'date': DateTime.now().toString(),
-          'status': NotificationEnum.COMMENT_MENTIONED.toString()
-        };
-        await api
-            .setNotification(_form)
-            .then((result) => _setPushNotificationMentioned(item))
-            .catchError((error) => debugPrint('ERROR: ' + error));
-      }
+    try {
+      await db.postNewNotification(_form);
+      _setPushNotificationOnwer(currentHistory.value.first.userId);
+    } on AuthException catch (error) {
+      debugPrint('ERROR => postNewNotification: ' + error.toString());
     }
   }
 
@@ -234,6 +225,30 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
     _sendNotification(title, body, _user);
   }
 
+  Future<void> _setNotificationMencioned() async {
+    for (var item in idMencioned) {
+      if (currentUser.value.first.id != item) {
+        _form = {
+          'id': uuid.v4(),
+          'idUser': item,
+          'nickName': _textSigned ? currentUser.value.first.name : 'anônimo',
+          'view': false,
+          'idContent': currentHistory.value.first.id,
+          'content': currentHistory.value.first.title,
+          'date': DateTime.now().toString(),
+          'status': NotificationEnum.COMMENT_MENTIONED.toString()
+        };
+
+        try {
+          db.postNewNotification(_form);
+          _setPushNotificationMentioned(item);
+        } on AuthException catch (error) {
+          debugPrint('ERROR => postNewNotification: ' + error.toString());
+        }
+      }
+    }
+  }
+
   void _setPushNotificationMentioned(String _user) {
     var history = currentHistory.value.first;
     var title = '';
@@ -255,9 +270,17 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
   }
 
   Future<void> _sendNotification(
-      String _title, String _body, String _user) async {
+    String _title,
+    String _body,
+    String _user,
+  ) async {
     await Provider.of<PushNotificationService>(context, listen: false)
-        .sendNotification(_title, _body, currentHistory.value.first.id, _user);
+        .sendNotification(
+      _title,
+      _body,
+      currentHistory.value.first.id,
+      _user,
+    );
   }
 
   void _clean() {
@@ -342,7 +365,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
                       ),
                       if (_isInputNotEmpty)
                         ButtonPublishComponent(
-                          callback: (value) => _publishComment(),
+                          callback: (value) => _postNewComment(),
                         ),
                     ],
                   ),

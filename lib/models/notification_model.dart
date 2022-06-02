@@ -5,8 +5,8 @@ class NotificationModel {
   late String date;
   late String id;
   late String idContent;
-  late String idUser;
-  late String nickName;
+  late String userId;
+  late String userName;
   late String status;
   late bool view;
 
@@ -15,8 +15,8 @@ class NotificationModel {
     required this.date,
     required this.id,
     required this.idContent,
-    required this.idUser,
-    required this.nickName,
+    required this.userId,
+    required this.userName,
     required this.status,
     required this.view,
   });
@@ -30,8 +30,8 @@ class NotificationModel {
         date: json['date'],
         id: json['id'],
         idContent: json['idContent'],
-        idUser: json['idUser'],
-        nickName: json['nickName'],
+        userId: json['userId'],
+        userName: json['userName'],
         status: json['status'],
         view: json['view'],
       );
@@ -44,8 +44,8 @@ class NotificationModel {
         'date': category.first.date,
         'id': category.first.id,
         'idContent': category.first.idContent,
-        'idUser': category.first.idUser,
-        'nickName': category.first.nickName,
+        'userId': category.first.userId,
+        'userName': category.first.userName,
         'status': category.first.status,
         'view': category.first.view,
       };
