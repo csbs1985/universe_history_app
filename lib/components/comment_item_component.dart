@@ -2,7 +2,6 @@ import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:universe_history_app/components/history_options_component.dart';
 import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/skeleton_comment_component.dart';
 import 'package:universe_history_app/core/api.dart';
@@ -17,9 +16,11 @@ import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/resume_util.dart';
 
 class CommentItemComponent extends StatefulWidget {
-  const CommentItemComponent({required HistoryOptionsType type}) : _type = type;
+  const CommentItemComponent({
+    required String type,
+  }) : _type = type;
 
-  final HistoryOptionsType _type;
+  final String _type;
 
   @override
   State<CommentItemComponent> createState() => _CommentItemComponentState();
@@ -146,7 +147,7 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (widget._type == HistoryOptionsType.HOMEPAGE)
+                  if (widget._type == HistoryOptionsType.HOMEPAGE.name)
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: Row(

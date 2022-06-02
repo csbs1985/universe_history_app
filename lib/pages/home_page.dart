@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
     _scrollController.dispose();
   }
 
-  void _onPressedFloatingButton(BuildContext context) {
+  void _onPressedFloating(BuildContext context) {
     currentHistory.value = [];
 
     if (currentUser.value.isEmpty) loginClass.clean();
@@ -168,8 +168,9 @@ class _HomePageState extends State<HomePage> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: UiColor.first,
           elevation: 0,
+          autofocus: true,
           child: SvgPicture.asset(UiSvg.create),
-          onPressed: () => _onPressedFloatingButton(context),
+          onPressed: () => _onPressedFloating(context),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(UiBorder.rounded),
           ),
@@ -184,9 +185,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 MenuComponent(),
                 const SizedBox(height: 10),
-                Flexible(
-                  child: _list(),
-                ),
+                Flexible(child: _list()),
               ],
             ),
           ),

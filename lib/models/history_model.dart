@@ -51,7 +51,7 @@ class HistoryModel {
         userName: json['userName'],
         qtyComment: json['qtyComment'],
         categories: json['categories'].cast<String>(),
-        bookmarks: json['bookmarks'].cast<String>(),
+        bookmarks: json['bookmarks'],
       );
 
   static String toJson(HistoryModel history) => jsonEncode(toMap(history));
@@ -81,6 +81,8 @@ class HistoryClass {
 
   void selectHistory(_history) {
     currentHistory.value = [];
-    currentHistory.value.add(_history);
+    currentHistory.value.add(HistoryModel.fromJson(_history));
   }
 }
+
+enum HistoryOptionsType { HOMEPAGE, HISTORYPAGE }

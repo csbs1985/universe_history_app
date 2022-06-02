@@ -17,12 +17,12 @@ import 'package:universe_history_app/theme/ui_text_style.dart';
 class HistoryOptionsComponent extends StatefulWidget {
   const HistoryOptionsComponent({
     required Map<String, dynamic> history,
-    required HistoryOptionsType type,
+    required String type,
   })  : _history = history,
         _type = type;
 
   final Map<String, dynamic> _history;
-  final HistoryOptionsType _type;
+  final String _type;
 
   @override
   State<HistoryOptionsComponent> createState() =>
@@ -44,7 +44,7 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
   }
 
   bool _showComment(bool _isComment) {
-    return widget._type == HistoryOptionsType.HOMEPAGE &&
+    return widget._type == HistoryOptionsType.HOMEPAGE.name &&
             _isComment &&
             currentUser.value.isNotEmpty
         ? true
@@ -56,7 +56,7 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
   }
 
   bool _showOpen() {
-    return widget._type == HistoryOptionsType.HOMEPAGE ? true : false;
+    return widget._type == HistoryOptionsType.HOMEPAGE.name ? true : false;
   }
 
   void _selectHistory(_history) {
@@ -98,12 +98,12 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
       barrierColor: Colors.black87,
       duration: const Duration(milliseconds: 300),
       builder: (context) => OptionsModal(
-        _content.id,
+        _content['id'],
         'história',
-        _content.userId,
-        _content.userName,
-        _content.text,
-        _content.isDelete,
+        _content['userId'],
+        _content['userName'],
+        _content['text'],
+        false,
       ),
     );
   }
@@ -131,9 +131,9 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
                   ],
                 ),
                 onPressed: () {
-                  if (widget._type == HistoryOptionsType.HOMEPAGE) {
+                  if (widget._type == HistoryOptionsType.HOMEPAGE.name) {
                     _selectHistory(widget._history);
-                    _showModal(context, 'listCommentary ');
+                    _showModal(context, 'listCommentary');
                   }
                 },
               ),
@@ -193,5 +193,3 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
     );
   }
 }
-
-enum HistoryOptionsType { HOMEPAGE, HISTORYPAGE }
