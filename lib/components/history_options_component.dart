@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -16,12 +18,12 @@ import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class HistoryOptionsComponent extends StatefulWidget {
   const HistoryOptionsComponent({
-    required Map<String, dynamic> history,
+    required history,
     required String type,
   })  : _history = history,
         _type = type;
 
-  final Map<String, dynamic> _history;
+  final _history;
   final String _type;
 
   @override

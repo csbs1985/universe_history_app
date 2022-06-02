@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterfire_ui/database.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/btn_comment_component.dart';
 import 'package:universe_history_app/components/comment_item_component.dart';
@@ -9,9 +9,9 @@ import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/resume_history_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
-import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
+import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -23,7 +23,7 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
-  final Api api = Api();
+  final RealtimeDatabaseService db = RealtimeDatabaseService();
   final HistoryClass historyClass = HistoryClass();
 
   double _getPaddingBottom(bool _isComment) {
@@ -36,31 +36,22 @@ class _HistoryPageState extends State<HistoryPage> {
 
     return Scaffold(
       appBar: const AppbarBackComponent(),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: api.getHistory(_idHistory),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-              return _notResult();
-            case ConnectionState.waiting:
-              return const SkeletonHistoryItemComponent();
-            case ConnectionState.done:
-            default:
-              try {
-                historyClass.selectHistory(
-                    snapshot.data!.docs.first.data() as Map<String, dynamic>);
-                return _history(context, snapshot);
-              } catch (error) {
-                return _notResult();
-              }
+      body: FirebaseDatabaseQueryBuilder(
+        query: db.histories.orderByChild('id').equalTo(_idHistory),
+        builder: (context, snapshot, _) {
+          if (snapshot.isFetching) const SkeletonHistoryItemComponent();
+          if (snapshot.hasError) _notResult();
+          if (snapshot.hasData) {
+            return _history(context, snapshot.docs);
           }
+          return const SkeletonHistoryItemComponent();
         },
       ),
     );
   }
 
-  Widget _history(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-    QueryDocumentSnapshot<dynamic> documents = snapshot.data!.docs.first;
+  Widget _history(BuildContext context, List<dynamic> snapshot) {
+    final _data = snapshot[0].value;
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: Stack(
@@ -70,7 +61,8 @@ class _HistoryPageState extends State<HistoryPage> {
               return SingleChildScrollView(
                 child: Container(
                   padding: EdgeInsets.only(
-                      bottom: _getPaddingBottom(documents['isComment'])),
+                    bottom: _getPaddingBottom(_data['isComment']),
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -79,32 +71,38 @@ class _HistoryPageState extends State<HistoryPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (documents['title'] != "")
-                              TitleComponent(
-                                  title: documents['title'], bottom: 0),
-                            ResumeHistoryComponent(resume: documents),
-                            Text(documents['text'], style: UiTextStyle.text1),
-                            Wrap(children: [
-                              for (var item in documents['categories'])
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 4),
-                                  child: Text(
-                                    '#' + item,
-                                    style: UiTextStyle.text2,
-                                  ),
-                                )
-                            ]),
-                            // HistoryOptionsComponent(
-                            //   history: documents,
-                            //   type: HistoryOptionsType.HISTORYPAGE,
-                            // )
+                            if (_data['title'] != "")
+                              TitleComponent(title: _data['title'], bottom: 0),
+                            ResumeHistoryComponent(resume: _data),
+                            Text(_data['text'], style: UiTextStyle.text1),
+                            Wrap(
+                              children: [
+                                for (var item in _data['categories'])
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 4),
+                                    child: Text(
+                                      '#' + item,
+                                      style: UiTextStyle.text2,
+                                    ),
+                                  )
+                              ],
+                            ),
+                            HistoryOptionsComponent(
+                              history: _data,
+                              type: HistoryOptionsType.HISTORYPAGE.name,
+                            )
                           ],
                         ),
                       ),
                       const DividerComponent(
-                          top: 0, bottom: 20, left: 16, right: 16),
+                        top: 0,
+                        bottom: 20,
+                        left: 16,
+                        right: 16,
+                      ),
                       CommentItemComponent(
-                          type: HistoryOptionsType.HISTORYPAGE.name)
+                        type: HistoryOptionsType.HISTORYPAGE.name,
+                      )
                     ],
                   ),
                 ),

@@ -35,10 +35,9 @@ class HistoryModel {
   late List<String> categories;
   late List<String> bookmarks;
 
-  factory HistoryModel.fromJson(Map<String, dynamic> json) =>
-      HistoryModel.fromMap(json);
+  factory HistoryModel.fromJson(json) => HistoryModel.fromMap(json);
 
-  factory HistoryModel.fromMap(Map<String, dynamic> json) => HistoryModel(
+  factory HistoryModel.fromMap(json) => HistoryModel(
         id: json['id'],
         title: json['title'],
         text: json['text'],
