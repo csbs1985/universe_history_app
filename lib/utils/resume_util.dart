@@ -17,12 +17,12 @@ String resumeUitl(_item, {String? type}) {
   var _time = editDateUtil(_date!);
   var author = '';
 
-  if (type == ContentType.COMMENT.toString().split('.').last) {
+  if (type == ContentType.COMMENT.name) {
     _userStatus =
         _item is CommentModel ? _item.userStatus : _item['userStatus'];
   }
 
-  _userStatus == UserStatus.DELETED.toString().split('.').last
+  _userStatus == UserStatus.DELETED.name
       ? author = 'usuário deletado'
       : author = _isSigned! ? _userName! : 'anônimo';
 

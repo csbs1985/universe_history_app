@@ -46,19 +46,19 @@ class CommentModel {
         userStatus: json['userStatus'],
       );
 
-  String toJson() => json.encode(toMap());
+  static String toJson(CommentModel comment) => jsonEncode(toMap(comment));
 
-  Map<String, dynamic> toMap() => {
-        'id': id,
-        'date': date,
-        'historyId': historyId,
-        'isSigned': isSigned,
-        'isEdit': isEdit,
-        'isDelete': isDelete,
-        'text': text,
-        'userId': userId,
-        'userName': userName,
-        'userStatus': userStatus
+  static Map<String, dynamic> toMap(comment) => {
+        'id': comment['id'],
+        'date': comment['date'],
+        'historyId': comment['historyId'],
+        'isSigned': comment['isSigned'],
+        'isEdit': comment['isEdit'],
+        'isDelete': comment['isDelete'],
+        'text': comment['text'],
+        'userId': comment['userId'],
+        'userName': comment['userName'],
+        'userStatus': comment['userStatus'],
       };
 }
 

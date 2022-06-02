@@ -123,7 +123,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
             _commentEdit?['historyId'] ?? currentHistory.value.first.id,
         'id': _commentEdit?['id'] ?? uuid.v4(),
         'isDelete': false,
-        '_isEdit': _commentEdit?['edit'] ?? false,
+        'isEdit': _commentEdit?['edit'] ?? false,
         'isSigned': _textSigned,
         'text': _commentController.text.trim(),
         'userId': _commentEdit?['userId'] ?? currentUser.value.first.id,
