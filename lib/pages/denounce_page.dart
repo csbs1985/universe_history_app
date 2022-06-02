@@ -56,7 +56,7 @@ class _DenouncePageState extends State<DenouncePage> {
               .setDenounce(_form)
               .then((result) => {
                     ActivityUtil(
-                      ActivitiesEnum.DENOUNCE,
+                      ActivitiesEnum.DENOUNCE.name,
                       currentOwner.value.first.name,
                       _form['date'],
                     ),

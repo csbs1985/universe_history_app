@@ -162,8 +162,8 @@ class _NickNamePageState extends State<NickNamePage> {
               if (result.size > 0)
                 for (var item in result.docs)
                   await api.upNicknameComment(item['id']),
-              ActivityUtil(
-                  ActivitiesEnum.UP_NICKNAME, _textController.text, _oldName),
+              ActivityUtil(ActivitiesEnum.UP_NICKNAME.name,
+                  _textController.text, _oldName),
               toast.toast(
                   context, ToastEnum.SUCCESS.name, 'Nome de usuário alterado!'),
               currentDialog.value = 'Finalizando...',

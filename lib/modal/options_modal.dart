@@ -93,7 +93,7 @@ class _OptionsModalState extends State<OptionsModal> {
           .deleteComment()
           .then((result) => {
                 ActivityUtil(
-                  ActivitiesEnum.DELETE_COMMENT,
+                  ActivitiesEnum.DELETE_COMMENT.name,
                   widget._text,
                   widget._userName,
                 ),
@@ -113,7 +113,7 @@ class _OptionsModalState extends State<OptionsModal> {
           .deleteHistory(currentHistory.value.first.id)
           .then((result) => {
                 ActivityUtil(
-                  ActivitiesEnum.DELETE_HISTORY,
+                  ActivitiesEnum.DELETE_HISTORY.name,
                   widget._text,
                   widget._userName,
                 ),

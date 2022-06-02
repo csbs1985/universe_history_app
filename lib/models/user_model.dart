@@ -84,7 +84,7 @@ class UserClass {
         '',
         UserStatus.INACTIVE.toString().split('.').last,
       );
-      ActivityUtil(ActivitiesEnum.LOGOUT, DeviceModel(), '');
+      ActivityUtil(ActivitiesEnum.LOGOUT.name, DeviceModel(), '');
       currentUser.value = [];
       toast.toast(context, ToastEnum.SUCCESS.name,
           'espero que isso não seja um adeus!');

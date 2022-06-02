@@ -168,7 +168,7 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
 
   void _success() {
     ActivityUtil(
-      isEdit ? ActivitiesEnum.NEW_HISTORY : ActivitiesEnum.UP_HISTORY,
+      isEdit ? ActivitiesEnum.NEW_HISTORY.name : ActivitiesEnum.UP_HISTORY.name,
       titleController.text,
       currentHistory.value.first.id,
     );
