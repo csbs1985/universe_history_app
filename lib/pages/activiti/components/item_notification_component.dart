@@ -1,17 +1,17 @@
 import 'package:flutter/widgets.dart';
 import 'package:styled_text/styled_text.dart';
 import 'package:universe_history_app/components/icon_circle_component.dart';
-import 'package:universe_history_app/models/activities_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class ItemNotificationComponent extends StatefulWidget {
-  const ItemNotificationComponent({required ActivitiesModel history})
-      : _history = history;
+  const ItemNotificationComponent({
+    required Map<String, dynamic> history,
+  }) : _history = history;
 
-  final ActivitiesModel _history;
+  final Map<String, dynamic> _history;
 
   @override
   State<ItemNotificationComponent> createState() =>
@@ -48,7 +48,7 @@ class _ItemNotificationComponentState extends State<ItemNotificationComponent> {
                 )
               },
               text:
-                  'Alteração de configurações para <bold>${_getText(widget._history.content)}</bold> todas as notificações de comentários em suas histórias.',
+                  'Alteração de configurações para <bold>${_getText(widget._history['content'])}</bold> todas as notificações de comentários em suas histórias.',
             ),
           ),
         )

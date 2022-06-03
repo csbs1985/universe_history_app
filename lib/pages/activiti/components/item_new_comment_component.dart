@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:styled_text/styled_text.dart';
 import 'package:universe_history_app/components/icon_circle_component.dart';
-import 'package:universe_history_app/models/activities_model.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
@@ -9,9 +8,11 @@ import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class ItemNewComment extends StatefulWidget {
-  const ItemNewComment({required ActivitiesModel history}) : _history = history;
+  const ItemNewComment({
+    required Map<String, dynamic> history,
+  }) : _history = history;
 
-  final ActivitiesModel _history;
+  final Map<String, dynamic> _history;
 
   @override
   State<ItemNewComment> createState() => _ItemNewCommentState();
@@ -50,7 +51,7 @@ class _ItemNewCommentState extends State<ItemNewComment> {
                     )
                   },
                   text:
-                      'Você deixou um comentário na história <bold>${widget._history.content}</bold>. Pode ver a repercussão dele clicando aqui.',
+                      'Você deixou um comentário na história <bold>${widget._history['content']}</bold>. Pode ver a repercussão dele clicando aqui.',
                 ),
               ),
             )

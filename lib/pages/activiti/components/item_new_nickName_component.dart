@@ -1,17 +1,17 @@
 import 'package:flutter/widgets.dart';
 import 'package:styled_text/styled_text.dart';
 import 'package:universe_history_app/components/icon_circle_component.dart';
-import 'package:universe_history_app/models/activities_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class ItemNewNickName extends StatefulWidget {
-  const ItemNewNickName({required ActivitiesModel history})
-      : _history = history;
+  const ItemNewNickName({
+    required Map<String, dynamic> history,
+  }) : _history = history;
 
-  final ActivitiesModel _history;
+  final Map<String, dynamic> _history;
 
   @override
   State<ItemNewNickName> createState() => _ItemNewNickNameState();
@@ -44,7 +44,7 @@ class _ItemNewNickNameState extends State<ItemNewNickName> {
                   )
                 },
                 text:
-                    'Acabou de definir seu usuário <bold>${widget._history.content}</bold> no Histoty. Pode altera-ló sempre que necessitar clicando aqui ou no item <bold>Nome de usuário</bold> no menu de configurações.',
+                    'Acabou de definir seu usuário <bold>${widget._history['content']}</bold> no Histoty. Pode altera-ló sempre que necessitar clicando aqui ou no item <bold>Nome de usuário</bold> no menu de configurações.',
               ),
             ),
           )

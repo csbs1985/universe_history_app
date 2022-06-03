@@ -1,25 +1,25 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, prefer_const_constructors
 
-import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/models/user_model.dart';
+import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:uuid/uuid.dart';
 
 ActivityUtil(String type, String content, String elementId) async {
-  Uuid uuid = const Uuid();
-  final Api api = Api();
+  final RealtimeDatabaseService db = RealtimeDatabaseService();
+  final Uuid uuid = Uuid();
 
-  late Map<String, dynamic> activity;
+  late Map<String, dynamic> _activity;
 
-  activity = {
-    'id': uuid.v4(),
+  _activity = {
+    'content': content.trim(),
     'date': DateTime.now().toString(),
+    'elementId': elementId,
+    'id': uuid.v4(),
     'type': type,
     'userId': currentUser.value.first.id,
-    'content': content.trim(),
-    'elementId': elementId,
   };
 
-  await api.setActivities(activity);
+  await db.postNewActivity(_activity);
 }
 
 enum ActivitiesEnum {

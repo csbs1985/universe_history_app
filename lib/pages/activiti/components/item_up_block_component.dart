@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:styled_text/styled_text.dart';
 import 'package:universe_history_app/components/icon_circle_component.dart';
-import 'package:universe_history_app/models/activities_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
@@ -9,10 +8,10 @@ import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 
 class ItemUpBlockComponent extends StatefulWidget {
-  const ItemUpBlockComponent({required ActivitiesModel history})
+  const ItemUpBlockComponent({required Map<String, dynamic> history})
       : _history = history;
 
-  final ActivitiesModel _history;
+  final Map<String, dynamic> _history;
 
   @override
   State<ItemUpBlockComponent> createState() => _ItemUpBlockComponentState();
@@ -21,8 +20,8 @@ class ItemUpBlockComponent extends StatefulWidget {
 class _ItemUpBlockComponentState extends State<ItemUpBlockComponent> {
   String _getText(String type) {
     return type == ActivitiesEnum.BLOCK_USER.name
-        ? 'Agora você pode ver e comentar tudo de <bold>${widget._history.content}</bold> e virse-versa.'
-        : 'Usuário <bold>${widget._history.content}</bold> bloqueado. Vocês não poderam mais ver e comentar as histórias entre vocês.';
+        ? 'Agora você pode ver e comentar tudo de <bold>${widget._history['content']}</bold> e virse-versa.'
+        : 'Usuário <bold>${widget._history['content']}</bold> bloqueado. Vocês não poderam mais ver e comentar as histórias entre vocês.';
   }
 
   @override
@@ -50,7 +49,7 @@ class _ItemUpBlockComponentState extends State<ItemUpBlockComponent> {
                       ),
                     )
                   },
-                  text: _getText(widget._history.type),
+                  text: _getText(widget._history['type']),
                 ),
               ),
             )

@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterfire_ui/database.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/pages/activiti/components/item_login_logout_component.dart';
 import 'package:universe_history_app/pages/activiti/components/item_new_account_component.dart';
@@ -15,9 +15,9 @@ import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/skeleton_activity_componen.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
-import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/models/activities_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
+import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
 
@@ -29,89 +29,23 @@ class ActivitiesPage extends StatefulWidget {
 }
 
 class _ActivitiesPageState extends State<ActivitiesPage> {
-  final Api api = Api();
+  final RealtimeDatabaseService db = RealtimeDatabaseService();
 
-  final ScrollController _scrollController = ScrollController();
-
-  static const PAGE_SIZE = 10;
-
-  bool _loading = false;
-  bool _isLoading = false;
-
-  String _qtyHistory = 'henhuma história';
-  String _qtyComment = 'henhum comentário';
-
-  final List<ActivitiesModel> _data = [];
-
-  DocumentSnapshot? _lastDocument;
-
-  @override
-  void initState() {
-    super.initState();
-    _getContent();
-    _scrollController.addListener(inifiniteScrolling);
-  }
-
-  inifiniteScrolling() {
-    var triggerFetchMoreSize =
-        _scrollController.position.maxScrollExtent * 0.20;
-
-    if (_scrollController.position.pixels > triggerFetchMoreSize && !_loading)
-      _getContent();
-  }
-
-  Future<void> _getContent() async {
-    if (_isLoading) return;
-
-    setState(() => _isLoading = true);
-
-    Query _query = FirebaseFirestore.instance
-        .collection('activities')
-        .where('userId', isEqualTo: currentUser.value.first.id)
-        .orderBy('date', descending: true);
-
-    _query = _lastDocument != null
-        ? _query.startAfterDocument(_lastDocument!).limit(PAGE_SIZE)
-        : _query.limit(PAGE_SIZE);
-
-    final List<ActivitiesModel> pagedData = await _query.get().then((value) {
-      _lastDocument = value.docs.isNotEmpty ? value.docs.last : null;
-
-      return value.docs
-          .map((e) => ActivitiesModel.fromMap(e.data() as Map<String, dynamic>))
-          .toList();
-    });
-
-    setState(() {
-      _data.addAll(pagedData);
-      if (pagedData.length < PAGE_SIZE) _loading = true;
-      _isLoading = false;
-    });
-  }
+  String _qtyHistory = 'nenhuma história';
+  String _qtyComment = 'nenhum comentário';
 
   _getResume() {
-    api
-        .getUser(currentUser.value.first.email)
-        .then((result) => {
-              if (result.docs.first['qtyHistory'] == 1)
-                _qtyHistory = '1 história',
-              if (result.docs.first['qtyHistory'] > 1)
-                _qtyHistory = '${result.docs.first['qtyHistory']} histórias',
-              if (result.docs.first['qtyComment'] == 1)
-                _qtyComment = '1 comentário',
-              if (result.docs.first['qtyComment'] > 1)
-                _qtyComment = '${result.docs.first['qtyComment']} comentários',
-            })
-        .catchError((error) => debugPrint('ERROR:' + error.toString()));
+    db.getUserEmail(currentUser.value.first.email).then((result) => {
+          if (result.docs.first['qtyHistory'] == 1) _qtyHistory = '1 história',
+          if (result.docs.first['qtyHistory'] > 1)
+            _qtyHistory = '${result.docs.first['qtyHistory']} histórias',
+          if (result.docs.first['qtyComment'] == 1)
+            _qtyComment = '1 comentário',
+          if (result.docs.first['qtyComment'] > 1)
+            _qtyComment = '${result.docs.first['qtyComment']} comentários',
+        });
 
     return _qtyHistory + ' · ' + _qtyComment;
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _scrollController.removeListener(inifiniteScrolling);
-    _scrollController.dispose();
   }
 
   @override
@@ -119,7 +53,6 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
     return Scaffold(
       appBar: const AppbarBackComponent(),
       body: SingleChildScrollView(
-        controller: _scrollController,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -130,61 +63,60 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
                 _getResume(),
               ),
             ),
-            _data.isEmpty
-                ? _noResult()
-                : ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: _data.length + (_loading ? 0 : 1),
-                    itemBuilder: (BuildContext context, index) {
-                      if (index == _data.length) {
-                        return const SkeletonActivityComponent();
-                      } else {
-                        final item = _data[index];
-                        ActivitiesEnum content = ActivitiesEnum.values
-                            .firstWhere(
-                                (e) => e.name.toString() == _data[index].type);
+            FirebaseDatabaseListView(
+              query: db.activities
+                  .orderByChild('userId')
+                  .equalTo(currentUser.value.first.id),
+              pageSize: 10,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              loadingBuilder: (context) => const SkeletonActivityComponent(),
+              errorBuilder: (context, error, stackTrace) => _noResult(),
+              itemBuilder: (context, snapshot) {
+                Map<String, dynamic> _item =
+                    ActivitiesModel.toMap(snapshot.value);
 
-                        return Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              if (content == ActivitiesEnum.UP_HISTORY)
-                                ItemUpHistory(history: item),
-                              if (content == ActivitiesEnum.NEW_HISTORY)
-                                ItemNewHistory(history: item),
-                              if (content == ActivitiesEnum.LOGIN ||
-                                  content == ActivitiesEnum.LOGOUT)
-                                ItemLoginLogout(history: item),
-                              if (content == ActivitiesEnum.UP_NICKNAME)
-                                ItemUpNickName(history: item),
-                              if (content == ActivitiesEnum.NEW_COMMENT)
-                                ItemNewComment(history: item),
-                              if (content == ActivitiesEnum.NEW_NICKNAME)
-                                ItemNewNickName(history: item),
-                              if (content == ActivitiesEnum.UP_NOTIFICATION)
-                                ItemNotificationComponent(history: item),
-                              if (content == ActivitiesEnum.BLOCK_USER ||
-                                  content == ActivitiesEnum.UNBLOCK_USER)
-                                ItemUpBlockComponent(history: item),
-                              if (content ==
-                                  ActivitiesEnum.TEMPORARILY_DISABLED)
-                                const ItemTemporarilyDesabledComponent(),
-                              if (content == ActivitiesEnum.NEW_ACCOUNT)
-                                const ItemNewAccountComponent(),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(40, 2, 0, 0),
-                                child: ResumeComponent(
-                                  resume: editDateUtil(item.date),
-                                ),
-                              )
-                            ],
-                          ),
-                        );
-                      }
-                    },
-                  )
+                ActivitiesEnum content = ActivitiesEnum.values
+                    .firstWhere((e) => e.name.toString() == _item['type']);
+
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (content == ActivitiesEnum.UP_HISTORY)
+                        ItemUpHistory(history: _item),
+                      if (content == ActivitiesEnum.NEW_HISTORY)
+                        ItemNewHistory(history: _item),
+                      if (content == ActivitiesEnum.LOGIN ||
+                          content == ActivitiesEnum.LOGOUT)
+                        ItemLoginLogout(history: _item),
+                      if (content == ActivitiesEnum.UP_NICKNAME)
+                        ItemUpNickName(history: _item),
+                      if (content == ActivitiesEnum.NEW_COMMENT)
+                        ItemNewComment(history: _item),
+                      if (content == ActivitiesEnum.NEW_NICKNAME)
+                        ItemNewNickName(history: _item),
+                      if (content == ActivitiesEnum.UP_NOTIFICATION)
+                        ItemNotificationComponent(history: _item),
+                      if (content == ActivitiesEnum.BLOCK_USER ||
+                          content == ActivitiesEnum.UNBLOCK_USER)
+                        ItemUpBlockComponent(history: _item),
+                      if (content == ActivitiesEnum.TEMPORARILY_DISABLED)
+                        const ItemTemporarilyDesabledComponent(),
+                      if (content == ActivitiesEnum.NEW_ACCOUNT)
+                        const ItemNewAccountComponent(),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(40, 2, 0, 0),
+                        child: ResumeComponent(
+                          resume: editDateUtil(_item['date']),
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),

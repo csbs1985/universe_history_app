@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:universe_history_app/models/comment_model.dart';
-import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'variables.dart';
 
@@ -87,10 +86,6 @@ class Api {
 
   setHistory(Map<String, dynamic> _form) {
     return history.doc(_form['id']).set(_form);
-  }
-
-  setActivities(Map<String, dynamic> _form) {
-    return activitie.doc().set(_form);
   }
 
   setUser(Map<String, dynamic> _form) {

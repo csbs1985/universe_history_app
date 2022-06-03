@@ -6,6 +6,17 @@ ValueNotifier<List<CommentModel>> currentComment =
 ValueNotifier<num> currentQtyComment = ValueNotifier(0);
 
 class CommentModel {
+  late String date;
+  late String historyId;
+  late String id;
+  late bool isDelete;
+  late bool isEdit;
+  late bool isSigned;
+  late String text;
+  late String userId;
+  late String userName;
+  late String userStatus;
+
   CommentModel({
     required this.date,
     required this.historyId,
@@ -18,17 +29,6 @@ class CommentModel {
     required this.userName,
     required this.userStatus,
   });
-
-  late String date;
-  late String historyId;
-  late String id;
-  late bool isDelete;
-  late bool isEdit;
-  late bool isSigned;
-  late String text;
-  late String userId;
-  late String userName;
-  late String userStatus;
 
   factory CommentModel.fromJson(Map<String, dynamic> json) =>
       CommentModel.fromMap(json);

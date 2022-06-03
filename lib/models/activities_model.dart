@@ -7,7 +7,6 @@ class ActivitiesModel {
   late String type;
   late String elementId;
   late String content;
-  late String? complement;
 
   ActivitiesModel({
     required this.id,
@@ -16,7 +15,6 @@ class ActivitiesModel {
     required this.type,
     required this.elementId,
     required this.content,
-    this.complement,
   });
 
   factory ActivitiesModel.fromJson(Map<String, dynamic> json) =>
@@ -29,19 +27,16 @@ class ActivitiesModel {
         type: json['type'],
         elementId: json['elementId'],
         content: json['content'],
-        complement: json['complement'],
       );
 
-  static String toJson(List<ActivitiesModel> category) =>
-      json.encode(toMap(category));
+  static String toJson(ActivitiesModel activity) => jsonEncode(toMap(activity));
 
-  static Map<String, dynamic> toMap(List<ActivitiesModel> category) => {
-        'id': category.first.id,
-        'idUser': category.first.idUser,
-        'date': category.first.date,
-        'type': category.first.type,
-        'elementId': category.first.elementId,
-        'content': category.first.content,
-        'complement': category.first.complement!,
+  static Map<String, dynamic> toMap(activity) => {
+        'id': activity['id'],
+        'idUser': activity['idUser'],
+        'date': activity['date'],
+        'type': activity['type'],
+        'elementId': activity['elementId'],
+        'content': activity['content'],
       };
 }

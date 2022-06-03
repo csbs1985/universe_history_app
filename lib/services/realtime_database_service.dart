@@ -6,6 +6,7 @@ import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
 
 class RealtimeDatabaseService {
+  DatabaseReference activities = FirebaseDatabase.instance.ref('activities');
   DatabaseReference comments = FirebaseDatabase.instance.ref('comments');
   DatabaseReference histories = FirebaseDatabase.instance.ref('histories');
   DatabaseReference notifications =
@@ -51,6 +52,17 @@ class RealtimeDatabaseService {
 
   pathToken(_user, {String? token}) async {
     await users.child(_user).update({"token": token ?? ''});
+  }
+
+  postNewActivity(Map<String, dynamic> _activity) {
+    return comments.child(_activity['id']).set({
+      'content': _activity['content'],
+      'date': _activity['date'],
+      'elementId': _activity['elementId'],
+      'id': _activity['id'],
+      'type': _activity['type'],
+      'userId': _activity['userId'],
+    });
   }
 
   postNewComment(Map<String, dynamic> _comment) {

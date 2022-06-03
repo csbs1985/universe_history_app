@@ -1,16 +1,17 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:styled_text/styled_text.dart';
 import 'package:universe_history_app/components/icon_circle_component.dart';
-import 'package:universe_history_app/models/activities_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class ItemUpNickName extends StatefulWidget {
-  const ItemUpNickName({required ActivitiesModel history}) : _history = history;
+  const ItemUpNickName({
+    required Map<String, dynamic> history,
+  }) : _history = history;
 
-  final ActivitiesModel _history;
+  final Map<String, dynamic> _history;
 
   @override
   State<ItemUpNickName> createState() => _ItemUpNickNameState();
@@ -44,7 +45,7 @@ class _ItemUpNickNameState extends State<ItemUpNickName> {
                   )
                 },
                 text:
-                    'Alterou seu usuário de <bold>${widget._history.elementId}</bold> para <bold>${widget._history.content}</bold>. Espero que goste desta vez, pode ser que <bold>${widget._history.elementId}</bold> não esteja mais disponível. Clique e descubra.',
+                    'Alterou seu usuário de <bold>${widget._history['elementId']}</bold> para <bold>${widget._history['content']}</bold>. Espero que goste desta vez, pode ser que <bold>${widget._history['elementId']}</bold> não esteja mais disponível. Clique e descubra.',
               ),
             ),
           )
