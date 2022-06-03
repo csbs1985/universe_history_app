@@ -56,8 +56,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
           callback: (value) => {
             !value
                 ? Navigator.of(context).pop()
-                : userClass.clean(
-                    context, UserStatus.DISABLED.toString().split('.').last)
+                : userClass.clean(context, UserStatus.DISABLED.name)
           },
         );
       },

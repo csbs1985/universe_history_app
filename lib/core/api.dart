@@ -120,9 +120,7 @@ class Api {
   }
 
   upStatusUserComment(String _id) {
-    return comment
-        .doc(_id)
-        .update({'userStatus': UserStatus.DELETED.toString().split('.').last});
+    return comment.doc(_id).update({'userStatus': UserStatus.DELETED.name});
   }
 
   upNotification(String _idNotification) {

@@ -20,7 +20,7 @@ class ItemUpBlockComponent extends StatefulWidget {
 
 class _ItemUpBlockComponentState extends State<ItemUpBlockComponent> {
   String _getText(String type) {
-    return type == ActivitiesEnum.BLOCK_USER.toString().split('.').last
+    return type == ActivitiesEnum.BLOCK_USER.name
         ? 'Agora você pode ver e comentar tudo de <bold>${widget._history.content}</bold> e virse-versa.'
         : 'Usuário <bold>${widget._history.content}</bold> bloqueado. Vocês não poderam mais ver e comentar as histórias entre vocês.';
   }

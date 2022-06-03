@@ -82,7 +82,7 @@ class UserClass {
       await db.pathLogout(
         currentUser.value.first.id,
         '',
-        UserStatus.INACTIVE.toString().split('.').last,
+        UserStatus.INACTIVE.name,
       );
       ActivityUtil(ActivitiesEnum.LOGOUT.name, DeviceModel(), '');
       currentUser.value = [];
@@ -102,7 +102,7 @@ class UserClass {
               await db.pathLogout(
                 currentUser.value.first.id,
                 '',
-                UserStatus.DELETED.toString().split('.').last,
+                UserStatus.DELETED.name,
               ),
               await authService.delete(),
               currentUser.value = [],

@@ -13,7 +13,7 @@ ActivityUtil(String type, String content, String elementId) async {
   activity = {
     'id': uuid.v4(),
     'date': DateTime.now().toString(),
-    'type': type.toString().split('.').last,
+    'type': type,
     'userId': currentUser.value.first.id,
     'content': content.trim(),
     'elementId': elementId,

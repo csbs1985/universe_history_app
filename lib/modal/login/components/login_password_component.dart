@@ -122,7 +122,7 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
       'date': DateTime.now().toString(),
       'name': currentLoginName.value,
       'upDateName': '',
-      'status': UserStatus.ACTIVE.toString().split('.').last,
+      'status': UserStatus.ACTIVE.name,
       'email': currentLoginEmail.value,
       'token': authService.token ?? '',
       'isNotification': true,

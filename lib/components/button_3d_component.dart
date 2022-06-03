@@ -41,17 +41,17 @@ class _Button3dComponentState extends State<Button3dComponent> {
   }
 
   _getStyle() {
-    if (widget._style == ButtonStyleEnum.PRIMARY) {
+    if (widget._style == ButtonStyleEnum.PRIMARY.name) {
       _backColor = UiColor.button;
       _borderColor = UiColor.buttonBorder;
       _styleText = UiTextStyle.buttonLabel;
     }
-    if (widget._style == ButtonStyleEnum.SECOND) {
+    if (widget._style == ButtonStyleEnum.SECOND.name) {
       _backColor = UiColor.buttonSecond;
       _borderColor = UiColor.buttonSecondBorder;
       _styleText = UiTextStyle.buttonSecondLabel;
     }
-    if (widget._style == ButtonStyleEnum.DISABLED) {
+    if (widget._style == ButtonStyleEnum.DISABLED.name) {
       _backColor = UiColor.buttonDisabled;
       _borderColor = UiColor.buttonDisabledBorder;
       _styleText = UiTextStyle.buttonLabel;
@@ -59,18 +59,18 @@ class _Button3dComponentState extends State<Button3dComponent> {
   }
 
   double _getWidth() {
-    if (widget._size == ButtonSizeEnum.SMALL) return 90;
-    if (widget._size == ButtonSizeEnum.MEDIUM) return 100;
-    if (widget._size == ButtonSizeEnum.LARGE) {
+    if (widget._size == ButtonSizeEnum.SMALL.name) return 90;
+    if (widget._size == ButtonSizeEnum.MEDIUM.name) return 100;
+    if (widget._size == ButtonSizeEnum.LARGE.name) {
       return MediaQuery.of(context).size.width - UiSize.widthFullLessPadding;
     }
     return _width;
   }
 
   double _getHeight() {
-    if (widget._size == ButtonSizeEnum.SMALL) return 32 - _borderSize;
-    if (widget._size == ButtonSizeEnum.MEDIUM) return 42 - _borderSize;
-    if (widget._size == ButtonSizeEnum.LARGE) return 48 - _borderSize;
+    if (widget._size == ButtonSizeEnum.SMALL.name) return 32 - _borderSize;
+    if (widget._size == ButtonSizeEnum.MEDIUM.name) return 42 - _borderSize;
+    if (widget._size == ButtonSizeEnum.LARGE.name) return 48 - _borderSize;
     return _height - _borderSize;
   }
 
@@ -108,7 +108,7 @@ class _Button3dComponentState extends State<Button3dComponent> {
         ),
       ),
       onTapUp: (_) {
-        if (widget._style != ButtonStyleEnum.DISABLED) {
+        if (widget._style != ButtonStyleEnum.DISABLED.name) {
           setState(() {
             _position = _borderSize;
             widget._callback(true);
@@ -116,14 +116,14 @@ class _Button3dComponentState extends State<Button3dComponent> {
         }
       },
       onTapDown: (_) {
-        if (widget._style != ButtonStyleEnum.DISABLED) {
+        if (widget._style != ButtonStyleEnum.DISABLED.name) {
           setState(() {
             _position = 0;
           });
         }
       },
       onTapCancel: () {
-        if (widget._style != ButtonStyleEnum.DISABLED) {
+        if (widget._style != ButtonStyleEnum.DISABLED.name) {
           setState(() {
             _position = _borderSize;
           });
