@@ -11,7 +11,6 @@ import 'package:universe_history_app/modal/input_comment_modal.dart';
 import 'package:universe_history_app/modal/options_modal.dart';
 import 'package:universe_history_app/models/comment_model.dart';
 import 'package:universe_history_app/models/history_model.dart';
-import 'package:universe_history_app/models/owner_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -35,7 +34,6 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
   final Api api = Api();
   final CommentClass commentClass = CommentClass();
   final HistoryClass historyClass = HistoryClass();
-  final OwnerClass ownerClass = OwnerClass();
 
   bool _showComments(int _qtyComment) {
     return _qtyComment > 0 ? true : false;

@@ -46,6 +46,10 @@ class RealtimeDatabaseService {
         .update({'qtyComment': _history.qtyComment});
   }
 
+  pathNotificationView(String _notificationId) {
+    return notifications.child(_notificationId).update({'view': true});
+  }
+
   pathQtyCommentUser(UserModel _user) {
     return users.child(_user.id).update({'qtyComment': _user.qtyComment});
   }
@@ -102,7 +106,7 @@ class RealtimeDatabaseService {
       'content': _notification['content'],
       'date': _notification['date'],
       'id': _notification['id'],
-      'idContent': _notification['idContent'],
+      'contentId': _notification['contentId'],
       'userId': _notification['userId'],
       'userName': _notification['userName'],
       'status': _notification['status'],

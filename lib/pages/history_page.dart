@@ -27,7 +27,7 @@ class _HistoryPageState extends State<HistoryPage> {
   final HistoryClass historyClass = HistoryClass();
 
   double _getPaddingBottom(bool _isComment) {
-    return _isComment && currentUser.value.isNotEmpty ? 0 : UiSize.input;
+    return _isComment && currentUser.value.isNotEmpty ? UiSize.input : 0;
   }
 
   @override
@@ -36,22 +36,24 @@ class _HistoryPageState extends State<HistoryPage> {
 
     return Scaffold(
       appBar: const AppbarBackComponent(),
-      body: FirebaseDatabaseQueryBuilder(
+      body: FirebaseDatabaseListView(
         query: db.histories.orderByChild('id').equalTo(_idHistory),
-        builder: (context, snapshot, _) {
-          if (snapshot.isFetching) const SkeletonHistoryItemComponent();
-          if (snapshot.hasError) _notResult();
-          if (snapshot.hasData) {
-            return _history(context, snapshot.docs);
-          }
-          return const SkeletonHistoryItemComponent();
+        reverse: true,
+        pageSize: 10,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        loadingBuilder: (context) => const SkeletonHistoryItemComponent(),
+        errorBuilder: (context, error, stackTrace) => _noResult(),
+        itemBuilder: (context, snapshot) {
+          Map<String, dynamic> data = HistoryModel.toMap(snapshot.value);
+          historyClass.selectHistory(data);
+          return _history(context, data);
         },
       ),
     );
   }
 
-  Widget _history(BuildContext context, List<dynamic> snapshot) {
-    final _data = snapshot[0].value;
+  Widget _history(BuildContext context, Map<String, dynamic> _data) {
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: Stack(
@@ -72,9 +74,15 @@ class _HistoryPageState extends State<HistoryPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             if (_data['title'] != "")
-                              TitleComponent(title: _data['title'], bottom: 0),
+                              TitleComponent(
+                                title: _data['title'],
+                                bottom: 0,
+                              ),
                             ResumeHistoryComponent(resume: _data),
-                            Text(_data['text'], style: UiTextStyle.text1),
+                            Text(
+                              _data['text'],
+                              style: UiTextStyle.text1,
+                            ),
                             Wrap(
                               children: [
                                 for (var item in _data['categories'])
@@ -115,7 +123,7 @@ class _HistoryPageState extends State<HistoryPage> {
     );
   }
 
-  Widget _notResult() {
+  Widget _noResult() {
     return SizedBox(
       width: double.infinity,
       height: MediaQuery.of(context).size.height,

@@ -17,8 +17,6 @@ class Api {
       FirebaseFirestore.instance.collection('denounces');
   CollectionReference history =
       FirebaseFirestore.instance.collection('historys');
-  CollectionReference notification =
-      FirebaseFirestore.instance.collection('notifications');
   CollectionReference user = FirebaseFirestore.instance.collection('users');
 
   getTokenOwner(String _user) {
@@ -116,10 +114,6 @@ class Api {
 
   upStatusUserComment(String _id) {
     return comment.doc(_id).update({'userStatus': UserStatus.DELETED.name});
-  }
-
-  upNotification(String _idNotification) {
-    return notification.doc(_idNotification).update({'view': true});
   }
 
   deleteComment() {

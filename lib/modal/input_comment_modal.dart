@@ -181,16 +181,16 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
 
   Future<void> _postNewNotification() async {
     _form = {
-      'id': uuid.v4(),
-      'idUser': currentHistory.value.first.userId,
-      'nickName': _textSigned ? currentUser.value.first.name : 'anônimo',
-      'view': false,
-      'idContent': currentHistory.value.first.id,
       'content': currentHistory.value.first.title,
       'date': DateTime.now().toString(),
+      'id': uuid.v4(),
+      'contentId': currentHistory.value.first.id,
+      'userId': currentHistory.value.first.userId,
+      'userName': _textSigned ? currentUser.value.first.name : 'anônimo',
       'status': _textSigned
-          ? NotificationEnum.COMMENT_SIGNED.toString()
-          : NotificationEnum.COMMENT_ANONYMOUS.toString()
+          ? NotificationEnum.COMMENT_SIGNED.name
+          : NotificationEnum.COMMENT_ANONYMOUS.name,
+      'view': false,
     };
 
     try {
@@ -231,9 +231,9 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
         _form = {
           'id': uuid.v4(),
           'idUser': item,
-          'nickName': _textSigned ? currentUser.value.first.name : 'anônimo',
+          'name': _textSigned ? currentUser.value.first.name : 'anônimo',
           'view': false,
-          'idContent': currentHistory.value.first.id,
+          'contentId': currentHistory.value.first.id,
           'content': currentHistory.value.first.title,
           'date': DateTime.now().toString(),
           'status': NotificationEnum.COMMENT_MENTIONED.toString()
