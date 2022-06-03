@@ -82,7 +82,6 @@ class RealtimeDatabaseService {
       'categories': _history.categories,
       'userId': _history.userId,
       'userName': _history.userName,
-      'bookmarks': _history.bookmarks,
     });
   }
 
