@@ -147,7 +147,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
       await db.pathQtyCommentHistory(currentHistory.value.first);
       ActivityUtil(
         ActivitiesEnum.NEW_COMMENT.name,
-        _commentController.text,
+        currentHistory.value.first.title,
         currentHistory.value.first.id,
       );
       _pathQtyCommentUser();

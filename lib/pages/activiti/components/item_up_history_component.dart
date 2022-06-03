@@ -21,8 +21,11 @@ class ItemUpHistory extends StatefulWidget {
 class _ItemUpHistoryState extends State<ItemUpHistory> {
   final HistoryClass historyClass = HistoryClass();
 
-  void _setHistory(_item) =>
-      Navigator.pushNamed(context, '/history', arguments: _item.elementId);
+  void _setHistory(_history) => Navigator.pushNamed(
+        context,
+        '/history',
+        arguments: _history['elementId'],
+      );
 
   @override
   Widget build(BuildContext context) {

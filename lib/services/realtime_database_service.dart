@@ -55,7 +55,7 @@ class RealtimeDatabaseService {
   }
 
   postNewActivity(Map<String, dynamic> _activity) {
-    return comments.child(_activity['id']).set({
+    return activities.child(_activity['id']).set({
       'content': _activity['content'],
       'date': _activity['date'],
       'elementId': _activity['elementId'],
