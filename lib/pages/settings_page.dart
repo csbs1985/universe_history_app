@@ -10,6 +10,7 @@ import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/modal/login/login_modal.dart';
+import 'package:universe_history_app/modal/login/login_model.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -23,8 +24,9 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  final UserClass userClass = UserClass();
   final Api api = Api();
+  final LoginClass loginClass = LoginClass();
+  final UserClass userClass = UserClass();
 
   @override
   void initState() {
@@ -50,6 +52,8 @@ class _SettingsPageState extends State<SettingsPage> {
 
   void _login(BuildContext context) {
     currentHistory.value = [];
+
+    if (currentUser.value.isEmpty) loginClass.clean();
 
     showCupertinoModalBottomSheet(
       expand: true,
@@ -78,8 +82,10 @@ class _SettingsPageState extends State<SettingsPage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const TitleResumeComponent('Conta',
-                            'Você deve ter uma conta Apple ou Google para usar os serviços do History.'),
+                        const TitleResumeComponent(
+                          'Conta',
+                          'Você deve ter uma conta Apple ou Google para usar os serviços do History.',
+                        ),
                         const SizedBox(height: 10),
                         const Text(
                           'Entrar ou criar conta',
@@ -99,29 +105,53 @@ class _SettingsPageState extends State<SettingsPage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const TitleResumeComponent('Conta',
-                            'Mantenha seus dados atualizados e consulte seu conteúdo.'),
-                        const BtnLinkComponent('Nome de usuário', '/name'),
+                        const TitleResumeComponent(
+                          'Conta',
+                          'Mantenha seus dados atualizados e consulte seu conteúdo.',
+                        ),
                         const BtnLinkComponent(
-                            'Suas atividades', '/activities'),
+                          'Nome de usuário',
+                          '/name',
+                        ),
+                        const BtnLinkComponent(
+                          'Suas atividades',
+                          '/activities',
+                        ),
                         SelectToggleComponent(
                           callback: (value) => _toggleNotification(),
                           title: 'Notificações',
                           resume: 'Habilitar ou desabilitar as notificações',
                           value: currentUser.value.first.isNotification,
                         ),
-                        const BtnLinkComponent('Bloqueados', '/blocked'),
+                        const BtnLinkComponent(
+                          'Bloqueados',
+                          '/blocked',
+                        ),
                       ],
                     ),
                   const SizedBox(height: 20),
                   const DividerComponent(),
-                  const TitleResumeComponent('Informações',
-                      'Sobre o History, perguntas, políticas e termos.'),
+                  const TitleResumeComponent(
+                    'Informações',
+                    'Sobre o History, perguntas, políticas e termos.',
+                  ),
                   // const BtnLinkComponent('Avaliação', '/questions'), TODO: adicionar feedback nas lojas de aplicativos.
-                  const BtnLinkComponent('Perguntas frequentes', '/questions'),
-                  const BtnLinkComponent('Termo de uso', '/terms'),
-                  const BtnLinkComponent('Política de privacidade', '/privacy'),
-                  const BtnLinkComponent('Sobre', '/about'),
+                  const BtnLinkComponent(
+                    'Perguntas frequentes',
+                    '/questions',
+                  ),
+                  const BtnLinkComponent(
+                    'Termo de uso',
+                    '/terms',
+                  ),
+                  const BtnLinkComponent(
+                    'Política de privacidade',
+                    '/privacy',
+                  ),
+                  const BtnLinkComponent(
+                    'Sobre',
+                    '/about',
+                  ),
                   const SizedBox(height: 20),
 
                   if (currentUser.value.isNotEmpty)

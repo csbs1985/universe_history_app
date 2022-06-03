@@ -4,8 +4,9 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/logo_component.dart';
-import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/models/user_model.dart';
+import 'package:universe_history_app/services/auth_service.dart';
+import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 
 class SplashPage extends StatefulWidget {
@@ -16,23 +17,38 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  final Api api = Api();
+  final RealtimeDatabaseService db = RealtimeDatabaseService();
   final UserClass _userClass = UserClass();
 
   @override
   void initState() {
     super.initState();
 
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) async {
       if (user != null) {
-        _userClass.readUser().then((file) async {
-          if (file.isNotEmpty) _userClass.setFileUser(file);
-          await api
-              .getUser(currentUser.value.first.email)
-              .then((result) => _userClass.add(result.docs!.first))
-              .catchError((error) => debugPrint('ERROR:' + error.toString()));
-          debugPrint('object');
-        }).catchError((error) => debugPrint(error));
+        await _userClass.readUser().then((_user) async {
+          if (_user.isNotEmpty) _userClass.setFileUser(_user);
+
+          try {
+            await db
+                .getUserEmail(currentUser.value.first.email)
+                .then((result) => _userClass.add({
+                      'id': result.children.single.value['id'],
+                      'date': result.children.single.value['date'],
+                      'name': result.children.single.value['name'],
+                      'upDateName': result.children.single.value['upDateName'],
+                      'status': result.children.single.value['status'],
+                      'email': result.children.single.value['email'],
+                      'token': result.children.single.value['token'],
+                      'isNotification':
+                          result.children.single.value['isNotification'],
+                      'qtyHistory': result.children.single.value['qtyHistory'],
+                      'qtyComment': result.children.single.value['qtyComment'],
+                    }));
+          } on AuthException catch (error) {
+            debugPrint('ERROR => getUserEmail: ' + error.toString());
+          }
+        }).catchError((error) => debugPrint('ERROR => readUser: ' + error));
       }
       Navigator.of(context).pushNamed("/home");
     });
@@ -47,7 +63,10 @@ class _SplashPageState extends State<SplashPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: const [
-            LogoComponent(icon: UiSvg.logo, size: 400),
+            LogoComponent(
+              icon: UiSvg.logo,
+              size: 400,
+            ),
           ],
         ),
       ),

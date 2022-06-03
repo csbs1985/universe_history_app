@@ -1,3 +1,5 @@
+// ignore_for_file: unrelated_type_equality_checks
+
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
@@ -31,8 +33,6 @@ class _Button3dComponentState extends State<Button3dComponent> {
   final double _borderSize = 4;
 
   late double _position = _borderSize;
-  late double _width;
-  late double _height;
 
   @override
   initState() {
@@ -41,17 +41,17 @@ class _Button3dComponentState extends State<Button3dComponent> {
   }
 
   _getStyle() {
-    if (widget._style == ButtonStyleEnum.PRIMARY.name) {
+    if (widget._style.name == ButtonStyleEnum.PRIMARY.name) {
       _backColor = UiColor.button;
       _borderColor = UiColor.buttonBorder;
       _styleText = UiTextStyle.buttonLabel;
     }
-    if (widget._style == ButtonStyleEnum.SECOND.name) {
+    if (widget._style.name == ButtonStyleEnum.SECOND.name) {
       _backColor = UiColor.buttonSecond;
       _borderColor = UiColor.buttonSecondBorder;
       _styleText = UiTextStyle.buttonSecondLabel;
     }
-    if (widget._style == ButtonStyleEnum.DISABLED.name) {
+    if (widget._style.name == ButtonStyleEnum.DISABLED.name) {
       _backColor = UiColor.buttonDisabled;
       _borderColor = UiColor.buttonDisabledBorder;
       _styleText = UiTextStyle.buttonLabel;
@@ -59,19 +59,17 @@ class _Button3dComponentState extends State<Button3dComponent> {
   }
 
   double _getWidth() {
-    if (widget._size == ButtonSizeEnum.SMALL.name) return 90;
-    if (widget._size == ButtonSizeEnum.MEDIUM.name) return 100;
-    if (widget._size == ButtonSizeEnum.LARGE.name) {
+    if (widget._size.name == ButtonSizeEnum.MEDIUM.name) return 100;
+    if (widget._size.name == ButtonSizeEnum.LARGE.name)
       return MediaQuery.of(context).size.width - UiSize.widthFullLessPadding;
-    }
-    return _width;
+    return 90;
   }
 
   double _getHeight() {
-    if (widget._size == ButtonSizeEnum.SMALL.name) return 32 - _borderSize;
-    if (widget._size == ButtonSizeEnum.MEDIUM.name) return 42 - _borderSize;
-    if (widget._size == ButtonSizeEnum.LARGE.name) return 48 - _borderSize;
-    return _height - _borderSize;
+    if (widget._size.name == ButtonSizeEnum.MEDIUM.name)
+      return 42 - _borderSize;
+    if (widget._size.name == ButtonSizeEnum.LARGE.name) return 48 - _borderSize;
+    return 32 - _borderSize;
   }
 
   @override
@@ -108,7 +106,7 @@ class _Button3dComponentState extends State<Button3dComponent> {
         ),
       ),
       onTapUp: (_) {
-        if (widget._style != ButtonStyleEnum.DISABLED.name) {
+        if (widget._style.name != ButtonStyleEnum.DISABLED.name) {
           setState(() {
             _position = _borderSize;
             widget._callback(true);
@@ -116,14 +114,14 @@ class _Button3dComponentState extends State<Button3dComponent> {
         }
       },
       onTapDown: (_) {
-        if (widget._style != ButtonStyleEnum.DISABLED.name) {
+        if (widget._style.name != ButtonStyleEnum.DISABLED.name) {
           setState(() {
             _position = 0;
           });
         }
       },
       onTapCancel: () {
-        if (widget._style != ButtonStyleEnum.DISABLED.name) {
+        if (widget._style.name != ButtonStyleEnum.DISABLED.name) {
           setState(() {
             _position = _borderSize;
           });
