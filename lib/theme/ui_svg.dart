@@ -23,7 +23,6 @@ class UiSvg {
   static const String notification = 'assets/icons/notification.svg';
   static const String open = 'assets/icons/open.svg';
   static const String options = 'assets/icons/options.svg';
-  static const String search = 'assets/icons/search.svg';
   static const String share = 'assets/icons/share.svg';
   static const String temporarily_disabled =
       'assets/icons/temporarily_disabled.svg';

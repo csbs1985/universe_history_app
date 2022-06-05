@@ -129,10 +129,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           actions: [
-            // IconComponent(
-            //   icon: UiSvg.search,
-            //   route: 'search',
-            // ),
             ValueListenableBuilder(
               valueListenable: currentUser,
               builder: (BuildContext context, value, __) {

@@ -42,13 +42,6 @@ class Api {
         .snapshots();
   }
 
-  getAllComment(String _idHistory) {
-    return comment
-        .orderBy('date', descending: true)
-        .where('historyId', isEqualTo: _idHistory)
-        .snapshots();
-  }
-
   getAllUserHistory() {
     return history
         .orderBy('date')
@@ -75,21 +68,6 @@ class Api {
     return user.where('name', isEqualTo: _nickname).get();
   }
 
-  getUsersNickName(String _nickname) {
-    return user
-        .where('name', arrayContainsAny: ['_nickname'])
-        .orderBy('name')
-        .snapshots();
-  }
-
-  setHistory(Map<String, dynamic> _form) {
-    return history.doc(_form['id']).set(_form);
-  }
-
-  setUser(Map<String, dynamic> _form) {
-    return user.doc(currentUser.value.first.id).set(_form);
-  }
-
   upBookmarks() {
     return bookmark
         .doc(currentUser.value.first.id)
@@ -98,14 +76,6 @@ class Api {
 
   upNicknameHistory(String _id) {
     return history.doc(_id).update({'userName': currentUser.value.first.name});
-  }
-
-  upStatusUser(String _status) {
-    return user.doc(currentUser.value.first.id).update({'status': _status});
-  }
-
-  upToken(String _status) {
-    return user.doc(currentUser.value.first.id).update({'status': _status});
   }
 
   upNicknameComment(String _id) {
@@ -145,11 +115,5 @@ class Api {
     return user
         .doc(currentUser.value.first.id)
         .update({'isNotification': currentUser.value.first.isNotification});
-  }
-
-  setUpQtyCommentUser() {
-    return user
-        .doc(currentUser.value.first.id)
-        .update({'qtyComment': currentUser.value.first.qtyComment});
   }
 }

@@ -40,7 +40,6 @@ class _HistoryPageState extends State<HistoryPage> {
         query: db.histories.orderByChild('id').equalTo(_idHistory),
         reverse: true,
         pageSize: 10,
-        shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         loadingBuilder: (context) => const SkeletonHistoryItemComponent(),
         errorBuilder: (context, error, stackTrace) => _noResult(),

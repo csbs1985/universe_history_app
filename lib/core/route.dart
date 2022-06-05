@@ -12,7 +12,6 @@ import 'package:universe_history_app/pages/home_page.dart';
 import 'package:universe_history_app/pages/justify_page.dart';
 import 'package:universe_history_app/pages/notification_page.dart';
 import 'package:universe_history_app/pages/privacy_page.dart';
-import 'package:universe_history_app/pages/search_page.dart';
 import 'package:universe_history_app/pages/settings_page.dart';
 import 'package:universe_history_app/pages/terms_page.dart';
 
@@ -82,12 +81,6 @@ class Routes {
       case '/privacy':
         return PageTransition(
           child: const PrivacyPage(),
-          type: PageTransitionType.rightToLeft,
-          settings: settings,
-        );
-      case '/search':
-        return PageTransition(
-          child: const SearchPage(),
           type: PageTransitionType.rightToLeft,
           settings: settings,
         );
