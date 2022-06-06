@@ -1,5 +1,6 @@
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
+import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/history_options_component.dart';
 import 'package:universe_history_app/components/resume_history_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
@@ -66,6 +67,11 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
             ],
           ),
         ),
+        const DividerComponent(
+          left: 16,
+          right: 16,
+          bottom: 10,
+        )
       ],
     );
   }

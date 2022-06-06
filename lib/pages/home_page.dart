@@ -1,12 +1,9 @@
-// ignore_for_file: unused_local_variable, prefer_typing_uninitialized_variables
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutterfire_ui/database.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
-import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/history_item_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
@@ -41,34 +38,11 @@ class _HomePageState extends State<HomePage> {
 
   bool loading = false;
 
-  var query;
-
   @override
   void initState() {
     super.initState();
     checkNotifications();
     DeviceUtil();
-  }
-
-  _getDatabase() {
-    final value = menuItemSelected.value.id!;
-
-    if (value == 'todas' || value.isEmpty) {
-      return db.histories.orderByChild('date');
-    } else if (value == 'minhas') {
-      return db.histories
-          .orderByChild('date')
-          .equalTo(currentUser.value.first.id);
-    } else if (value == 'salvas') {
-      return db.histories
-          .orderByChild('date')
-          .equalTo(currentUser.value.first.id);
-    } else {
-      return db.histories
-          .child('categories')
-          .orderByChild('date')
-          .equalTo(value);
-    }
   }
 
   checkNotifications() async {
@@ -199,20 +173,14 @@ class _HomePageState extends State<HomePage> {
       valueListenable: menuItemSelected,
       builder: (BuildContext context, value, __) {
         return FirebaseDatabaseQueryBuilder(
-          query: _getDatabase(),
+          query: db.histories.orderByChild('date'),
           pageSize: 10,
           builder: (context, snapshot, _) {
-            return ListView.separated(
+            return ListView.builder(
               shrinkWrap: true,
               reverse: true,
               physics: const NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.only(bottom: 72),
-              separatorBuilder: (BuildContext context, int index) =>
-                  const DividerComponent(
-                left: 16,
-                right: 16,
-                bottom: 10,
-              ),
               itemCount: snapshot.docs.length,
               itemBuilder: (context, index) {
                 if (snapshot.isFetching || snapshot.hasMore)
@@ -225,12 +193,33 @@ class _HomePageState extends State<HomePage> {
 
                 Map<String, dynamic> data =
                     HistoryModel.toMap(snapshot.docs[index].value);
+
+                final value = menuItemSelected.value.id!;
+
+                if (value != FilterHistoryEnum.todas.name &&
+                    value != FilterHistoryEnum.minhas.name &&
+                    value != FilterHistoryEnum.salvas.name) {
+                  if (data['categories'].contains(value)) {
+                    return HistoryItemComponent(snapshot: data);
+                  }
+                  return Container();
+                }
+
+                if (value == FilterHistoryEnum.minhas.name) {
+                  if (data['userId'] == currentUser.value.first.id) {
+                    return HistoryItemComponent(snapshot: data);
+                  }
+                  return Container();
+                }
+
+                if (value == FilterHistoryEnum.salvas.name) {
+                  return HistoryItemComponent(snapshot: data);
+                }
+
                 return HistoryItemComponent(snapshot: data);
               },
             );
           },
-
-          // padding: const EdgeInsets.only(bottom: 72),
         );
       },
     );
@@ -243,3 +232,5 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+enum FilterHistoryEnum { todas, minhas, salvas }
