@@ -218,7 +218,7 @@ class _HomePageState extends State<HomePage> {
                 if (snapshot.isFetching || snapshot.hasMore)
                   const SkeletonHistoryItemComponent();
 
-                if (snapshot.hasError) _noResult();
+                if (snapshot.hasError) _noResults();
 
                 if (snapshot.hasMore && index + 1 == snapshot.docs.length)
                   snapshot.fetchMore();
@@ -236,7 +236,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _noResult() {
+  Widget _noResults() {
     return const NoResultComponent(
       text:
           'Não encontramos histórias que atendam sua pesquisa. Mas não desista, temos muitas outras histórias para você interagir.',

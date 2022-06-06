@@ -61,7 +61,7 @@ class _NotificationPageState extends State<NotificationPage> {
               physics: const NeverScrollableScrollPhysics(),
               loadingBuilder: (context) =>
                   const SkeletonNotificationComponent(),
-              errorBuilder: (context, error, stackTrace) => _noResult(),
+              errorBuilder: (context, error, stackTrace) => _noResults(),
               itemBuilder: (context, snapshot) {
                 Map<String, dynamic> data =
                     NotificationModel.toMap(snapshot.value);
@@ -123,7 +123,7 @@ class _NotificationPageState extends State<NotificationPage> {
         text: _text);
   }
 
-  Widget _noResult() {
+  Widget _noResults() {
     return const NoResultComponent(
         text: 'Não há ou encontramos notificações no momento.');
   }

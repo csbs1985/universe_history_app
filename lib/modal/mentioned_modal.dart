@@ -61,7 +61,7 @@ class _MentionedModalState extends State<MentionedModal> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                   child: _snapshot == null
-                      ? _noResult()
+                      ? _noResults()
                       : ListView.builder(
                           shrinkWrap: true,
                           reverse: true,
@@ -138,7 +138,7 @@ class _MentionedModalState extends State<MentionedModal> {
     );
   }
 
-  Widget _noResult() {
+  Widget _noResults() {
     return const NoResultComponent(
         text:
             'Nenhum usuário encontrado ou você digitou o email ou usuário errado.');

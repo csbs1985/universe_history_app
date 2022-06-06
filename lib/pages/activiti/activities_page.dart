@@ -71,7 +71,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               loadingBuilder: (context) => const SkeletonActivityComponent(),
-              errorBuilder: (context, error, stackTrace) => _noResult(),
+              errorBuilder: (context, error, stackTrace) => _noResults(),
               itemBuilder: (context, snapshot) {
                 Map<String, dynamic> _item =
                     ActivitiesModel.toMap(snapshot.value);
@@ -123,7 +123,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
     );
   }
 
-  Widget _noResult() {
+  Widget _noResults() {
     return const NoResultComponent(
         text: 'Não há atividades ou não foi possível encontrá-las.');
   }

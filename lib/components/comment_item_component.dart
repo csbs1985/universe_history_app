@@ -114,7 +114,7 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               loadingBuilder: (context) => const SkeletonCommentComponent(),
-              errorBuilder: (context, error, stackTrace) => _noResult(),
+              errorBuilder: (context, error, stackTrace) => _noResults(),
               itemBuilder: (context, snapshot) {
                 Map<String, dynamic> data = CommentModel.toMap(snapshot.value);
                 return _list(data);
@@ -174,7 +174,7 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
     );
   }
 
-  Widget _noResult() {
+  Widget _noResults() {
     return const NoResultComponent(
         text: 'Nenhum comentário ainda, ou os comentários foram desativados.');
   }

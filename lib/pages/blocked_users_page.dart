@@ -68,7 +68,7 @@ class _BlockedUsersPageState extends State<BlockedUsersPage> {
                   }
                   switch (snapshot.connectionState) {
                     case ConnectionState.none:
-                      return _noResult();
+                      return _noResults();
                     case ConnectionState.waiting:
                       return const SkeletonBlockedComponent();
                     case ConnectionState.done:
@@ -76,7 +76,7 @@ class _BlockedUsersPageState extends State<BlockedUsersPage> {
                       try {
                         return _list(context, snapshot);
                       } catch (error) {
-                        return _noResult();
+                        return _noResults();
                       }
                   }
                 },
@@ -88,7 +88,7 @@ class _BlockedUsersPageState extends State<BlockedUsersPage> {
     );
   }
 
-  Widget _noResult() {
+  Widget _noResults() {
     return const NoResultComponent(text: 'Você não tem usuários bloqueados.');
   }
 
@@ -128,6 +128,6 @@ class _BlockedUsersPageState extends State<BlockedUsersPage> {
               );
             },
           )
-        : _noResult();
+        : _noResults();
   }
 }

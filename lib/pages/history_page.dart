@@ -42,7 +42,7 @@ class _HistoryPageState extends State<HistoryPage> {
         pageSize: 10,
         physics: const NeverScrollableScrollPhysics(),
         loadingBuilder: (context) => const SkeletonHistoryItemComponent(),
-        errorBuilder: (context, error, stackTrace) => _noResult(),
+        errorBuilder: (context, error, stackTrace) => _noResults(),
         itemBuilder: (context, snapshot) {
           Map<String, dynamic> data = HistoryModel.toMap(snapshot.value);
           historyClass.selectHistory(data);
@@ -122,7 +122,7 @@ class _HistoryPageState extends State<HistoryPage> {
     );
   }
 
-  Widget _noResult() {
+  Widget _noResults() {
     return SizedBox(
       width: double.infinity,
       height: MediaQuery.of(context).size.height,
