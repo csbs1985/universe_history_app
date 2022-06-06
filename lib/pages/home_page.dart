@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutterfire_ui/database.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
+import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/history_item_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/logo_component.dart';
@@ -184,7 +185,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 MenuComponent(),
                 const SizedBox(height: 10),
-                Flexible(child: _list()),
+                _list(),
               ],
             ),
           ),
@@ -196,20 +197,40 @@ class _HomePageState extends State<HomePage> {
   Widget _list() {
     return ValueListenableBuilder<CategoryModel>(
       valueListenable: menuItemSelected,
-      builder: (context, value, __) {
-        return FirebaseDatabaseListView(
+      builder: (BuildContext context, value, __) {
+        return FirebaseDatabaseQueryBuilder(
           query: _getDatabase(),
-          reverse: true,
           pageSize: 10,
-          shrinkWrap: true,
-          padding: const EdgeInsets.only(bottom: 72),
-          physics: const NeverScrollableScrollPhysics(),
-          loadingBuilder: (context) => const SkeletonHistoryItemComponent(),
-          errorBuilder: (context, error, stackTrace) => _noResult(),
-          itemBuilder: (context, snapshot) {
-            Map<String, dynamic> data = HistoryModel.toMap(snapshot.value);
-            return HistoryItemComponent(snapshot: data);
+          builder: (context, snapshot, _) {
+            return ListView.separated(
+              shrinkWrap: true,
+              reverse: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.only(bottom: 72),
+              separatorBuilder: (BuildContext context, int index) =>
+                  const DividerComponent(
+                left: 16,
+                right: 16,
+                bottom: 10,
+              ),
+              itemCount: snapshot.docs.length,
+              itemBuilder: (context, index) {
+                if (snapshot.isFetching || snapshot.hasMore)
+                  const SkeletonHistoryItemComponent();
+
+                if (snapshot.hasError) _noResult();
+
+                if (snapshot.hasMore && index + 1 == snapshot.docs.length)
+                  snapshot.fetchMore();
+
+                Map<String, dynamic> data =
+                    HistoryModel.toMap(snapshot.docs[index].value);
+                return HistoryItemComponent(snapshot: data);
+              },
+            );
           },
+
+          // padding: const EdgeInsets.only(bottom: 72),
         );
       },
     );
@@ -217,7 +238,8 @@ class _HomePageState extends State<HomePage> {
 
   Widget _noResult() {
     return const NoResultComponent(
-        text:
-            'Não encontramos histórias que atendam sua pesquisa. Mas não desista, temos muitas outras histórias para você interagir.');
+      text:
+          'Não encontramos histórias que atendam sua pesquisa. Mas não desista, temos muitas outras histórias para você interagir.',
+    );
   }
 }
