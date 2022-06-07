@@ -4,7 +4,6 @@ import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/icon_component.dart';
-import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/modal/comment_modal.dart';
 import 'package:universe_history_app/modal/input_comment_modal.dart';
@@ -12,6 +11,7 @@ import 'package:universe_history_app/modal/options_modal.dart';
 import 'package:universe_history_app/models/comment_model.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
+import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -31,7 +31,7 @@ class HistoryOptionsComponent extends StatefulWidget {
 }
 
 class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
-  final Api api = Api();
+  final RealtimeDatabaseService db = RealtimeDatabaseService();
   final CommentClass commentClass = CommentClass();
   final HistoryClass historyClass = HistoryClass();
 
@@ -79,14 +79,16 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
     return currentBookmarks.value.contains(id) ? true : false;
   }
 
-  void _toggleBookmark(String id) {
+  void _toggleBookmark(_history) {
     setState(() {
-      currentBookmarks.value.contains(id)
-          ? currentBookmarks.value.remove(id)
-          : currentBookmarks.value.add(id);
+      if (currentBookmarks.value.contains(_history['id'])) {
+        currentBookmarks.value.remove(_history['id']);
+        db.deleteUserBookmark(_history);
+      } else {
+        currentBookmarks.value.add(_history['id']);
+        db.postUserBookmark(_history);
+      }
     });
-
-    api.upBookmarks();
   }
 
   void _showModalOptions(BuildContext context, dynamic _content) {
@@ -164,7 +166,7 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
                             ? UiSvg.favorited
                             : UiSvg.favorite,
                         callback: (value) {
-                          _toggleBookmark(widget._history['id']);
+                          _toggleBookmark(widget._history);
                         },
                       );
                     },

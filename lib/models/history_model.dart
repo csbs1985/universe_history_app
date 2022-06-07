@@ -18,6 +18,7 @@ class HistoryModel {
     required this.userName,
     required this.qtyComment,
     required this.categories,
+    required this.bookmarks,
   });
 
   late String id;
@@ -32,6 +33,7 @@ class HistoryModel {
   late bool isAuthorized;
   late int qtyComment;
   late List<String> categories;
+  late List<String> bookmarks;
 
   factory HistoryModel.fromJson(json) => HistoryModel.fromMap(json);
 
@@ -48,6 +50,7 @@ class HistoryModel {
         userName: json['userName'],
         qtyComment: json['qtyComment'],
         categories: json['categories'].cast<String>(),
+        bookmarks: json['categories'].cast<String>(),
       );
 
   static String toJson(HistoryModel history) => jsonEncode(toMap(history));
@@ -65,6 +68,7 @@ class HistoryModel {
         'userName': history['userName'],
         'qtyComment': history['qtyComment'],
         'categories': history['categories'],
+        'bookmarks': history['bookmarks'],
       };
 }
 

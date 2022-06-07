@@ -213,7 +213,10 @@ class _HomePageState extends State<HomePage> {
                 }
 
                 if (value == FilterHistoryEnum.salvas.name) {
-                  return HistoryItemComponent(snapshot: data);
+                  if (data['bookmark'] == currentUser.value.first.id) {
+                    return HistoryItemComponent(snapshot: data);
+                  }
+                  return Container();
                 }
 
                 return HistoryItemComponent(snapshot: data);

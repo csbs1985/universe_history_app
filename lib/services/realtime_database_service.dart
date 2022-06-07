@@ -34,6 +34,21 @@ class RealtimeDatabaseService {
     });
   }
 
+  deleteUserBookmark(_history) {
+    return histories
+        .child(_history['id'])
+        .child('bookmark')
+        .child(currentUser.value.first.id)
+        .remove();
+  }
+
+  postUserBookmark(_history) {
+    return histories
+        .child(_history['id'])
+        .child('bookmark')
+        .set(currentUser.value.first.id);
+  }
+
   pathQtyHistoryUser(String _user) async {
     await users
         .child(_user)

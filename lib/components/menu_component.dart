@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/models/category_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
+import 'package:universe_history_app/pages/home_page.dart';
 import 'package:universe_history_app/theme/ui_button.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -16,7 +17,9 @@ class MenuComponent extends StatefulWidget {
 
 class _MenuComponentState extends State<MenuComponent> {
   bool canShow(String? item) {
-    return (item == 'minhas' || item == 'salvas') && currentUser.value.isEmpty
+    return (item == FilterHistoryEnum.minhas.name ||
+                item == FilterHistoryEnum.salvas.name) &&
+            currentUser.value.isEmpty
         ? false
         : true;
   }

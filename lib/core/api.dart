@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:universe_history_app/models/comment_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
-import 'variables.dart';
 
 class Api {
   CollectionReference activitie =
@@ -66,12 +65,6 @@ class Api {
 
   getNickName(String _nickname) {
     return user.where('name', isEqualTo: _nickname).get();
-  }
-
-  upBookmarks() {
-    return bookmark
-        .doc(currentUser.value.first.id)
-        .update({'historyId': currentBookmarks.value});
   }
 
   upNicknameHistory(String _id) {

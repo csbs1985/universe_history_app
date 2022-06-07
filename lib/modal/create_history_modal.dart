@@ -125,6 +125,7 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
           'categories': _categories,
           'userId': currentUser.value.first.id,
           'userName': currentUser.value.first.name,
+          'bookmarks': currentHistory.value.first.bookmarks,
         });
       } else {
         historyClass.add({
@@ -140,6 +141,7 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
           'categories': _categories,
           'userId': currentUser.value.first.id,
           'userName': currentUser.value.first.name,
+          'bookmarks': [],
         });
       }
     });
