@@ -6,7 +6,7 @@ import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/skeleton_blocked_componen.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
-import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/services/firestore_database_service.dart';
 import 'package:universe_history_app/models/blocked_model.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
@@ -19,7 +19,7 @@ class BlockedUsersPage extends StatefulWidget {
 }
 
 class _BlockedUsersPageState extends State<BlockedUsersPage> {
-  final Api api = Api();
+  final FirestoreDatabaseService api = FirestoreDatabaseService();
   final ToastComponent toast = ToastComponent();
 
   String _numBlocked() {

@@ -14,7 +14,7 @@ import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
-import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/services/firestore_database_service.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
@@ -35,7 +35,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
   final TextEditingController _commentController = TextEditingController();
   final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
-  final Api api = Api();
+  final FirestoreDatabaseService api = FirestoreDatabaseService();
   final Uuid uuid = const Uuid();
 
   late Map<String, dynamic> _form;

@@ -4,7 +4,7 @@ import 'package:universe_history_app/components/btn_card_component.dart';
 import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
-import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/services/firestore_database_service.dart';
 import 'package:universe_history_app/models/denounce_justify_model.dart';
 import 'package:universe_history_app/models/owner_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
@@ -19,7 +19,7 @@ class DenouncePage extends StatefulWidget {
 }
 
 class _DenouncePageState extends State<DenouncePage> {
-  final Api api = Api();
+  final FirestoreDatabaseService api = FirestoreDatabaseService();
   final Uuid uuid = const Uuid();
   final ToastComponent toast = ToastComponent();
   final List<DenounceJustifyModel> _allDenounceJustify =

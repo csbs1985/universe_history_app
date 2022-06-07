@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:universe_history_app/models/comment_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
 
-class Api {
+class FirestoreDatabaseService {
   CollectionReference activitie =
       FirebaseFirestore.instance.collection('activities');
   CollectionReference justification =

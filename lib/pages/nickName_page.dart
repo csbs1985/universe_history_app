@@ -7,7 +7,7 @@ import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
-import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/services/firestore_database_service.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -21,7 +21,7 @@ class NickNamePage extends StatefulWidget {
 }
 
 class _NickNamePageState extends State<NickNamePage> {
-  final Api api = Api();
+  final FirestoreDatabaseService api = FirestoreDatabaseService();
   final TextEditingController _textController = TextEditingController();
   final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();

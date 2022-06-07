@@ -4,7 +4,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/btn_confirm_component.dart';
 import 'package:universe_history_app/components/button_option_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
-import 'package:universe_history_app/core/api.dart';
+import 'package:universe_history_app/services/firestore_database_service.dart';
 import 'package:universe_history_app/modal/input_comment_modal.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
@@ -41,7 +41,7 @@ class OptionsModal extends StatefulWidget {
 
 class _OptionsModalState extends State<OptionsModal> {
   final ToastComponent toast = ToastComponent();
-  final Api api = Api();
+  final FirestoreDatabaseService api = FirestoreDatabaseService();
   final Uuid uuid = const Uuid();
 
   late Map<String, dynamic> _form;
