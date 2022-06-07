@@ -103,10 +103,4 @@ class Api {
       'upDateName': currentUser.value.first.upDateName
     });
   }
-
-  toggleNotification() {
-    return user
-        .doc(currentUser.value.first.id)
-        .update({'isNotification': currentUser.value.first.isNotification});
-  }
 }

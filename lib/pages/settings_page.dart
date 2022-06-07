@@ -8,11 +8,11 @@ import 'package:universe_history_app/components/select_toggle_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
-import 'package:universe_history_app/core/api.dart';
 import 'package:universe_history_app/modal/login/login_modal.dart';
 import 'package:universe_history_app/modal/login/login_model.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
+import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 
@@ -24,8 +24,8 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  final Api api = Api();
   final LoginClass loginClass = LoginClass();
+  final RealtimeDatabaseService db = RealtimeDatabaseService();
   final UserClass userClass = UserClass();
 
   @override
@@ -38,9 +38,12 @@ class _SettingsPageState extends State<SettingsPage> {
     setState(() {
       currentUser.value.first.isNotification =
           !currentUser.value.first.isNotification;
-      ActivityUtil(ActivitiesEnum.UP_NOTIFICATION.name,
-          currentUser.value.first.isNotification.toString(), '');
-      api.toggleNotification();
+      ActivityUtil(
+        ActivitiesEnum.UP_NOTIFICATION.name,
+        currentUser.value.first.isNotification.toString(),
+        '',
+      );
+      db.pathNotification();
     });
   }
 

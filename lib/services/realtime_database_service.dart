@@ -69,6 +69,12 @@ class RealtimeDatabaseService {
     return users.child(_user.id).update({'qtyComment': _user.qtyComment});
   }
 
+  pathNotification() {
+    return users
+        .child(currentUser.value.first.id)
+        .update({'isNotification': currentUser.value.first.isNotification});
+  }
+
   pathToken(_user, {String? token}) async {
     await users.child(_user).update({"token": token ?? ''});
   }
