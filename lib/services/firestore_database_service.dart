@@ -14,8 +14,7 @@ class FirestoreDatabaseService {
       FirebaseFirestore.instance.collection('comments');
   CollectionReference denounce =
       FirebaseFirestore.instance.collection('denounces');
-  CollectionReference history =
-      FirebaseFirestore.instance.collection('historys');
+
   CollectionReference user = FirebaseFirestore.instance.collection('users');
 
   getTokenOwner(String _user) {
@@ -41,13 +40,6 @@ class FirestoreDatabaseService {
         .snapshots();
   }
 
-  getAllUserHistory() {
-    return history
-        .orderBy('date')
-        .where('userId', isEqualTo: currentUser.value.first.id)
-        .get();
-  }
-
   getAllUserComment() {
     return comment
         .orderBy('date')
@@ -67,10 +59,6 @@ class FirestoreDatabaseService {
     return user.where('name', isEqualTo: _nickname).get();
   }
 
-  upNicknameHistory(String _id) {
-    return history.doc(_id).update({'userName': currentUser.value.first.name});
-  }
-
   upNicknameComment(String _id) {
     return comment.doc(_id).update({'userName': currentUser.value.first.name});
   }
@@ -83,10 +71,6 @@ class FirestoreDatabaseService {
     return comment
         .doc(currentComment.value.first.id)
         .update({'isDelete': true});
-  }
-
-  deleteHistory(String _idHistory) {
-    return history.doc(_idHistory).delete();
   }
 
   deleteUser(String _idUser) {

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/loader_component.dart';
+import 'package:universe_history_app/firebase/histories_firebase.dart';
 import 'package:universe_history_app/services/firestore_database_service.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:uuid/uuid.dart';
 
 class DeleteAccountUtil {
+  final HistoriesFirestore historiesFirestore = HistoriesFirestore();
   final FirestoreDatabaseService api = FirestoreDatabaseService();
   final UserClass userClass = UserClass();
   Uuid uuid = const Uuid();
@@ -49,12 +51,13 @@ class DeleteAccountUtil {
   }
 
   Future<void> _deletetAllHistory(BuildContext context) async {
-    await api
+    await historiesFirestore
         .getAllUserHistory()
         .then((result) async => {
               if (result.size > 0)
                 currentDialog.value = 'Deletando histórias...',
-              for (var item in result.docs) await api.deleteHistory(item['id']),
+              for (var item in result.docs)
+                await historiesFirestore.deleteHistory(item['id']),
               _upAllComment(context)
             })
         .catchError((error) => debugPrint('ERROR:' + error));

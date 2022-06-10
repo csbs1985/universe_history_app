@@ -5,6 +5,7 @@ import 'package:universe_history_app/components/select_categories_component.dart
 import 'package:universe_history_app/components/select_toggle_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/variables.dart';
+import 'package:universe_history_app/firebase/histories_firebase.dart';
 import 'package:universe_history_app/models/category_model.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
@@ -23,6 +24,7 @@ class CreateHistoryModal extends StatefulWidget {
 
 class _CreateHistoryModalState extends State<CreateHistoryModal> {
   final HistoryClass historyClass = HistoryClass();
+  final HistoriesFirestore historiesFirestore = HistoriesFirestore();
   final RealtimeDatabaseService db = RealtimeDatabaseService();
   final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
@@ -147,7 +149,7 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
     });
 
     try {
-      await db.postNewHistory(currentHistory.value.first);
+      await historiesFirestore.postHistory(currentHistory.value.first);
       _setUpQtyHistoryUser();
     } on AuthException catch (error) {
       debugPrint('ERROR => postNewHistory:' + error.toString());

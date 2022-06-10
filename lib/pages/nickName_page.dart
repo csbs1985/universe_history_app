@@ -5,6 +5,7 @@ import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/variables.dart';
+import 'package:universe_history_app/firebase/histories_firebase.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/services/firestore_database_service.dart';
@@ -21,6 +22,7 @@ class NickNamePage extends StatefulWidget {
 }
 
 class _NickNamePageState extends State<NickNamePage> {
+  final HistoriesFirestore historiesFirestore = HistoriesFirestore();
   final FirestoreDatabaseService api = FirestoreDatabaseService();
   final TextEditingController _textController = TextEditingController();
   final ToastComponent toast = ToastComponent();
@@ -142,12 +144,12 @@ class _NickNamePageState extends State<NickNamePage> {
   Future<void> _upAllHistory() async {
     currentDialog.value = 'Alterando nome de usuário nas histórias...';
 
-    await api
+    await historiesFirestore
         .getAllUserHistory()
         .then((result) async => {
               if (result.size > 0)
                 for (var item in result.docs)
-                  await api.upNicknameHistory(item['id']),
+                  await historiesFirestore.upNicknameHistory(item['id']),
               _upAllComment()
             })
         .catchError((error) => debugPrint('ERROR:' + error.toString()));
