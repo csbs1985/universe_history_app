@@ -1,7 +1,8 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutterfire_ui/database.dart';
+import 'package:flutterfire_ui/firestore.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:universe_history_app/components/history_item_component.dart';
@@ -11,6 +12,7 @@ import 'package:universe_history_app/components/menu_component.dart';
 import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/core/variables.dart';
+import 'package:universe_history_app/firebase/histories_firebase.dart';
 import 'package:universe_history_app/modal/login/login_modal.dart';
 import 'package:universe_history_app/modal/login/login_model.dart';
 import 'package:universe_history_app/models/category_model.dart';
@@ -32,6 +34,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final HistoriesFirestore historiesDb = HistoriesFirestore();
   final LoginClass loginClass = LoginClass();
   final RealtimeDatabaseService db = RealtimeDatabaseService();
   final ScrollController _scrollController = ScrollController();
@@ -41,13 +44,40 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    checkNotifications();
+    _checkNotifications();
     DeviceUtil();
+    _getContent();
   }
 
-  checkNotifications() async {
+  _checkNotifications() async {
     await Provider.of<LocalNotificationService>(context, listen: false)
         .checkForNotifications();
+  }
+
+  _getContent() {
+    String value = menuItemSelected.value.id!;
+
+    if (value != FilterHistoryEnum.todas.name &&
+        value != FilterHistoryEnum.minhas.name &&
+        value != FilterHistoryEnum.salvas.name) {
+      return historiesDb.db
+          .orderBy('date')
+          .where('categories', arrayContainsAny: [value]);
+    }
+
+    if (value == FilterHistoryEnum.minhas.name) {
+      return historiesDb.db
+          .orderBy('date')
+          .where('userId', arrayContains: currentUser.value.first.id);
+    }
+
+    if (value == FilterHistoryEnum.salvas.name) {
+      return historiesDb.db
+          .orderBy('date')
+          .where('bookmarks', arrayContainsAny: [currentUser.value.first.id]);
+    }
+
+    return historiesDb.db.orderBy('date');
   }
 
   void _scrollToTop() {
@@ -56,12 +86,6 @@ class _HomePageState extends State<HomePage> {
       duration: const Duration(milliseconds: 300),
       curve: Curves.linear,
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _scrollController.dispose();
   }
 
   void _onPressedFloating(BuildContext context) {
@@ -78,6 +102,12 @@ class _HomePageState extends State<HomePage> {
           ? const LoginModal()
           : const CreateHistoryModal(),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
   }
 
   @override
@@ -135,7 +165,10 @@ class _HomePageState extends State<HomePage> {
                     : Container();
               },
             ),
-            const IconComponent(icon: UiSvg.menu, route: 'settings'),
+            const IconComponent(
+              icon: UiSvg.menu,
+              route: 'settings',
+            ),
             const SizedBox(width: 10)
           ],
         ),
@@ -172,56 +205,20 @@ class _HomePageState extends State<HomePage> {
     return ValueListenableBuilder<CategoryModel>(
       valueListenable: menuItemSelected,
       builder: (BuildContext context, value, __) {
-        return FirebaseDatabaseQueryBuilder(
-          query: db.histories.orderByChild('date'),
-          pageSize: 10,
-          builder: (context, snapshot, _) {
-            return ListView.builder(
-              shrinkWrap: true,
-              reverse: true,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.only(bottom: 72),
-              itemCount: snapshot.docs.length,
-              itemBuilder: (context, index) {
-                if (snapshot.isFetching || snapshot.hasMore)
-                  const SkeletonHistoryItemComponent();
+        return FirestoreListView(
+          query: _getContent(),
+          pageSize: 3,
+          shrinkWrap: true,
+          reverse: true,
+          physics: const NeverScrollableScrollPhysics(),
+          padding: const EdgeInsets.only(bottom: 72),
+          loadingBuilder: (context) => const SkeletonHistoryItemComponent(),
+          errorBuilder: (context, error, _) => _noResults(),
+          itemBuilder:
+              (BuildContext context, QueryDocumentSnapshot<dynamic> snapshot) {
+            final item = snapshot.data();
 
-                if (snapshot.hasError) _noResults();
-
-                if (snapshot.hasMore && index + 1 == snapshot.docs.length)
-                  snapshot.fetchMore();
-
-                Map<String, dynamic> data =
-                    HistoryModel.toMap(snapshot.docs[index].value);
-
-                final value = menuItemSelected.value.id!;
-
-                if (value != FilterHistoryEnum.todas.name &&
-                    value != FilterHistoryEnum.minhas.name &&
-                    value != FilterHistoryEnum.salvas.name) {
-                  if (data['categories'].contains(value)) {
-                    return HistoryItemComponent(snapshot: data);
-                  }
-                  return Container();
-                }
-
-                if (value == FilterHistoryEnum.minhas.name) {
-                  if (data['userId'] == currentUser.value.first.id) {
-                    return HistoryItemComponent(snapshot: data);
-                  }
-                  return Container();
-                }
-
-                if (value == FilterHistoryEnum.salvas.name) {
-                  if (data['bookmark'] == currentUser.value.first.id) {
-                    return HistoryItemComponent(snapshot: data);
-                  }
-                  return Container();
-                }
-
-                return HistoryItemComponent(snapshot: data);
-              },
-            );
+            return HistoryItemComponent(snapshot: item);
           },
         );
       },

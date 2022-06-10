@@ -24,7 +24,7 @@ class CreateHistoryModal extends StatefulWidget {
 
 class _CreateHistoryModalState extends State<CreateHistoryModal> {
   final HistoryClass historyClass = HistoryClass();
-  final HistoriesFirestore historiesFirestore = HistoriesFirestore();
+  final HistoriesFirestore historiesDb = HistoriesFirestore();
   final RealtimeDatabaseService db = RealtimeDatabaseService();
   final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
@@ -46,7 +46,7 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
 
   List<String> _categories = [];
 
-  late Map<String, dynamic> history;
+  late Map<String, dynamic> _history;
   late Map<String, dynamic> activity;
 
   @override
@@ -114,7 +114,7 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
 
     setState(() {
       if (currentHistory.value.isNotEmpty) {
-        historyClass.add({
+        _history = {
           'id': currentHistory.value.first.id,
           'title': titleController.text.trim(),
           'text': textController.text.trim(),
@@ -128,9 +128,9 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
           'userId': currentUser.value.first.id,
           'userName': currentUser.value.first.name,
           'bookmarks': currentHistory.value.first.bookmarks,
-        });
+        };
       } else {
-        historyClass.add({
+        _history = {
           'id': uuid.v4(),
           'title': titleController.text.trim(),
           'text': textController.text.trim(),
@@ -144,13 +144,14 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
           'userId': currentUser.value.first.id,
           'userName': currentUser.value.first.name,
           'bookmarks': [],
-        });
+        };
       }
     });
 
     try {
-      await historiesFirestore.postHistory(currentHistory.value.first);
-      _setUpQtyHistoryUser();
+      await historiesDb.postHistory(_history);
+      // _setUpQtyHistoryUser();
+      Navigator.of(context).pop();
     } on AuthException catch (error) {
       debugPrint('ERROR => postNewHistory:' + error.toString());
       toast.toast(context, ToastEnum.WARNING.name,
