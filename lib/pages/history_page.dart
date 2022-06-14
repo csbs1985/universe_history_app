@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/btn_comment_component.dart';
-import 'package:universe_history_app/components/comment_item_component.dart';
+import 'package:universe_history_app/components/comment_list_component.dart';
 import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/history_options_component.dart';
 import 'package:universe_history_app/components/no_history_component.dart';
@@ -59,7 +59,6 @@ class _HistoryPageState extends State<HistoryPage> {
 
   Widget _history(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     QueryDocumentSnapshot<dynamic> _data = snapshot.data!.docs[0];
-
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: Stack(
@@ -108,12 +107,13 @@ class _HistoryPageState extends State<HistoryPage> {
                           ],
                         ),
                       ),
-                      const DividerComponent(
-                        top: 0,
-                        bottom: 20,
-                        left: 16,
-                        right: 16,
-                      ),
+                      if (_data['qtyComment'] > 0)
+                        const DividerComponent(
+                          top: 0,
+                          bottom: 20,
+                          left: 16,
+                          right: 16,
+                        ),
                       CommentListComponent(
                         type: HistoryOptionsType.HISTORYPAGE.name,
                       )

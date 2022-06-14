@@ -60,7 +60,7 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
   }
 
   void _selectHistory(_history) {
-    historyClass.selectHistory(_history);
+    historyClass.add(_history);
   }
 
   void _showModal(BuildContext context, String type) {
@@ -92,7 +92,7 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
   }
 
   void _showModalOptions(BuildContext context, dynamic _content) {
-    historyClass.selectHistory(_content);
+    historyClass.add(_content);
 
     showCupertinoModalBottomSheet(
       expand: false,

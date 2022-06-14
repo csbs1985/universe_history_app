@@ -77,11 +77,6 @@ class HistoryClass {
     currentHistory.value = [];
     currentHistory.value.add(HistoryModel.fromJson(_history));
   }
-
-  void selectHistory(_history) {
-    currentHistory.value = [];
-    currentHistory.value.add(HistoryModel.fromJson(_history));
-  }
 }
 
 enum HistoryOptionsType { HOMEPAGE, HISTORYPAGE }
