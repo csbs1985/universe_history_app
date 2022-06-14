@@ -5,8 +5,8 @@ import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/variables.dart';
-import 'package:universe_history_app/firebase/histories_firebase.dart';
-import 'package:universe_history_app/firebase/users_firebase.dart';
+import 'package:universe_history_app/firestore/histories_firestore.dart';
+import 'package:universe_history_app/firestore/users_firestore.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/services/firestore_database_service.dart';
@@ -15,20 +15,20 @@ import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/qty_days_util.dart';
 
-class NickNamePage extends StatefulWidget {
-  const NickNamePage({Key? key}) : super(key: key);
+class NamePage extends StatefulWidget {
+  const NamePage({Key? key}) : super(key: key);
 
   @override
-  State<NickNamePage> createState() => _NickNamePageState();
+  State<NamePage> createState() => _NickNamePageState();
 }
 
-class _NickNamePageState extends State<NickNamePage> {
+class _NickNamePageState extends State<NamePage> {
   final HistoriesFirestore historiesFirestore = HistoriesFirestore();
   final FirestoreDatabaseService api = FirestoreDatabaseService();
   final TextEditingController _textController = TextEditingController();
   final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
-  final UsersFirebase usersFirebase = UsersFirebase();
+  final UsersFirestore usersFirestore = UsersFirestore();
 
   bool _isInputNotEmpty = false;
   bool _hasInput = true;
@@ -57,7 +57,7 @@ class _NickNamePageState extends State<NickNamePage> {
   }
 
   _validateupDateName() {
-    usersFirebase.getUser(currentUser.value.first.email).then((result) {
+    usersFirestore.getUser(currentUser.value.first.email).then((result) {
       setState(() {
         var _days = qtyDays(result.docs.first['upDateName']);
 
@@ -100,7 +100,7 @@ class _NickNamePageState extends State<NickNamePage> {
       return;
     }
 
-    usersFirebase
+    usersFirestore
         .getName(_textController.text)
         .then((result) => {
               setState(() {
@@ -135,7 +135,7 @@ class _NickNamePageState extends State<NickNamePage> {
     currentUser.value.first.upDateName = DateTime.now().toString();
     currentDialog.value = 'Alterando nome de usuário...';
 
-    await usersFirebase
+    await usersFirestore
         .upNickName()
         .then((result) => {
               _upAllHistory(),
