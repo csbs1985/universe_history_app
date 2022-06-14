@@ -5,7 +5,7 @@ import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/variables.dart';
-import 'package:universe_history_app/firebase/users_firebase.dart';
+import 'package:universe_history_app/firestore/users_firestore.dart';
 import 'package:universe_history_app/modal/login/login_model.dart';
 import 'package:universe_history_app/services/auth_service.dart';
 import 'package:universe_history_app/models/user_model.dart';
@@ -26,7 +26,7 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
   final LoginClass loginClass = LoginClass();
   final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
-  final UsersFirebase usersFirebase = UsersFirebase();
+  final UsersFirestore usersFirestore = UsersFirestore();
   final Uuid uuid = const Uuid();
 
   final passwordController = TextEditingController();
@@ -135,7 +135,7 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
     currentDialog.value = 'Criando conta...';
 
     try {
-      await usersFirebase.postUser(_user);
+      await usersFirestore.postUser(_user);
       userClass.add(_user);
       ActivityUtil(
         ActivitiesEnum.NEW_NICKNAME.name,

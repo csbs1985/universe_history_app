@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/loader_component.dart';
-import 'package:universe_history_app/firebase/histories_firebase.dart';
+import 'package:universe_history_app/firestore/histories_firestore.dart';
 import 'package:universe_history_app/services/firestore_database_service.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/models/user_model.dart';

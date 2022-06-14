@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
-import 'package:universe_history_app/firebase/users_firebase.dart';
+import 'package:universe_history_app/firestore/users_firestore.dart';
 import 'package:universe_history_app/modal/login/login_model.dart';
 import 'package:universe_history_app/theme/ui_padding.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -16,7 +16,7 @@ class LoginNameComponent extends StatefulWidget {
 
 class _LoginNameComponentState extends State<LoginNameComponent> {
   final LoginClass loginClass = LoginClass();
-  final UsersFirebase usersFirebase = UsersFirebase();
+  final UsersFirestore usersFirestore = UsersFirestore();
 
   final nickController = TextEditingController();
 
@@ -51,7 +51,7 @@ class _LoginNameComponentState extends State<LoginNameComponent> {
   }
 
   _checkNameEmpty(String _nick) async {
-    await usersFirebase
+    await usersFirestore
         .getName(_nick)
         .then((result) => {
               setState(() {

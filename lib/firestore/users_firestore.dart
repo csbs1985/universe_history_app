@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:universe_history_app/models/user_model.dart';
 
-class UsersFirebase {
+class UsersFirestore {
   CollectionReference user = FirebaseFirestore.instance.collection('users');
 
   postUser(Map<String, dynamic> _user) {

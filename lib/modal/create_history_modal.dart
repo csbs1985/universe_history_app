@@ -5,7 +5,7 @@ import 'package:universe_history_app/components/select_categories_component.dart
 import 'package:universe_history_app/components/select_toggle_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/variables.dart';
-import 'package:universe_history_app/firebase/histories_firebase.dart';
+import 'package:universe_history_app/firestore/histories_firestore.dart';
 import 'package:universe_history_app/models/category_model.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';

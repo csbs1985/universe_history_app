@@ -12,7 +12,7 @@ import 'package:universe_history_app/components/menu_component.dart';
 import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/core/variables.dart';
-import 'package:universe_history_app/firebase/histories_firebase.dart';
+import 'package:universe_history_app/firestore/histories_firestore.dart';
 import 'package:universe_history_app/modal/login/login_modal.dart';
 import 'package:universe_history_app/modal/login/login_model.dart';
 import 'package:universe_history_app/models/category_model.dart';
@@ -60,24 +60,24 @@ class _HomePageState extends State<HomePage> {
     if (value != FilterHistoryEnum.todas.name &&
         value != FilterHistoryEnum.minhas.name &&
         value != FilterHistoryEnum.salvas.name) {
-      return historiesDb.db
+      return historiesDb.histories
           .orderBy('date')
           .where('categories', arrayContainsAny: [value]);
     }
 
     if (value == FilterHistoryEnum.minhas.name) {
-      return historiesDb.db
+      return historiesDb.histories
           .orderBy('date')
           .where('userId', arrayContains: currentUser.value.first.id);
     }
 
     if (value == FilterHistoryEnum.salvas.name) {
-      return historiesDb.db
+      return historiesDb.histories
           .orderBy('date')
           .where('bookmarks', arrayContainsAny: [currentUser.value.first.id]);
     }
 
-    return historiesDb.db.orderBy('date');
+    return historiesDb.histories.orderBy('date');
   }
 
   void _scrollToTop() {

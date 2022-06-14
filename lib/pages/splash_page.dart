@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/logo_component.dart';
-import 'package:universe_history_app/firebase/users_firebase.dart';
+import 'package:universe_history_app/firestore/users_firestore.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/services/auth_service.dart';
 import 'package:universe_history_app/services/realtime_database_service.dart';
@@ -20,7 +20,7 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   final RealtimeDatabaseService db = RealtimeDatabaseService();
   final UserClass _userClass = UserClass();
-  final UsersFirebase usersFirebase = UsersFirebase();
+  final UsersFirestore usersFirestore = UsersFirestore();
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _SplashPageState extends State<SplashPage> {
       if (user != null) {
         try {
           await _userClass.readUser();
-          await usersFirebase
+          await usersFirestore
               .getUserEmail(user.email)
               .then((result) => _userClass.add({
                     'id': result.docs[0]['id'],

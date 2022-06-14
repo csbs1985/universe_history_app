@@ -309,15 +309,18 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
                   controller: _commentController,
                   onChanged: (value) => keyUp(value),
                   autofocus: true,
-                  minLines: 1,
                   maxLines: null,
                   style: UiTextStyle.text1,
                   decoration: const InputDecoration(
                     focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: UiColor.comp_1, width: 0)),
+                      borderSide: BorderSide(
+                        color: UiColor.comp_1,
+                        width: 0,
+                      ),
+                    ),
+                    hintMaxLines: 100,
                     hintText:
-                        "Escreva aqui seu comentário, ele pode ajudar alguém em um momento difícil, escolha com cuidado suas palavras.",
+                        "Escreva aqui seu comentário, ele pode ajudar alguém em um momento difícil. Escolha com cuidado suas palavras.",
                     hintStyle: UiTextStyle.text7,
                   ),
                 ),
@@ -357,10 +360,11 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
                           ),
                           const SizedBox(width: 10),
                           Text(
-                              _textSigned
-                                  ? currentUser.value.first.name
-                                  : 'anônimo',
-                              style: UiTextStyle.text2)
+                            _textSigned
+                                ? currentUser.value.first.name
+                                : 'anônimo',
+                            style: UiTextStyle.text2,
+                          )
                         ],
                       ),
                       if (_isInputNotEmpty)

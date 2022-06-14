@@ -4,7 +4,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/btn_confirm_component.dart';
 import 'package:universe_history_app/components/button_option_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
-import 'package:universe_history_app/firebase/histories_firebase.dart';
+import 'package:universe_history_app/firestore/histories_firestore.dart';
 import 'package:universe_history_app/services/firestore_database_service.dart';
 import 'package:universe_history_app/modal/input_comment_modal.dart';
 import 'package:universe_history_app/models/history_model.dart';
