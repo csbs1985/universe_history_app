@@ -34,7 +34,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final HistoriesFirestore historiesDb = HistoriesFirestore();
+  final HistoriesFirestore historiesFirestore = HistoriesFirestore();
   final LoginClass loginClass = LoginClass();
   final RealtimeDatabaseService db = RealtimeDatabaseService();
   final ScrollController _scrollController = ScrollController();
@@ -60,24 +60,24 @@ class _HomePageState extends State<HomePage> {
     if (value != FilterHistoryEnum.todas.name &&
         value != FilterHistoryEnum.minhas.name &&
         value != FilterHistoryEnum.salvas.name) {
-      return historiesDb.histories
+      return historiesFirestore.histories
           .orderBy('date')
           .where('categories', arrayContainsAny: [value]);
     }
 
     if (value == FilterHistoryEnum.minhas.name) {
-      return historiesDb.histories
+      return historiesFirestore.histories
           .orderBy('date')
           .where('userId', arrayContains: currentUser.value.first.id);
     }
 
     if (value == FilterHistoryEnum.salvas.name) {
-      return historiesDb.histories
+      return historiesFirestore.histories
           .orderBy('date')
           .where('bookmarks', arrayContainsAny: [currentUser.value.first.id]);
     }
 
-    return historiesDb.histories.orderBy('date');
+    return historiesFirestore.histories.orderBy('date');
   }
 
   void _scrollToTop() {
@@ -216,9 +216,7 @@ class _HomePageState extends State<HomePage> {
           errorBuilder: (context, error, _) => _noResults(),
           itemBuilder:
               (BuildContext context, QueryDocumentSnapshot<dynamic> snapshot) {
-            final item = snapshot.data();
-
-            return HistoryItemComponent(snapshot: item);
+            return HistoryItemComponent(snapshot: snapshot.data());
           },
         );
       },

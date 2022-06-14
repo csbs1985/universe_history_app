@@ -12,7 +12,7 @@ class CommentModal extends StatelessWidget {
         children: [
           SizedBox(
             height: MediaQuery.of(context).size.height,
-            child: CommentItemComponent(
+            child: CommentListComponent(
               type: HistoryOptionsType.HOMEPAGE.name,
             ),
           ),

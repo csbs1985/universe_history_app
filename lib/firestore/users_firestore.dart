@@ -12,6 +12,10 @@ class UsersFirestore {
     return user.where('email', isEqualTo: _email).get();
   }
 
+  pathQtyCommentUser(UserModel _user) {
+    return user.doc(_user.id).update({'qtyComment': _user.qtyComment});
+  }
+
   ////////////
   getTokenOwner(String _user) {
     return user.where('id', isEqualTo: _user).get();

@@ -107,7 +107,7 @@ class _HistoryPageState extends State<HistoryPage> {
                         left: 16,
                         right: 16,
                       ),
-                      CommentItemComponent(
+                      CommentListComponent(
                         type: HistoryOptionsType.HISTORYPAGE.name,
                       )
                     ],

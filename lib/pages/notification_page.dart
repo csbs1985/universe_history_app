@@ -1,16 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterfire_ui/database.dart';
+import 'package:flutterfire_ui/firestore.dart';
 import 'package:styled_text/styled_text.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/resume_component.dart';
 import 'package:universe_history_app/components/skeleton_notification_componen.dart';
 import 'package:universe_history_app/components/title_component.dart';
+import 'package:universe_history_app/firestore/notifications_firestore.dart';
 import 'package:universe_history_app/models/history_model.dart';
-import 'package:universe_history_app/models/notification_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/services/auth_service.dart';
-import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
@@ -24,12 +24,12 @@ class NotificationPage extends StatefulWidget {
 
 class _NotificationPageState extends State<NotificationPage> {
   final HistoryClass historyClass = HistoryClass();
-  final RealtimeDatabaseService db = RealtimeDatabaseService();
+  final NotificatonsFirestore notificatonsFirestore = NotificatonsFirestore();
 
   Future<void> _pathNotificationView(_history) async {
     if (!_history['view']) {
       try {
-        await db.pathNotificationView(_history['id']);
+        await notificatonsFirestore.pathNotificationView(_history['id']);
         setState(() => _history['view'] = true);
       } on AuthException catch (error) {
         debugPrint('ERROR => pathNotificationView: ' + error.toString());
@@ -51,21 +51,20 @@ class _NotificationPageState extends State<NotificationPage> {
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: TitleComponent(title: 'Notificações'),
             ),
-            FirebaseDatabaseListView(
-              query: db.notifications
-                  .orderByChild('userId')
-                  .equalTo(currentUser.value.first.id),
-              reverse: true,
+            FirestoreListView(
+              query: notificatonsFirestore.notifications
+                  .orderBy('date')
+                  .where('userId', isEqualTo: currentUser.value.first.id),
               pageSize: 10,
               shrinkWrap: true,
+              reverse: true,
               physics: const NeverScrollableScrollPhysics(),
               loadingBuilder: (context) =>
                   const SkeletonNotificationComponent(),
-              errorBuilder: (context, error, stackTrace) => _noResults(),
-              itemBuilder: (context, snapshot) {
-                Map<String, dynamic> data =
-                    NotificationModel.toMap(snapshot.value);
-                return _list(data);
+              errorBuilder: (context, error, _) => _noResults(),
+              itemBuilder: (BuildContext context,
+                  QueryDocumentSnapshot<dynamic> snapshot) {
+                return _list(snapshot.data());
               },
             ),
           ],

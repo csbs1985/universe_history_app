@@ -6,15 +6,17 @@ import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/components/toggle_component.dart';
+import 'package:universe_history_app/firestore/comments_firestore.dart';
+import 'package:universe_history_app/firestore/histories_firestore.dart';
+import 'package:universe_history_app/firestore/notifications_firestore.dart';
+import 'package:universe_history_app/firestore/users_firestore.dart';
 import 'package:universe_history_app/modal/mentioned_modal.dart';
 import 'package:universe_history_app/pages/notification_page.dart';
 import 'package:universe_history_app/services/auth_service.dart';
 import 'package:universe_history_app/services/push_notification_service.dart';
-import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
-import 'package:universe_history_app/services/firestore_database_service.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
@@ -31,11 +33,13 @@ class InputCommmentModal extends StatefulWidget {
 }
 
 class _InputCommmentModalState extends State<InputCommmentModal> {
-  final RealtimeDatabaseService db = RealtimeDatabaseService();
+  final CommentsFirestore commentsFirestore = CommentsFirestore();
+  final HistoriesFirestore historiesFirestore = HistoriesFirestore();
+  final NotificatonsFirestore notificatonsFirestore = NotificatonsFirestore();
   final TextEditingController _commentController = TextEditingController();
   final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
-  final FirestoreDatabaseService api = FirestoreDatabaseService();
+  final UsersFirestore usersFirestore = UsersFirestore();
   final Uuid uuid = const Uuid();
 
   late Map<String, dynamic> _form;
@@ -53,7 +57,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
     // edit
     if (widget._id != null) {
       _isEdit = true;
-      api
+      commentsFirestore
           .getComment(widget._id!)
           .then((result) => {
                 _commentController.text = result.docs[0].data()['text'],
@@ -115,7 +119,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
 
   ///// publicar notificação
 
-  Future<void> _postNewComment() async {
+  Future<void> _postComment() async {
     setState(() {
       _form = {
         'date': _commentEdit?['date'] ?? DateTime.now().toString(),
@@ -133,7 +137,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
     });
 
     try {
-      await db.postNewComment(_form);
+      await commentsFirestore.postComment(_form);
       _pathQtyCommentHistory();
     } on AuthException catch (error) {
       debugPrint('ERROR => postNewComment: ' + error.toString());
@@ -144,7 +148,8 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
     if (!_isEdit) currentHistory.value.first.qtyComment++;
 
     try {
-      await db.pathQtyCommentHistory(currentHistory.value.first);
+      await historiesFirestore
+          .pathQtyCommentHistory(currentHistory.value.first);
       ActivityUtil(
         ActivitiesEnum.NEW_COMMENT.name,
         currentHistory.value.first.title,
@@ -160,9 +165,9 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
     if (!_isEdit) currentUser.value.first.qtyComment++;
 
     try {
-      await db.pathQtyCommentUser(currentUser.value.first);
+      await usersFirestore.pathQtyCommentUser(currentUser.value.first);
       if (currentUser.value.first.id != currentHistory.value.first.userId) {
-        _postNewNotification();
+        _postNotification();
       }
       if (idMencioned.isNotEmpty) _setNotificationMencioned();
       if (_isEdit) Navigator.of(context).pop();
@@ -179,7 +184,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
     }
   }
 
-  Future<void> _postNewNotification() async {
+  Future<void> _postNotification() async {
     _form = {
       'content': currentHistory.value.first.title,
       'date': DateTime.now().toString(),
@@ -194,10 +199,10 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
     };
 
     try {
-      await db.postNewNotification(_form);
+      await notificatonsFirestore.postNotification(_form);
       _setPushNotificationOnwer(currentHistory.value.first.userId);
     } on AuthException catch (error) {
-      debugPrint('ERROR => postNewNotification: ' + error.toString());
+      debugPrint('ERROR => postNotification: ' + error.toString());
     }
   }
 
@@ -240,7 +245,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
         };
 
         try {
-          db.postNewNotification(_form);
+          notificatonsFirestore.postNotification(_form);
           _setPushNotificationMentioned(item);
         } on AuthException catch (error) {
           debugPrint('ERROR => postNewNotification: ' + error.toString());
@@ -369,7 +374,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
                       ),
                       if (_isInputNotEmpty)
                         ButtonPublishComponent(
-                          callback: (value) => _postNewComment(),
+                          callback: (value) => _postComment(),
                         ),
                     ],
                   ),

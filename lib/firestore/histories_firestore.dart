@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
 
 class HistoriesFirestore {
@@ -7,6 +8,12 @@ class HistoriesFirestore {
 
   postHistory(Map<String, dynamic> _history) {
     return histories.doc(_history['id']).set(_history);
+  }
+
+  pathQtyCommentHistory(HistoryModel _history) {
+    return histories
+        .doc(_history.id)
+        .update({'qtyComment': _history.qtyComment});
   }
 
   ////////////////

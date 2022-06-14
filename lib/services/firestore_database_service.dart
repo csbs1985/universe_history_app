@@ -41,10 +41,6 @@ class FirestoreDatabaseService {
         .get();
   }
 
-  getComment(String _id) {
-    return comment.where('id', isEqualTo: _id).get();
-  }
-
   upNicknameComment(String _id) {
     return comment.doc(_id).update({'userName': currentUser.value.first.name});
   }

@@ -1,53 +1,47 @@
 import 'package:animated_flip_counter/animated_flip_counter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterfire_ui/database.dart';
+import 'package:flutterfire_ui/firestore.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/skeleton_comment_component.dart';
+import 'package:universe_history_app/firestore/comments_firestore.dart';
 import 'package:universe_history_app/modal/options_modal.dart';
 import 'package:universe_history_app/models/comment_model.dart';
 import 'package:universe_history_app/models/history_model.dart';
-import 'package:universe_history_app/models/owner_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
-import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/resume_util.dart';
 
-class CommentItemComponent extends StatefulWidget {
-  const CommentItemComponent({
+class CommentListComponent extends StatefulWidget {
+  const CommentListComponent({
     required String type,
   }) : _type = type;
 
   final String _type;
 
   @override
-  State<CommentItemComponent> createState() => _CommentItemComponentState();
+  State<CommentListComponent> createState() => _CommentItemComponentState();
 }
 
-class _CommentItemComponentState extends State<CommentItemComponent> {
+class _CommentItemComponentState extends State<CommentListComponent> {
   final CommentClass commentClass = CommentClass();
-  final OwnerClass ownerClass = OwnerClass();
-  final RealtimeDatabaseService db = RealtimeDatabaseService();
+  final CommentsFirestore commentsFirestore = CommentsFirestore();
+  final UserClass userClass = UserClass();
 
   Color _getBackColor(_index) {
-    if (_index['text'].contains('@' + currentUser.value.first.name)) {
-      return UiColor.first;
+    if (userClass.isLogin()) {
+      if (_index['text'].contains('@' + currentUser.value.first.name))
+        return UiColor.first;
+      if (_index['userId'] == currentUser.value.first.id) return UiColor.second;
     }
-    if (_index['userId'] == currentUser.value.first.id) return UiColor.second;
     return UiColor.comp_3;
   }
 
-  void _showModal(BuildContext context, dynamic _content) {
-    ownerClass.selectOwner(
-      _content['userId'],
-      _content['userName'],
-      _content['userStatus'],
-      _content['token'],
-    );
-
-    commentClass.selectComment(_content);
+  void _showModal(BuildContext context, Map<String, dynamic> _content) {
+    commentClass.selectComment(CommentModel.fromJson(_content));
 
     showCupertinoModalBottomSheet(
         expand: false,
@@ -55,19 +49,19 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
         barrierColor: Colors.black87,
         duration: const Duration(milliseconds: 300),
         builder: (context) => OptionsModal(
-              _content.id,
+              _content['id'],
               'comentário',
-              _content.userId,
-              _content.userName,
-              _content.text,
-              _content.isDelete,
+              _content['userId'],
+              _content['userName'],
+              _content['text'],
+              _content['isDelete'],
             ));
   }
 
   bool _canShowOption(dynamic _content) {
-    if (currentUser.value.first.id == _content['userId']) {
-      if (!_content['isDelete']) return true;
-    } else {
+    if (userClass.isLogin()) {
+      if (!_content['isDelete'] &&
+          currentUser.value.first.id == _content['userId']) return true;
       if (!_content['isDelete']) return true;
     }
     return false;
@@ -106,18 +100,19 @@ class _CommentItemComponentState extends State<CommentItemComponent> {
                   ],
                 ),
               ),
-            FirebaseDatabaseListView(
-              query: db.comments
-                  .orderByChild('historyId')
-                  .equalTo(currentHistory.value.first.id),
+            FirestoreListView(
+              query: commentsFirestore.comments
+                  .orderBy('date')
+                  .where('historyId', isEqualTo: currentHistory.value.first.id),
               pageSize: 10,
               shrinkWrap: true,
+              reverse: true,
               physics: const NeverScrollableScrollPhysics(),
               loadingBuilder: (context) => const SkeletonCommentComponent(),
-              errorBuilder: (context, error, stackTrace) => _noResults(),
-              itemBuilder: (context, snapshot) {
-                Map<String, dynamic> data = CommentModel.toMap(snapshot.value);
-                return _list(data);
+              errorBuilder: (context, error, _) => _noResults(),
+              itemBuilder: (BuildContext context,
+                  QueryDocumentSnapshot<dynamic> snapshot) {
+                return _list(snapshot.data());
               },
             ),
           ],

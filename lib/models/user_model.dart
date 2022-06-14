@@ -152,6 +152,10 @@ class UserClass {
         return UserStatus.ACTIVE;
     }
   }
+
+  bool isLogin() {
+    return currentUser.value.isNotEmpty ? true : false;
+  }
 }
 
 enum UserStatus { ACTIVE, INACTIVE, DISABLED, DELETED }
