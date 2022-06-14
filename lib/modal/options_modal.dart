@@ -5,6 +5,7 @@ import 'package:universe_history_app/components/btn_confirm_component.dart';
 import 'package:universe_history_app/components/button_option_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/firestore/histories_firestore.dart';
+import 'package:universe_history_app/modal/create_history_modal.dart';
 import 'package:universe_history_app/services/firestore_database_service.dart';
 import 'package:universe_history_app/modal/input_comment_modal.dart';
 import 'package:universe_history_app/models/history_model.dart';
@@ -80,7 +81,13 @@ class _OptionsModalState extends State<OptionsModal> {
   void _edit(BuildContext context) {
     widget._type == 'comentário'
         ? _showModal(context)
-        : Navigator.of(context).pushNamed('/create');
+        : showCupertinoModalBottomSheet(
+            expand: true,
+            context: context,
+            barrierColor: Colors.black87,
+            duration: const Duration(milliseconds: 300),
+            builder: (context) => const CreateHistoryModal(),
+          );
   }
 
   void _delete(bool value) {
