@@ -235,7 +235,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
       if (currentUser.value.first.id != item) {
         _form = {
           'id': uuid.v4(),
-          'idUser': item,
+          'userId': item,
           'name': _textSigned ? currentUser.value.first.name : 'anônimo',
           'view': false,
           'contentId': currentHistory.value.first.id,

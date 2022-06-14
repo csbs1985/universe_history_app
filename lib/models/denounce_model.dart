@@ -1,7 +1,7 @@
 class DenounceModel {
   DenounceModel({
     required this.id,
-    required this.idUser,
+    required this.userId,
     required this.idDenounced,
     required this.nickDenounced,
     required this.code,
@@ -10,7 +10,7 @@ class DenounceModel {
   });
 
   late String id;
-  late String idUser;
+  late String userId;
   late String idDenounced;
   late String nickDenounced;
   late String code;

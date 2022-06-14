@@ -3,14 +3,14 @@ import 'dart:convert';
 class ActivitiesModel {
   late String id;
   late String date;
-  late String idUser;
+  late String userId;
   late String type;
   late String elementId;
   late String content;
 
   ActivitiesModel({
     required this.id,
-    required this.idUser,
+    required this.userId,
     required this.date,
     required this.type,
     required this.elementId,
@@ -22,7 +22,7 @@ class ActivitiesModel {
 
   factory ActivitiesModel.fromMap(Map<String, dynamic> json) => ActivitiesModel(
         id: json['id'],
-        idUser: json['idUser'],
+        userId: json['userId'],
         date: json['date'],
         type: json['type'],
         elementId: json['elementId'],
@@ -33,7 +33,7 @@ class ActivitiesModel {
 
   static Map<String, dynamic> toMap(activity) => {
         'id': activity['id'],
-        'idUser': activity['idUser'],
+        'userId': activity['userId'],
         'date': activity['date'],
         'type': activity['type'],
         'elementId': activity['elementId'],

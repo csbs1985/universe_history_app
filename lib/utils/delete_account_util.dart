@@ -32,7 +32,7 @@ class DeleteAccountUtil {
       _form = {
         'id': uuid.v4(),
         'date': DateTime.now().toString(),
-        'idUser': currentUser.value.first.id,
+        'userId': currentUser.value.first.id,
         'nicknameUser': currentUser.value.first.name,
         'idJustify': _justifySelected!.id,
         'titleJustify': _justifySelected!.title

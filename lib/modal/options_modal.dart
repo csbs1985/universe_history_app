@@ -18,13 +18,13 @@ class OptionsModal extends StatefulWidget {
   const OptionsModal(
     String id,
     String type,
-    String idUser,
+    String userId,
     String userName,
     String text,
     bool isDelete,
   )   : _id = id,
         _type = type,
-        _idUser = idUser,
+        _idUser = userId,
         _userName = userName,
         _text = text,
         _isDelete = isDelete;

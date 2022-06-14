@@ -42,7 +42,7 @@ class _DenouncePageState extends State<DenouncePage> {
     void _setDenounce(bool value) {
       _form = {
         'id': uuid.v4(),
-        'idUser': currentUser.value.first.id,
+        'userId': currentUser.value.first.id,
         'idDenounced': currentOwner.value.first.id,
         'nickDenounced': currentOwner.value.first.name,
         'code': justifySelected.id,
