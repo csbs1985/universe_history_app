@@ -48,12 +48,6 @@ class RealtimeDatabaseService {
         .set(currentUser.value.first.id);
   }
 
-  pathQtyHistoryUser(String _user) async {
-    await users
-        .child(_user)
-        .update({"qtyHistory": currentUser.value.first.qtyHistory});
-  }
-
   pathNotification() {
     return users
         .child(currentUser.value.first.id)

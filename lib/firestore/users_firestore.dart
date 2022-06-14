@@ -16,6 +16,10 @@ class UsersFirestore {
     return user.doc(_user.id).update({'qtyComment': _user.qtyComment});
   }
 
+  pathQtyHistoryUser(UserModel _user) async {
+    await user.doc(_user.id).update({"qtyHistory": _user.qtyHistory});
+  }
+
   ////////////
   getTokenOwner(String _user) {
     return user.where('id', isEqualTo: _user).get();

@@ -6,11 +6,11 @@ import 'package:universe_history_app/components/select_toggle_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/firestore/histories_firestore.dart';
+import 'package:universe_history_app/firestore/users_firestore.dart';
 import 'package:universe_history_app/models/category_model.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/services/auth_service.dart';
-import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:uuid/uuid.dart';
@@ -24,10 +24,10 @@ class CreateHistoryModal extends StatefulWidget {
 
 class _CreateHistoryModalState extends State<CreateHistoryModal> {
   final HistoryClass historyClass = HistoryClass();
-  final HistoriesFirestore historiesDb = HistoriesFirestore();
-  final RealtimeDatabaseService db = RealtimeDatabaseService();
+  final HistoriesFirestore historiesFirestore = HistoriesFirestore();
   final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
+  final UsersFirestore usersFirestore = UsersFirestore();
   final Uuid uuid = const Uuid();
 
   var scaffoldKey = GlobalKey<ScaffoldState>();
@@ -101,7 +101,7 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
     });
   }
 
-  Future<void> _publishHistory(BuildContext context) async {
+  Future<void> _postHistory(BuildContext context) async {
     FocusManager.instance.primaryFocus?.unfocus();
     currentDialog.value = 'Criando história...';
 
@@ -149,8 +149,8 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
     });
 
     try {
-      await historiesDb.postHistory(_history);
-      // _setUpQtyHistoryUser();
+      await historiesFirestore.postHistory(_history);
+      _pathQtyHistoryUser();
       Navigator.of(context).pop();
     } on AuthException catch (error) {
       debugPrint('ERROR => postNewHistory:' + error.toString());
@@ -159,26 +159,29 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
     }
   }
 
-  Future<void> _setUpQtyHistoryUser() async {
+  Future<void> _pathQtyHistoryUser() async {
     if (!isEdit) currentUser.value.first.qtyHistory++;
 
-    await db
-        .pathQtyHistoryUser(currentUser.value.first.id)
-        .then((value) => _success())
-        .catchError((error) =>
-            debugPrint('ERROR => _setUpQtyHistoryUser:' + error.toString()));
-  }
-
-  void _success() {
-    ActivityUtil(
-      isEdit ? ActivitiesEnum.NEW_HISTORY.name : ActivitiesEnum.UP_HISTORY.name,
-      titleController.text,
-      currentHistory.value.first.id,
-    );
-    if (currentHistory.value.isNotEmpty) Navigator.of(context).pop();
-    toast.toast(context, ToastEnum.SUCCESS.name,
-        isEdit ? 'Sua história foi alterada.' : 'Sua história foi publicada.');
-    Navigator.of(context).pop();
+    try {
+      await usersFirestore.pathQtyHistoryUser(currentUser.value.first);
+      ActivityUtil(
+        isEdit
+            ? ActivitiesEnum.NEW_HISTORY.name
+            : ActivitiesEnum.UP_HISTORY.name,
+        titleController.text,
+        _history['id'],
+      );
+      if (currentHistory.value.isNotEmpty) Navigator.of(context).pop();
+      toast.toast(
+          context,
+          ToastEnum.SUCCESS.name,
+          isEdit
+              ? 'Sua história foi alterada.'
+              : 'Sua história foi publicada.');
+      Navigator.of(context).pop();
+    } on AuthException catch (error) {
+      debugPrint('ERROR => pathQtyHistoryUser:' + error.toString());
+    }
   }
 
   @override
@@ -188,7 +191,7 @@ class _CreateHistoryModalState extends State<CreateHistoryModal> {
       appBar: AppbarComponent(
         btnBack: true,
         btnPublish: _btnPublish,
-        callback: (value) => _publishHistory(context),
+        callback: (value) => _postHistory(context),
       ),
       body: SingleChildScrollView(
         child: Column(
