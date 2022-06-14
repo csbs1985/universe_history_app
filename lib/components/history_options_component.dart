@@ -4,14 +4,13 @@ import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/icon_component.dart';
-import 'package:universe_history_app/core/variables.dart';
+import 'package:universe_history_app/firestore/histories_firestore.dart';
 import 'package:universe_history_app/modal/comment_modal.dart';
 import 'package:universe_history_app/modal/input_comment_modal.dart';
 import 'package:universe_history_app/modal/options_modal.dart';
 import 'package:universe_history_app/models/comment_model.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
-import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -31,8 +30,8 @@ class HistoryOptionsComponent extends StatefulWidget {
 }
 
 class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
-  final RealtimeDatabaseService db = RealtimeDatabaseService();
   final CommentClass commentClass = CommentClass();
+  final HistoriesFirestore historiesFirestore = HistoriesFirestore();
   final HistoryClass historyClass = HistoryClass();
 
   bool _showComments(int _qtyComment) {
@@ -75,19 +74,19 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
     );
   }
 
-  bool _getBookmark(String id) {
-    return currentBookmarks.value.contains(id) ? true : false;
+  bool _getBookmark(_history) {
+    return _history['bookmarks'].contains(currentUser.value.first.id)
+        ? true
+        : false;
   }
 
   void _toggleBookmark(_history) {
     setState(() {
-      if (currentBookmarks.value.contains(_history['id'])) {
-        currentBookmarks.value.remove(_history['id']);
-        db.deleteUserBookmark(_history);
-      } else {
-        currentBookmarks.value.add(_history['id']);
-        db.postUserBookmark(_history);
-      }
+      _history['bookmarks'].contains(currentUser.value.first.id)
+          ? _history['bookmarks'].remove(currentUser.value.first.id)
+          : _history['bookmarks'].add(currentUser.value.first.id);
+
+      historiesFirestore.pathBookmark(_history);
     });
   }
 
@@ -159,10 +158,10 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
                   ),
                 if (_showBookmark())
                   ValueListenableBuilder(
-                    valueListenable: currentBookmarks,
+                    valueListenable: currentHistory,
                     builder: (BuildContext context, value, __) {
                       return IconComponent(
-                        icon: _getBookmark(widget._history['id'])
+                        icon: _getBookmark(widget._history)
                             ? UiSvg.favorited
                             : UiSvg.favorite,
                         callback: (value) {

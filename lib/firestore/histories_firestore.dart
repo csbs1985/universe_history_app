@@ -20,6 +20,12 @@ class HistoriesFirestore {
         .update({'qtyComment': _history.qtyComment});
   }
 
+  pathBookmark(Map<String, dynamic> _history) {
+    return histories
+        .doc(_history['id'])
+        .update({'bookmarks': _history['bookmarks']});
+  }
+
   ////////////////
   getAllUserHistory() {
     return histories

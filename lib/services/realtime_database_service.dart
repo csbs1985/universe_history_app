@@ -33,14 +33,6 @@ class RealtimeDatabaseService {
     });
   }
 
-  deleteUserBookmark(_history) {
-    return histories
-        .child(_history['id'])
-        .child('bookmark')
-        .child(currentUser.value.first.id)
-        .remove();
-  }
-
   postUserBookmark(_history) {
     return histories
         .child(_history['id'])
