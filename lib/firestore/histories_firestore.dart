@@ -6,6 +6,10 @@ class HistoriesFirestore {
   CollectionReference histories =
       FirebaseFirestore.instance.collection('histories');
 
+  geHistory(String _idHistory) {
+    return histories.where('id', isEqualTo: _idHistory).snapshots();
+  }
+
   postHistory(Map<String, dynamic> _history) {
     return histories.doc(_history['id']).set(_history);
   }

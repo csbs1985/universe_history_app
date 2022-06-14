@@ -1,5 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterfire_ui/database.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/btn_comment_component.dart';
 import 'package:universe_history_app/components/comment_item_component.dart';
@@ -9,9 +9,9 @@ import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/resume_history_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
+import 'package:universe_history_app/firestore/histories_firestore.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
-import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -23,7 +23,7 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
-  final RealtimeDatabaseService db = RealtimeDatabaseService();
+  final HistoriesFirestore historiesFirestore = HistoriesFirestore();
   final HistoryClass historyClass = HistoryClass();
 
   double _getPaddingBottom(bool _isComment) {
@@ -36,23 +36,30 @@ class _HistoryPageState extends State<HistoryPage> {
 
     return Scaffold(
       appBar: const AppbarBackComponent(),
-      body: FirebaseDatabaseListView(
-        query: db.histories.orderByChild('id').equalTo(_idHistory),
-        reverse: true,
-        pageSize: 10,
-        physics: const NeverScrollableScrollPhysics(),
-        loadingBuilder: (context) => const SkeletonHistoryItemComponent(),
-        errorBuilder: (context, error, stackTrace) => _noResults(),
-        itemBuilder: (context, snapshot) {
-          Map<String, dynamic> data = HistoryModel.toMap(snapshot.value);
-          historyClass.selectHistory(data);
-          return _history(context, data);
+      body: StreamBuilder<QuerySnapshot>(
+        stream: historiesFirestore.geHistory(_idHistory),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return _noResults();
+            case ConnectionState.waiting:
+              return const SkeletonHistoryItemComponent();
+            case ConnectionState.done:
+            default:
+              try {
+                return _history(context, snapshot);
+              } catch (error) {
+                return _noResults();
+              }
+          }
         },
       ),
     );
   }
 
-  Widget _history(BuildContext context, Map<String, dynamic> _data) {
+  Widget _history(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    QueryDocumentSnapshot<dynamic> _data = snapshot.data!.docs[0];
+
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: Stack(
