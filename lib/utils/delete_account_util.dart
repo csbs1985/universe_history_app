@@ -33,7 +33,7 @@ class DeleteAccountUtil {
         'id': uuid.v4(),
         'date': DateTime.now().toString(),
         'userId': currentUser.value.first.id,
-        'nicknameUser': currentUser.value.first.name,
+        'userName': currentUser.value.first.name,
         'idJustify': _justifySelected!.id,
         'titleJustify': _justifySelected!.title
       };
