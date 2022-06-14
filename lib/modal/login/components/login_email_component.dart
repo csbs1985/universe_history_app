@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
+import 'package:universe_history_app/firebase/users_firebase.dart';
 import 'package:universe_history_app/modal/login/login_model.dart';
-import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_padding.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -15,8 +15,8 @@ class LoginEmailComponent extends StatefulWidget {
 
 class _LoginEmailComponentState extends State<LoginEmailComponent> {
   final LoginClass loginClass = LoginClass();
-  final RealtimeDatabaseService db = RealtimeDatabaseService();
   final TextEditingController emailController = TextEditingController();
+  final UsersFirebase usersFirebase = UsersFirebase();
 
   String _labelText = "digite seu email";
   final String _regx =
@@ -73,14 +73,14 @@ class _LoginEmailComponentState extends State<LoginEmailComponent> {
   }
 
   _checkEmailEmpty() async {
-    await db
+    await usersFirebase
         .getUserEmail(emailController.text)
         .then((result) => {
               setState(() {
-                if (result.exists) {
+                if (result.size > 0) {
                   _buttonText = loginButtonText.LOGIN.name;
                   _labelText =
-                      'encontrei "${result.children.single.value['name']}", se for você pode entrar!';
+                      'encontrei "${result.docs[0]['name']}", se for você pode entrar!';
                 } else {
                   _buttonText = loginButtonText.REGISTER.name;
                   _labelStyle = loginLabelStyle.WARNING.name;

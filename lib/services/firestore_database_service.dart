@@ -15,12 +15,6 @@ class FirestoreDatabaseService {
   CollectionReference denounce =
       FirebaseFirestore.instance.collection('denounces');
 
-  CollectionReference user = FirebaseFirestore.instance.collection('users');
-
-  getTokenOwner(String _user) {
-    return user.where('id', isEqualTo: _user).get();
-  }
-
   setBlock(Map<String, dynamic> _form) {
     return block.doc(_form['id']).set(_form);
   }
@@ -51,14 +45,6 @@ class FirestoreDatabaseService {
     return comment.where('id', isEqualTo: _id).get();
   }
 
-  getUser(String? _email) {
-    return user.where('email', isEqualTo: _email).get();
-  }
-
-  getNickName(String _nickname) {
-    return user.where('name', isEqualTo: _nickname).get();
-  }
-
   upNicknameComment(String _id) {
     return comment.doc(_id).update({'userName': currentUser.value.first.name});
   }
@@ -73,18 +59,7 @@ class FirestoreDatabaseService {
         .update({'isDelete': true});
   }
 
-  deleteUser(String _idUser) {
-    return user.doc(_idUser).delete();
-  }
-
   deleteBlock(String blocked) {
     return block.doc(blocked).delete();
-  }
-
-  upNickName() {
-    return user.doc(currentUser.value.first.id).update({
-      'name': currentUser.value.first.name,
-      'upDateName': currentUser.value.first.upDateName
-    });
   }
 }

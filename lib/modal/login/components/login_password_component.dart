@@ -5,10 +5,10 @@ import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/variables.dart';
+import 'package:universe_history_app/firebase/users_firebase.dart';
 import 'package:universe_history_app/modal/login/login_model.dart';
 import 'package:universe_history_app/services/auth_service.dart';
 import 'package:universe_history_app/models/user_model.dart';
-import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_padding.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
@@ -24,9 +24,9 @@ class LoginPasswordComponent extends StatefulWidget {
 class _LoginNickPageState extends State<LoginPasswordComponent> {
   final AuthService authService = AuthService();
   final LoginClass loginClass = LoginClass();
-  final RealtimeDatabaseService db = RealtimeDatabaseService();
   final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
+  final UsersFirebase usersFirebase = UsersFirebase();
   final Uuid uuid = const Uuid();
 
   final passwordController = TextEditingController();
@@ -39,6 +39,8 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
 
   bool _showButton = false;
   bool _hiddenPassword = true;
+
+  late Map<String, dynamic> _user;
 
   @override
   initState() {
@@ -117,7 +119,7 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
   }
 
   Future<void> _registerFirestore() async {
-    userClass.add({
+    _user = {
       'id': authService.user?.uid,
       'date': DateTime.now().toString(),
       'name': currentLoginName.value,
@@ -128,12 +130,13 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
       'isNotification': true,
       'qtyHistory': 0,
       'qtyComment': 0,
-    });
+    };
 
     currentDialog.value = 'Criando conta...';
 
     try {
-      await db.postNewUser(currentUser.value.first);
+      await usersFirebase.postUser(_user);
+      userClass.add(_user);
       ActivityUtil(
         ActivitiesEnum.NEW_NICKNAME.name,
         currentLoginName.value,

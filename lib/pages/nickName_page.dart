@@ -6,6 +6,7 @@ import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/firebase/histories_firebase.dart';
+import 'package:universe_history_app/firebase/users_firebase.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/services/firestore_database_service.dart';
@@ -27,6 +28,7 @@ class _NickNamePageState extends State<NickNamePage> {
   final TextEditingController _textController = TextEditingController();
   final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
+  final UsersFirebase usersFirebase = UsersFirebase();
 
   bool _isInputNotEmpty = false;
   bool _hasInput = true;
@@ -55,7 +57,7 @@ class _NickNamePageState extends State<NickNamePage> {
   }
 
   _validateupDateName() {
-    api.getUser(currentUser.value.first.email).then((result) {
+    usersFirebase.getUser(currentUser.value.first.email).then((result) {
       setState(() {
         var _days = qtyDays(result.docs.first['upDateName']);
 
@@ -98,8 +100,8 @@ class _NickNamePageState extends State<NickNamePage> {
       return;
     }
 
-    api
-        .getNickName(_textController.text)
+    usersFirebase
+        .getName(_textController.text)
         .then((result) => {
               setState(() {
                 if (result.size > 0) {
@@ -133,7 +135,7 @@ class _NickNamePageState extends State<NickNamePage> {
     currentUser.value.first.upDateName = DateTime.now().toString();
     currentDialog.value = 'Alterando nome de usuário...';
 
-    await api
+    await usersFirebase
         .upNickName()
         .then((result) => {
               _upAllHistory(),

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/logo_component.dart';
+import 'package:universe_history_app/firebase/users_firebase.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/services/auth_service.dart';
 import 'package:universe_history_app/services/realtime_database_service.dart';
@@ -19,6 +20,7 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   final RealtimeDatabaseService db = RealtimeDatabaseService();
   final UserClass _userClass = UserClass();
+  final UsersFirebase usersFirebase = UsersFirebase();
 
   @override
   void initState() {
@@ -26,29 +28,25 @@ class _SplashPageState extends State<SplashPage> {
 
     FirebaseAuth.instance.authStateChanges().listen((User? user) async {
       if (user != null) {
-        await _userClass.readUser().then((_user) async {
-          if (_user.isNotEmpty) _userClass.setFileUser(_user);
-
-          try {
-            await db
-                .getUserEmail(currentUser.value.first.email)
-                .then((result) => _userClass.add({
-                      'id': result.children.single.value['id'],
-                      'date': result.children.single.value['date'],
-                      'name': result.children.single.value['name'],
-                      'upDateName': result.children.single.value['upDateName'],
-                      'status': result.children.single.value['status'],
-                      'email': result.children.single.value['email'],
-                      'token': result.children.single.value['token'],
-                      'isNotification':
-                          result.children.single.value['isNotification'],
-                      'qtyHistory': result.children.single.value['qtyHistory'],
-                      'qtyComment': result.children.single.value['qtyComment'],
-                    }));
-          } on AuthException catch (error) {
-            debugPrint('ERROR => getUserEmail: ' + error.toString());
-          }
-        }).catchError((error) => debugPrint('ERROR => readUser: ' + error));
+        try {
+          await _userClass.readUser();
+          await usersFirebase
+              .getUserEmail(user.email)
+              .then((result) => _userClass.add({
+                    'id': result.docs[0]['id'],
+                    'date': result.docs[0]['date'],
+                    'name': result.docs[0]['name'],
+                    'upDateName': result.docs[0]['upDateName'],
+                    'status': result.docs[0]['status'],
+                    'email': result.docs[0]['email'],
+                    'token': result.docs[0]['token'],
+                    'isNotification': result.docs[0]['isNotification'],
+                    'qtyHistory': result.docs[0]['qtyHistory'],
+                    'qtyComment': result.docs[0]['qtyComment'],
+                  }));
+        } on AuthException catch (error) {
+          debugPrint('ERROR => getUserEmail: ' + error.toString());
+        }
       }
       Navigator.of(context).pushNamed("/home");
     });

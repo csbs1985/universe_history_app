@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:universe_history_app/components/button_3d_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
+import 'package:universe_history_app/firebase/users_firebase.dart';
 import 'package:universe_history_app/modal/login/login_model.dart';
-import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_padding.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -16,7 +16,7 @@ class LoginNameComponent extends StatefulWidget {
 
 class _LoginNameComponentState extends State<LoginNameComponent> {
   final LoginClass loginClass = LoginClass();
-  final RealtimeDatabaseService db = RealtimeDatabaseService();
+  final UsersFirebase usersFirebase = UsersFirebase();
 
   final nickController = TextEditingController();
 
@@ -51,11 +51,11 @@ class _LoginNameComponentState extends State<LoginNameComponent> {
   }
 
   _checkNameEmpty(String _nick) async {
-    await db
-        .getUserName(_nick)
+    await usersFirebase
+        .getName(_nick)
         .then((result) => {
               setState(() {
-                if (result.exists) {
+                if (result.size > 0) {
                   _labelText = 'nome de usuário indisponível';
                   _labelStyle = loginLabelStyle.WARNING.name;
                   _showButton = false;

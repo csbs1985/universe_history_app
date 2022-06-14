@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:universe_history_app/components/toast_component.dart';
+import 'package:universe_history_app/firebase/users_firebase.dart';
 import 'package:universe_history_app/services/firestore_database_service.dart';
 import 'package:universe_history_app/services/auth_service.dart';
 import 'package:universe_history_app/services/realtime_database_service.dart';
@@ -75,6 +76,7 @@ class UserClass {
   final AuthService authService = AuthService();
   final RealtimeDatabaseService db = RealtimeDatabaseService();
   final ToastComponent toast = ToastComponent();
+  final UsersFirebase usersFirebase = UsersFirebase();
 
   Future<void> clean(BuildContext context, String _status) async {
     try {
@@ -96,7 +98,7 @@ class UserClass {
   }
 
   Future<void> delete(BuildContext context) async {
-    await api
+    await usersFirebase
         .deleteUser(currentUser.value.first.id)
         .then((result) async => {
               await db.pathLogout(
@@ -121,11 +123,6 @@ class UserClass {
     saveUser();
   }
 
-  Future<File> getFileUser() async {
-    final directory = await getApplicationDocumentsDirectory();
-    return File('${directory.path}/user.json');
-  }
-
   Future<File> saveUser() async {
     String data = UserModel.toJson(currentUser.value.first);
     final file = await getFileUser();
@@ -137,13 +134,9 @@ class UserClass {
     return file.readAsString();
   }
 
-  void setFileUser(String file) {
-    try {
-      var json = jsonDecode(file);
-      add(json);
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+  Future<File> getFileUser() async {
+    final directory = await getApplicationDocumentsDirectory();
+    return File('${directory.path}/user.json');
   }
 
   UserStatus getUserStatus(String _status) {
