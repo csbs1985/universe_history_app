@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:universe_history_app/models/comment_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
 
 class FirestoreDatabaseService {
@@ -47,12 +46,6 @@ class FirestoreDatabaseService {
 
   upStatusUserComment(String _id) {
     return comment.doc(_id).update({'userStatus': UserStatus.DELETED.name});
-  }
-
-  deleteComment() {
-    return comment
-        .doc(currentComment.value.first.id)
-        .update({'isDelete': true});
   }
 
   deleteBlock(String blocked) {

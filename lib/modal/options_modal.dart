@@ -4,12 +4,13 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/btn_confirm_component.dart';
 import 'package:universe_history_app/components/button_option_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
+import 'package:universe_history_app/firestore/comments_firestore.dart';
 import 'package:universe_history_app/firestore/histories_firestore.dart';
 import 'package:universe_history_app/modal/create_history_modal.dart';
-import 'package:universe_history_app/services/firestore_database_service.dart';
 import 'package:universe_history_app/modal/input_comment_modal.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
+import 'package:universe_history_app/services/auth_service.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
@@ -42,7 +43,7 @@ class OptionsModal extends StatefulWidget {
 }
 
 class _OptionsModalState extends State<OptionsModal> {
-  final FirestoreDatabaseService api = FirestoreDatabaseService();
+  final CommentsFirestore commentsFirestore = CommentsFirestore();
   final HistoriesFirestore historiesFirestore = HistoriesFirestore();
   final ToastComponent toast = ToastComponent();
   final Uuid uuid = const Uuid();
@@ -98,19 +99,18 @@ class _OptionsModalState extends State<OptionsModal> {
 
   void _deleteComment(bool value) async {
     if (value) {
-      api
-          .deleteComment()
-          .then((result) => {
-                ActivityUtil(
-                  ActivitiesEnum.DELETE_COMMENT.name,
-                  widget._text,
-                  widget._userName,
-                ),
-                toast.toast(
-                    context, ToastEnum.SUCCESS.name, 'Comentário deletado!'),
-                Navigator.of(context).pop(),
-              })
-          .catchError((error) => debugPrint('ERROR:' + error.toString()));
+      try {
+        await commentsFirestore.deleteComment();
+        ActivityUtil(
+          ActivitiesEnum.DELETE_COMMENT.name,
+          widget._text,
+          widget._userName,
+        );
+        toast.toast(context, ToastEnum.SUCCESS.name, 'Comentário deletado!');
+        Navigator.of(context).pop();
+      } on AuthException catch (error) {
+        debugPrint('ERROR => deleteComment: ' + error.toString());
+      }
     }
 
     Navigator.of(context).pop();
@@ -136,25 +136,25 @@ class _OptionsModalState extends State<OptionsModal> {
   }
 
   void _setBlock(bool value) {
-    if (value) {
-      _form = {
-        'id': uuid.v4(),
-        'blockerId': currentUser.value.first.id,
-        'blockedId': widget._idUser,
-        'blockedNickName': widget._userName,
-        'date': DateTime.now().toString(),
-      };
+    // if (value) {
+    //   _form = {
+    //     'id': uuid.v4(),
+    //     'blockerId': currentUser.value.first.id,
+    //     'blockedId': widget._idUser,
+    //     'blockedNickName': widget._userName,
+    //     'date': DateTime.now().toString(),
+    //   };
 
-      api
-          .setBlock(_form)
-          .then((result) => {
-                toast.toast(
-                    context, ToastEnum.SUCCESS.name, 'Usuário bloqueado!'),
-                Navigator.of(context).pop(),
-              })
-          .catchError((error) => debugPrint('ERROR:' + error.toString()));
-    }
-    Navigator.of(context).pop();
+    //   api
+    //       .setBlock(_form)
+    //       .then((result) => {
+    //             toast.toast(
+    //                 context, ToastEnum.SUCCESS.name, 'Usuário bloqueado!'),
+    //             Navigator.of(context).pop(),
+    //           })
+    //       .catchError((error) => debugPrint('ERROR:' + error.toString()));
+    // }
+    // Navigator.of(context).pop();
   }
 
   void _setDenounce(bool value) {
@@ -201,8 +201,9 @@ class _OptionsModalState extends State<OptionsModal> {
                         icon: UiSvg.delete,
                         btnPrimaryLabel: 'Cancelar',
                         btnSecondaryLabel: 'Excluir',
-                        text:
-                            'Tem certeza de que deseja excluir esse comentário definitivamente?',
+                        text: 'Tem certeza de que deseja excluir ' +
+                            widget._type +
+                            ' definitivamente?',
                         callback: (value) => _delete(value),
                       ),
                     ),

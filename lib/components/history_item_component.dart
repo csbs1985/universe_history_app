@@ -43,7 +43,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
               ExpandableText(
                 widget._snapshot['text'],
                 style: UiTextStyle.text1,
-                expandText: 'continuar lendo',
+                expandText: 'ler tudo',
                 collapseText: 'fechar',
                 maxLines: 10,
                 linkColor: UiColor.first,
