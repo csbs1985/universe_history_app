@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/firestore/users_firestore.dart';
-import 'package:universe_history_app/services/firestore_database_service.dart';
 import 'package:universe_history_app/services/auth_service.dart';
 import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
@@ -72,7 +71,6 @@ class UserModel {
 }
 
 class UserClass {
-  final FirestoreDatabaseService api = FirestoreDatabaseService();
   final AuthService authService = AuthService();
   final RealtimeDatabaseService db = RealtimeDatabaseService();
   final ToastComponent toast = ToastComponent();

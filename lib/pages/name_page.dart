@@ -5,11 +5,11 @@ import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/variables.dart';
+import 'package:universe_history_app/firestore/comments_firestore.dart';
 import 'package:universe_history_app/firestore/histories_firestore.dart';
 import 'package:universe_history_app/firestore/users_firestore.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
-import 'package:universe_history_app/services/firestore_database_service.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -23,8 +23,8 @@ class NamePage extends StatefulWidget {
 }
 
 class _NickNamePageState extends State<NamePage> {
+  final CommentsFirestore commentsFirestore = CommentsFirestore();
   final HistoriesFirestore historiesFirestore = HistoriesFirestore();
-  final FirestoreDatabaseService api = FirestoreDatabaseService();
   final TextEditingController _textController = TextEditingController();
   final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
@@ -160,12 +160,12 @@ class _NickNamePageState extends State<NamePage> {
   Future<void> _upAllComment() async {
     currentDialog.value = 'Alterando nome de usuário nos comentários...';
 
-    await api
+    await commentsFirestore
         .getAllUserComment()
         .then((result) async => {
               if (result.size > 0)
                 for (var item in result.docs)
-                  await api.upNicknameComment(item['id']),
+                  await commentsFirestore.upNicknameComment(item['id']),
               ActivityUtil(ActivitiesEnum.UP_NICKNAME.name,
                   _textController.text, _oldName),
               toast.toast(
