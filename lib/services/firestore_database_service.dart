@@ -2,21 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:universe_history_app/models/user_model.dart';
 
 class FirestoreDatabaseService {
-  CollectionReference activitie =
-      FirebaseFirestore.instance.collection('activities');
   CollectionReference justification =
       FirebaseFirestore.instance.collection('justifications');
-  CollectionReference block = FirebaseFirestore.instance.collection('blocks');
-  CollectionReference bookmark =
-      FirebaseFirestore.instance.collection('bookmarks');
+
   CollectionReference comment =
       FirebaseFirestore.instance.collection('comments');
-  CollectionReference denounce =
-      FirebaseFirestore.instance.collection('denounces');
-
-  setDenounce(Map<String, dynamic> _form) {
-    return denounce.doc(_form['id']).set(_form);
-  }
 
   setJustify(Map<String, dynamic> _form) {
     return justification.doc(_form['id']).set(_form);
