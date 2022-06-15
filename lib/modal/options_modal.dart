@@ -4,6 +4,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/btn_confirm_component.dart';
 import 'package:universe_history_app/components/button_option_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
+import 'package:universe_history_app/firestore/blockeds_firestore.dart';
 import 'package:universe_history_app/firestore/comments_firestore.dart';
 import 'package:universe_history_app/firestore/histories_firestore.dart';
 import 'package:universe_history_app/modal/create_history_modal.dart';
@@ -43,6 +44,7 @@ class OptionsModal extends StatefulWidget {
 }
 
 class _OptionsModalState extends State<OptionsModal> {
+  final BlockedsFirestore blockedsFirestore = BlockedsFirestore();
   final CommentsFirestore commentsFirestore = CommentsFirestore();
   final HistoriesFirestore historiesFirestore = HistoriesFirestore();
   final ToastComponent toast = ToastComponent();
@@ -135,26 +137,25 @@ class _OptionsModalState extends State<OptionsModal> {
     Navigator.of(context).pop();
   }
 
-  void _setBlock(bool value) {
-    // if (value) {
-    //   _form = {
-    //     'id': uuid.v4(),
-    //     'blockerId': currentUser.value.first.id,
-    //     'blockedId': widget._idUser,
-    //     'blockedNickName': widget._userName,
-    //     'date': DateTime.now().toString(),
-    //   };
+  void _setBlock(bool value) async {
+    if (value) {
+      _form = {
+        'id': uuid.v4(),
+        'blockerId': currentUser.value.first.id,
+        'userId': widget._idUser,
+        'userName': widget._userName,
+        'date': DateTime.now().toString(),
+      };
 
-    //   api
-    //       .setBlock(_form)
-    //       .then((result) => {
-    //             toast.toast(
-    //                 context, ToastEnum.SUCCESS.name, 'Usuário bloqueado!'),
-    //             Navigator.of(context).pop(),
-    //           })
-    //       .catchError((error) => debugPrint('ERROR:' + error.toString()));
-    // }
-    // Navigator.of(context).pop();
+      try {
+        await blockedsFirestore.postBlock(_form);
+        toast.toast(context, ToastEnum.SUCCESS.name, 'Usuário bloqueado!');
+        Navigator.of(context).pop();
+      } on AuthException catch (error) {
+        debugPrint('ERROR => postBlock: ' + error.toString());
+      }
+    }
+    Navigator.of(context).pop();
   }
 
   void _setDenounce(bool value) {

@@ -49,6 +49,12 @@ class _MentionedModalState extends State<MentionedModal> {
   }
 
   @override
+  void dispose() {
+    _commentController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Material(
       color: UiColor.comp_1,
@@ -140,8 +146,7 @@ class _MentionedModalState extends State<MentionedModal> {
 
   Widget _noResults() {
     return const NoResultComponent(
-        text:
-            'Nenhum usuário encontrado ou você digitou o email ou usuário errado.');
+        text: 'Nenhum usuário encontrado ou você digitou o usuário incorreto.');
   }
 }
 

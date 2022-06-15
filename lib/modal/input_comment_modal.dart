@@ -299,6 +299,12 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
   }
 
   @override
+  void dispose() {
+    _commentController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Material(
       color: UiColor.comp_1,

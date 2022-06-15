@@ -6,39 +6,35 @@ import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/skeleton_blocked_componen.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
-import 'package:universe_history_app/services/firestore_database_service.dart';
+import 'package:universe_history_app/firestore/blockeds_firestore.dart';
 import 'package:universe_history_app/models/blocked_model.dart';
+import 'package:universe_history_app/services/auth_service.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
 
-class BlockedUsersPage extends StatefulWidget {
-  const BlockedUsersPage({Key? key}) : super(key: key);
+class BlockedPage extends StatefulWidget {
+  const BlockedPage({Key? key}) : super(key: key);
 
   @override
-  _BlockedUsersPageState createState() => _BlockedUsersPageState();
+  _BlockedPageState createState() => _BlockedPageState();
 }
 
-class _BlockedUsersPageState extends State<BlockedUsersPage> {
-  final FirestoreDatabaseService api = FirestoreDatabaseService();
+class _BlockedPageState extends State<BlockedPage> {
+  final BlockedsFirestore blockedsFirestore = BlockedsFirestore();
   final ToastComponent toast = ToastComponent();
 
-  String _numBlocked() {
-    if (currentBlockedQty.value == 1) return '1 usuário bloqueado';
-    if (currentBlockedQty.value > 1) {
-      return '${currentBlockedQty.value} usuários bloqueados';
+  Future<void> _unlockUser(QueryDocumentSnapshot<dynamic> blocked) async {
+    try {
+      await blockedsFirestore.deleteBlock(blocked['id']);
+      currentBlockedQty.value--;
+      toast.toast(
+        context,
+        ToastEnum.SUCCESS.name,
+        '${blocked['userName']} desbloqueado!',
+      );
+    } on AuthException catch (error) {
+      debugPrint('ERROR => deleteBlock: ' + error.toString());
     }
-    return 'Desbloquear usuário';
-  }
-
-  void _unlockUser(QueryDocumentSnapshot<dynamic> blocked) {
-    api
-        .deleteBlock(blocked['id'])
-        .then((result) => {
-              currentBlockedQty.value--,
-              toast.toast(context, ToastEnum.SUCCESS.name,
-                  '${blocked['blockedNickName']} desbloqueado!')
-            })
-        .catchError((error) => debugPrint('ERROR:' + error.toString()));
   }
 
   @override
@@ -54,11 +50,13 @@ class _BlockedUsersPageState extends State<BlockedUsersPage> {
               ValueListenableBuilder(
                   valueListenable: currentBlockedQty,
                   builder: (context, value, __) {
-                    return TitleResumeComponent(_numBlocked(),
-                        'Quando você bloqueia uma pessoa, este usuário não poderá mais ler suas histórias e comentários e comentar o que você escreve.');
+                    return const TitleResumeComponent(
+                      'Usuários bloqueados',
+                      'Quando você bloqueia uma pessoa, este usuário não poderá mais ler suas histórias e comentários e comentar o que você escreve.',
+                    );
                   }),
               StreamBuilder<QuerySnapshot>(
-                stream: api.getAllBlock(),
+                stream: blockedsFirestore.getAllBlock(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.data != null) {
@@ -88,10 +86,6 @@ class _BlockedUsersPageState extends State<BlockedUsersPage> {
     );
   }
 
-  Widget _noResults() {
-    return const NoResultComponent(text: 'Você não tem usuários bloqueados.');
-  }
-
   Widget _list(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     List<QueryDocumentSnapshot<dynamic>> documents = snapshot.data!.docs;
     return documents.isNotEmpty
@@ -110,7 +104,7 @@ class _BlockedUsersPageState extends State<BlockedUsersPage> {
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(documents[index]['blockedNickName'],
+                          Text(documents[index]['userName'],
                               style: UiTextStyle.text1),
                           Text(editDateUtil(documents[index]['date']),
                               style: UiTextStyle.text2)
@@ -129,5 +123,9 @@ class _BlockedUsersPageState extends State<BlockedUsersPage> {
             },
           )
         : _noResults();
+  }
+
+  Widget _noResults() {
+    return const NoResultComponent(text: 'Você não tem usuários bloqueados.');
   }
 }

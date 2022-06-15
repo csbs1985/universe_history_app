@@ -47,11 +47,12 @@ class _BtnCommentComponentState extends State<BtnCommentComponent> {
                     color: UiColor.comp_1,
                     width: double.infinity,
                     height: UiSize.input,
-                    child: const Padding(
-                      padding: EdgeInsets.fromLTRB(16, 12, 10, 10),
+                    padding: const EdgeInsets.only(left: 16),
+                    child: const Align(
+                      alignment: Alignment.centerLeft,
                       child: Text(
                         "Escrever comentário...",
-                        style: UiTextStyle.text2,
+                        style: UiTextStyle.text1,
                         textAlign: TextAlign.left,
                       ),
                     ),

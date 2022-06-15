@@ -14,23 +14,12 @@ class FirestoreDatabaseService {
   CollectionReference denounce =
       FirebaseFirestore.instance.collection('denounces');
 
-  setBlock(Map<String, dynamic> _form) {
-    return block.doc(_form['id']).set(_form);
-  }
-
   setDenounce(Map<String, dynamic> _form) {
     return denounce.doc(_form['id']).set(_form);
   }
 
   setJustify(Map<String, dynamic> _form) {
     return justification.doc(_form['id']).set(_form);
-  }
-
-  getAllBlock() {
-    return block
-        .orderBy('date')
-        .where('blockerId', isEqualTo: currentUser.value.first.id)
-        .snapshots();
   }
 
   getAllUserComment() {
@@ -46,9 +35,5 @@ class FirestoreDatabaseService {
 
   upStatusUserComment(String _id) {
     return comment.doc(_id).update({'userStatus': UserStatus.DELETED.name});
-  }
-
-  deleteBlock(String blocked) {
-    return block.doc(blocked).delete();
   }
 }
