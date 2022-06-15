@@ -12,13 +12,15 @@ import 'package:universe_history_app/components/menu_component.dart';
 import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
 import 'package:universe_history_app/core/variables.dart';
+import 'package:universe_history_app/firestore/blockeds_firestore.dart';
 import 'package:universe_history_app/firestore/histories_firestore.dart';
 import 'package:universe_history_app/modal/login/login_modal.dart';
 import 'package:universe_history_app/modal/login/login_model.dart';
-import 'package:universe_history_app/models/category_model.dart';
+import 'package:universe_history_app/models/blocked_model.dart';
 import 'package:universe_history_app/modal/create_history_modal.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
+import 'package:universe_history_app/services/auth_service.dart';
 import 'package:universe_history_app/services/local_notification_service.dart';
 import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
@@ -34,10 +36,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final BlockedClass blockedClass = BlockedClass();
+  final BlockedsFirestore blockedsFirestore = BlockedsFirestore();
   final HistoriesFirestore historiesFirestore = HistoriesFirestore();
   final LoginClass loginClass = LoginClass();
   final RealtimeDatabaseService db = RealtimeDatabaseService();
   final ScrollController _scrollController = ScrollController();
+
+  late QuerySnapshot<Map<String, dynamic>> allBlockeds;
 
   bool loading = false;
 
@@ -46,6 +52,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _checkNotifications();
     DeviceUtil();
+
     _getContent();
   }
 
@@ -55,7 +62,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _getContent() {
-    String value = menuItemSelected.value.id!;
+    String value = currentMenuSelected.value.id!;
 
     if (value != FilterHistoryEnum.todas.name &&
         value != FilterHistoryEnum.minhas.name &&
@@ -64,20 +71,26 @@ class _HomePageState extends State<HomePage> {
           .orderBy('date')
           .where('categories', arrayContainsAny: [value]);
     }
-
     if (value == FilterHistoryEnum.minhas.name) {
       return historiesFirestore.histories
           .orderBy('date')
           .where('userId', isEqualTo: currentUser.value.first.id);
     }
-
     if (value == FilterHistoryEnum.salvas.name) {
       return historiesFirestore.histories
           .orderBy('date')
           .where('bookmarks', arrayContainsAny: [currentUser.value.first.id]);
     }
-
     return historiesFirestore.histories.orderBy('date');
+  }
+
+  _getBlockeds() async {
+    try {
+      allBlockeds = await blockedsFirestore.getAllBlockedsHistories();
+      if (allBlockeds.size > 0) blockedClass.add(allBlockeds.docs[0].data());
+    } on AuthException catch (error) {
+      debugPrint('ERROR => getAllBlock: ' + error.toString());
+    }
   }
 
   void _scrollToTop() {
@@ -192,7 +205,13 @@ class _HomePageState extends State<HomePage> {
               children: [
                 MenuComponent(),
                 const SizedBox(height: 10),
-                _list(),
+                ValueListenableBuilder(
+                  valueListenable: currentBlockeds,
+                  builder: (BuildContext context, value, __) {
+                    _getBlockeds();
+                    return _list();
+                  },
+                ),
               ],
             ),
           ),
@@ -202,8 +221,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _list() {
-    return ValueListenableBuilder<CategoryModel>(
-      valueListenable: menuItemSelected,
+    return ValueListenableBuilder(
+      valueListenable: currentMenuSelected,
       builder: (BuildContext context, value, __) {
         return FirestoreListView(
           query: _getContent(),
@@ -216,6 +235,10 @@ class _HomePageState extends State<HomePage> {
           errorBuilder: (context, error, _) => _noResults(),
           itemBuilder:
               (BuildContext context, QueryDocumentSnapshot<dynamic> snapshot) {
+            if (currentBlockeds.value.isNotEmpty &&
+                (currentBlockeds.value.first.userId ==
+                    snapshot.data()['userId'])) return Container();
+
             return HistoryItemComponent(snapshot: snapshot.data());
           },
         );

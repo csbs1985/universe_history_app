@@ -20,13 +20,16 @@ class BlockedPage extends StatefulWidget {
 }
 
 class _BlockedPageState extends State<BlockedPage> {
+  final BlockedClass blockedClass = BlockedClass();
   final BlockedsFirestore blockedsFirestore = BlockedsFirestore();
   final ToastComponent toast = ToastComponent();
 
   Future<void> _unlockUser(QueryDocumentSnapshot<dynamic> blocked) async {
     try {
       await blockedsFirestore.deleteBlock(blocked['id']);
-      currentBlockedQty.value--;
+
+      currentBlockeds.value;
+
       toast.toast(
         context,
         ToastEnum.SUCCESS.name,
@@ -47,23 +50,14 @@ class _BlockedPageState extends State<BlockedPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ValueListenableBuilder(
-                  valueListenable: currentBlockedQty,
-                  builder: (context, value, __) {
-                    return const TitleResumeComponent(
-                      'Usuários bloqueados',
-                      'Quando você bloqueia uma pessoa, este usuário não poderá mais ler suas histórias e comentários e comentar o que você escreve.',
-                    );
-                  }),
+              const TitleResumeComponent(
+                'Usuários bloqueados',
+                'Quando você bloqueia uma pessoa, este usuário não poderá mais ler suas histórias e comentários e comentar o que você escreve.',
+              ),
               StreamBuilder<QuerySnapshot>(
-                stream: blockedsFirestore.getAllBlock(),
+                stream: blockedsFirestore.getAllBlockeds(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.data != null) {
-                    WidgetsBinding.instance!.addPostFrameCallback((_) {
-                      currentBlockedQty.value = snapshot.data!.size;
-                    });
-                  }
                   switch (snapshot.connectionState) {
                     case ConnectionState.none:
                       return _noResults();
@@ -88,6 +82,9 @@ class _BlockedPageState extends State<BlockedPage> {
 
   Widget _list(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     List<QueryDocumentSnapshot<dynamic>> documents = snapshot.data!.docs;
+    // Map<String, dynamic> blockeds = snapshot.data!.docs as Map<String, dynamic>;
+
+    // blockedClass.add(blockeds);
     return documents.isNotEmpty
         ? ListView.builder(
             shrinkWrap: true,

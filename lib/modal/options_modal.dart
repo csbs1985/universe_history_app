@@ -209,6 +209,12 @@ class _OptionsModalState extends State<OptionsModal> {
                       ),
                     ),
                   if (_canBlock())
+                    ButtonOptionComponent(
+                      label: 'Denunciar ' + widget._userName,
+                      icon: UiSvg.delate,
+                      callback: (value) => _setDenounce(value),
+                    ),
+                  if (_canBlock())
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
                       child: BtnConfirmComponent(
@@ -220,12 +226,6 @@ class _OptionsModalState extends State<OptionsModal> {
                             'Tem certeza de que deseja bloquear este usuário?',
                         callback: (value) => _setBlock(value),
                       ),
-                    ),
-                  if (_canBlock())
-                    ButtonOptionComponent(
-                      label: 'Denunciar ' + widget._userName,
-                      icon: UiSvg.delate,
-                      callback: (value) => _setDenounce(value),
                     ),
                 ],
               ),

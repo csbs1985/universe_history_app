@@ -9,11 +9,18 @@ class BlockedsFirestore {
     return blockeds.doc(blocked).delete();
   }
 
-  getAllBlock() {
+  getAllBlockeds() {
     return blockeds
         .orderBy('date')
         .where('blockerId', isEqualTo: currentUser.value.first.id)
         .snapshots();
+  }
+
+  getAllBlockedsHistories() {
+    return blockeds
+        .orderBy('date')
+        .where('blockerId', isEqualTo: currentUser.value.first.id)
+        .get();
   }
 
   postBlock(Map<String, dynamic> _form) {
