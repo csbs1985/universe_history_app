@@ -37,7 +37,7 @@ class _HistoryPageState extends State<HistoryPage> {
     return Scaffold(
       appBar: const AppbarBackComponent(),
       body: StreamBuilder<QuerySnapshot>(
-        stream: historiesFirestore.geHistory(_idHistory),
+        stream: historiesFirestore.getHistory(_idHistory),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -59,6 +59,7 @@ class _HistoryPageState extends State<HistoryPage> {
 
   Widget _history(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     QueryDocumentSnapshot<dynamic> _data = snapshot.data!.docs[0];
+
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: Stack(

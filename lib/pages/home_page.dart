@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
     if (value == FilterHistoryEnum.minhas.name) {
       return historiesFirestore.histories
           .orderBy('date')
-          .where('userId', arrayContains: currentUser.value.first.id);
+          .where('userId', isEqualTo: currentUser.value.first.id);
     }
 
     if (value == FilterHistoryEnum.salvas.name) {

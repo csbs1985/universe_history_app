@@ -15,7 +15,7 @@ class TitleResumeComponent extends StatelessWidget {
       children: [
         Text(
           title,
-          style: UiTextStyle.header2,
+          style: UiTextStyle.title1,
         ),
         const SizedBox(height: 4),
         ResumeComponent(resume: resume),
