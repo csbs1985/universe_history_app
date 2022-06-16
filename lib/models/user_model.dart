@@ -5,7 +5,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/firestore/users_firestore.dart';
 import 'package:universe_history_app/services/auth_service.dart';
-import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/utils/device_util.dart';
 
@@ -72,22 +71,24 @@ class UserModel {
 
 class UserClass {
   final AuthService authService = AuthService();
-  final RealtimeDatabaseService db = RealtimeDatabaseService();
   final ToastComponent toast = ToastComponent();
   final UsersFirestore usersFirestore = UsersFirestore();
 
   Future<void> clean(BuildContext context, String _status) async {
     try {
+      await usersFirestore.pathLogout(UserStatus.INACTIVE.name);
       await authService.logout();
-      await db.pathLogout(
-        currentUser.value.first.id,
+      ActivityUtil(
+        ActivitiesEnum.LOGOUT.name,
+        DeviceModel(),
         '',
-        UserStatus.INACTIVE.name,
       );
-      ActivityUtil(ActivitiesEnum.LOGOUT.name, DeviceModel(), '');
       currentUser.value = [];
-      toast.toast(context, ToastEnum.SUCCESS.name,
-          'espero que isso não seja um adeus!');
+      toast.toast(
+        context,
+        ToastEnum.SUCCESS.name,
+        'espero que isso não seja um adeus!',
+      );
     } catch (error) {
       debugPrint('ERROR => _setUpQtyHistoryUser:' + error.toString());
       toast.toast(context, ToastEnum.WARNING.name,
@@ -96,23 +97,20 @@ class UserClass {
   }
 
   Future<void> delete(BuildContext context) async {
-    await usersFirestore
-        .deleteUser(currentUser.value.first.id)
-        .then((result) async => {
-              await db.pathLogout(
-                currentUser.value.first.id,
-                '',
-                UserStatus.DELETED.name,
-              ),
-              await authService.delete(),
-              currentUser.value = [],
-            })
-        .catchError((error) {
+    try {
+      await usersFirestore.deleteUser(currentUser.value.first.id);
+      await usersFirestore.pathLogout(UserStatus.DELETED.name);
+      await authService.delete();
+      currentUser.value = [];
+    } on AuthException catch (error) {
+      debugPrint('ERROR => deleteUser: ' + error.toString());
       Navigator.of(context).pop();
-      debugPrint('ERROR:' + error.toString());
-      toast.toast(context, ToastEnum.WARNING.name,
-          'não foi possível delatar a conta no momento, tente novamente mais tarde.');
-    });
+      toast.toast(
+        context,
+        ToastEnum.WARNING.name,
+        'não foi possível delatar a conta no momento, tente novamente mais tarde.',
+      );
+    }
   }
 
   void add(Map<String, dynamic> _user) {

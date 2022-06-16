@@ -26,13 +26,6 @@ class RealtimeDatabaseService {
     return token;
   }
 
-  pathLogout(String user, String token, String status) async {
-    await users.child(user).update({
-      "status": status,
-      "token": token,
-    });
-  }
-
   postUserBookmark(_history) {
     return histories
         .child(_history['id'])

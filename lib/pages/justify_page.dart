@@ -70,7 +70,8 @@ class _JustifyPageState extends State<JustifyPage> {
                   style: ButtonStyleEnum.PRIMARY,
                   size: ButtonSizeEnum.LARGE,
                   callback: (value) => _showDialog(context),
-                )
+                ),
+              const SizedBox(height: 20),
             ],
           ),
         ),

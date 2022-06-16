@@ -24,6 +24,7 @@ linter:
   rules:
     constant_identifier_names: false
     curly_braces_in_flow_control_structures: false
+    file_names: false
     unrelated_type_equality_checks: true
     use_key_in_widget_constructors: false
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule

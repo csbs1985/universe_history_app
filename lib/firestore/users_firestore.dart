@@ -19,6 +19,13 @@ class UsersFirestore {
     });
   }
 
+  pathLogout(String _status) {
+    return user.doc(currentUser.value.first.id).update({
+      "status": _status,
+      "token": '',
+    });
+  }
+
   pathQtyCommentUser(UserModel _user) {
     return user.doc(_user.id).update({'qtyComment': _user.qtyComment});
   }
