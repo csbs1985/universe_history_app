@@ -4,8 +4,8 @@ import 'package:universe_history_app/models/user_model.dart';
 class UsersFirestore {
   CollectionReference user = FirebaseFirestore.instance.collection('users');
 
-  postUser(Map<String, dynamic> _user) {
-    return user.doc(_user['id']).set(_user);
+  deleteUser() {
+    return user.doc(currentUser.value.first.id).delete();
   }
 
   getUserEmail(String? _email) {
@@ -19,10 +19,10 @@ class UsersFirestore {
     });
   }
 
-  pathLogout(String _status) {
+  pathLoginLogout(String _status, {String? token}) {
     return user.doc(currentUser.value.first.id).update({
       "status": _status,
-      "token": '',
+      "token": token ?? '',
     });
   }
 
@@ -32,6 +32,10 @@ class UsersFirestore {
 
   pathQtyHistoryUser(UserModel _user) async {
     await user.doc(_user.id).update({"qtyHistory": _user.qtyHistory});
+  }
+
+  postUser(Map<String, dynamic> _user) {
+    return user.doc(_user['id']).set(_user);
   }
 
   ////////////
@@ -45,9 +49,5 @@ class UsersFirestore {
 
   getName(String _nickname) {
     return user.where('name', isEqualTo: _nickname).get();
-  }
-
-  deleteUser(String _idUser) {
-    return user.doc(_idUser).delete();
   }
 }

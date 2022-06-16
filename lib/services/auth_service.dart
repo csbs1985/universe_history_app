@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:universe_history_app/firestore/token_firestore.dart';
+import 'package:universe_history_app/firestore/users_firestore.dart';
 import 'package:universe_history_app/models/user_model.dart';
-import 'package:universe_history_app/services/realtime_database_service.dart';
 
 class AuthException implements Exception {
   String message;
@@ -9,7 +10,8 @@ class AuthException implements Exception {
 }
 
 class AuthService extends ChangeNotifier {
-  final RealtimeDatabaseService db = RealtimeDatabaseService();
+  final TokenFirestore tokenFirestore = TokenFirestore();
+  final UsersFirestore usersFirestore = UsersFirestore();
 
   FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -45,33 +47,34 @@ class AuthService extends ChangeNotifier {
   }
 
   getToken() async {
-    await db
+    await tokenFirestore
         .getToken()
-        .then((String result) => {
-              token = result,
-            })
+        .then((String result) => token = result)
         .catchError((error) => debugPrint('ERROR => getToken:' + error));
   }
 
   setToken() async {
     await getToken();
-    await db
+    await usersFirestore
         .getUserEmail(auth.currentUser!.email!)
         .then((_user) async => {
               UserClass().add({
-                'id': _user.children.single.value['id'],
-                'date': _user.children.single.value['date'],
-                'name': _user.children.single.value['name'],
-                'upDateName': _user.children.single.value['upDateName'],
-                'status': _user.children.single.value['status'],
-                'email': _user.children.single.value['email'],
-                'token': _user.children.single.value['token'],
-                'isNotification': _user.children.single.value['isNotification'],
-                'qtyHistory': _user.children.single.value['qtyHistory'],
-                'qtyComment': _user.children.single.value['qtyComment'],
+                'id': _user.docs[0]['id'],
+                'date': _user.docs[0]['date'],
+                'name': _user.docs[0]['name'],
+                'upDateName': _user.docs[0]['upDateName'],
+                'status': UserStatus.ACTIVE.name,
+                'email': _user.docs[0]['email'],
+                'token': token,
+                'isNotification': _user.docs[0]['isNotification'],
+                'qtyHistory': _user.docs[0]['qtyHistory'],
+                'qtyComment': _user.docs[0]['qtyComment'],
               }),
               if (token != null && currentUser.value.isNotEmpty)
-                await db.pathToken(currentUser.value.first.id, token: token)
+                await usersFirestore.pathLoginLogout(
+                  UserStatus.ACTIVE.name,
+                  token: token,
+                )
             })
         .catchError((error) => debugPrint('ERROR => setToken:' + error));
   }

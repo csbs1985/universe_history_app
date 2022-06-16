@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print, invalid_return_type_for_catch_error
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
 
@@ -12,18 +11,12 @@ class RealtimeDatabaseService {
 
   DatabaseReference users = FirebaseDatabase.instance.ref('users');
 
-  Future<String?> token = FirebaseMessaging.instance.getToken();
-
   getUserEmail(String _email) async {
     return await users.orderByChild('email').equalTo(_email).get();
   }
 
   getUserName(String _name) async {
     return await users.orderByChild('name').equalTo(_name).get();
-  }
-
-  getToken() {
-    return token;
   }
 
   postUserBookmark(_history) {
@@ -37,10 +30,6 @@ class RealtimeDatabaseService {
     return users
         .child(currentUser.value.first.id)
         .update({'isNotification': currentUser.value.first.isNotification});
-  }
-
-  pathToken(_user, {String? token}) async {
-    await users.child(_user).update({"token": token ?? ''});
   }
 
   postNewActivity(Map<String, dynamic> _activity) {

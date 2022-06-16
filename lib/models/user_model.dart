@@ -76,7 +76,7 @@ class UserClass {
 
   Future<void> clean(BuildContext context, String _status) async {
     try {
-      await usersFirestore.pathLogout(UserStatus.INACTIVE.name);
+      await usersFirestore.pathLoginLogout(UserStatus.INACTIVE.name);
       await authService.logout();
       ActivityUtil(
         ActivitiesEnum.LOGOUT.name,
@@ -98,8 +98,8 @@ class UserClass {
 
   Future<void> delete(BuildContext context) async {
     try {
-      await usersFirestore.deleteUser(currentUser.value.first.id);
-      await usersFirestore.pathLogout(UserStatus.DELETED.name);
+      await usersFirestore.pathLoginLogout(UserStatus.DELETED.name);
+      await usersFirestore.deleteUser();
       await authService.delete();
       currentUser.value = [];
     } on AuthException catch (error) {

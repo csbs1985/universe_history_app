@@ -5,6 +5,7 @@ import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/variables.dart';
+import 'package:universe_history_app/firestore/token_firestore.dart';
 import 'package:universe_history_app/firestore/users_firestore.dart';
 import 'package:universe_history_app/modal/login/login_model.dart';
 import 'package:universe_history_app/services/auth_service.dart';
@@ -25,6 +26,7 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
   final AuthService authService = AuthService();
   final LoginClass loginClass = LoginClass();
   final ToastComponent toast = ToastComponent();
+  final TokenFirestore tokenFirestore = TokenFirestore();
   final UserClass userClass = UserClass();
   final UsersFirestore usersFirestore = UsersFirestore();
   final Uuid uuid = const Uuid();
@@ -92,7 +94,11 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
         currentLoginEmail.value,
         passwordController.text,
       );
-      toast.toast(context, ToastEnum.SUCCESS.name, 'bem vindo de volta.');
+      toast.toast(
+        context,
+        ToastEnum.SUCCESS.name,
+        'bem vindo de volta.',
+      );
     } on AuthException catch (e) {
       setState(() {
         _labelStyle = loginLabelStyle.WARNING.name;
