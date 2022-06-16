@@ -12,23 +12,23 @@ class CommentsFirestore {
         .update({'isDelete': true});
   }
 
-  getComment(String _id) {
-    return comments.where('id', isEqualTo: _id).get();
-  }
-
-  postComment(Map<String, dynamic> _comment) {
-    return comments.doc(_comment['id']).set(_comment);
-  }
-
-  getAllUserComment() {
+  getAllCommentUser() {
     return comments
         .orderBy('date')
         .where('userId', isEqualTo: currentUser.value.first.id)
         .get();
   }
 
-  upNicknameComment(String _id) {
+  getComment(String _id) {
+    return comments.where('id', isEqualTo: _id).get();
+  }
+
+  pathNameUserComment(String _id) {
     return comments.doc(_id).update({'userName': currentUser.value.first.name});
+  }
+
+  postComment(Map<String, dynamic> _comment) {
+    return comments.doc(_comment['id']).set(_comment);
   }
 
   upStatusUserComment(String _id) {

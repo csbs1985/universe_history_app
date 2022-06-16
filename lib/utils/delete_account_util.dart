@@ -55,7 +55,7 @@ class DeleteAccountUtil {
 
   Future<void> _deletetAllHistory(BuildContext context) async {
     await historiesFirestore
-        .getAllUserHistory()
+        .getAllHistoryUser()
         .then((result) async => {
               if (result.size > 0)
                 currentDialog.value = 'Deletando histórias...',
@@ -68,7 +68,7 @@ class DeleteAccountUtil {
 
   _upAllComment(BuildContext context) async {
     await commentsFirestore
-        .getAllUserComment()
+        .getAllCommentUser()
         .then((result) async => {
               if (result.size > 0)
                 currentDialog.value = 'Atualizando comentários...',

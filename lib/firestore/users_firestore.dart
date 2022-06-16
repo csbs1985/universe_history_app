@@ -12,6 +12,13 @@ class UsersFirestore {
     return user.where('email', isEqualTo: _email).get();
   }
 
+  pathName() {
+    return user.doc(currentUser.value.first.id).update({
+      'name': currentUser.value.first.name,
+      'upDateName': currentUser.value.first.upDateName
+    });
+  }
+
   pathQtyCommentUser(UserModel _user) {
     return user.doc(_user.id).update({'qtyComment': _user.qtyComment});
   }
@@ -31,13 +38,6 @@ class UsersFirestore {
 
   getName(String _nickname) {
     return user.where('name', isEqualTo: _nickname).get();
-  }
-
-  upNickName() {
-    return user.doc(currentUser.value.first.id).update({
-      'name': currentUser.value.first.name,
-      'upDateName': currentUser.value.first.upDateName
-    });
   }
 
   deleteUser(String _idUser) {
