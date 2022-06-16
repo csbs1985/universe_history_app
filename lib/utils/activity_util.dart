@@ -1,11 +1,11 @@
 // ignore_for_file: non_constant_identifier_names, prefer_const_constructors
 
+import 'package:universe_history_app/firestore/activities_firestore.dart';
 import 'package:universe_history_app/models/user_model.dart';
-import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:uuid/uuid.dart';
 
 ActivityUtil(String type, String content, String elementId) async {
-  final RealtimeDatabaseService db = RealtimeDatabaseService();
+  final ActivitiesFirestore activitiesFirestore = ActivitiesFirestore();
   final Uuid uuid = Uuid();
 
   late Map<String, dynamic> _activity;
@@ -19,7 +19,7 @@ ActivityUtil(String type, String content, String elementId) async {
     'userId': currentUser.value.first.id,
   };
 
-  await db.postNewActivity(_activity);
+  await activitiesFirestore.postActivity(_activity);
 }
 
 enum ActivitiesEnum {
