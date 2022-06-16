@@ -8,11 +8,12 @@ import 'package:universe_history_app/components/select_toggle_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
+import 'package:universe_history_app/firestore/users_firestore.dart';
 import 'package:universe_history_app/modal/login/login_modal.dart';
 import 'package:universe_history_app/modal/login/login_model.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
-import 'package:universe_history_app/services/realtime_database_service.dart';
+import 'package:universe_history_app/services/auth_service.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 
@@ -25,8 +26,8 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   final LoginClass loginClass = LoginClass();
-  final RealtimeDatabaseService db = RealtimeDatabaseService();
   final UserClass userClass = UserClass();
+  final UsersFirestore usersFirestore = UsersFirestore();
 
   @override
   void initState() {
@@ -43,8 +44,16 @@ class _SettingsPageState extends State<SettingsPage> {
         currentUser.value.first.isNotification.toString(),
         '',
       );
-      db.pathNotification();
+      _pathNotification();
     });
+  }
+
+  Future<void> _pathNotification() async {
+    try {
+      await usersFirestore.pathNotification();
+    } on AuthException catch (error) {
+      debugPrint('ERROR => pathNotification: ' + error.toString());
+    }
   }
 
   Future<void> goLogout(bool value) async {

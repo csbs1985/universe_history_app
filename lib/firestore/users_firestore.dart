@@ -12,6 +12,12 @@ class UsersFirestore {
     return user.where('email', isEqualTo: _email).get();
   }
 
+  pathNotification() {
+    return user
+        .doc(currentUser.value.first.id)
+        .update({'isNotification': currentUser.value.first.isNotification});
+  }
+
   pathName() {
     return user.doc(currentUser.value.first.id).update({
       'name': currentUser.value.first.name,
