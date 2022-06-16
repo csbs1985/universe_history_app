@@ -4,7 +4,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:universe_history_app/models/user_model.dart';
 
 class RealtimeDatabaseService {
-  DatabaseReference activities = FirebaseDatabase.instance.ref('activities');
   DatabaseReference comments = FirebaseDatabase.instance.ref('comments');
   DatabaseReference histories = FirebaseDatabase.instance.ref('histories');
 

@@ -1,6 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterfire_ui/database.dart';
+import 'package:flutterfire_ui/firestore.dart';
 import 'package:universe_history_app/components/appbar_back_component.dart';
+import 'package:universe_history_app/components/resume_component.dart';
+import 'package:universe_history_app/firestore/activities_firestore.dart';
+import 'package:universe_history_app/firestore/users_firestore.dart';
+import 'package:universe_history_app/components/no_history_component.dart';
+import 'package:universe_history_app/components/skeleton_activity_componen.dart';
+import 'package:universe_history_app/components/title_resume_component.dart';
+import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/pages/activiti/components/item_login_logout_component.dart';
 import 'package:universe_history_app/pages/activiti/components/item_new_account_component.dart';
 import 'package:universe_history_app/pages/activiti/components/item_new_comment_component.dart';
@@ -11,13 +19,6 @@ import 'package:universe_history_app/pages/activiti/components/item_temporarily_
 import 'package:universe_history_app/pages/activiti/components/item_up_block_component.dart';
 import 'package:universe_history_app/pages/activiti/components/item_up_history_component.dart';
 import 'package:universe_history_app/pages/activiti/components/item_up_nickName_component.dart';
-import 'package:universe_history_app/components/no_history_component.dart';
-import 'package:universe_history_app/components/resume_component.dart';
-import 'package:universe_history_app/components/skeleton_activity_componen.dart';
-import 'package:universe_history_app/components/title_resume_component.dart';
-import 'package:universe_history_app/models/activities_model.dart';
-import 'package:universe_history_app/models/user_model.dart';
-import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
 
@@ -29,21 +30,25 @@ class ActivitiesPage extends StatefulWidget {
 }
 
 class _ActivitiesPageState extends State<ActivitiesPage> {
-  final RealtimeDatabaseService db = RealtimeDatabaseService();
+  final ActivitiesFirestore activitiesFirestore = ActivitiesFirestore();
+  final UsersFirestore usersFirestore = UsersFirestore();
 
   String _qtyHistory = 'nenhuma história';
   String _qtyComment = 'nenhum comentário';
 
   _getResume() {
-    db.getUserEmail(currentUser.value.first.email).then((result) => {
-          if (result.docs.first['qtyHistory'] == 1) _qtyHistory = '1 história',
-          if (result.docs.first['qtyHistory'] > 1)
-            _qtyHistory = '${result.docs.first['qtyHistory']} histórias',
-          if (result.docs.first['qtyComment'] == 1)
-            _qtyComment = '1 comentário',
-          if (result.docs.first['qtyComment'] > 1)
-            _qtyComment = '${result.docs.first['qtyComment']} comentários',
-        });
+    usersFirestore
+        .getUserEmail(currentUser.value.first.email)
+        .then((result) => {
+              if (result.docs.first['qtyHistory'] == 1)
+                _qtyHistory = '1 história',
+              if (result.docs.first['qtyHistory'] > 1)
+                _qtyHistory = '${result.docs.first['qtyHistory']} histórias',
+              if (result.docs.first['qtyComment'] == 1)
+                _qtyComment = '1 comentário',
+              if (result.docs.first['qtyComment'] > 1)
+                _qtyComment = '${result.docs.first['qtyComment']} comentários',
+            });
 
     return _qtyHistory + ' · ' + _qtyComment;
   }
@@ -63,53 +68,49 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
                 _getResume(),
               ),
             ),
-            FirebaseDatabaseListView(
-              query: db.activities
-                  .orderByChild('userId')
-                  .equalTo(currentUser.value.first.id),
+            FirestoreListView(
+              query: activitiesFirestore.activities
+                  .orderBy('date', descending: true)
+                  .where('userId', isEqualTo: currentUser.value.first.id),
               pageSize: 10,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               loadingBuilder: (context) => const SkeletonActivityComponent(),
               errorBuilder: (context, error, stackTrace) => _noResults(),
-              itemBuilder: (context, snapshot) {
-                Map<String, dynamic> _item =
-                    ActivitiesModel.toMap(snapshot.value);
-
-                ActivitiesEnum content = ActivitiesEnum.values
-                    .firstWhere((e) => e.name.toString() == _item['type']);
-
+              itemBuilder: (BuildContext context,
+                  QueryDocumentSnapshot<dynamic> snapshot) {
+                String content = snapshot.data()['type'];
                 return Padding(
                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (content == ActivitiesEnum.UP_HISTORY)
-                        ItemUpHistory(history: _item),
-                      if (content == ActivitiesEnum.NEW_HISTORY)
-                        ItemNewHistory(history: _item),
-                      if (content == ActivitiesEnum.LOGIN ||
-                          content == ActivitiesEnum.LOGOUT)
-                        ItemLoginLogout(history: _item),
-                      if (content == ActivitiesEnum.UP_NICKNAME)
-                        ItemUpNickName(history: _item),
-                      if (content == ActivitiesEnum.NEW_COMMENT)
-                        ItemNewComment(history: _item),
-                      if (content == ActivitiesEnum.NEW_NICKNAME)
-                        ItemNewNickName(history: _item),
-                      if (content == ActivitiesEnum.UP_NOTIFICATION)
-                        ItemNotificationComponent(history: _item),
-                      if (content == ActivitiesEnum.BLOCK_USER ||
-                          content == ActivitiesEnum.UNBLOCK_USER)
-                        ItemUpBlockComponent(history: _item),
-                      if (content == ActivitiesEnum.TEMPORARILY_DISABLED)
+                      if (content == ActivitiesEnum.UP_HISTORY.name)
+                        ItemUpHistory(history: snapshot.data()),
+                      if (content == ActivitiesEnum.NEW_HISTORY.name)
+                        ItemNewHistory(history: snapshot.data()),
+                      if (content == ActivitiesEnum.LOGIN.name ||
+                          content == ActivitiesEnum.LOGOUT.name)
+                        ItemLoginLogout(history: snapshot.data()),
+                      if (content == ActivitiesEnum.UP_NICKNAME.name)
+                        ItemUpNickName(history: snapshot.data()),
+                      if (content == ActivitiesEnum.NEW_COMMENT.name)
+                        ItemNewComment(history: snapshot.data()),
+                      if (content == ActivitiesEnum.NEW_NICKNAME.name)
+                        ItemNewName(history: snapshot.data()),
+                      if (content == ActivitiesEnum.UP_NOTIFICATION.name)
+                        ItemNotificationComponent(history: snapshot.data()),
+                      if (content == ActivitiesEnum.BLOCK_USER.name ||
+                          content == ActivitiesEnum.UNBLOCK_USER.name)
+                        ItemUpBlockComponent(history: snapshot.data()),
+                      if (content == ActivitiesEnum.TEMPORARILY_DISABLED.name)
                         const ItemTemporarilyDesabledComponent(),
-                      if (content == ActivitiesEnum.NEW_ACCOUNT)
+                      if (content == ActivitiesEnum.NEW_ACCOUNT.name)
                         const ItemNewAccountComponent(),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(40, 2, 0, 0),
                         child: ResumeComponent(
-                          resume: editDateUtil(_item['date']),
+                          resume: editDateUtil(snapshot.data()['date']),
                         ),
                       )
                     ],

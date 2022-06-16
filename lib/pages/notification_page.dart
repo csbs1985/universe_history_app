@@ -37,7 +37,11 @@ class _NotificationPageState extends State<NotificationPage> {
     }
 
     await historyClass.getHistory(_history['contentId']);
-    Navigator.pushNamed(context, '/history', arguments: _history['contentId']);
+    Navigator.pushNamed(
+      context,
+      '/history',
+      arguments: _history['contentId'],
+    );
   }
 
   @override
