@@ -2,13 +2,11 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:universe_history_app/firestore/users_firestore.dart';
-import 'package:universe_history_app/services/firestore_database_service.dart';
 import 'package:universe_history_app/core/route.dart';
 import 'package:universe_history_app/services/local_notification_service.dart';
 import 'package:http/http.dart' as http;
 
 class PushNotificationService {
-  final FirestoreDatabaseService api = FirestoreDatabaseService();
   final LocalNotificationService _notificationService;
   final UsersFirestore usersFirestore = UsersFirestore();
 

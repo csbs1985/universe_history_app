@@ -5,11 +5,12 @@ import 'package:universe_history_app/components/loader_component.dart';
 import 'package:universe_history_app/components/title_resume_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/core/variables.dart';
+import 'package:universe_history_app/firestore/comments_firestore.dart';
 import 'package:universe_history_app/firestore/histories_firestore.dart';
 import 'package:universe_history_app/firestore/users_firestore.dart';
+import 'package:universe_history_app/services/auth_service.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
-import 'package:universe_history_app/services/firestore_database_service.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -23,8 +24,8 @@ class NamePage extends StatefulWidget {
 }
 
 class _NickNamePageState extends State<NamePage> {
+  final CommentsFirestore commentsFirestore = CommentsFirestore();
   final HistoriesFirestore historiesFirestore = HistoriesFirestore();
-  final FirestoreDatabaseService api = FirestoreDatabaseService();
   final TextEditingController _textController = TextEditingController();
   final ToastComponent toast = ToastComponent();
   final UserClass userClass = UserClass();
@@ -116,7 +117,7 @@ class _NickNamePageState extends State<NamePage> {
         .catchError((error) => debugPrint('ERROR: ' + error));
   }
 
-  Future<void> _saveNickName() async {
+  Future<void> _pathName() async {
     currentDialog.value = 'Iniciando...';
     currentUser.value.first.name = currentNickname.value = _textController.text;
 
@@ -127,49 +128,51 @@ class _NickNamePageState extends State<NamePage> {
           return const LoaderComponent();
         });
 
-    _upNickname();
-  }
-
-  Future<void> _upNickname() async {
     currentUser.value.first.name = _textController.text;
     currentUser.value.first.upDateName = DateTime.now().toString();
     currentDialog.value = 'Alterando nome de usuário...';
 
-    await usersFirestore
-        .upNickName()
-        .then((result) => {
-              _upAllHistory(),
-            })
-        .catchError((error) => debugPrint('ERROR:' + error.toString()));
+    try {
+      await usersFirestore.pathName();
+      _pathAllHistory();
+    } on AuthException catch (error) {
+      debugPrint('ERROR => pathName: ' + error.toString());
+    }
   }
 
-  Future<void> _upAllHistory() async {
+  Future<void> _pathAllHistory() async {
     currentDialog.value = 'Alterando nome de usuário nas histórias...';
 
     await historiesFirestore
-        .getAllUserHistory()
+        .getAllHistoryUser()
         .then((result) async => {
               if (result.size > 0)
                 for (var item in result.docs)
-                  await historiesFirestore.upNicknameHistory(item['id']),
-              _upAllComment()
+                  await historiesFirestore.pathNameUserHistory(item['id']),
+              _pathAllComment()
             })
         .catchError((error) => debugPrint('ERROR:' + error.toString()));
   }
 
-  Future<void> _upAllComment() async {
+  Future<void> _pathAllComment() async {
     currentDialog.value = 'Alterando nome de usuário nos comentários...';
 
-    await api
-        .getAllUserComment()
+    await commentsFirestore
+        .getAllCommentUser()
         .then((result) async => {
               if (result.size > 0)
                 for (var item in result.docs)
-                  await api.upNicknameComment(item['id']),
-              ActivityUtil(ActivitiesEnum.UP_NICKNAME.name,
-                  _textController.text, _oldName),
+                  await commentsFirestore.pathNameUserComment(item['id']),
+              ActivityUtil(
+                ActivitiesEnum.UP_NICKNAME.name,
+                _textController.text,
+                _oldName,
+              ),
               toast.toast(
-                  context, ToastEnum.SUCCESS.name, 'Nome de usuário alterado!'),
+                context,
+                ToastEnum.SUCCESS.name,
+                'Nome de usuário alterado!',
+              ),
               currentDialog.value = 'Finalizando...',
               Navigator.of(context).pushNamed('/home')
             })
@@ -177,12 +180,19 @@ class _NickNamePageState extends State<NamePage> {
   }
 
   @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppbarComponent(
-          btnBack: true,
-          btnPublish: _isInputNotEmpty,
-          callback: (value) => _saveNickName()),
+        btnBack: true,
+        btnPublish: _isInputNotEmpty,
+        callback: (value) => _pathName(),
+      ),
       body: Column(
         children: [
           Padding(

@@ -22,7 +22,6 @@ import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/services/auth_service.dart';
 import 'package:universe_history_app/services/local_notification_service.dart';
-import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
@@ -40,7 +39,6 @@ class _HomePageState extends State<HomePage> {
   final BlockedsFirestore blockedsFirestore = BlockedsFirestore();
   final HistoriesFirestore historiesFirestore = HistoriesFirestore();
   final LoginClass loginClass = LoginClass();
-  final RealtimeDatabaseService db = RealtimeDatabaseService();
   final ScrollController _scrollController = ScrollController();
 
   late QuerySnapshot<Map<String, dynamic>> allBlockeds;

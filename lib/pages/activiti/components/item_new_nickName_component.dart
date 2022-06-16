@@ -6,18 +6,18 @@ import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
-class ItemNewNickName extends StatefulWidget {
-  const ItemNewNickName({
+class ItemNewName extends StatefulWidget {
+  const ItemNewName({
     required Map<String, dynamic> history,
   }) : _history = history;
 
   final Map<String, dynamic> _history;
 
   @override
-  State<ItemNewNickName> createState() => _ItemNewNickNameState();
+  State<ItemNewName> createState() => _ItemNewNameState();
 }
 
-class _ItemNewNickNameState extends State<ItemNewNickName> {
+class _ItemNewNameState extends State<ItemNewName> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/components/loader_component.dart';
+import 'package:universe_history_app/firestore/comments_firestore.dart';
 import 'package:universe_history_app/firestore/histories_firestore.dart';
-import 'package:universe_history_app/services/firestore_database_service.dart';
+import 'package:universe_history_app/firestore/justifications_Firestore.dart';
 import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/models/user_model.dart';
+import 'package:universe_history_app/services/auth_service.dart';
 import 'package:uuid/uuid.dart';
 
 class DeleteAccountUtil {
+  final CommentsFirestore commentsFirestore = CommentsFirestore();
   final HistoriesFirestore historiesFirestore = HistoriesFirestore();
-  final FirestoreDatabaseService api = FirestoreDatabaseService();
+  final JustificationsFirestore justificationsFirestore =
+      JustificationsFirestore();
   final UserClass userClass = UserClass();
   Uuid uuid = const Uuid();
 
@@ -27,7 +31,7 @@ class DeleteAccountUtil {
         });
 
     if (_justifySelected == null) {
-      _deletetAllHistory(context);
+      _deleteAllHistory(context);
     } else {
       _form = {
         'id': uuid.v4(),
@@ -38,39 +42,37 @@ class DeleteAccountUtil {
         'titleJustify': _justifySelected!.title
       };
 
-      await api
-          .setJustify(_form)
-          .then(
-            (result) => {
-              currentDialog.value = 'Justificando...',
-              _deletetAllHistory(context)
-            },
-          )
-          .catchError((error) => debugPrint('ERROR:' + error));
+      try {
+        await justificationsFirestore.postJustify(_form);
+        currentDialog.value = 'Justificando...';
+        _deleteAllHistory(context);
+      } on AuthException catch (error) {
+        debugPrint('ERROR => _deleteAllHistory: ' + error.toString());
+      }
     }
   }
 
-  Future<void> _deletetAllHistory(BuildContext context) async {
+  Future<void> _deleteAllHistory(BuildContext context) async {
     await historiesFirestore
-        .getAllUserHistory()
+        .getAllHistoryUser()
         .then((result) async => {
               if (result.size > 0)
                 currentDialog.value = 'Deletando histórias...',
               for (var item in result.docs)
                 await historiesFirestore.deleteHistory(item['id']),
-              _upAllComment(context)
+              _deleteAllComment(context)
             })
         .catchError((error) => debugPrint('ERROR:' + error));
   }
 
-  _upAllComment(BuildContext context) async {
-    await api
-        .getAllUserComment()
+  _deleteAllComment(BuildContext context) async {
+    await commentsFirestore
+        .getAllCommentUser()
         .then((result) async => {
               if (result.size > 0)
                 currentDialog.value = 'Atualizando comentários...',
               for (var item in result.docs)
-                await api.upStatusUserComment(item['id']),
+                await commentsFirestore.upStatusUserComment(item['id']),
               userClass.delete(context)
             })
         .catchError((error) => debugPrint('ERROR:' + error));

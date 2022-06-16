@@ -21,12 +21,6 @@ class ItemNewHistory extends StatefulWidget {
 class _ItemNewHistoryState extends State<ItemNewHistory> {
   final HistoryClass historyClass = HistoryClass();
 
-  void _setHistory(_history) => Navigator.pushNamed(
-        context,
-        '/history',
-        arguments: _history['elementId'],
-      );
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -63,6 +57,6 @@ class _ItemNewHistoryState extends State<ItemNewHistory> {
             )
           ],
         ),
-        onTap: () => _setHistory(widget._history));
+        onTap: () => historyClass.setHistory(context, widget._history));
   }
 }

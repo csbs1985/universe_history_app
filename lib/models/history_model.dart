@@ -82,6 +82,16 @@ class HistoryClass {
     currentHistory.value.add(HistoryModel.fromJson(_history));
   }
 
+  Future<void> setHistory(_context, _history) async {
+    Navigator.pushNamed(
+      _context,
+      '/history',
+      arguments: _history['elementId'],
+    );
+
+    await getHistory(_history['elementId']);
+  }
+
   Future<void> getHistory(String _historyId) async {
     try {
       await historiesFirestore

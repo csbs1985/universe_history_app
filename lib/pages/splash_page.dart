@@ -7,7 +7,6 @@ import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/firestore/users_firestore.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/services/auth_service.dart';
-import 'package:universe_history_app/services/realtime_database_service.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 
 class SplashPage extends StatefulWidget {
@@ -18,7 +17,6 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  final RealtimeDatabaseService db = RealtimeDatabaseService();
   final UserClass _userClass = UserClass();
   final UsersFirestore usersFirestore = UsersFirestore();
 
