@@ -4,7 +4,6 @@ import 'package:universe_history_app/pages/denounce_page.dart';
 import 'package:universe_history_app/pages/activiti/activities_page.dart';
 import 'package:universe_history_app/pages/name_page.dart';
 import 'package:universe_history_app/pages/about_page.dart';
-import 'package:universe_history_app/pages/blocked_page.dart';
 import 'package:universe_history_app/pages/common_questions_page.dart';
 import 'package:universe_history_app/pages/delete_account_page.dart';
 import 'package:universe_history_app/pages/history_page.dart';
@@ -24,12 +23,7 @@ class Routes {
           type: PageTransitionType.rightToLeft,
           settings: settings,
         );
-      case '/blocked':
-        return PageTransition(
-          child: const BlockedPage(),
-          type: PageTransitionType.rightToLeft,
-          settings: settings,
-        );
+
       case '/denounce':
         return PageTransition(
           child: const DenouncePage(),

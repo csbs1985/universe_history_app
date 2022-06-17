@@ -16,7 +16,6 @@ import 'package:universe_history_app/pages/activiti/components/item_new_history_
 import 'package:universe_history_app/pages/activiti/components/item_new_nickName_component.dart';
 import 'package:universe_history_app/pages/activiti/components/item_notification_component.dart';
 import 'package:universe_history_app/pages/activiti/components/item_temporarily_desabled_component.dart';
-import 'package:universe_history_app/pages/activiti/components/item_up_block_component.dart';
 import 'package:universe_history_app/pages/activiti/components/item_up_history_component.dart';
 import 'package:universe_history_app/pages/activiti/components/item_up_nickName_component.dart';
 import 'package:universe_history_app/utils/activity_util.dart';
@@ -100,9 +99,6 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
                         ItemNewName(history: snapshot.data()),
                       if (content == ActivitiesEnum.UP_NOTIFICATION.name)
                         ItemNotificationComponent(history: snapshot.data()),
-                      if (content == ActivitiesEnum.BLOCK_USER.name ||
-                          content == ActivitiesEnum.UNBLOCK_USER.name)
-                        ItemUpBlockComponent(history: snapshot.data()),
                       if (content == ActivitiesEnum.TEMPORARILY_DISABLED.name)
                         const ItemTemporarilyDesabledComponent(),
                       if (content == ActivitiesEnum.NEW_ACCOUNT.name)

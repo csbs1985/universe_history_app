@@ -4,7 +4,6 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/btn_confirm_component.dart';
 import 'package:universe_history_app/components/button_option_component.dart';
 import 'package:universe_history_app/components/toast_component.dart';
-import 'package:universe_history_app/firestore/blockeds_firestore.dart';
 import 'package:universe_history_app/firestore/comments_firestore.dart';
 import 'package:universe_history_app/firestore/histories_firestore.dart';
 import 'package:universe_history_app/modal/create_history_modal.dart';
@@ -44,13 +43,10 @@ class OptionsModal extends StatefulWidget {
 }
 
 class _OptionsModalState extends State<OptionsModal> {
-  final BlockedsFirestore blockedsFirestore = BlockedsFirestore();
   final CommentsFirestore commentsFirestore = CommentsFirestore();
   final HistoriesFirestore historiesFirestore = HistoriesFirestore();
   final ToastComponent toast = ToastComponent();
   final Uuid uuid = const Uuid();
-
-  late Map<String, dynamic> _form;
 
   bool _canCopy() {
     return !widget._isDelete ? true : false;
@@ -137,27 +133,6 @@ class _OptionsModalState extends State<OptionsModal> {
     Navigator.of(context).pop();
   }
 
-  void _setBlock(bool value) async {
-    if (value) {
-      _form = {
-        'id': uuid.v4(),
-        'blockerId': currentUser.value.first.id,
-        'userId': widget._idUser,
-        'userName': widget._userName,
-        'date': DateTime.now().toString(),
-      };
-
-      try {
-        await blockedsFirestore.postBlock(_form);
-        toast.toast(context, ToastEnum.SUCCESS.name, 'Usuário bloqueado!');
-        Navigator.of(context).pop();
-      } on AuthException catch (error) {
-        debugPrint('ERROR => postBlock: ' + error.toString());
-      }
-    }
-    Navigator.of(context).pop();
-  }
-
   void _setDenounce(bool value) {
     value ? Navigator.of(context).pushNamed('/denounce') : null;
   }
@@ -206,19 +181,6 @@ class _OptionsModalState extends State<OptionsModal> {
                             widget._type +
                             ' definitivamente?',
                         callback: (value) => _delete(value),
-                      ),
-                    ),
-                  if (_canBlock())
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: BtnConfirmComponent(
-                        title: 'Bloquear ' + widget._userName,
-                        icon: UiSvg.block,
-                        btnPrimaryLabel: 'Cancelar',
-                        btnSecondaryLabel: 'Bloquear',
-                        text:
-                            'Tem certeza de que deseja bloquear este usuário?',
-                        callback: (value) => _setBlock(value),
                       ),
                     ),
                   if (_canBlock())

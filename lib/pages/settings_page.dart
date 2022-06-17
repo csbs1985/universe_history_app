@@ -135,10 +135,6 @@ class _SettingsPageState extends State<SettingsPage> {
                           resume: 'Habilitar ou desabilitar as notificações',
                           value: currentUser.value.first.isNotification,
                         ),
-                        const BtnLinkComponent(
-                          'Bloqueados',
-                          '/blocked',
-                        ),
                       ],
                     ),
                   const SizedBox(height: 20),
