@@ -26,12 +26,12 @@ class _MenuComponentState extends State<MenuComponent> {
 
   void _setSelected(CategoryModel item) {
     setState(() {
-      menuItemSelected.value = item;
+      currentMenuSelected.value = item;
     });
   }
 
   bool _getSelected(CategoryModel item) {
-    return menuItemSelected.value.id == item.id ? true : false;
+    return currentMenuSelected.value.id == item.id ? true : false;
   }
 
   @override

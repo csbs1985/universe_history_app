@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _getContent() {
-    String value = menuItemSelected.value.id!;
+    String value = currentMenuSelected.value.id!;
 
     if (value != FilterHistoryEnum.todas.name &&
         value != FilterHistoryEnum.minhas.name &&
@@ -201,7 +201,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _list() {
     return ValueListenableBuilder<CategoryModel>(
-      valueListenable: menuItemSelected,
+      valueListenable: currentMenuSelected,
       builder: (BuildContext context, value, __) {
         return FirestoreListView(
           query: _getContent(),

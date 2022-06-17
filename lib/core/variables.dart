@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:universe_history_app/models/category_model.dart';
 
-ValueNotifier<CategoryModel> menuItemSelected =
+ValueNotifier<CategoryModel> currentMenuSelected =
     ValueNotifier<CategoryModel>(CategoryModel.allCategories.first);
 
 ValueNotifier<String> currentToken = ValueNotifier<String>('');

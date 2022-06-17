@@ -6,6 +6,10 @@ class HistoriesFirestore {
   CollectionReference histories =
       FirebaseFirestore.instance.collection('histories');
 
+  deleteHistory(String _idHistory) {
+    return histories.doc(_idHistory).delete();
+  }
+
   getAllHistoryUser() {
     return histories
         .orderBy('date')
@@ -41,11 +45,5 @@ class HistoriesFirestore {
 
   postHistory(Map<String, dynamic> _history) {
     return histories.doc(_history['id']).set(_history);
-  }
-
-  ////////////////
-
-  deleteHistory(String _idHistory) {
-    return histories.doc(_idHistory).delete();
   }
 }
