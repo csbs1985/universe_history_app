@@ -12,6 +12,18 @@ class CommentsFirestore {
         .update({'isDelete': true});
   }
 
+  deleteCommentBlocked(String _idComment) {
+    return comments.doc(_idComment).delete();
+  }
+
+  getAllCommentBlockeds(String _historyId, String _blockerId) {
+    return comments
+        .orderBy('date')
+        .where('userId', isEqualTo: currentUser.value.first.id)
+        .where('userId', isEqualTo: _blockerId)
+        .get();
+  }
+
   getAllCommentUser() {
     return comments
         .orderBy('date')

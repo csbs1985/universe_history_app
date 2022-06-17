@@ -175,8 +175,11 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
                     icon: UiSvg.open,
                     callback: (value) {
                       _selectHistory(widget._history);
-                      Navigator.pushNamed(context, '/history',
-                          arguments: widget._history['id']);
+                      Navigator.pushNamed(
+                        context,
+                        '/history',
+                        arguments: widget._history['id'],
+                      );
                     },
                   ),
                 IconComponent(

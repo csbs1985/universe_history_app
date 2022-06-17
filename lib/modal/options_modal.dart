@@ -149,6 +149,7 @@ class _OptionsModalState extends State<OptionsModal> {
 
       try {
         await blockedsFirestore.postBlock(_form);
+        _getAllHistoryUser();
         toast.toast(context, ToastEnum.SUCCESS.name, 'Usuário bloqueado!');
         Navigator.of(context).pop();
       } on AuthException catch (error) {
@@ -156,6 +157,22 @@ class _OptionsModalState extends State<OptionsModal> {
       }
     }
     Navigator.of(context).pop();
+  }
+
+  void _getAllHistoryUser() async {
+    await historiesFirestore.getAllHistoryUser().then((result) async => {
+          if (result.size > 0)
+            {
+              for (var item in result.docs)
+                {
+                  currentHistory.value.first.qtyComment - result.size,
+                  await historiesFirestore
+                      .pathQtyCommentHistory(currentHistory.value.first),
+                  for (var item in result.docs)
+                    await commentsFirestore.deleteCommentBlocked(item['id']),
+                }
+            }
+        });
   }
 
   void _setDenounce(bool value) {
