@@ -16,12 +16,12 @@ import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class HistoryOptionsComponent extends StatefulWidget {
   const HistoryOptionsComponent({
-    required history,
+    required Map<String, dynamic> history,
     required String type,
   })  : _history = history,
         _type = type;
 
-  final _history;
+  final Map<String, dynamic> _history;
   final String _type;
 
   @override

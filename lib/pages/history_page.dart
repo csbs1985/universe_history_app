@@ -58,7 +58,7 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   Widget _history(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-    QueryDocumentSnapshot<dynamic> _data = snapshot.data!.docs[0];
+    Map<String, dynamic> _data = HistoryModel.toMap(snapshot.data!.docs[0]);
 
     return SizedBox(
       height: MediaQuery.of(context).size.height,
