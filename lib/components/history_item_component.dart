@@ -4,6 +4,7 @@ import 'package:universe_history_app/components/divider_component.dart';
 import 'package:universe_history_app/components/history_options_component.dart';
 import 'package:universe_history_app/components/resume_history_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
+import 'package:universe_history_app/models/category_model.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
@@ -20,6 +21,8 @@ class HistoryItemComponent extends StatefulWidget {
 }
 
 class _HistoryItemComponentState extends State<HistoryItemComponent> {
+  final CategoriesClass categoriesClass = CategoriesClass();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -51,7 +54,7 @@ class _HistoryItemComponentState extends State<HistoryItemComponent> {
                     Padding(
                       padding: const EdgeInsets.only(right: 4),
                       child: Text(
-                        '#' + item,
+                        '#' + categoriesClass.getCategoryLabel(item),
                         style: UiTextStyle.text2,
                       ),
                     ),

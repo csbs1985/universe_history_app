@@ -55,21 +55,21 @@ class _HomePageState extends State<HomePage> {
   _getContent() {
     String value = currentMenuSelected.value.id!;
 
-    if (value != FilterHistoryEnum.todas.name &&
-        value != FilterHistoryEnum.minhas.name &&
-        value != FilterHistoryEnum.salvas.name) {
+    if (value != CategoriesEnum.ALL.name &&
+        value != CategoriesEnum.MY.name &&
+        value != CategoriesEnum.SAVE.name) {
       return historiesFirestore.histories
           .orderBy('date')
           .where('categories', arrayContainsAny: [value]);
     }
 
-    if (value == FilterHistoryEnum.minhas.name) {
+    if (value == CategoriesEnum.MY.name) {
       return historiesFirestore.histories
           .orderBy('date')
           .where('userId', isEqualTo: currentUser.value.first.id);
     }
 
-    if (value == FilterHistoryEnum.salvas.name) {
+    if (value == CategoriesEnum.SAVE.name) {
       return historiesFirestore.histories
           .orderBy('date')
           .where('bookmarks', arrayContainsAny: [currentUser.value.first.id]);
@@ -228,5 +228,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-enum FilterHistoryEnum { todas, minhas, salvas }

@@ -1,10 +1,8 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/models/category_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
-import 'package:universe_history_app/pages/home_page.dart';
 import 'package:universe_history_app/theme/ui_button.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
@@ -17,8 +15,8 @@ class MenuComponent extends StatefulWidget {
 
 class _MenuComponentState extends State<MenuComponent> {
   bool canShow(String? item) {
-    return (item == FilterHistoryEnum.minhas.name ||
-                item == FilterHistoryEnum.salvas.name) &&
+    return (item == CategoriesEnum.MY.name ||
+                item == CategoriesEnum.SAVE.name) &&
             currentUser.value.isEmpty
         ? false
         : true;
@@ -51,19 +49,19 @@ class _MenuComponentState extends State<MenuComponent> {
                         if (widget.allCategories[index].id == 'todas')
                           const SizedBox(width: 16),
                         TextButton(
-                          style: _getSelected(widget.allCategories[index])
-                              ? UiButton.buttonMenuActive
-                              : UiButton.buttonMenu,
-                          child: Text(
-                            widget.allCategories[index].label!.toLowerCase(),
                             style: _getSelected(widget.allCategories[index])
-                                ? UiTextStyle.menuActive
-                                : UiTextStyle.menu,
-                          ),
-                          onPressed: () =>
-                              _setSelected(widget.allCategories[index]),
-                        ),
-                        if (widget.allCategories[index].id == 'violencia')
+                                ? UiButton.buttonMenuActive
+                                : UiButton.buttonMenu,
+                            child: Text(
+                              widget.allCategories[index].label!.toLowerCase(),
+                              style: _getSelected(widget.allCategories[index])
+                                  ? UiTextStyle.menuActive
+                                  : UiTextStyle.menu,
+                            ),
+                            onPressed: () =>
+                                _setSelected(widget.allCategories[index])),
+                        if (widget.allCategories[index].id ==
+                            CategoriesEnum.VIOLENCE.name)
                           const SizedBox(width: 16),
                       ],
                     )
