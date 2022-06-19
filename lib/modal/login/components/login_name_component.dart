@@ -112,8 +112,8 @@ class _LoginNameComponentState extends State<LoginNameComponent> {
               if (_showButton)
                 Button3dComponent(
                   label: loginClass.getButtonText(_buttonText),
-                  size: ButtonSizeEnum.MEDIUM,
-                  style: ButtonStyleEnum.PRIMARY,
+                  size: ButtonSizeEnum.MEDIUM.name,
+                  style: ButtonStyleEnum.PRIMARY.name,
                   callback: (value) => _next(),
                 )
             ],

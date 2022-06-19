@@ -106,8 +106,8 @@ class _SettingsPageState extends State<SettingsPage> {
                         const SizedBox(height: 10),
                         Button3dComponent(
                           label: 'Entrar',
-                          size: ButtonSizeEnum.MEDIUM,
-                          style: ButtonStyleEnum.PRIMARY,
+                          size: ButtonSizeEnum.MEDIUM.name,
+                          style: ButtonStyleEnum.PRIMARY.name,
                           callback: (value) => _login(context),
                         ),
                       ],

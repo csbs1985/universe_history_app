@@ -9,8 +9,8 @@ class Button3dComponent extends StatefulWidget {
   const Button3dComponent({
     required Function callback,
     required String label,
-    required ButtonStyleEnum style,
-    required ButtonSizeEnum size,
+    required String style,
+    required String size,
   })  : _callback = callback,
         _label = label,
         _style = style,
@@ -18,8 +18,8 @@ class Button3dComponent extends StatefulWidget {
 
   final Function _callback;
   final String _label;
-  final ButtonStyleEnum _style;
-  final ButtonSizeEnum _size;
+  final String _style;
+  final String _size;
 
   @override
   State<Button3dComponent> createState() => _Button3dComponentState();
@@ -41,17 +41,17 @@ class _Button3dComponentState extends State<Button3dComponent> {
   }
 
   _getStyle() {
-    if (widget._style.name == ButtonStyleEnum.PRIMARY.name) {
+    if (widget._style == ButtonStyleEnum.PRIMARY.name) {
       _backColor = UiColor.button;
       _borderColor = UiColor.buttonBorder;
       _styleText = UiTextStyle.buttonLabel;
     }
-    if (widget._style.name == ButtonStyleEnum.SECOND.name) {
+    if (widget._style == ButtonStyleEnum.SECOND.name) {
       _backColor = UiColor.buttonSecond;
       _borderColor = UiColor.buttonSecondBorder;
       _styleText = UiTextStyle.buttonSecondLabel;
     }
-    if (widget._style.name == ButtonStyleEnum.DISABLED.name) {
+    if (widget._style == ButtonStyleEnum.DISABLED.name) {
       _backColor = UiColor.buttonDisabled;
       _borderColor = UiColor.buttonDisabledBorder;
       _styleText = UiTextStyle.buttonLabel;
@@ -59,16 +59,15 @@ class _Button3dComponentState extends State<Button3dComponent> {
   }
 
   double _getWidth() {
-    if (widget._size.name == ButtonSizeEnum.MEDIUM.name) return 100;
-    if (widget._size.name == ButtonSizeEnum.LARGE.name)
+    if (widget._size == ButtonSizeEnum.MEDIUM.name) return 100;
+    if (widget._size == ButtonSizeEnum.LARGE.name)
       return MediaQuery.of(context).size.width - UiSize.widthFullLessPadding;
     return 90;
   }
 
   double _getHeight() {
-    if (widget._size.name == ButtonSizeEnum.MEDIUM.name)
-      return 42 - _borderSize;
-    if (widget._size.name == ButtonSizeEnum.LARGE.name) return 48 - _borderSize;
+    if (widget._size == ButtonSizeEnum.MEDIUM.name) return 42 - _borderSize;
+    if (widget._size == ButtonSizeEnum.LARGE.name) return 48 - _borderSize;
     return 32 - _borderSize;
   }
 
@@ -106,7 +105,7 @@ class _Button3dComponentState extends State<Button3dComponent> {
         ),
       ),
       onTapUp: (_) {
-        if (widget._style.name != ButtonStyleEnum.DISABLED.name) {
+        if (widget._style != ButtonStyleEnum.DISABLED.name) {
           setState(() {
             _position = _borderSize;
             widget._callback(true);
@@ -114,14 +113,14 @@ class _Button3dComponentState extends State<Button3dComponent> {
         }
       },
       onTapDown: (_) {
-        if (widget._style.name != ButtonStyleEnum.DISABLED.name) {
+        if (widget._style != ButtonStyleEnum.DISABLED.name) {
           setState(() {
             _position = 0;
           });
         }
       },
       onTapCancel: () {
-        if (widget._style.name != ButtonStyleEnum.DISABLED.name) {
+        if (widget._style != ButtonStyleEnum.DISABLED.name) {
           setState(() {
             _position = _borderSize;
           });

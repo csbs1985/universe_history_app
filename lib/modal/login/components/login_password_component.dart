@@ -188,15 +188,15 @@ class _LoginNickPageState extends State<LoginPasswordComponent> {
             children: [
               Button3dComponent(
                 label: _hiddenPassword ? 'mostrar' : 'esconder',
-                size: ButtonSizeEnum.MEDIUM,
-                style: ButtonStyleEnum.SECOND,
+                size: ButtonSizeEnum.MEDIUM.name,
+                style: ButtonStyleEnum.SECOND.name,
                 callback: (value) => _toggleShow(),
               ),
               if (_showButton)
                 Button3dComponent(
                   label: loginClass.getButtonText(_buttonText),
-                  size: ButtonSizeEnum.MEDIUM,
-                  style: ButtonStyleEnum.PRIMARY,
+                  size: ButtonSizeEnum.MEDIUM.name,
+                  style: ButtonStyleEnum.PRIMARY.name,
                   callback: (value) => _pressed(),
                 )
             ],

@@ -90,8 +90,8 @@ class _DenouncePageState extends State<DenouncePage> {
               if (_hasButton)
                 Button3dComponent(
                   label: 'Denunciar',
-                  style: ButtonStyleEnum.PRIMARY,
-                  size: ButtonSizeEnum.LARGE,
+                  style: ButtonStyleEnum.PRIMARY.name,
+                  size: ButtonSizeEnum.LARGE.name,
                   callback: (value) => _setDenounce(value),
                 ),
               const SizedBox(height: 20),

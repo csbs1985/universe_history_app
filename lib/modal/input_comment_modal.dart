@@ -78,7 +78,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
 
       if ((_text.length <= 1 && _text.contains('@')) ||
           (_text.length > 1 && lastString == '@'))
-        _showMentioned(context, MentionedCallEnum.KEYBOARD);
+        _showMentioned(context, MentionedCallEnum.KEYBOARD.name);
     }
 
     setState(() =>
@@ -87,7 +87,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
 
   _toggleAnonimous() => setState(() => _textSigned = !_textSigned);
 
-  void _showMentioned(BuildContext context, MentionedCallEnum type) {
+  void _showMentioned(BuildContext context, String type) {
     showCupertinoModalBottomSheet(
         expand: true,
         context: context,
@@ -97,18 +97,18 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
             MentionedModal(callback: (value) => _setText(value, type)));
   }
 
-  void _setText(_user, MentionedCallEnum type) {
+  void _setText(_user, String type) {
     setState(() {
       _isInputNotEmpty = true;
       var _id = _user['objectID'];
 
       idMencioned.contains(_id) ? null : idMencioned.add(_id);
 
-      if (type == MentionedCallEnum.ICON)
+      if (type == MentionedCallEnum.ICON.name)
         _commentController.text =
             _commentController.text + '@' + _user['name'] + ' ';
 
-      if (type == MentionedCallEnum.KEYBOARD) {
+      if (type == MentionedCallEnum.KEYBOARD.name) {
         var value = _commentController.text
             .substring(0, _commentController.text.length - 1);
 
@@ -241,7 +241,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
           'contentId': currentHistory.value.first.id,
           'content': currentHistory.value.first.title,
           'date': DateTime.now().toString(),
-          'status': NotificationEnum.COMMENT_MENTIONED.toString()
+          'status': NotificationEnum.COMMENT_MENTIONED.name,
         };
 
         try {
@@ -361,8 +361,8 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
                           ),
                           IconComponent(
                             icon: UiSvg.mentioned,
-                            callback: (value) =>
-                                _showMentioned(context, MentionedCallEnum.ICON),
+                            callback: (value) => _showMentioned(
+                                context, MentionedCallEnum.ICON.name),
                           ),
                           const SizedBox(width: 10),
                           ToggleComponent(

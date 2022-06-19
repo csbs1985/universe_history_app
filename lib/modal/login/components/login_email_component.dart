@@ -123,8 +123,8 @@ class _LoginEmailComponentState extends State<LoginEmailComponent> {
             children: [
               Button3dComponent(
                 label: loginClass.getButtonText(_buttonText),
-                size: ButtonSizeEnum.MEDIUM,
-                style: ButtonStyleEnum.PRIMARY,
+                size: ButtonSizeEnum.MEDIUM.name,
+                style: ButtonStyleEnum.PRIMARY.name,
                 callback: (value) => _verify(),
               ),
             ],

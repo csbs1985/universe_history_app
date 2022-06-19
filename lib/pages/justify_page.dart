@@ -67,8 +67,8 @@ class _JustifyPageState extends State<JustifyPage> {
               if (_hasButton)
                 Button3dComponent(
                   label: 'Justificar e deletar',
-                  style: ButtonStyleEnum.PRIMARY,
-                  size: ButtonSizeEnum.LARGE,
+                  style: ButtonStyleEnum.PRIMARY.name,
+                  size: ButtonSizeEnum.LARGE.name,
                   callback: (value) => _showDialog(context),
                 ),
               const SizedBox(height: 20),
