@@ -41,28 +41,25 @@ class _MenuComponentState extends State<MenuComponent> {
           height: 36,
           child: ListView.builder(
             itemCount: CategoryModel.allCategories.length,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             scrollDirection: Axis.horizontal,
             itemBuilder: (BuildContext context, int index) {
               return canShow(widget.allCategories[index].label)
                   ? Row(
                       children: [
-                        if (widget.allCategories[index].id == 'todas')
-                          const SizedBox(width: 16),
                         TextButton(
+                          style: _getSelected(widget.allCategories[index])
+                              ? UiButton.buttonMenuActive
+                              : UiButton.buttonMenu,
+                          child: Text(
+                            widget.allCategories[index].label!.toLowerCase(),
                             style: _getSelected(widget.allCategories[index])
-                                ? UiButton.buttonMenuActive
-                                : UiButton.buttonMenu,
-                            child: Text(
-                              widget.allCategories[index].label!.toLowerCase(),
-                              style: _getSelected(widget.allCategories[index])
-                                  ? UiTextStyle.menuActive
-                                  : UiTextStyle.menu,
-                            ),
-                            onPressed: () =>
-                                _setSelected(widget.allCategories[index])),
-                        if (widget.allCategories[index].id ==
-                            CategoriesEnum.VIOLENCE.name)
-                          const SizedBox(width: 16),
+                                ? UiTextStyle.menuActive
+                                : UiTextStyle.menu,
+                          ),
+                          onPressed: () =>
+                              _setSelected(widget.allCategories[index]),
+                        ),
                       ],
                     )
                   : const SizedBox();
