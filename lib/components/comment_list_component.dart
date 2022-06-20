@@ -12,6 +12,7 @@ import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
+import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/resume_util.dart';
 
@@ -115,6 +116,8 @@ class _CommentItemComponentState extends State<CommentListComponent> {
                 return _list(snapshot.data());
               },
             ),
+            if (currentUser.value.isNotEmpty)
+              const SizedBox(height: UiSize.input),
           ],
         ),
       ),
