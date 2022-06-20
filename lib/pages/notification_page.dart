@@ -121,7 +121,7 @@ class _NotificationPageState extends State<NotificationPage> {
 
     if (_status == NotificationEnum.COMMENT_MENTIONED.name)
       _text =
-          '<em>${_item['userName']}</em> mencionou você em um comentário da história "<em>${_item['content']}</em>".';
+          '<em>${_item['name']}</em> mencionou você em um comentário da história "<em>${_item['content']}</em>".';
 
     return StyledText(
         style: UiTextStyle.text1,
