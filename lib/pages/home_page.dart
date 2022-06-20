@@ -11,7 +11,6 @@ import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/components/menu_component.dart';
 import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
-import 'package:universe_history_app/core/variables.dart';
 import 'package:universe_history_app/firestore/histories_firestore.dart';
 import 'package:universe_history_app/modal/login/login_modal.dart';
 import 'package:universe_history_app/modal/login/login_model.dart';

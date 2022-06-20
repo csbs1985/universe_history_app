@@ -125,46 +125,41 @@ class _CommentItemComponentState extends State<CommentListComponent> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            GestureDetector(
-              child: Card(
-                color: _getBackColor(item),
-                margin: const EdgeInsets.all(0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                    UiBorder.rounded,
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 6, 10, 8),
-                  child: item['isDelete']
-                      ? Text(
-                          'Comentário apagado!'.toUpperCase(),
-                          style: UiTextStyle.text8,
-                        )
-                      : Text(
-                          item['text'],
-                          style: UiTextStyle.text1,
-                        ),
-                ),
+        GestureDetector(
+          child: Card(
+            color: _getBackColor(item),
+            margin: const EdgeInsets.all(0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                UiBorder.rounded,
               ),
-              onLongPress:
-                  _canShowOption(item) ? () => _showModal(context, item) : null,
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(2, 4, 0, 16),
-              child: Text(
-                resumeUitl(
-                  item,
-                  type: ContentType.COMMENT.name,
-                ),
-                style: UiTextStyle.text2,
-              ),
-            )
-          ],
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 6, 10, 8),
+              child: item['isDelete']
+                  ? Text(
+                      'Comentário apagado!'.toUpperCase(),
+                      style: UiTextStyle.text8,
+                    )
+                  : Text(
+                      item['text'],
+                      style: UiTextStyle.text1,
+                    ),
+            ),
+          ),
+          onLongPress:
+              _canShowOption(item) ? () => _showModal(context, item) : null,
         ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(2, 4, 0, 16),
+          child: Text(
+            resumeUitl(
+              item,
+              type: ContentType.COMMENT.name,
+            ),
+            style: UiTextStyle.text2,
+          ),
+        )
       ],
     );
   }

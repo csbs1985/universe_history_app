@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:universe_history_app/core/route.dart';
 import 'package:universe_history_app/firestore/users_firestore.dart';
+import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/services/local_notification_service.dart';
 import 'package:http/http.dart' as http;
 
@@ -31,14 +32,18 @@ class PushNotificationService {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
 
-      if (notification != null && android != null) {
-        currentNotification.value = true;
-        _notificationService.showNotification(CustomNotification(
-          id: android.hashCode,
-          title: notification.title!,
-          body: notification.body!,
-          payload: message.data['id'] ?? '',
-        ));
+      if (currentUser.value.first.isNotification) {
+        if (notification != null && android != null) {
+          currentNotification.value = true;
+          _notificationService.showNotification(CustomNotification(
+            id: android.hashCode,
+            title: notification.title!,
+            body: notification.body!,
+            payload: message.data['id'] ?? '',
+          ));
+        }
+
+        // TODO: ios
       }
     });
   }
