@@ -11,6 +11,7 @@ import 'package:universe_history_app/firestore/notifications_firestore.dart';
 import 'package:universe_history_app/models/history_model.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/services/auth_service.dart';
+import 'package:universe_history_app/services/push_notification_service.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 import 'package:universe_history_app/utils/edit_date_util.dart';
@@ -27,6 +28,7 @@ class _NotificationPageState extends State<NotificationPage> {
   final NotificatonsFirestore notificatonsFirestore = NotificatonsFirestore();
 
   Future<void> _pathNotificationView(_history) async {
+    currentNotification.value = false;
     if (!_history['view']) {
       try {
         await notificatonsFirestore.pathNotificationView(_history['id']);

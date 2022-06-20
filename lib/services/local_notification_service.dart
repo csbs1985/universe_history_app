@@ -3,17 +3,16 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:universe_history_app/core/route.dart';
 
 class LocalNotificationService {
-  final FlutterLocalNotificationsPlugin localNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-
+  late FlutterLocalNotificationsPlugin localNotificationsPlugin;
   late AndroidNotificationDetails androidDetails;
   late IOSNotificationDetails appleDetails;
 
   LocalNotificationService() {
-    _setupNotifications();
+    localNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    _initializeNotifications();
   }
 
-  _setupNotifications() async {
+  _initializeNotifications() async {
     const android = AndroidInitializationSettings('@mipmap/ic_launcher');
     const apple = IOSInitializationSettings();
 
@@ -71,11 +70,13 @@ class LocalNotificationService {
 }
 
 class CustomNotification {
+  late int id;
   late String title;
   late String body;
   late String payload;
 
   CustomNotification({
+    required this.id,
     required this.title,
     required this.body,
     required this.payload,

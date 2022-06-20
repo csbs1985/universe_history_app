@@ -119,7 +119,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
 
   ///// publicar notificação
 
-  Future<void> _postComment() async {
+  Future<void> _postComment(BuildContext context) async {
     setState(() {
       _form = {
         'date': _commentEdit?['date'] ?? DateTime.now().toString(),
@@ -138,13 +138,13 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
 
     try {
       await commentsFirestore.postComment(_form);
-      _pathQtyCommentHistory();
+      _pathQtyCommentHistory(context);
     } on AuthException catch (error) {
       debugPrint('ERROR => postNewComment: ' + error.toString());
     }
   }
 
-  Future<void> _pathQtyCommentHistory() async {
+  Future<void> _pathQtyCommentHistory(BuildContext context) async {
     if (!_isEdit) currentHistory.value.first.qtyComment++;
 
     try {
@@ -155,21 +155,21 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
         currentHistory.value.first.title,
         currentHistory.value.first.id,
       );
-      _pathQtyCommentUser();
+      _pathQtyCommentUser(context);
     } on AuthException catch (error) {
       debugPrint('ERROR => pathQtyCommentHistory: ' + error.toString());
     }
   }
 
-  Future<void> _pathQtyCommentUser() async {
+  Future<void> _pathQtyCommentUser(BuildContext context) async {
     if (!_isEdit) currentUser.value.first.qtyComment++;
 
     try {
       await usersFirestore.pathQtyCommentUser(currentUser.value.first);
       if (currentUser.value.first.id != currentHistory.value.first.userId) {
-        _postNotification();
+        _postNotification(context);
       }
-      if (idMencioned.isNotEmpty) _setNotificationMencioned();
+      if (idMencioned.isNotEmpty) _setNotificationMencioned(context);
       if (_isEdit) Navigator.of(context).pop();
       toast.toast(
         context,
@@ -184,7 +184,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
     }
   }
 
-  Future<void> _postNotification() async {
+  Future<void> _postNotification(BuildContext context) async {
     _form = {
       'content': currentHistory.value.first.title,
       'date': DateTime.now().toString(),
@@ -200,13 +200,13 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
 
     try {
       await notificatonsFirestore.postNotification(_form);
-      _setPushNotificationOnwer(currentHistory.value.first.userId);
+      _setPushNotificationOnwer(context, currentHistory.value.first.userId);
     } on AuthException catch (error) {
       debugPrint('ERROR => postNotification: ' + error.toString());
     }
   }
 
-  void _setPushNotificationOnwer(String _user) {
+  void _setPushNotificationOnwer(BuildContext context, String _user) {
     var history = currentHistory.value.first;
     var title = '';
     var body = '';
@@ -227,10 +227,10 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
             '"'
         : '"' + _commentController.text.trim() + '"';
 
-    _sendNotification(title, body, _user);
+    _sendNotification(context, title, body, _user);
   }
 
-  Future<void> _setNotificationMencioned() async {
+  Future<void> _setNotificationMencioned(BuildContext context) async {
     for (var item in idMencioned) {
       if (currentUser.value.first.id != item) {
         _form = {
@@ -246,7 +246,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
 
         try {
           notificatonsFirestore.postNotification(_form);
-          _setPushNotificationMentioned(item);
+          _setPushNotificationMentioned(context, item);
         } on AuthException catch (error) {
           debugPrint('ERROR => postNewNotification: ' + error.toString());
         }
@@ -254,7 +254,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
     }
   }
 
-  void _setPushNotificationMentioned(String _user) {
+  void _setPushNotificationMentioned(BuildContext context, String _user) {
     var history = currentHistory.value.first;
     var title = '';
     var body = '';
@@ -271,10 +271,11 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
             '"'
         : '"' + _commentController.text.trim() + '"';
 
-    _sendNotification(title, body, _user);
+    _sendNotification(context, title, body, _user);
   }
 
   Future<void> _sendNotification(
+    BuildContext context,
     String _title,
     String _body,
     String _user,
@@ -380,7 +381,7 @@ class _InputCommmentModalState extends State<InputCommmentModal> {
                       ),
                       if (_isInputNotEmpty)
                         ButtonPublishComponent(
-                          callback: (value) => _postComment(),
+                          callback: (value) => _postComment(context),
                         ),
                     ],
                   ),

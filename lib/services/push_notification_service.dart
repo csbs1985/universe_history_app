@@ -1,14 +1,16 @@
 import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:universe_history_app/firestore/users_firestore.dart';
 import 'package:universe_history_app/core/route.dart';
+import 'package:universe_history_app/firestore/users_firestore.dart';
 import 'package:universe_history_app/services/local_notification_service.dart';
 import 'package:http/http.dart' as http;
 
+ValueNotifier<bool> currentNotification = ValueNotifier<bool>(false);
+
 class PushNotificationService {
   final LocalNotificationService _notificationService;
-  final UsersFirestore usersFirestore = UsersFirestore();
+  final UsersFirestore _usersFirestore = UsersFirestore();
 
   PushNotificationService(this._notificationService);
 
@@ -16,7 +18,7 @@ class PushNotificationService {
     await FirebaseMessaging.instance
         .setForegroundNotificationPresentationOptions(
       badge: true,
-      sound: false,
+      sound: true,
       alert: true,
     );
 
@@ -30,10 +32,13 @@ class PushNotificationService {
       AndroidNotification? android = message.notification?.android;
 
       if (notification != null && android != null) {
+        currentNotification.value = true;
         _notificationService.showNotification(CustomNotification(
-            title: notification.title!,
-            body: notification.body!,
-            payload: message.data['id']));
+          id: android.hashCode,
+          title: notification.title!,
+          body: notification.body!,
+          payload: message.data['id'] ?? '',
+        ));
       }
     });
   }
@@ -43,15 +48,14 @@ class PushNotificationService {
   }
 
   _goToPageAfterMessage(message) {
-    if (message.data['payload'] != null && message.data['payload'].isNotEmpty) {
-      Routes.navigatorKey?.currentState
-          ?.pushNamed('/history', arguments: message.data['payload']);
-    }
+    final String _route = message.data['payload'].isNotEmpty ?? '';
+    Routes.navigatorKey?.currentState
+        ?.pushNamed('/history', arguments: message.data[_route]);
   }
 
   Future<void> sendNotification(
       String title, String body, String idHistory, String _user) async {
-    await usersFirestore.getTokenOwner(_user).then((result) async {
+    await _usersFirestore.getTokenOwner(_user).then((result) async {
       try {
         await http.post(
           Uri.parse('https://fcm.googleapis.com/fcm/send'),
