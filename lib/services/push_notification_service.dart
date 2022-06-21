@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:universe_history_app/core/route.dart';
+import 'package:no_context_navigation/no_context_navigation.dart';
 import 'package:universe_history_app/firestore/users_firestore.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/services/local_notification_service.dart';
@@ -54,8 +54,7 @@ class PushNotificationService {
 
   _goToPageAfterMessage(message) {
     final String _route = message.data['payload'].isNotEmpty ?? '';
-    Routes.navigatorKey?.currentState
-        ?.pushNamed('/history', arguments: message.data[_route]);
+    navService.pushNamed('/history', args: message.data[_route]);
   }
 
   Future<void> sendNotification(

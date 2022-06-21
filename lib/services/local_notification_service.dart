@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:universe_history_app/core/route.dart';
+import 'package:no_context_navigation/no_context_navigation.dart';
 
 class LocalNotificationService {
   late FlutterLocalNotificationsPlugin localNotificationsPlugin;
@@ -26,10 +25,8 @@ class LocalNotificationService {
   }
 
   _onSelectNotification(String? payload) {
-    if (payload != null && payload.isNotEmpty) {
-      Navigator.pushNamed(Routes.navigatorKey!.currentContext!, '/history',
-          arguments: payload);
-    }
+    if (payload != null && payload.isNotEmpty)
+      navService.pushNamed('/history', args: payload);
   }
 
   showNotification(CustomNotification notification, {String? user}) {
