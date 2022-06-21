@@ -11,8 +11,6 @@ import 'package:universe_history_app/components/skeleton_history_item_component.
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/firestore/histories_firestore.dart';
 import 'package:universe_history_app/models/history_model.dart';
-import 'package:universe_history_app/models/user_model.dart';
-import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -25,10 +23,6 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage> {
   final HistoriesFirestore historiesFirestore = HistoriesFirestore();
   final HistoryClass historyClass = HistoryClass();
-
-  double _getPaddingBottom(bool _isComment) {
-    return _isComment && currentUser.value.isNotEmpty ? UiSize.input : 0;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,59 +61,54 @@ class _HistoryPageState extends State<HistoryPage> {
           Builder(
             builder: (context) {
               return SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.only(
-                    bottom: _getPaddingBottom(_data['isComment']),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (_data['title'] != "")
-                              TitleComponent(
-                                title: _data['title'],
-                                bottom: 0,
-                              ),
-                            ResumeHistoryComponent(resume: _data),
-                            Text(
-                              _data['text'],
-                              style: UiTextStyle.text1,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (_data['title'] != "")
+                            TitleComponent(
+                              title: _data['title'],
+                              bottom: 0,
                             ),
-                            Wrap(
-                              children: [
-                                for (var item in _data['categories'])
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 4),
-                                    child: Text(
-                                      '#' + item,
-                                      style: UiTextStyle.text2,
-                                    ),
-                                  )
-                              ],
-                            ),
-                            HistoryOptionsComponent(
-                              history: _data,
-                              type: HistoryOptionsType.HISTORYPAGE.name,
-                            )
-                          ],
-                        ),
+                          ResumeHistoryComponent(resume: _data),
+                          Text(
+                            _data['text'],
+                            style: UiTextStyle.text1,
+                          ),
+                          Wrap(
+                            children: [
+                              for (var item in _data['categories'])
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 4),
+                                  child: Text(
+                                    '#' + item,
+                                    style: UiTextStyle.text2,
+                                  ),
+                                )
+                            ],
+                          ),
+                          HistoryOptionsComponent(
+                            history: _data,
+                            type: HistoryOptionsType.HISTORYPAGE.name,
+                          )
+                        ],
                       ),
-                      if (_data['qtyComment'] > 0)
-                        const DividerComponent(
-                          top: 0,
-                          bottom: 20,
-                          left: 16,
-                          right: 16,
-                        ),
-                      CommentListComponent(
-                        type: HistoryOptionsType.HISTORYPAGE.name,
-                      )
-                    ],
-                  ),
+                    ),
+                    if (_data['qtyComment'] > 0)
+                      const DividerComponent(
+                        top: 0,
+                        bottom: 20,
+                        left: 16,
+                        right: 16,
+                      ),
+                    CommentListComponent(
+                      type: HistoryOptionsType.HISTORYPAGE.name,
+                    )
+                  ],
                 ),
               );
             },

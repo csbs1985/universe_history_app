@@ -37,8 +37,6 @@ class _HomePageState extends State<HomePage> {
   final LoginClass loginClass = LoginClass();
   final ScrollController _scrollController = ScrollController();
 
-  bool loading = false;
-
   @override
   void initState() {
     super.initState();
@@ -229,8 +227,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _noResults() {
     return const NoResultComponent(
-      text:
-          'Não encontramos histórias que atendam sua pesquisa. Mas não desista, temos muitas outras histórias para você interagir.',
+      text: 'Não encontramos histórias que atendam sua pesquisa.',
     );
   }
 }
