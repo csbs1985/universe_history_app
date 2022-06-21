@@ -209,7 +209,7 @@ class _HomePageState extends State<HomePage> {
       builder: (BuildContext context, value, __) {
         return FirestoreListView(
           query: _getContent(),
-          pageSize: 3,
+          pageSize: 10,
           shrinkWrap: true,
           reverse: true,
           physics: const NeverScrollableScrollPhysics(),

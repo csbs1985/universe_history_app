@@ -105,7 +105,7 @@ class _CommentItemComponentState extends State<CommentListComponent> {
               query: commentsFirestore.comments
                   .orderBy('date')
                   .where('historyId', isEqualTo: currentHistory.value.first.id),
-              pageSize: 10,
+              pageSize: 20,
               shrinkWrap: true,
               reverse: true,
               physics: const NeverScrollableScrollPhysics(),
