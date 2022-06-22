@@ -30,7 +30,7 @@ class _ItemTemporarilyDesabledComponentState
           ),
         ),
         SizedBox(
-          width: MediaQuery.of(context).size.width - UiSize.widthItemActiviries,
+          width: MediaQuery.of(context).size.width - UiSize.widthItemActivities,
           child: Padding(
             padding: const EdgeInsets.only(left: 10),
             child: StyledText(

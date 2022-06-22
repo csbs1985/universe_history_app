@@ -37,7 +37,7 @@ class _ItemNewHistoryState extends State<ItemNewHistory> {
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width -
-                  UiSize.widthItemActiviries,
+                  UiSize.widthItemActivities,
               child: Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: StyledText(

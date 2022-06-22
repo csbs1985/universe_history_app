@@ -34,7 +34,7 @@ class _ItemUpNickNameState extends State<ItemUpNickName> {
           ),
           SizedBox(
             width:
-                MediaQuery.of(context).size.width - UiSize.widthItemActiviries,
+                MediaQuery.of(context).size.width - UiSize.widthItemActivities,
             child: Padding(
               padding: const EdgeInsets.only(left: 10),
               child: StyledText(
