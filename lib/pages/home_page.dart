@@ -207,19 +207,24 @@ class _HomePageState extends State<HomePage> {
     return ValueListenableBuilder<CategoryModel>(
       valueListenable: currentMenuSelected,
       builder: (BuildContext context, value, __) {
-        return FirestoreListView(
-          query: _getContent(),
-          pageSize: 10,
-          shrinkWrap: true,
-          reverse: true,
-          physics: const NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.only(bottom: 72),
-          loadingBuilder: (context) => const SkeletonHistoryItemComponent(),
-          errorBuilder: (context, error, _) => _noResults(),
-          itemBuilder:
-              (BuildContext context, QueryDocumentSnapshot<dynamic> snapshot) {
-            return HistoryItemComponent(snapshot: snapshot.data());
-          },
+        return Column(
+          children: [
+            FirestoreListView(
+              query: _getContent(),
+              pageSize: 10,
+              shrinkWrap: true,
+              reverse: true,
+              physics: const NeverScrollableScrollPhysics(),
+              loadingBuilder: (context) => const SkeletonHistoryItemComponent(),
+              errorBuilder: (context, error, _) => _noResults(),
+              itemBuilder: (BuildContext context,
+                  QueryDocumentSnapshot<dynamic> snapshot) {
+                return HistoryItemComponent(snapshot: snapshot.data());
+              },
+            ),
+            _noResults(),
+            const SizedBox(height: 72)
+          ],
         );
       },
     );
@@ -227,7 +232,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _noResults() {
     return const NoResultComponent(
-      text: 'Não encontramos histórias que atendam sua pesquisa.',
+      text: 'Isso é tudo por enquanto.',
     );
   }
 }
