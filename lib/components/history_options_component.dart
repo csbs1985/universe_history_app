@@ -4,6 +4,7 @@ import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:universe_history_app/components/icon_component.dart';
+import 'package:universe_history_app/components/toast_component.dart';
 import 'package:universe_history_app/firestore/histories_firestore.dart';
 import 'package:universe_history_app/modal/comment_modal.dart';
 import 'package:universe_history_app/modal/input_comment_modal.dart';
@@ -33,6 +34,7 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
   final CommentClass commentClass = CommentClass();
   final HistoriesFirestore historiesFirestore = HistoriesFirestore();
   final HistoryClass historyClass = HistoryClass();
+  final ToastComponent toast = ToastComponent();
 
   bool _showComments(int _qtyComment) {
     return _qtyComment > 0 ? true : false;
@@ -82,9 +84,15 @@ class _HistoryOptionsComponentState extends State<HistoryOptionsComponent> {
 
   void _toggleBookmark(_history) {
     setState(() {
-      _history['bookmarks'].contains(currentUser.value.first.id)
-          ? _history['bookmarks'].remove(currentUser.value.first.id)
-          : _history['bookmarks'].add(currentUser.value.first.id);
+      if (_history['bookmarks'].contains(currentUser.value.first.id)) {
+        _history['bookmarks'].remove(currentUser.value.first.id);
+        toast.toast(
+            context, ToastEnum.SUCCESS.name, 'História removida dos favoritos');
+      } else {
+        _history['bookmarks'].add(currentUser.value.first.id);
+        toast.toast(context, ToastEnum.SUCCESS.name,
+            'História adicionada aos favoritos');
+      }
 
       historiesFirestore.pathBookmark(_history);
     });
