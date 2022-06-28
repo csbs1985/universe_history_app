@@ -44,7 +44,7 @@ class _MenuComponentState extends State<MenuComponent> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             scrollDirection: Axis.horizontal,
             itemBuilder: (BuildContext context, int index) {
-              return canShow(widget.allCategories[index].label)
+              return canShow(widget.allCategories[index].id)
                   ? Row(
                       children: [
                         TextButton(
