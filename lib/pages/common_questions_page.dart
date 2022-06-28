@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:universe_history_app/components/appbar_back_component.dart';
 import 'package:universe_history_app/components/title_component.dart';
 import 'package:universe_history_app/models/common_questions_model.dart';
-import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/theme/ui_text_style.dart';
 
 class CommonQuestionsPage extends StatelessWidget {
@@ -14,12 +13,7 @@ class CommonQuestionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: SvgPicture.asset(UiSvg.closed),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ),
+      appBar: const AppbarBackComponent(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
