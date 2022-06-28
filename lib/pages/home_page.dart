@@ -21,6 +21,7 @@ import 'package:universe_history_app/services/local_notification_service.dart';
 import 'package:universe_history_app/services/push_notification_service.dart';
 import 'package:universe_history_app/theme/ui_border.dart';
 import 'package:universe_history_app/theme/ui_color.dart';
+import 'package:universe_history_app/theme/ui_size.dart';
 import 'package:universe_history_app/theme/ui_svg.dart';
 import 'package:universe_history_app/utils/device_util.dart';
 
@@ -120,24 +121,17 @@ class _HomePageState extends State<HomePage> {
           leadingWidth: double.infinity,
           automaticallyImplyLeading: false,
           elevation: 0,
-          toolbarHeight: 54,
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  child: Container(
-                    alignment: Alignment.topLeft,
-                    color: Colors.amber,
-                    height: 28,
-                    child: SvgPicture.asset(UiSvg.name),
-                  ),
-                  onTap: () => _scrollToTop(),
-                )
-              ],
+          toolbarHeight: UiSize.appBar,
+          leading: GestureDetector(
+            child: Center(
+              child: Container(
+                alignment: Alignment.centerLeft,
+                height: 24,
+                margin: const EdgeInsets.fromLTRB(0, 0, 16, 0),
+                child: SvgPicture.asset(UiSvg.name),
+              ),
             ),
+            onTap: () => _scrollToTop(),
           ),
           actions: [
             ValueListenableBuilder(
