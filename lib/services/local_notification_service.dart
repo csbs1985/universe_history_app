@@ -1,9 +1,12 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:no_context_navigation/no_context_navigation.dart';
+import 'package:universe_history_app/models/history_model.dart';
 
 class LocalNotificationService {
-  late FlutterLocalNotificationsPlugin localNotificationsPlugin;
+  final HistoryClass historyClass = HistoryClass();
+
   late AndroidNotificationDetails androidDetails;
+  late FlutterLocalNotificationsPlugin localNotificationsPlugin;
   late IOSNotificationDetails appleDetails;
 
   LocalNotificationService() {
@@ -24,9 +27,11 @@ class LocalNotificationService {
     );
   }
 
-  _onSelectNotification(String? payload) {
-    if (payload != null && payload.isNotEmpty)
+  _onSelectNotification(String? payload) async {
+    if (payload != null && payload.isNotEmpty) {
+      await historyClass.getHistory(payload);
       navService.pushNamed('/history', args: payload);
+    }
   }
 
   showNotification(CustomNotification notification, {String? user}) {
