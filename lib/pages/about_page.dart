@@ -19,13 +19,12 @@ class AboutPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const TitleComponent(title: 'Sobre'),
-              const SizedBox(height: 20),
               Container(
-                alignment: Alignment.centerLeft,
-                height: 54,
+                height: 32,
+                width: 140,
                 child: SvgPicture.asset(UiSvg.logo),
+                margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
               ),
-              const SizedBox(height: 20),
               const Text(
                 'Versão',
                 style: UiTextStyle.text2,

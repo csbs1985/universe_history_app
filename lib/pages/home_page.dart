@@ -123,13 +123,9 @@ class _HomePageState extends State<HomePage> {
           elevation: 0,
           toolbarHeight: UiSize.appBar,
           leading: GestureDetector(
-            child: Center(
-              child: Container(
-                alignment: Alignment.centerLeft,
-                height: 24,
-                margin: const EdgeInsets.fromLTRB(0, 0, 16, 0),
-                child: SvgPicture.asset(UiSvg.name),
-              ),
+            child: Container(
+              child: SvgPicture.asset(UiSvg.name),
+              margin: const EdgeInsets.fromLTRB(0, 16, 0, 16),
             ),
             onTap: () => _scrollToTop(),
           ),
