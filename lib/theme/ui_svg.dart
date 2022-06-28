@@ -12,11 +12,11 @@ class UiSvg {
   static const String favorite = 'assets/icons/favorite.svg';
   static const String favorited = 'assets/icons/favorited.svg';
   static const String login = 'assets/icons/login.svg';
-  static const String logo = 'assets/icons/history_logo_full.svg';
+  static const String logo = 'assets/icons/logo.svg';
   static const String logout = 'assets/icons/logout.svg';
   static const String mentioned = 'assets/icons/mentioned.svg';
   static const String menu = 'assets/icons/menu.svg';
-  static const String name = 'assets/icons/history_name.svg';
+  static const String name = 'assets/icons/name.svg';
   static const String new_account = 'assets/icons/new_account.svg';
   static const String new_nickname = 'assets/icons/new_nickname.svg';
   static const String create = 'assets/icons/create.svg';

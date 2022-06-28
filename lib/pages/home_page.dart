@@ -7,7 +7,6 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:universe_history_app/components/history_item_component.dart';
 import 'package:universe_history_app/components/icon_component.dart';
-import 'package:universe_history_app/components/logo_component.dart';
 import 'package:universe_history_app/components/menu_component.dart';
 import 'package:universe_history_app/components/no_history_component.dart';
 import 'package:universe_history_app/components/skeleton_history_item_component.dart';
@@ -126,11 +125,16 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.only(left: 10),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                LogoComponent(
-                  size: 20,
-                  callback: (value) => _scrollToTop(),
+                GestureDetector(
+                  child: Container(
+                    alignment: Alignment.topLeft,
+                    color: Colors.amber,
+                    height: 28,
+                    child: SvgPicture.asset(UiSvg.name),
+                  ),
+                  onTap: () => _scrollToTop(),
                 )
               ],
             ),

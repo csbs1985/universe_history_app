@@ -39,11 +39,9 @@ class _LogoComponentState extends State<LogoComponent> {
   }
 
   Color? _setColor() {
-    if (widget._icon == UiSvg.logo) {
+    if (widget._icon == UiSvg.logo)
       return null;
-    } else if (widget._color != null) {
-      return widget._color;
-    }
+    else if (widget._color != null) return widget._color;
     return UiColor.icon;
   }
 
@@ -51,6 +49,7 @@ class _LogoComponentState extends State<LogoComponent> {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
+        color: Colors.amber,
         padding: const EdgeInsets.all(0),
         margin: const EdgeInsets.all(0),
         child: SvgPicture.asset(

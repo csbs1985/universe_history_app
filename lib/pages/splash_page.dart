@@ -3,7 +3,7 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:universe_history_app/components/logo_component.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:universe_history_app/firestore/users_firestore.dart';
 import 'package:universe_history_app/models/user_model.dart';
 import 'package:universe_history_app/services/auth_service.dart';
@@ -55,15 +55,12 @@ class _SplashPageState extends State<SplashPage> {
     return WillPopScope(
       onWillPop: () => exit(0),
       child: Scaffold(
-        body: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: const [
-            LogoComponent(
-              icon: UiSvg.logo,
-              size: 400,
-            ),
-          ],
+        body: Center(
+          child: Container(
+            alignment: Alignment.center,
+            height: 50,
+            child: SvgPicture.asset(UiSvg.logo),
+          ),
         ),
       ),
     );
