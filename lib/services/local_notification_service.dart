@@ -12,7 +12,7 @@ class LocalNotificationService {
   }
 
   _initializeNotifications() async {
-    const android = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const android = AndroidInitializationSettings('@drawable/ic_notification');
     const apple = IOSInitializationSettings();
 
     await localNotificationsPlugin.initialize(
