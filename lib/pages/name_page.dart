@@ -53,7 +53,7 @@ class _NickNamePageState extends State<NamePage> {
       _counter = currentUser.value.first.name.length;
     }
 
-    _validateupDateName();
+    // _validateupDateName();
     _keyUp(_oldName);
   }
 
